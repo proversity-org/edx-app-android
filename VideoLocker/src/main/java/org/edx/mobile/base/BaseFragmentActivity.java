@@ -43,7 +43,7 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-public abstract class BaseFragmentActivity extends RoboAppCompatActivity
+public abstract class BaseFragmentActivity extends BaseActivity
         implements NetworkSubject, ICommonUI {
 
     public static final String ACTION_SHOW_MESSAGE_INFO = "ACTION_SHOW_MESSAGE_INFO";
@@ -324,25 +324,6 @@ public abstract class BaseFragmentActivity extends RoboAppCompatActivity
      */
     protected boolean handleOptionsItemSelected(MenuItem item) {
         return false;
-    }
-
-    /**
-     * This function is overidden to set the font for Action bar title
-     * @param title
-     */
-    @Override
-    public void setTitle(CharSequence title) {
-        try {
-            final ActionBar bar = getSupportActionBar();
-            if (bar != null && title!=null) {
-                SpannableString s = new SpannableString(title);
-                s.setSpan(new CustomTypefaceSpan(this, "OpenSans-Semibold.ttf"), 0, s.length(),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                bar.setTitle(s);
-            }
-        } catch(Exception ex) {
-            logger.error(ex);
-        }
     }
 
     public void setActionBarVisible(boolean visible){
