@@ -110,9 +110,8 @@ public class Config {
      * If TYPE is not "webview" in any letter case, defaults to "native"
      */
     public class EnrollmentConfig {
+        private @SerializedName("WEBVIEW") WebViewConfig mWebViewConfig;
         private @SerializedName("TYPE") String mCourseEnrollmentType;
-        private @SerializedName("COURSE_SEARCH_URL") String mSearchUrl;
-        private @SerializedName("COURSE_INFO_URL_TEMPLATE") String mCourseInfoUrlTemplate;
 
         public boolean isWebviewCourseDiscoveryEnabled() {
             if (mCourseEnrollmentType == null) { return false; }
@@ -127,6 +126,19 @@ public class Config {
                     return false;
             }
     }
+
+        public String getCourseSearchUrl() {
+            return mWebViewConfig.getCourseSearchUrl();
+        }
+
+        public String getCourseInfoUrlTemplate() {
+            return mWebViewConfig.getCourseInfoUrlTemplate();
+        }
+    }
+
+    public static class WebViewConfig {
+        private @SerializedName("COURSE_SEARCH_URL") String mSearchUrl;
+        private @SerializedName("COURSE_INFO_URL_TEMPLATE") String mCourseInfoUrlTemplate;
 
         public String getCourseSearchUrl() {
             return mSearchUrl;
@@ -366,9 +378,6 @@ public class Config {
     public boolean isNotificationEnabled() {
         return getBoolean(PUSH_NOTIFICATIONS_FLAG, false);
     }
-
-
-
 
     /**
      * Empty or no config returns false.

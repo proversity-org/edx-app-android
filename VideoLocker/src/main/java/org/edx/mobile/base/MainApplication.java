@@ -16,6 +16,7 @@ import com.newrelic.agent.android.NewRelic;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 
+import org.edx.mobile.BuildConfig;
 import org.edx.mobile.R;
 import org.edx.mobile.core.EdxDefaultModule;
 import org.edx.mobile.logger.Logger;
@@ -71,11 +72,12 @@ public class MainApplication extends MultiDexApplication {
         injector = RoboGuice.getOrCreateBaseApplicationInjector((Application) this, RoboGuice.DEFAULT_STAGE,
                 (Module) RoboGuice.newDefaultRoboModule(this), (Module) new EdxDefaultModule(this));
 
+        final Config config = injector.getInstance(Config.class);
 
-        Config config = injector.getInstance(Config.class);
         // initialize Fabric
-        if (config.getFabricConfig().isEnabled()) {
+        if (config.getFabricConfig().isEnabled() && !BuildConfig.DEBUG) {
             Fabric.with(this, new Crashlytics());
+            EventBus.getDefault().register(new CrashlyticsCrashReportObserver());
         }
 
         // initialize NewRelic with crash reporting disabled
@@ -190,6 +192,13 @@ public class MainApplication extends MultiDexApplication {
             }
         }
         pmanager.setNotificationEnabled(true);
+    }
+
+    public static class CrashlyticsCrashReportObserver {
+        @SuppressWarnings("unused")
+        public void onEventMainThread(Logger.CrashReportEvent e) {
+            Crashlytics.logException(e.getError());
+        }
     }
 
     public Injector getInjector() {
