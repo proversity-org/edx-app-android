@@ -19,3 +19,7 @@ test:
     override:
         - (./gradlew assemble):
             timeout: 360
+general:
+  branches:
+    only:
+      - circleci-deployment
