@@ -18,8 +18,7 @@ dependencies:
 
 test:
     override:
-        - (./gradlew assemble):
-            timeout: 360
+        - ./gradlew build -x test -PpreDexEnable=false -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs="-Xms512m -Xmx2048m"
 general:
   branches:
     only:
