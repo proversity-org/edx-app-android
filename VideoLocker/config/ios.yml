@@ -1,0 +1,22 @@
+---
+  API_HOST_URL: "http://10.0.2.2:8000" #"https://courses.edx.org"
+  ENVIRONMENT_DISPLAY_NAME: "Localhost"
+  PLATFORM_NAME: "Proversity"
+  PLATFORM_DESTINATION_NAME: "proversity.io"
+  FEEDBACK_EMAIL_ADDRESS: "rene@proversity.org"
+  OAUTH_CLIENT_ID: "android-key"
+  SOCIAL_SHARING:
+    ENABLED: true
+  COURSE_ENROLLMENT:
+    COURSE_SEARCH_URL: "http://10.0.2.2:8000/courses?type=mobile" #'https://webview.edx.org/course?type=mobile'
+    EXTERNAL_COURSE_SEARCH_URL: "http://10.0.2.2:8000/courses?type=mobile" #'https://www.edx.org/course-search?type=mobile'
+    COURSE_INFO_URL_TEMPLATE: "http://10.0.2.2:8000/courses/{path_id}" #'https://webview.edx.org/course/{path_id}'
+    ENABLED: true
+  ZERO_RATING:
+    ENABLED: true
+    CARRIERS: ["63514"]
+    WHITE_LIST_OF_DOMAINS: ["10.0.2.2","localhost","webview.edx.org","courses.edx.org","edx.org","cdn.segment.io","ssl.google-analytics.com","api.segment.io","e.crashyltics.com","settings.crashlytics.com","mobile-collector.newrelic.com","www.google-analytics.com","android.clients.google.com","play.googleapis.com","cdn.optimizely.com"]
+  SPEED_TEST_ENABLED: false
+  SEGMENT:
+    SEGMENT_IO_WRITE_KEY: 'd3q35zMPdifpnVDPnnwmTukmfmyJVJh9'
+    ENABLED: true
