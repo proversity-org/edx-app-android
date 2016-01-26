@@ -145,7 +145,7 @@ android {
 
     signingConfigs {
         releasekey {
-            storeFile file('/Users/kearabiloeledwaba/StudioProjects/edx-app-android/VideoLocker/edx-android-release-key.jks')
+            storeFile file('edx-android-release-key.jks')
             storePassword '123456'
             keyAlias '123456'
             keyPassword '123456'
