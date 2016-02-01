@@ -162,7 +162,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "org.proversity.edx.mobile"
+        applicationId 'org.proversity.mobile'
         // minimum version is Android 4.0
         minSdkVersion 14
         targetSdkVersion 21
@@ -226,7 +226,6 @@ android {
 
     productFlavors {
         prod {}
-
         dev {
             minSdkVersion 21
             // Disables multidex to drastically speed up build: https://developer.android.com/tools/building/multidex.html#dev-build

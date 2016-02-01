@@ -15,7 +15,16 @@ dependencies:
         - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-2.2.1,android-21,extra-google-m2repository,extra-google-google_play_services,extra-android-support
         - echo y | android update sdk --no-ui --all --filter build-tools-23.0.2
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
-
+    pre:
+    -  wget https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
+    - tar -xvzf ruby-2.3.0.tar.gz
+    - cd ruby-2.3.0
+    - ./configure
+    - make
+    - sudo make install
+    - sudo gem install supply
+    - cd ~/edx-app-android/
+    - supply --apk VideoLocker/build/outputs/apk/VideoLocker-prod-release.apk -p org.proversity.edx.mobile -i proversity-edx@api-8032764440691596481-702575.iam.gserviceaccount.com
 test:
     override:
         - ./gradlew build -x test -PpreDexEnable=false -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs="-Xms512m -Xmx512m" --stacktrace
