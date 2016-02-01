@@ -13,7 +13,7 @@ buildscript {
 
         //Included for NewRelic
         classpath "com.newrelic.agent.android:agent-gradle-plugin:5.3.1"
-
+        classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
     }
 }
 
@@ -137,7 +137,7 @@ dependencies {
 
 configurations {
     // I believe it was a wrong configuration at project level before.
-   // all*.exclude group: 'com.android.support', module: 'support-v4'
+    // all*.exclude group: 'com.android.support', module: 'support-v4'
 }
 
 android {
@@ -153,7 +153,7 @@ android {
     }
 
     compileSdkVersion 23
-    buildToolsVersion BUILD_TOOLS_VERSION
+    buildToolsVersion '23.0.2'
 
     useLibrary 'org.apache.http.legacy'
 
@@ -181,7 +181,7 @@ android {
         // Enabling multidex support.
         multiDexEnabled true
 
-        manifestPlaceholders = [ supportsRtl:"false"]
+        manifestPlaceholders = [supportsRtl: "false"]
 
         def platformName = config.get('PLATFORM_NAME')
         resValue "string", "platform_name", platformName
@@ -225,22 +225,25 @@ android {
     }
 
     productFlavors {
-        prod { }
+        prod {}
 
         dev {
-            minSdkVersion 21 // Disables multidex to drastically speed up build: https://developer.android.com/tools/building/multidex.html#dev-build
+            minSdkVersion 21
+            // Disables multidex to drastically speed up build: https://developer.android.com/tools/building/multidex.html#dev-build
         }
     }
 
     buildTypes {
         debug {
             testCoverageEnabled true
-            pseudoLocalesEnabled true // Set device language to "en_XA" to test glyphs, or "ar_XB" to test RTL support
-            manifestPlaceholders = [ supportsRtl:"true"]
+            pseudoLocalesEnabled true
+            // Set device language to "en_XA" to test glyphs, or "ar_XB" to test RTL support
+            manifestPlaceholders = [supportsRtl: "true"]
         }
         debuggable.initWith(buildTypes.debug)
         debuggable {
-            testCoverageEnabled = false // Set to "false" to work around debugger issue: https://code.google.com/p/android/issues/detail?id=123771
+            testCoverageEnabled = false
+            // Set to "false" to work around debugger issue: https://code.google.com/p/android/issues/detail?id=123771
         }
 
         release {
@@ -255,11 +258,11 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
     }
-    testOptions { 
-         unitTests.all {
-             maxHeapSize '1024m'
-             jvmArgs '-XX:MaxPermSize=512m'
-         }
+    testOptions {
+        unitTests.all {
+            maxHeapSize '1024m'
+            jvmArgs '-XX:MaxPermSize=512m'
+        }
     }
 }
 
@@ -276,7 +279,7 @@ android.applicationVariants.all { variant ->
     def generateTask = project.tasks.getByName("generate" + variantName + "Resources")
     generateTask.dependsOn(configureTask)
 
-    tasks.all {task ->
+    tasks.all { task ->
         if (task.name.startsWith("test")) {
             task.mustRunAfter(configureTask)
         }
