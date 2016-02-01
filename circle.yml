@@ -18,8 +18,8 @@ dependencies:
     pre:
     - cd ~/edx-app-android/
     - wget https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
-    - tar -xvzf ruby-2.3.0.tar.gz && ls
-    - cd ruby-2.3.0
+    - tar -xvzf ruby-2.3.0.tar.gz
+    - cd ~/edx-app-android/ruby-2.3.0/
     - ls
     - ./configure && make && sudo make install
     - sudo gem install supply
