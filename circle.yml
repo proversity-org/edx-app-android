@@ -20,7 +20,7 @@ dependencies:
     - wget https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
     - tar -xvzf ruby-2.3.0.tar.gz
     - cd ruby-2.3.0/
-    - autoreconf -i
+    - ls
     - ./configure && make && sudo make install
     - sudo gem install supply
     - cd ~/edx-app-android/
