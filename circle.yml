@@ -16,7 +16,7 @@ dependencies:
         - echo y | android update sdk --no-ui --all --filter build-tools-23.0.2
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
     pre:
-    -  wget https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
+    - wget https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
     - tar -xvzf ruby-2.3.0.tar.gz
     - cd ruby-2.3.0/
     - ./configure
