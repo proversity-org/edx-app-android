@@ -1,4 +1,4 @@
-package org.edx.mobile.social.google;
+package org.proversity.edx.mobile.social.google;
 
 /**
   {

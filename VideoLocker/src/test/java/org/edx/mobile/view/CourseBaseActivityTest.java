@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,10 +12,10 @@ import android.widget.ProgressBar;
 
 import com.joanzapata.iconify.IconDrawable;
 
-import org.edx.mobile.R;
-import org.edx.mobile.http.OkHttpUtil;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.model.course.CourseComponent;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.http.OkHttpUtil;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.model.course.CourseComponent;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameter;
 import org.robolectric.Robolectric;

@@ -1,20 +1,20 @@
-package org.edx.mobile.test.http;
+package org.proversity.edx.mobile.test.http;
 
-import org.edx.mobile.http.OkHttpUtil;
-import org.edx.mobile.model.Filter;
-import org.edx.mobile.model.api.AnnouncementsModel;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.model.api.HandoutModel;
-import org.edx.mobile.model.api.ResetPasswordResponse;
-import org.edx.mobile.model.api.SectionEntry;
-import org.edx.mobile.model.api.SyncLastAccessedSubsectionResponse;
-import org.edx.mobile.model.api.VideoResponseModel;
-import org.edx.mobile.model.course.BlockPath;
-import org.edx.mobile.model.course.BlockType;
-import org.edx.mobile.model.course.CourseComponent;
-import org.edx.mobile.model.course.HasDownloadEntry;
-import org.edx.mobile.model.course.IBlock;
-import org.edx.mobile.module.registration.model.RegistrationDescription;
+import org.proversity.edx.mobile.http.OkHttpUtil;
+import org.proversity.edx.mobile.model.Filter;
+import org.proversity.edx.mobile.model.api.AnnouncementsModel;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.model.api.HandoutModel;
+import org.proversity.edx.mobile.model.api.ResetPasswordResponse;
+import org.proversity.edx.mobile.model.api.SectionEntry;
+import org.proversity.edx.mobile.model.api.SyncLastAccessedSubsectionResponse;
+import org.proversity.edx.mobile.model.api.VideoResponseModel;
+import org.proversity.edx.mobile.model.course.BlockPath;
+import org.proversity.edx.mobile.model.course.BlockType;
+import org.proversity.edx.mobile.model.course.CourseComponent;
+import org.proversity.edx.mobile.model.course.HasDownloadEntry;
+import org.proversity.edx.mobile.model.course.IBlock;
+import org.proversity.edx.mobile.module.registration.model.RegistrationDescription;
 import org.junit.Test;
 
 import java.util.ArrayList;

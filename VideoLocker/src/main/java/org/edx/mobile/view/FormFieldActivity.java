@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,8 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-import org.edx.mobile.base.BaseSingleFragmentActivity;
-import org.edx.mobile.user.FormField;
+import org.proversity.edx.mobile.base.BaseSingleFragmentActivity;
+import org.proversity.edx.mobile.user.FormField;
 
 import roboguice.inject.InjectExtra;
 

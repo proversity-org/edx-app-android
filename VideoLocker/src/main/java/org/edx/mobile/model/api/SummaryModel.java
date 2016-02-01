@@ -1,9 +1,9 @@
-package org.edx.mobile.model.api;
+package org.proversity.edx.mobile.model.api;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.edx.mobile.model.course.BlockType;
-import org.edx.mobile.util.JavaUtil;
+import org.proversity.edx.mobile.model.course.BlockType;
+import org.proversity.edx.mobile.util.JavaUtil;
 
 import java.io.Serializable;
 

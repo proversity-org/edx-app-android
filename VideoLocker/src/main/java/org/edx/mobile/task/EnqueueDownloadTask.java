@@ -1,11 +1,11 @@
-package org.edx.mobile.task;
+package org.proversity.edx.mobile.task;
 
 import android.content.Context;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.model.db.DownloadEntry;
-import org.edx.mobile.player.TranscriptManager;
+import org.proversity.edx.mobile.model.db.DownloadEntry;
+import org.proversity.edx.mobile.player.TranscriptManager;
 
 import java.util.List;
 

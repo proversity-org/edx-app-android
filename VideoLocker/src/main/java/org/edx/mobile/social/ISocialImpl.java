@@ -1,4 +1,4 @@
-package org.edx.mobile.social;
+package org.proversity.edx.mobile.social;
 
 import android.app.Activity;
 import android.os.Bundle;

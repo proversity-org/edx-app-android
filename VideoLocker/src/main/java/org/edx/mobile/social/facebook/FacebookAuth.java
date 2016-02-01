@@ -1,4 +1,4 @@
-package org.edx.mobile.social.facebook;
+package org.proversity.edx.mobile.social.facebook;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,8 +12,8 @@ import android.util.Base64;
 import com.facebook.Session;
 import com.facebook.SessionState;
 
-import org.edx.mobile.module.facebook.IUiLifecycleHelper;
-import org.edx.mobile.social.ISocialImpl;
+import org.proversity.edx.mobile.module.facebook.IUiLifecycleHelper;
+import org.proversity.edx.mobile.social.ISocialImpl;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

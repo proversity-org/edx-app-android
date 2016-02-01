@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,14 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.edx.mobile.R;
-import org.edx.mobile.discussion.DiscussionThread;
-import org.edx.mobile.discussion.TopicThreads;
-import org.edx.mobile.task.SearchThreadListTask;
-import org.edx.mobile.util.ResourceUtil;
-import org.edx.mobile.view.adapters.InfiniteScrollUtils;
-import org.edx.mobile.view.common.MessageType;
-import org.edx.mobile.view.common.TaskProcessCallback;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.discussion.DiscussionThread;
+import org.proversity.edx.mobile.discussion.TopicThreads;
+import org.proversity.edx.mobile.task.SearchThreadListTask;
+import org.proversity.edx.mobile.util.ResourceUtil;
+import org.proversity.edx.mobile.view.adapters.InfiniteScrollUtils;
+import org.proversity.edx.mobile.view.common.MessageType;
+import org.proversity.edx.mobile.view.common.TaskProcessCallback;
 
 import roboguice.inject.InjectExtra;
 

@@ -1,4 +1,4 @@
-package org.edx.mobile.view.common;
+package org.proversity.edx.mobile.view.common;
 
 /**
  * Created by hanningni on 8/17/15.

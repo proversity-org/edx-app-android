@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -17,24 +17,24 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.MyVideosBaseFragment;
-import org.edx.mobile.interfaces.SectionItemInterface;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.api.ProfileModel;
-import org.edx.mobile.model.api.VideoResponseModel;
-import org.edx.mobile.model.db.DownloadEntry;
-import org.edx.mobile.module.analytics.ISegment;
-import org.edx.mobile.module.db.DataCallback;
-import org.edx.mobile.module.prefs.PrefManager;
-import org.edx.mobile.player.PlayerFragment;
-import org.edx.mobile.player.VideoListFragment.VideoListCallback;
-import org.edx.mobile.util.AppConstants;
-import org.edx.mobile.util.ResourceUtil;
-import org.edx.mobile.util.UiUtil;
-import org.edx.mobile.view.adapters.MyRecentVideoAdapter;
-import org.edx.mobile.view.dialog.DeleteVideoDialogFragment;
-import org.edx.mobile.view.dialog.IDialogCallback;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.MyVideosBaseFragment;
+import org.proversity.edx.mobile.interfaces.SectionItemInterface;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.api.ProfileModel;
+import org.proversity.edx.mobile.model.api.VideoResponseModel;
+import org.proversity.edx.mobile.model.db.DownloadEntry;
+import org.proversity.edx.mobile.module.analytics.ISegment;
+import org.proversity.edx.mobile.module.db.DataCallback;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.player.PlayerFragment;
+import org.proversity.edx.mobile.player.VideoListFragment.VideoListCallback;
+import org.proversity.edx.mobile.util.AppConstants;
+import org.proversity.edx.mobile.util.ResourceUtil;
+import org.proversity.edx.mobile.util.UiUtil;
+import org.proversity.edx.mobile.view.adapters.MyRecentVideoAdapter;
+import org.proversity.edx.mobile.view.dialog.DeleteVideoDialogFragment;
+import org.proversity.edx.mobile.view.dialog.IDialogCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;

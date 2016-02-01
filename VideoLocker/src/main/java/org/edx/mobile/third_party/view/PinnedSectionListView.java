@@ -1,4 +1,4 @@
-package org.edx.mobile.third_party.view;
+package org.proversity.edx.mobile.third_party.view;
 
  /*
  * Copyright (C) 2013 Sergej Shafarenka, halfbit.de
@@ -37,7 +37,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 
-import org.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.logger.Logger;
 
 
 /**

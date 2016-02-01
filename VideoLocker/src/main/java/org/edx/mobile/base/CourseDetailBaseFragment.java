@@ -1,4 +1,4 @@
-package org.edx.mobile.base;
+package org.proversity.edx.mobile.base;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.R;
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.api.ProfileModel;
-import org.edx.mobile.module.prefs.PrefManager;
-import org.edx.mobile.util.BrowserUtil;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.api.ProfileModel;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.util.BrowserUtil;
 
 import roboguice.fragment.RoboFragment;
 

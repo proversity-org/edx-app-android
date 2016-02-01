@@ -1,10 +1,10 @@
-package org.edx.mobile.view.adapters;
+package org.proversity.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.view.View;
 
-import org.edx.mobile.R;
-import org.edx.mobile.social.SocialMember;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.social.SocialMember;
 
 import java.util.List;
 

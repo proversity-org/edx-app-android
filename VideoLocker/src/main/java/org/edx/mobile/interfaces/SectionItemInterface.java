@@ -1,4 +1,4 @@
-package org.edx.mobile.interfaces;
+package org.proversity.edx.mobile.interfaces;
 
 import java.io.Serializable;
 

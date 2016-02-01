@@ -1,4 +1,4 @@
-package org.edx.mobile.model;
+package org.proversity.edx.mobile.model;
 
 /**
 * Created by hanning on 5/27/15.

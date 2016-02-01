@@ -1,11 +1,11 @@
-package org.edx.mobile.task;
+package org.proversity.edx.mobile.task;
 
 import android.content.Context;
 
-import org.edx.mobile.discussion.DiscussionPostsFilter;
-import org.edx.mobile.discussion.DiscussionPostsSort;
-import org.edx.mobile.discussion.TopicThreads;
-import org.edx.mobile.http.RetroHttpException;
+import org.proversity.edx.mobile.discussion.DiscussionPostsFilter;
+import org.proversity.edx.mobile.discussion.DiscussionPostsSort;
+import org.proversity.edx.mobile.discussion.TopicThreads;
+import org.proversity.edx.mobile.http.RetroHttpException;
 
 import java.util.List;
 

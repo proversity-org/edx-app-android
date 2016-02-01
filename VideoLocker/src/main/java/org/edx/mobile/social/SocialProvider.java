@@ -1,9 +1,9 @@
-package org.edx.mobile.social;
+package org.proversity.edx.mobile.social;
 
 import android.app.Activity;
 import android.content.Context;
 
-import org.edx.mobile.model.api.CourseEntry;
+import org.proversity.edx.mobile.model.api.CourseEntry;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.edx.mobile.view.adapters;
+package org.proversity.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
@@ -13,20 +13,20 @@ import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.internal.Animation;
 import com.joanzapata.iconify.widget.IconImageView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.MainApplication;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.course.BlockPath;
-import org.edx.mobile.model.course.BlockType;
-import org.edx.mobile.model.course.CourseComponent;
-import org.edx.mobile.model.course.HasDownloadEntry;
-import org.edx.mobile.model.course.IBlock;
-import org.edx.mobile.model.course.VideoBlockModel;
-import org.edx.mobile.model.db.DownloadEntry;
-import org.edx.mobile.module.db.DataCallback;
-import org.edx.mobile.module.db.IDatabase;
-import org.edx.mobile.module.prefs.PrefManager;
-import org.edx.mobile.module.storage.IStorage;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.MainApplication;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.course.BlockPath;
+import org.proversity.edx.mobile.model.course.BlockType;
+import org.proversity.edx.mobile.model.course.CourseComponent;
+import org.proversity.edx.mobile.model.course.HasDownloadEntry;
+import org.proversity.edx.mobile.model.course.IBlock;
+import org.proversity.edx.mobile.model.course.VideoBlockModel;
+import org.proversity.edx.mobile.model.db.DownloadEntry;
+import org.proversity.edx.mobile.module.db.DataCallback;
+import org.proversity.edx.mobile.module.db.IDatabase;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.module.storage.IStorage;
 
 import java.util.ArrayList;
 import java.util.List;

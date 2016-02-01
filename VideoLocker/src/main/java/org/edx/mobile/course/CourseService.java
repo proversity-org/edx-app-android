@@ -1,6 +1,6 @@
-package org.edx.mobile.course;
+package org.proversity.edx.mobile.course;
 
-import org.edx.mobile.http.RetroHttpException;
+import org.proversity.edx.mobile.http.RetroHttpException;
 
 import retrofit.http.GET;
 import retrofit.http.Path;

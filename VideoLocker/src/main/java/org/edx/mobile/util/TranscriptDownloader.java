@@ -1,11 +1,11 @@
-package org.edx.mobile.util;
+package org.proversity.edx.mobile.util;
 
 import android.content.Context;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.services.ServiceManager;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.services.ServiceManager;
 
 import roboguice.RoboGuice;
 

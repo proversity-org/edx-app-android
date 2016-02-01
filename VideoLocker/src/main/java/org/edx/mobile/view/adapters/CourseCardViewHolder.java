@@ -1,4 +1,4 @@
-package org.edx.mobile.view.adapters;
+package org.proversity.edx.mobile.view.adapters;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.edx.mobile.R;
-import org.edx.mobile.model.api.CourseEntry;
-import org.edx.mobile.util.images.TopAnchorFillWidthTransformation;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.model.api.CourseEntry;
+import org.proversity.edx.mobile.util.images.TopAnchorFillWidthTransformation;
 
 public class CourseCardViewHolder extends BaseListAdapter.BaseViewHolder {
 

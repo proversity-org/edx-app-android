@@ -1,12 +1,12 @@
-package org.edx.mobile.test;
+package org.proversity.edx.mobile.test;
 
 import com.segment.analytics.Options;
 import com.segment.analytics.Properties;
 import com.segment.analytics.Traits;
 
-import org.edx.mobile.module.analytics.ISegment;
-import org.edx.mobile.module.analytics.ISegmentImpl;
-import org.edx.mobile.module.analytics.ISegmentTracker;
+import org.proversity.edx.mobile.module.analytics.ISegment;
+import org.proversity.edx.mobile.module.analytics.ISegmentImpl;
+import org.proversity.edx.mobile.module.analytics.ISegmentTracker;
 import org.junit.Test;
 import org.mockito.Mockito;
 

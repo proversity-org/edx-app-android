@@ -78,33 +78,33 @@ public interface IMyCoursesLocators_Offline {
 	// Android id
 	String btnHeaderId = "android:id/up";
 	String btnHeaderNameId = "android:id/action_bar_title";
-	String btnCourseId = "org.edx.mobile:id/course_row_layout";
+	String btnCourseId = "org.proversity.edx.mobile:id/course_row_layout";
 	String btnCourseWareName = "Courseware";
-	String btnSectionSubsectionId = "org.edx.mobile:id/chapter_row_layout";
-	String hlnkOpenInBrowserId = "org.edx.mobile:id/open_in_browser_btn";//
-	String btnVideoId = "org.edx.mobile:id/video_row_layout";
+	String btnSectionSubsectionId = "org.proversity.edx.mobile:id/chapter_row_layout";
+	String hlnkOpenInBrowserId = "org.proversity.edx.mobile:id/open_in_browser_btn";//
+	String btnVideoId = "org.proversity.edx.mobile:id/video_row_layout";
 	String txtMyCourseName = "My Courses";
-	String vpVideoPlayerId = "org.edx.mobile:id/preview";
+	String vpVideoPlayerId = "org.proversity.edx.mobile:id/preview";
 	
-	String txtMyCourseId = "org.edx.mobile:id/drawer_option_my_courses";
-	String btnLastAccessedId = "org.edx.mobile:id/last_viewed_tv";
-	String btnLMS = "org.edx.mobile:id/lms_btn";
-	String btnPlayPause = "org.edx.mobile:id/pause";
-	String btnRewind = "org.edx.mobile:id/rew";
-	String btnSettings = "org.edx.mobile:id/settings";
-	String btnFullScreenId = "org.edx.mobile:id/fullscreen";
-	String btnLogOutId = "org.edx.mobile:id/logout_button";
-	String popupCC = "org.edx.mobile:id/tv_closedcaption";
-	String popupLanguages = "org.edx.mobile:id/cc_list";
-	String popupLanguagesCancel = "org.edx.mobile:id/tv_cc_cancel";
-	String txtSectionName="org.edx.mobile:id/txt_chapter_title";
+	String txtMyCourseId = "org.proversity.edx.mobile:id/drawer_option_my_courses";
+	String btnLastAccessedId = "org.proversity.edx.mobile:id/last_viewed_tv";
+	String btnLMS = "org.proversity.edx.mobile:id/lms_btn";
+	String btnPlayPause = "org.proversity.edx.mobile:id/pause";
+	String btnRewind = "org.proversity.edx.mobile:id/rew";
+	String btnSettings = "org.proversity.edx.mobile:id/settings";
+	String btnFullScreenId = "org.proversity.edx.mobile:id/fullscreen";
+	String btnLogOutId = "org.proversity.edx.mobile:id/logout_button";
+	String popupCC = "org.proversity.edx.mobile:id/tv_closedcaption";
+	String popupLanguages = "org.proversity.edx.mobile:id/cc_list";
+	String popupLanguagesCancel = "org.proversity.edx.mobile:id/tv_cc_cancel";
+	String txtSectionName="org.proversity.edx.mobile:id/txt_chapter_title";
 
 	// offline
-	String btnOkPopupId = "org.edx.mobile:id/positiveButton";
-	String btnDeleteId = "org.edx.mobile:id/delete_btn";
-	String cbVideoSelectId = "org.edx.mobile:id/video_select_checkbox";
-	String btnEditId = "org.edx.mobile:id/edit_btn";
-	String offlineBarId = "org.edx.mobile:id/offline_bar";
+	String btnOkPopupId = "org.proversity.edx.mobile:id/positiveButton";
+	String btnDeleteId = "org.proversity.edx.mobile:id/delete_btn";
+	String cbVideoSelectId = "org.proversity.edx.mobile:id/video_select_checkbox";
+	String btnEditId = "org.proversity.edx.mobile:id/edit_btn";
+	String offlineBarId = "org.proversity.edx.mobile:id/offline_bar";
 
 	// IOS Locators id's
 	String btnHeaderIdiOS = "btnNavigation";

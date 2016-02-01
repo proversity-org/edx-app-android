@@ -1,8 +1,8 @@
-package org.edx.mobile.task;
+package org.proversity.edx.mobile.task;
 
 import android.content.Context;
 
-import org.edx.mobile.discussion.DiscussionThread;
+import org.proversity.edx.mobile.discussion.DiscussionThread;
 
 public abstract class FollowThreadTask extends
 Task<DiscussionThread> {

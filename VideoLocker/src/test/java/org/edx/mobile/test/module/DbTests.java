@@ -1,13 +1,13 @@
-package org.edx.mobile.test.module;
+package org.proversity.edx.mobile.test.module;
 
-import org.edx.mobile.model.VideoModel;
-import org.edx.mobile.model.db.DownloadEntry;
-import org.edx.mobile.model.db.DownloadEntry.DownloadedState;
-import org.edx.mobile.model.db.DownloadEntry.WatchedState;
-import org.edx.mobile.module.db.DataCallback;
-import org.edx.mobile.module.db.IDatabase;
-import org.edx.mobile.module.db.impl.DatabaseFactory;
-import org.edx.mobile.test.BaseTestCase;
+import org.proversity.edx.mobile.model.VideoModel;
+import org.proversity.edx.mobile.model.db.DownloadEntry;
+import org.proversity.edx.mobile.model.db.DownloadEntry.DownloadedState;
+import org.proversity.edx.mobile.model.db.DownloadEntry.WatchedState;
+import org.proversity.edx.mobile.module.db.DataCallback;
+import org.proversity.edx.mobile.module.db.IDatabase;
+import org.proversity.edx.mobile.module.db.impl.DatabaseFactory;
+import org.proversity.edx.mobile.test.BaseTestCase;
 import org.junit.Test;
 import org.robolectric.RuntimeEnvironment;
 

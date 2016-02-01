@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,20 +15,20 @@ import android.widget.TextView;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.R;
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.loader.AsyncTaskResult;
-import org.edx.mobile.loader.FriendsInCourseLoader;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.api.CourseEntry;
-import org.edx.mobile.module.analytics.ISegment;
-import org.edx.mobile.module.facebook.FacebookSessionUtil;
-import org.edx.mobile.social.SocialMember;
-import org.edx.mobile.util.BrowserUtil;
-import org.edx.mobile.util.ResourceUtil;
-import org.edx.mobile.util.UiUtil;
-import org.edx.mobile.view.adapters.FriendsInCourseAdapter;
-import org.edx.mobile.view.adapters.SimpleAdapter;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.loader.AsyncTaskResult;
+import org.proversity.edx.mobile.loader.FriendsInCourseLoader;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.api.CourseEntry;
+import org.proversity.edx.mobile.module.analytics.ISegment;
+import org.proversity.edx.mobile.module.facebook.FacebookSessionUtil;
+import org.proversity.edx.mobile.social.SocialMember;
+import org.proversity.edx.mobile.util.BrowserUtil;
+import org.proversity.edx.mobile.util.ResourceUtil;
+import org.proversity.edx.mobile.util.UiUtil;
+import org.proversity.edx.mobile.view.adapters.FriendsInCourseAdapter;
+import org.proversity.edx.mobile.view.adapters.SimpleAdapter;
 
 import java.util.List;
 

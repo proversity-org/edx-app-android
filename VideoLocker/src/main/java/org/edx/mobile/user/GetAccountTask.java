@@ -1,11 +1,11 @@
-package org.edx.mobile.user;
+package org.proversity.edx.mobile.user;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.task.Task;
+import org.proversity.edx.mobile.task.Task;
 
 public abstract class GetAccountTask extends
         Task<Account> {

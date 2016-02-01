@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,18 +18,18 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
 import com.google.inject.Inject;
 
-import org.edx.mobile.R;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.module.analytics.ISegment;
-import org.edx.mobile.social.SocialGroup;
-import org.edx.mobile.social.SocialMember;
-import org.edx.mobile.social.SocialProvider;
-import org.edx.mobile.social.facebook.FacebookProvider;
-import org.edx.mobile.util.ResourceUtil;
-import org.edx.mobile.util.SocialUtils;
-import org.edx.mobile.util.UiUtil;
-import org.edx.mobile.view.adapters.GroupSummaryAdapter;
-import org.edx.mobile.view.adapters.SimpleAdapter;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.module.analytics.ISegment;
+import org.proversity.edx.mobile.social.SocialGroup;
+import org.proversity.edx.mobile.social.SocialMember;
+import org.proversity.edx.mobile.social.SocialProvider;
+import org.proversity.edx.mobile.social.facebook.FacebookProvider;
+import org.proversity.edx.mobile.util.ResourceUtil;
+import org.proversity.edx.mobile.util.SocialUtils;
+import org.proversity.edx.mobile.util.UiUtil;
+import org.proversity.edx.mobile.view.adapters.GroupSummaryAdapter;
+import org.proversity.edx.mobile.view.adapters.SimpleAdapter;
 
 import java.util.List;
 

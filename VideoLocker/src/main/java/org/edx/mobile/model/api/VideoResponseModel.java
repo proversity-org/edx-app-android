@@ -1,11 +1,11 @@
-package org.edx.mobile.model.api;
+package org.proversity.edx.mobile.model.api;
 
-import org.edx.mobile.interfaces.SectionItemInterface;
-import org.edx.mobile.model.course.BlockType;
-import org.edx.mobile.model.course.HasDownloadEntry;
-import org.edx.mobile.model.course.VideoBlockModel;
-import org.edx.mobile.model.db.DownloadEntry;
-import org.edx.mobile.module.storage.IStorage;
+import org.proversity.edx.mobile.interfaces.SectionItemInterface;
+import org.proversity.edx.mobile.model.course.BlockType;
+import org.proversity.edx.mobile.model.course.HasDownloadEntry;
+import org.proversity.edx.mobile.model.course.VideoBlockModel;
+import org.proversity.edx.mobile.model.db.DownloadEntry;
+import org.proversity.edx.mobile.module.storage.IStorage;
 
 import java.util.EnumSet;
 

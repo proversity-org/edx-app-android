@@ -1,9 +1,9 @@
-package org.edx.mobile.http;
+package org.proversity.edx.mobile.http;
 
 import android.content.Context;
 
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.util.NetworkUtil;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.util.NetworkUtil;
 
 import retrofit.RequestInterceptor;
 

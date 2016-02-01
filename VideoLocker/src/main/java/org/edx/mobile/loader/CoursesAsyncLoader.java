@@ -1,12 +1,12 @@
-package org.edx.mobile.loader;
+package org.proversity.edx.mobile.loader;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.services.ServiceManager;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.services.ServiceManager;
 
 import java.util.List;
 import java.util.Observable;

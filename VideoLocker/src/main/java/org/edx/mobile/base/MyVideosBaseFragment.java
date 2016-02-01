@@ -1,12 +1,12 @@
-package org.edx.mobile.base;
+package org.proversity.edx.mobile.base;
 
 import android.os.Bundle;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.view.Router;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.view.Router;
 
 import roboguice.fragment.RoboFragment;
 

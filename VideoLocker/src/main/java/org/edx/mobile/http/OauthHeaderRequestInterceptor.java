@@ -1,4 +1,4 @@
-package org.edx.mobile.http;
+package org.proversity.edx.mobile.http;
 
 import android.content.Context;
 
@@ -6,9 +6,9 @@ import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.api.AuthResponse;
-import org.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.api.AuthResponse;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
 
 import java.io.IOException;
 

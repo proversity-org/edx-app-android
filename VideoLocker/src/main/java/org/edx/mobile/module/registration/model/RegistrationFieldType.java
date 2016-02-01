@@ -1,4 +1,4 @@
-package org.edx.mobile.module.registration.model;
+package org.proversity.edx.mobile.module.registration.model;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,6 +1,6 @@
-package org.edx.mobile.model.api;
+package org.proversity.edx.mobile.model.api;
 
-import org.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.logger.Logger;
 
 public class SyncLastAccessedSubsectionResponse {
 

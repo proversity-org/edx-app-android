@@ -1,4 +1,4 @@
-package org.edx.mobile.player;
+package org.proversity.edx.mobile.player;
 
 /**
  * @author rohan

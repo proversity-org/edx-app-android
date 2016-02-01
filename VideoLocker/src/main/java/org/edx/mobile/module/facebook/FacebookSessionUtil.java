@@ -1,4 +1,4 @@
-package org.edx.mobile.module.facebook;
+package org.proversity.edx.mobile.module.facebook;
 
 import com.facebook.Session;
 

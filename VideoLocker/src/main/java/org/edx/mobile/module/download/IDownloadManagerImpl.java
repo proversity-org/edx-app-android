@@ -1,4 +1,4 @@
-package org.edx.mobile.module.download;
+package org.proversity.edx.mobile.module.download;
 
 import android.app.DownloadManager;
 import android.app.DownloadManager.Query;
@@ -11,9 +11,9 @@ import android.net.Uri;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.download.NativeDownloadModel;
-import org.edx.mobile.util.Sha1Util;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.download.NativeDownloadModel;
+import org.proversity.edx.mobile.util.Sha1Util;
 
 import java.io.File;
 

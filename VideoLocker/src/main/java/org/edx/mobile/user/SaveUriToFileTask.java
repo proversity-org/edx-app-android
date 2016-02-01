@@ -1,4 +1,4 @@
-package org.edx.mobile.user;
+package org.proversity.edx.mobile.user;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.apache.commons.io.IOUtils;
-import org.edx.mobile.task.Task;
+import org.proversity.edx.mobile.task.Task;
 
 import java.io.File;
 import java.io.FileOutputStream;

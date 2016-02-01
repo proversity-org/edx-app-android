@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,12 +17,12 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.module.analytics.ISegment;
-import org.edx.mobile.player.PlayerActivity;
-import org.edx.mobile.player.VideoListFragment.VideoListCallback;
-import org.edx.mobile.util.AppConstants;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.module.analytics.ISegment;
+import org.proversity.edx.mobile.player.PlayerActivity;
+import org.proversity.edx.mobile.player.VideoListFragment.VideoListCallback;
+import org.proversity.edx.mobile.util.AppConstants;
 
 public class MyVideosTabActivity extends PlayerActivity implements VideoListCallback {
 

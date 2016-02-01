@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -18,15 +18,15 @@ import com.google.inject.Inject;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.widget.IconImageView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.api.CourseEntry;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.module.analytics.ISegment;
-import org.edx.mobile.util.ResourceUtil;
-import org.edx.mobile.util.images.ShareUtils;
-import org.edx.mobile.util.images.TopAnchorFillWidthTransformation;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.api.CourseEntry;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.module.analytics.ISegment;
+import org.proversity.edx.mobile.util.ResourceUtil;
+import org.proversity.edx.mobile.util.images.ShareUtils;
+import org.proversity.edx.mobile.util.images.TopAnchorFillWidthTransformation;
 
 import roboguice.fragment.RoboFragment;
 

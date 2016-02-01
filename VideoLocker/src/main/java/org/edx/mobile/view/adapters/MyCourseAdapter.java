@@ -1,4 +1,4 @@
-package org.edx.mobile.view.adapters;
+package org.proversity.edx.mobile.view.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.model.api.CourseEntry;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.util.images.CourseCardUtils;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.model.api.CourseEntry;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.util.images.CourseCardUtils;
 
 
 public abstract class MyCourseAdapter extends BaseListAdapter<EnrolledCoursesResponse> {

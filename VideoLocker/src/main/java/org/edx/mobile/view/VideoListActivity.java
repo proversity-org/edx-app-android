@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -14,16 +14,16 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.BaseVideosDownloadStateActivity;
-import org.edx.mobile.model.api.TranscriptModel;
-import org.edx.mobile.model.db.DownloadEntry;
-import org.edx.mobile.player.IPlayerEventCallback;
-import org.edx.mobile.player.PlayerFragment;
-import org.edx.mobile.player.VideoListFragment;
-import org.edx.mobile.player.VideoListFragment.VideoListCallback;
-import org.edx.mobile.util.AppConstants;
-import org.edx.mobile.util.NetworkUtil;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.BaseVideosDownloadStateActivity;
+import org.proversity.edx.mobile.model.api.TranscriptModel;
+import org.proversity.edx.mobile.model.db.DownloadEntry;
+import org.proversity.edx.mobile.player.IPlayerEventCallback;
+import org.proversity.edx.mobile.player.PlayerFragment;
+import org.proversity.edx.mobile.player.VideoListFragment;
+import org.proversity.edx.mobile.player.VideoListFragment.VideoListCallback;
+import org.proversity.edx.mobile.util.AppConstants;
+import org.proversity.edx.mobile.util.NetworkUtil;
 
 import java.io.File;
 

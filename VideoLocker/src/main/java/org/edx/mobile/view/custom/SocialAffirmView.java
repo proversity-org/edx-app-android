@@ -1,4 +1,4 @@
-package org.edx.mobile.view.custom;
+package org.proversity.edx.mobile.view.custom;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,8 +7,8 @@ import android.widget.FrameLayout;
 
 import com.facebook.widget.LikeView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.util.SocialUtils;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.util.SocialUtils;
 
 /**
  * Multiple social affirmation buttons can be added here

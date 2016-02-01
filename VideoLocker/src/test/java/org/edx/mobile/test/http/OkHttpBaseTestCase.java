@@ -1,4 +1,4 @@
-package org.edx.mobile.test.http;
+package org.proversity.edx.mobile.test.http;
 
 import android.text.TextUtils;
 
@@ -8,7 +8,7 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
-import org.edx.mobile.test.BaseTestCase;
+import org.proversity.edx.mobile.test.BaseTestCase;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Ignore;

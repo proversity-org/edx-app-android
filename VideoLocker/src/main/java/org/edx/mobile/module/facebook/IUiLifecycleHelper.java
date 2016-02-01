@@ -1,4 +1,4 @@
-package org.edx.mobile.module.facebook;
+package org.proversity.edx.mobile.module.facebook;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -34,7 +34,7 @@ public interface IUiLifecycleHelper {
     public static class Factory {
 
         /**
-         * Returns instance of {@link org.edx.mobile.module.facebook.IUiLifecycleHelperImpl} class.
+         * Returns instance of {@link org.proversity.edx.mobile.module.facebook.IUiLifecycleHelperImpl} class.
          * @param activity
          * @param statusCallback
          * @return

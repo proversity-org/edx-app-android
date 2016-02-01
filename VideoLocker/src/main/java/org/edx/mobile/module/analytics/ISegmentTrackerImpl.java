@@ -1,4 +1,4 @@
-package org.edx.mobile.module.analytics;
+package org.proversity.edx.mobile.module.analytics;
 
 
 import android.content.Context;
@@ -10,9 +10,9 @@ import com.segment.analytics.Options;
 import com.segment.analytics.Properties;
 import com.segment.analytics.Traits;
 
-import org.edx.mobile.R;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.util.Config;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.util.Config;
 
 import java.util.concurrent.TimeUnit;
 

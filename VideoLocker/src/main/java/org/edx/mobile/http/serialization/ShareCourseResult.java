@@ -1,8 +1,8 @@
-package org.edx.mobile.http.serialization;
+package org.proversity.edx.mobile.http.serialization;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.edx.mobile.model.json.SuccessResponse;
+import org.proversity.edx.mobile.model.json.SuccessResponse;
 
 /**
  * Created by yervant on 1/19/15.

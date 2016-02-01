@@ -1,9 +1,9 @@
-package org.edx.mobile.course;
+package org.proversity.edx.mobile.course;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.edx.mobile.model.api.StartType;
+import org.proversity.edx.mobile.model.api.StartType;
 
 public class CourseDetail implements Parcelable {
     public String course_id;

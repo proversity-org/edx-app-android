@@ -1,10 +1,10 @@
-package org.edx.mobile.task;
+package org.proversity.edx.mobile.task;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import org.edx.mobile.event.EnrolledInCourseEvent;
+import org.proversity.edx.mobile.event.EnrolledInCourseEvent;
 
 import de.greenrobot.event.EventBus;
 

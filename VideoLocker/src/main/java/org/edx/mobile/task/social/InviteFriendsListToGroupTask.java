@@ -1,10 +1,10 @@
-package org.edx.mobile.task.social;
+package org.proversity.edx.mobile.task.social;
 
 import android.content.Context;
 
-import org.edx.mobile.services.ServiceManager;
-import org.edx.mobile.task.Task;
-import org.edx.mobile.util.JavaUtil;
+import org.proversity.edx.mobile.services.ServiceManager;
+import org.proversity.edx.mobile.task.Task;
+import org.proversity.edx.mobile.util.JavaUtil;
 
 
 public abstract class InviteFriendsListToGroupTask extends Task<Void> {

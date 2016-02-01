@@ -1,4 +1,4 @@
-package org.edx.mobile.module.analytics;
+package org.proversity.edx.mobile.module.analytics;
 
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
@@ -11,9 +11,9 @@ import com.segment.analytics.Options;
 import com.segment.analytics.Properties;
 import com.segment.analytics.Traits;
 
-import org.edx.mobile.base.MainApplication;
-import org.edx.mobile.module.prefs.PrefManager;
-import org.edx.mobile.util.images.ShareUtils;
+import org.proversity.edx.mobile.base.MainApplication;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.util.images.ShareUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

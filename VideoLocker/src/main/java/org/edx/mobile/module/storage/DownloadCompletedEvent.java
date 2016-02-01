@@ -1,4 +1,4 @@
-package org.edx.mobile.module.storage;
+package org.proversity.edx.mobile.module.storage;
 
 public class DownloadCompletedEvent {
 }

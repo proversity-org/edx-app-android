@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,12 +25,12 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.BaseFragmentActivity;
-import org.edx.mobile.event.FlyingMessageEvent;
-import org.edx.mobile.module.prefs.PrefManager;
-import org.edx.mobile.util.NetworkUtil;
-import org.edx.mobile.view.dialog.WebViewDialogFragment;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.BaseFragmentActivity;
+import org.proversity.edx.mobile.event.FlyingMessageEvent;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.util.NetworkUtil;
+import org.proversity.edx.mobile.view.dialog.WebViewDialogFragment;
 import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;

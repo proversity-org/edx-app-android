@@ -1,4 +1,4 @@
-package org.edx.mobile.http.model;
+package org.proversity.edx.mobile.http.model;
 
 
 public class CourseIdObject {

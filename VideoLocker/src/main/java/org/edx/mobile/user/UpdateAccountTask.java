@@ -1,4 +1,4 @@
-package org.edx.mobile.user;
+package org.proversity.edx.mobile.user;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.event.AccountUpdatedEvent;
-import org.edx.mobile.task.Task;
+import org.proversity.edx.mobile.event.AccountUpdatedEvent;
+import org.proversity.edx.mobile.task.Task;
 
 import de.greenrobot.event.EventBus;
 

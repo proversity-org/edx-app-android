@@ -1,6 +1,6 @@
-package org.edx.mobile.exception;
+package org.proversity.edx.mobile.exception;
 
-import org.edx.mobile.model.api.AuthErrorResponse;
+import org.proversity.edx.mobile.model.api.AuthErrorResponse;
 
 public class AuthException extends Exception {
 

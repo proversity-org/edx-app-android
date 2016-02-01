@@ -1,4 +1,4 @@
-package org.edx.mobile.view.dialog;
+package org.proversity.edx.mobile.view.dialog;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -10,12 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.api.ResetPasswordResponse;
-import org.edx.mobile.task.ResetPasswordTask;
-import org.edx.mobile.util.InputValidationUtil;
-import org.edx.mobile.util.NetworkUtil;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.api.ResetPasswordResponse;
+import org.proversity.edx.mobile.task.ResetPasswordTask;
+import org.proversity.edx.mobile.util.InputValidationUtil;
+import org.proversity.edx.mobile.util.NetworkUtil;
 
 public class ResetPasswordDialog extends DialogFragment {
 

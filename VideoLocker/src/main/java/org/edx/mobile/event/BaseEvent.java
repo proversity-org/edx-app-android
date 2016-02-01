@@ -1,4 +1,4 @@
-package org.edx.mobile.event;
+package org.proversity.edx.mobile.event;
 
 
 public class BaseEvent {

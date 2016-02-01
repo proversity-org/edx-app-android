@@ -1,4 +1,4 @@
-package org.edx.mobile.view.dialog;
+package org.proversity.edx.mobile.view.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,8 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
 
-import org.edx.mobile.R;
-import org.edx.mobile.util.BrowserUtil;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.util.BrowserUtil;
 
 /**
  * This class will help creating Dialog objects for different screens and events. 

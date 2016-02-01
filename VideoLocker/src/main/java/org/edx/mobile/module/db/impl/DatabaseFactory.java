@@ -1,14 +1,14 @@
-package org.edx.mobile.module.db.impl;
+package org.proversity.edx.mobile.module.db.impl;
 
-import org.edx.mobile.base.MainApplication;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.module.db.IDatabase;
+import org.proversity.edx.mobile.base.MainApplication;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.module.db.IDatabase;
 
 import android.content.Context;
 import android.util.SparseArray;
 
 /**
- * This class provides singleton instances of database implemention as {@link org.edx.mobile.module.db.IDatabase}.
+ * This class provides singleton instances of database implemention as {@link org.proversity.edx.mobile.module.db.IDatabase}.
  * @author rohan
  *
  */

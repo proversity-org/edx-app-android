@@ -1,4 +1,4 @@
-package org.edx.mobile.util;
+package org.proversity.edx.mobile.util;
 
 import android.content.Context;
 import android.os.Environment;

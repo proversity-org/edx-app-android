@@ -1,4 +1,4 @@
-package org.edx.mobile.util.images;
+package org.proversity.edx.mobile.util.images;
 
 import android.content.Context;
 import android.content.Intent;

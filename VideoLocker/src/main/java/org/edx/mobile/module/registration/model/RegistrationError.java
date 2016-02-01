@@ -1,4 +1,4 @@
-package org.edx.mobile.module.registration.model;
+package org.proversity.edx.mobile.module.registration.model;
 
 // TODO: delete if this class is not really required
 class RegistrationError {

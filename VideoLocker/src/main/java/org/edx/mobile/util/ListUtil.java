@@ -1,10 +1,10 @@
-package org.edx.mobile.util;
+package org.proversity.edx.mobile.util;
 
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import org.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.logger.Logger;
 
 /**
  * Created by rohan on 2/27/15.

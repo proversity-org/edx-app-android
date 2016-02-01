@@ -1,4 +1,4 @@
-package org.edx.mobile.view.custom;
+package org.proversity.edx.mobile.view.custom;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,8 +12,8 @@ import android.view.ViewParent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.social.SocialMember;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.social.SocialMember;
 
 import java.util.ArrayList;
 import java.util.List;

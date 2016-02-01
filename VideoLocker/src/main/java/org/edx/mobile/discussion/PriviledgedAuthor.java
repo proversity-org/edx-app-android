@@ -1,10 +1,10 @@
-package org.edx.mobile.discussion;
+package org.proversity.edx.mobile.discussion;
 
 import android.content.Context;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.edx.mobile.R;
+import org.proversity.edx.mobile.R;
 
 public enum PriviledgedAuthor {
 

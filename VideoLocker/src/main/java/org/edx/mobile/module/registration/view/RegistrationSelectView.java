@@ -1,4 +1,4 @@
-package org.edx.mobile.module.registration.view;
+package org.proversity.edx.mobile.module.registration.view;
 
 import android.text.TextUtils;
 import android.view.View;
@@ -7,10 +7,10 @@ import android.widget.TextView;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 
-import org.edx.mobile.R;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.module.registration.model.RegistrationFormField;
-import org.edx.mobile.module.registration.model.RegistrationOption;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.module.registration.model.RegistrationFormField;
+import org.proversity.edx.mobile.module.registration.model.RegistrationOption;
 
 class RegistrationSelectView implements IRegistrationFieldView {
 

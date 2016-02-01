@@ -1,4 +1,4 @@
-package org.edx.mobile.view.common;
+package org.proversity.edx.mobile.view.common;
 
 import android.support.annotation.NonNull;
 

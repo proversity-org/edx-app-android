@@ -1,4 +1,4 @@
-package org.edx.mobile.player;
+package org.proversity.edx.mobile.player;
 
 import android.content.Context;
 import android.os.Environment;
@@ -7,10 +7,10 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import org.apache.commons.io.IOUtils;
-import org.edx.mobile.R;
-import org.edx.mobile.model.api.TranscriptModel;
-import org.edx.mobile.util.Sha1Util;
-import org.edx.mobile.util.TranscriptDownloader;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.model.api.TranscriptModel;
+import org.proversity.edx.mobile.util.Sha1Util;
+import org.proversity.edx.mobile.util.TranscriptDownloader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,7 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedHashMap;
-import org.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.logger.Logger;
 
 @Singleton
 public class TranscriptManager {

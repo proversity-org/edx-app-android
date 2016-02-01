@@ -1,10 +1,10 @@
-package org.edx.mobile.module.notification;
+package org.proversity.edx.mobile.module.notification;
 
 import android.content.Context;
 
 import com.parse.ParseInstallation;
 
-import org.edx.mobile.task.Task;
+import org.proversity.edx.mobile.task.Task;
 
 import java.util.List;
 

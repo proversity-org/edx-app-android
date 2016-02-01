@@ -1,6 +1,6 @@
-package org.edx.mobile.test;
+package org.proversity.edx.mobile.test;
 
-import org.edx.mobile.util.PropertyUtil;
+import org.proversity.edx.mobile.util.PropertyUtil;
 import org.junit.Test;
 import org.robolectric.RuntimeEnvironment;
 

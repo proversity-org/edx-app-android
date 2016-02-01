@@ -1,4 +1,4 @@
-package org.edx.mobile.util;
+package org.proversity.edx.mobile.util;
 
 /**
  * Created by rohan on 3/12/15.

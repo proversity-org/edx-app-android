@@ -1,4 +1,4 @@
-package org.edx.mobile.module.db;
+package org.proversity.edx.mobile.module.db;
 
 import android.os.Handler;
 import android.os.Looper;

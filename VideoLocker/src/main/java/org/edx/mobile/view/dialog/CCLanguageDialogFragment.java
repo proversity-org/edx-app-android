@@ -1,4 +1,4 @@
-package org.edx.mobile.view.dialog;
+package org.proversity.edx.mobile.view.dialog;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.R;
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.view.adapters.ClosedCaptionAdapter;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.view.adapters.ClosedCaptionAdapter;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

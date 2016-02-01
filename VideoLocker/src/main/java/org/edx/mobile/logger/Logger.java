@@ -1,4 +1,4 @@
-package org.edx.mobile.logger;
+package org.proversity.edx.mobile.logger;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -12,17 +12,17 @@ import android.widget.ProgressBar;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.R;
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.model.api.HandoutModel;
-import org.edx.mobile.module.analytics.ISegment;
-import org.edx.mobile.task.GetHandoutTask;
-import org.edx.mobile.util.NetworkUtil;
-import org.edx.mobile.util.UiUtil;
-import org.edx.mobile.util.WebViewUtil;
-import org.edx.mobile.view.custom.URLInterceptorWebViewClient;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.model.api.HandoutModel;
+import org.proversity.edx.mobile.module.analytics.ISegment;
+import org.proversity.edx.mobile.task.GetHandoutTask;
+import org.proversity.edx.mobile.util.NetworkUtil;
+import org.proversity.edx.mobile.util.UiUtil;
+import org.proversity.edx.mobile.util.WebViewUtil;
+import org.proversity.edx.mobile.view.custom.URLInterceptorWebViewClient;
 
 import roboguice.fragment.RoboFragment;
 

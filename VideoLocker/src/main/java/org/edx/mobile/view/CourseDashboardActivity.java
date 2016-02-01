@@ -1,12 +1,12 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
-import org.edx.mobile.base.BaseVideosDownloadStateActivity;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.module.analytics.ISegment;
+import org.proversity.edx.mobile.base.BaseVideosDownloadStateActivity;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.module.analytics.ISegment;
 
 public class CourseDashboardActivity extends BaseVideosDownloadStateActivity {
 

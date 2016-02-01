@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.widget.IconImageView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
 import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.util.ActivityController;

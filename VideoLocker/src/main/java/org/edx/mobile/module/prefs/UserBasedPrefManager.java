@@ -1,13 +1,13 @@
-package org.edx.mobile.module.prefs;
+package org.proversity.edx.mobile.module.prefs;
 
 import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.edx.mobile.base.MainApplication;
-import org.edx.mobile.model.api.ProfileModel;
-import org.edx.mobile.module.notification.NotificationPreference;
+import org.proversity.edx.mobile.base.MainApplication;
+import org.proversity.edx.mobile.model.api.ProfileModel;
+import org.proversity.edx.mobile.module.notification.NotificationPreference;
 
 /**
  * the current implemenation of user profile can only keep one user profile at a time.

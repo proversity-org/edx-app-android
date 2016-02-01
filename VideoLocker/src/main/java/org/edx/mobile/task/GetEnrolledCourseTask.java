@@ -6,13 +6,13 @@
  * of enrolled courses and then parses out the course that matches the given course id.
  */
 
-package org.edx.mobile.task;
+package org.proversity.edx.mobile.task;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
 
 public abstract class GetEnrolledCourseTask extends Task<EnrolledCoursesResponse> {
 

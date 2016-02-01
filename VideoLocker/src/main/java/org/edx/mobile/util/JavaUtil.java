@@ -1,4 +1,4 @@
-package org.edx.mobile.util;
+package org.proversity.edx.mobile.util;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package org.edx.mobile.http;
+package org.proversity.edx.mobile.http;
 
 import android.support.annotation.NonNull;
 

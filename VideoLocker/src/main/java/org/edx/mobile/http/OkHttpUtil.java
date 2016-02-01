@@ -1,4 +1,4 @@
-package org.edx.mobile.http;
+package org.proversity.edx.mobile.http;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,8 +15,8 @@ import com.squareup.okhttp.Response;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 
 import org.apache.http.cookie.Cookie;
-import org.edx.mobile.BuildConfig;
-import org.edx.mobile.R;
+import org.proversity.edx.mobile.BuildConfig;
+import org.proversity.edx.mobile.R;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package org.edx.mobile.course;
+package org.proversity.edx.mobile.course;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,9 +7,9 @@ import android.text.TextUtils;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import org.edx.mobile.http.RetroHttpException;
-import org.edx.mobile.model.api.ProfileModel;
-import org.edx.mobile.module.prefs.UserPrefs;
+import org.proversity.edx.mobile.http.RetroHttpException;
+import org.proversity.edx.mobile.model.api.ProfileModel;
+import org.proversity.edx.mobile.module.prefs.UserPrefs;
 
 import retrofit.RestAdapter;
 

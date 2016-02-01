@@ -1,8 +1,8 @@
-package org.edx.mobile.event;
+package org.proversity.edx.mobile.event;
 
 import android.support.annotation.NonNull;
 
-import org.edx.mobile.user.Account;
+import org.proversity.edx.mobile.user.Account;
 
 public class AccountUpdatedEvent {
     @NonNull

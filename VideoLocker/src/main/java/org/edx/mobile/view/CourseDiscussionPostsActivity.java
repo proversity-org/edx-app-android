@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,10 +10,10 @@ import com.google.inject.Inject;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.BaseSingleFragmentActivity;
-import org.edx.mobile.discussion.DiscussionTopic;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.BaseSingleFragmentActivity;
+import org.proversity.edx.mobile.discussion.DiscussionTopic;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
 
 import roboguice.inject.InjectExtra;
 

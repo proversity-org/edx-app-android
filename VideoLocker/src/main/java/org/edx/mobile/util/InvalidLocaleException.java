@@ -1,4 +1,4 @@
-package org.edx.mobile.util;
+package org.proversity.edx.mobile.util;
 
 public class InvalidLocaleException extends Exception {
     public InvalidLocaleException(String msg) {

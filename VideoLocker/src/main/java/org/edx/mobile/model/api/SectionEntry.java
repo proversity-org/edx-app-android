@@ -1,4 +1,4 @@
-package org.edx.mobile.model.api;
+package org.proversity.edx.mobile.model.api;
 
 import java.io.Serializable;
 import java.util.ArrayList;

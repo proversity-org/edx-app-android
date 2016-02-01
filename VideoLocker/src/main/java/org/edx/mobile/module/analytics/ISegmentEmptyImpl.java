@@ -1,4 +1,4 @@
-package org.edx.mobile.module.analytics;
+package org.proversity.edx.mobile.module.analytics;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -6,14 +6,14 @@ import android.support.annotation.Nullable;
 import com.segment.analytics.Properties;
 import com.segment.analytics.Traits;
 
-import org.edx.mobile.util.images.ShareUtils;
+import org.proversity.edx.mobile.util.images.ShareUtils;
 
 /**
  * Created by rohan on 2/8/15.
  *
- * This implementation of {@link org.edx.mobile.module.analytics.ISegment} does nothing.
+ * This implementation of {@link org.proversity.edx.mobile.module.analytics.ISegment} does nothing.
  * None of the methods are implemented. This class is significant to let the app call
- * tracking methods on {@link org.edx.mobile.module.analytics.ISegment}, however,
+ * tracking methods on {@link org.proversity.edx.mobile.module.analytics.ISegment}, however,
  * data is actually not captured.
  */
 public class ISegmentEmptyImpl implements ISegment {

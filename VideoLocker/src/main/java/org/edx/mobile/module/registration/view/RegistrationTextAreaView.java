@@ -1,10 +1,10 @@
-package org.edx.mobile.module.registration.view;
+package org.proversity.edx.mobile.module.registration.view;
 
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.View;
 
-import org.edx.mobile.module.registration.model.RegistrationFormField;
+import org.proversity.edx.mobile.module.registration.model.RegistrationFormField;
 
 class RegistrationTextAreaView extends RegistrationEditTextView {
 

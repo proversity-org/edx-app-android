@@ -1,4 +1,4 @@
-package org.edx.mobile.view.adapters;
+package org.proversity.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.os.SystemClock;
@@ -9,12 +9,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.edx.mobile.R;
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.model.api.CourseEntry;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.util.MemoryUtil;
-import org.edx.mobile.util.images.TopAnchorFillWidthTransformation;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.model.api.CourseEntry;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.util.MemoryUtil;
+import org.proversity.edx.mobile.util.images.TopAnchorFillWidthTransformation;
 
 public abstract class MyAllVideoCourseAdapter extends BaseListAdapter<EnrolledCoursesResponse> {
     private long lastClickTime;

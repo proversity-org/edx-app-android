@@ -1,11 +1,11 @@
-package org.edx.mobile.task;
+package org.proversity.edx.mobile.task;
 
 import android.content.Context;
 
-import org.edx.mobile.base.MainApplication;
-import org.edx.mobile.http.OkHttpUtil;
-import org.edx.mobile.model.course.CourseComponent;
-import org.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.base.MainApplication;
+import org.proversity.edx.mobile.http.OkHttpUtil;
+import org.proversity.edx.mobile.model.course.CourseComponent;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
 
 import java.util.Date;
 

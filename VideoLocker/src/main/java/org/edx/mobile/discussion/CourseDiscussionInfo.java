@@ -1,4 +1,4 @@
-package org.edx.mobile.discussion;
+package org.proversity.edx.mobile.discussion;
 
 import com.google.gson.annotations.SerializedName;
 

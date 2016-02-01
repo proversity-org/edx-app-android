@@ -1,7 +1,7 @@
-package org.edx.mobile.http;
+package org.proversity.edx.mobile.http;
 
-import org.edx.mobile.model.api.AuthResponse;
-import org.edx.mobile.model.api.ResetPasswordResponse;
+import org.proversity.edx.mobile.model.api.AuthResponse;
+import org.proversity.edx.mobile.model.api.ResetPasswordResponse;
 
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;

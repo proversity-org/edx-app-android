@@ -1,6 +1,6 @@
-package org.edx.mobile.view.custom.speed;
+package org.proversity.edx.mobile.view.custom.speed;
 
-import org.edx.mobile.view.custom.BaseListAdapter;
+import org.proversity.edx.mobile.view.custom.BaseListAdapter;
 
 import android.content.Context;
 import android.view.View;

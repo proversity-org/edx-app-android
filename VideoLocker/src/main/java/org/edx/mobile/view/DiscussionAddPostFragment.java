@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.os.Bundle;
 import android.support.annotation.StringRes;
@@ -17,19 +17,19 @@ import android.widget.TextView;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.R;
-import org.edx.mobile.discussion.CourseTopics;
-import org.edx.mobile.discussion.DiscussionThread;
-import org.edx.mobile.discussion.DiscussionThreadPostedEvent;
-import org.edx.mobile.discussion.DiscussionTopic;
-import org.edx.mobile.discussion.DiscussionTopicDepth;
-import org.edx.mobile.discussion.ThreadBody;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.module.analytics.ISegment;
-import org.edx.mobile.task.CreateThreadTask;
-import org.edx.mobile.task.GetTopicListTask;
-import org.edx.mobile.view.adapters.TopicSpinnerAdapter;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.discussion.CourseTopics;
+import org.proversity.edx.mobile.discussion.DiscussionThread;
+import org.proversity.edx.mobile.discussion.DiscussionThreadPostedEvent;
+import org.proversity.edx.mobile.discussion.DiscussionTopic;
+import org.proversity.edx.mobile.discussion.DiscussionTopicDepth;
+import org.proversity.edx.mobile.discussion.ThreadBody;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.module.analytics.ISegment;
+import org.proversity.edx.mobile.task.CreateThreadTask;
+import org.proversity.edx.mobile.task.GetTopicListTask;
+import org.proversity.edx.mobile.view.adapters.TopicSpinnerAdapter;
 
 import java.util.ArrayList;
 

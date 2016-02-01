@@ -1,8 +1,8 @@
-package org.edx.mobile.module.db.impl;
+package org.proversity.edx.mobile.module.db.impl;
 
 import android.database.sqlite.SQLiteDatabase;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.module.db.DataCallback;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.module.db.DataCallback;
 
 abstract class DbOperationBase<T> implements IDbOperation<T> {
     

@@ -1,4 +1,4 @@
-package org.edx.mobile.module.db.impl;
+package org.proversity.edx.mobile.module.db.impl;
 
 import android.database.sqlite.SQLiteDatabase;
 

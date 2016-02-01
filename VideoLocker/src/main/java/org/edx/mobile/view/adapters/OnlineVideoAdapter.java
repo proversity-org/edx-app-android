@@ -1,5 +1,5 @@
 
-package org.edx.mobile.view.adapters;
+package org.proversity.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -10,18 +10,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.interfaces.SectionItemInterface;
-import org.edx.mobile.model.api.ChapterModel;
-import org.edx.mobile.model.api.SectionItemModel;
-import org.edx.mobile.model.db.DownloadEntry;
-import org.edx.mobile.model.download.NativeDownloadModel;
-import org.edx.mobile.module.db.DataCallback;
-import org.edx.mobile.module.db.IDatabase;
-import org.edx.mobile.module.storage.IStorage;
-import org.edx.mobile.view.custom.ProgressWheel;
-import org.edx.mobile.util.MemoryUtil;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.interfaces.SectionItemInterface;
+import org.proversity.edx.mobile.model.api.ChapterModel;
+import org.proversity.edx.mobile.model.api.SectionItemModel;
+import org.proversity.edx.mobile.model.db.DownloadEntry;
+import org.proversity.edx.mobile.model.download.NativeDownloadModel;
+import org.proversity.edx.mobile.module.db.DataCallback;
+import org.proversity.edx.mobile.module.db.IDatabase;
+import org.proversity.edx.mobile.module.storage.IStorage;
+import org.proversity.edx.mobile.view.custom.ProgressWheel;
+import org.proversity.edx.mobile.util.MemoryUtil;
 
 public abstract class OnlineVideoAdapter extends VideoBaseAdapter<SectionItemInterface> {
 

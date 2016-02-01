@@ -1,13 +1,13 @@
-package org.edx.mobile.module.storage;
+package org.proversity.edx.mobile.module.storage;
 
-import org.edx.mobile.interfaces.SectionItemInterface;
-import org.edx.mobile.model.VideoModel;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.model.api.VideoResponseModel;
-import org.edx.mobile.model.course.VideoBlockModel;
-import org.edx.mobile.model.db.DownloadEntry;
-import org.edx.mobile.model.download.NativeDownloadModel;
-import org.edx.mobile.module.db.DataCallback;
+import org.proversity.edx.mobile.interfaces.SectionItemInterface;
+import org.proversity.edx.mobile.model.VideoModel;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.model.api.VideoResponseModel;
+import org.proversity.edx.mobile.model.course.VideoBlockModel;
+import org.proversity.edx.mobile.model.db.DownloadEntry;
+import org.proversity.edx.mobile.model.download.NativeDownloadModel;
+import org.proversity.edx.mobile.module.db.DataCallback;
 
 import java.util.ArrayList;
 

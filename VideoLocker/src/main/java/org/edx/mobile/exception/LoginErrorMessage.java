@@ -1,4 +1,4 @@
-package org.edx.mobile.exception;
+package org.proversity.edx.mobile.exception;
 
 import java.util.Locale;
 

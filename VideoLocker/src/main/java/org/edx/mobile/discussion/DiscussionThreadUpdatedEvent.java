@@ -1,8 +1,8 @@
-package org.edx.mobile.discussion;
+package org.proversity.edx.mobile.discussion;
 
 import android.support.annotation.NonNull;
 
-import org.edx.mobile.discussion.DiscussionThread;
+import org.proversity.edx.mobile.discussion.DiscussionThread;
 
 public class DiscussionThreadUpdatedEvent {
 

@@ -1,13 +1,13 @@
-package org.edx.mobile.util;
+package org.proversity.edx.mobile.util;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 
-import org.edx.mobile.R;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.module.prefs.UserPrefs;
-import org.edx.mobile.view.dialog.IDialogCallback;
-import org.edx.mobile.view.dialog.NetworkCheckDialogFragment;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.module.prefs.UserPrefs;
+import org.proversity.edx.mobile.view.dialog.IDialogCallback;
+import org.proversity.edx.mobile.view.dialog.NetworkCheckDialogFragment;
 
 /**
  * Created by marcashman on 2014-12-04.

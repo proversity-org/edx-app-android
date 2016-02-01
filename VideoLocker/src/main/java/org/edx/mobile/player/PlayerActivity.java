@@ -1,4 +1,4 @@
-package org.edx.mobile.player;
+package org.proversity.edx.mobile.player;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -7,10 +7,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.BaseVideosDownloadStateActivity;
-import org.edx.mobile.model.api.TranscriptModel;
-import org.edx.mobile.model.db.DownloadEntry;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.BaseVideosDownloadStateActivity;
+import org.proversity.edx.mobile.model.api.TranscriptModel;
+import org.proversity.edx.mobile.model.db.DownloadEntry;
 
 import java.io.File;
 

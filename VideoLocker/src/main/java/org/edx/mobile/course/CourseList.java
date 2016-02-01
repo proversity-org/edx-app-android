@@ -1,4 +1,4 @@
-package org.edx.mobile.course;
+package org.proversity.edx.mobile.course;
 
 import java.util.List;
 

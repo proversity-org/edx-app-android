@@ -1,11 +1,11 @@
-package org.edx.mobile.module.notification;
+package org.proversity.edx.mobile.module.notification;
 
 import android.content.Context;
 import android.content.Intent;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.util.Config;
+import org.proversity.edx.mobile.util.Config;
 
 import roboguice.receiver.RoboBroadcastReceiver;
 

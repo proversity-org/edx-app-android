@@ -1,4 +1,4 @@
-package org.edx.mobile.user;
+package org.proversity.edx.mobile.user;
 
 import com.google.gson.annotations.SerializedName;
 

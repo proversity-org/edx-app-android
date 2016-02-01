@@ -1,4 +1,4 @@
-package org.edx.mobile.exception;
+package org.proversity.edx.mobile.exception;
 
 /**
  * Created by rohan on 1/12/15.

@@ -1,4 +1,4 @@
-package org.edx.mobile.view.adapters;
+package org.proversity.edx.mobile.view.adapters;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -9,12 +9,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.model.db.DownloadEntry;
-import org.edx.mobile.model.download.NativeDownloadModel;
-import org.edx.mobile.module.storage.IStorage;
-import org.edx.mobile.util.MemoryUtil;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.model.db.DownloadEntry;
+import org.proversity.edx.mobile.model.download.NativeDownloadModel;
+import org.proversity.edx.mobile.module.storage.IStorage;
+import org.proversity.edx.mobile.util.MemoryUtil;
 
 public abstract class DownloadEntryAdapter extends BaseListAdapter<DownloadEntry> {
 

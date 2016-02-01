@@ -1,6 +1,6 @@
-package org.edx.mobile.module.notification;
+package org.proversity.edx.mobile.module.notification;
 
-import org.edx.mobile.model.api.CourseEntry;
+import org.proversity.edx.mobile.model.api.CourseEntry;
 
 import java.io.Serializable;
 import java.util.ArrayList;

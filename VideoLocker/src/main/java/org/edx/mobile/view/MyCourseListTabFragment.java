@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,17 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.event.EnrolledInCourseEvent;
-import org.edx.mobile.exception.AuthException;
-import org.edx.mobile.loader.AsyncTaskResult;
-import org.edx.mobile.loader.CoursesAsyncLoader;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.module.analytics.ISegment;
-import org.edx.mobile.module.facebook.FacebookSessionUtil;
-import org.edx.mobile.module.prefs.PrefManager;
-import org.edx.mobile.services.FetchCourseFriendsService;
-import org.edx.mobile.services.ServiceManager;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.event.EnrolledInCourseEvent;
+import org.proversity.edx.mobile.exception.AuthException;
+import org.proversity.edx.mobile.loader.AsyncTaskResult;
+import org.proversity.edx.mobile.loader.CoursesAsyncLoader;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.module.analytics.ISegment;
+import org.proversity.edx.mobile.module.facebook.FacebookSessionUtil;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.services.FetchCourseFriendsService;
+import org.proversity.edx.mobile.services.ServiceManager;
 
 import java.util.ArrayList;
 import java.util.List;

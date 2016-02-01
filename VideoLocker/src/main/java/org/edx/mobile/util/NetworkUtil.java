@@ -1,4 +1,4 @@
-package org.edx.mobile.util;
+package org.proversity.edx.mobile.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -8,10 +8,10 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.BaseFragmentActivity;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.BaseFragmentActivity;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;

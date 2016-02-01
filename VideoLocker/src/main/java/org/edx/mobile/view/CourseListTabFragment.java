@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,18 +15,18 @@ import android.widget.TextView;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.BaseFragmentActivity;
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.interfaces.NetworkObserver;
-import org.edx.mobile.interfaces.NetworkSubject;
-import org.edx.mobile.loader.AsyncTaskResult;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.module.prefs.PrefManager;
-import org.edx.mobile.util.NetworkUtil;
-import org.edx.mobile.util.ViewAnimationUtil;
-import org.edx.mobile.view.adapters.MyCourseAdapter;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.BaseFragmentActivity;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.interfaces.NetworkObserver;
+import org.proversity.edx.mobile.interfaces.NetworkSubject;
+import org.proversity.edx.mobile.loader.AsyncTaskResult;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.util.NetworkUtil;
+import org.proversity.edx.mobile.util.ViewAnimationUtil;
+import org.proversity.edx.mobile.view.adapters.MyCourseAdapter;
 
 import java.util.List;
 

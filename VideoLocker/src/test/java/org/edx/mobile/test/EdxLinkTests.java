@@ -1,9 +1,9 @@
-package org.edx.mobile.test;
+package org.proversity.edx.mobile.test;
 
 import android.net.Uri;
 
-import org.edx.mobile.util.links.EdxCourseInfoLink;
-import org.edx.mobile.util.links.EdxEnrollLink;
+import org.proversity.edx.mobile.util.links.EdxCourseInfoLink;
+import org.proversity.edx.mobile.util.links.EdxEnrollLink;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

@@ -1,6 +1,6 @@
-package org.edx.mobile.view.dialog;
+package org.proversity.edx.mobile.view.dialog;
 
-import org.edx.mobile.R;
+import org.proversity.edx.mobile.R;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;

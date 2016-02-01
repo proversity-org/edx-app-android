@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.edx.mobile.third_party.crop;
+package org.proversity.edx.mobile.third_party.crop;
 
 import android.content.Context;
 import android.database.Cursor;

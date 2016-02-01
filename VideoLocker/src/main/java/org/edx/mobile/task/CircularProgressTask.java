@@ -1,7 +1,7 @@
-package org.edx.mobile.task;
+package org.proversity.edx.mobile.task;
 
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.view.custom.ProgressWheel;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.view.custom.ProgressWheel;
 
 import android.os.AsyncTask;
 import android.view.View;

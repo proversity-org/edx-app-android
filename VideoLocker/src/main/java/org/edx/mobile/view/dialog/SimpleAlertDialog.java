@@ -1,4 +1,4 @@
-package org.edx.mobile.view.dialog;
+package org.proversity.edx.mobile.view.dialog;
 
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.edx.mobile.R;
+import org.proversity.edx.mobile.R;
 
 /**
  * Created by yervant on 1/20/15.

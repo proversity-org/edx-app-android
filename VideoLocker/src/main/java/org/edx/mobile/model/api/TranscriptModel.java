@@ -1,10 +1,10 @@
-package org.edx.mobile.model.api;
+package org.proversity.edx.mobile.model.api;
 
 import android.content.Context;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.edx.mobile.R;
+import org.proversity.edx.mobile.R;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;

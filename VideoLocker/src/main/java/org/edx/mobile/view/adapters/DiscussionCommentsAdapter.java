@@ -1,4 +1,4 @@
-package org.edx.mobile.view.adapters;
+package org.proversity.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
@@ -13,9 +13,9 @@ import android.widget.TextView;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
-import org.edx.mobile.R;
-import org.edx.mobile.discussion.DiscussionComment;
-import org.edx.mobile.discussion.DiscussionTextUtils;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.discussion.DiscussionComment;
+import org.proversity.edx.mobile.discussion.DiscussionTextUtils;
 
 public class DiscussionCommentsAdapter extends RecyclerView.Adapter {
 

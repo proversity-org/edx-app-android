@@ -1,4 +1,4 @@
-package org.edx.mobile.module.db.impl;
+package org.proversity.edx.mobile.module.db.impl;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,14 +7,14 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.edx.mobile.model.VideoModel;
-import org.edx.mobile.model.api.ProfileModel;
-import org.edx.mobile.model.db.DownloadEntry.DownloadedState;
-import org.edx.mobile.model.db.DownloadEntry.WatchedState;
-import org.edx.mobile.module.db.DataCallback;
-import org.edx.mobile.module.db.DbStructure;
-import org.edx.mobile.module.db.IDatabase;
-import org.edx.mobile.module.prefs.UserPrefs;
+import org.proversity.edx.mobile.model.VideoModel;
+import org.proversity.edx.mobile.model.api.ProfileModel;
+import org.proversity.edx.mobile.model.db.DownloadEntry.DownloadedState;
+import org.proversity.edx.mobile.model.db.DownloadEntry.WatchedState;
+import org.proversity.edx.mobile.module.db.DataCallback;
+import org.proversity.edx.mobile.module.db.DbStructure;
+import org.proversity.edx.mobile.module.db.IDatabase;
+import org.proversity.edx.mobile.module.prefs.UserPrefs;
 
 import java.util.List;
 

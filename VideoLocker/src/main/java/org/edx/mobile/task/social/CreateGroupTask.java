@@ -1,10 +1,10 @@
-package org.edx.mobile.task.social;
+package org.proversity.edx.mobile.task.social;
 
 import android.content.Context;
 
-import org.edx.mobile.module.facebook.FacebookSessionUtil;
-import org.edx.mobile.services.ServiceManager;
-import org.edx.mobile.task.Task;
+import org.proversity.edx.mobile.module.facebook.FacebookSessionUtil;
+import org.proversity.edx.mobile.services.ServiceManager;
+import org.proversity.edx.mobile.task.Task;
 
 public abstract class CreateGroupTask extends Task<Long> {
 

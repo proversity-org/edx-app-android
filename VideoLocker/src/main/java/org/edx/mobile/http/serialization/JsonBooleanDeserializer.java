@@ -1,4 +1,4 @@
-package org.edx.mobile.http.serialization;
+package org.proversity.edx.mobile.http.serialization;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

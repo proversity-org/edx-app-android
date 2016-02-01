@@ -1,11 +1,11 @@
-package org.edx.mobile.view.adapters;
+package org.proversity.edx.mobile.view.adapters;
 
 import android.content.Context;
 
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.interfaces.SectionItemInterface;
-import org.edx.mobile.model.db.DownloadEntry;
-import org.edx.mobile.model.db.DownloadEntry.DownloadedState;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.interfaces.SectionItemInterface;
+import org.proversity.edx.mobile.model.db.DownloadEntry;
+import org.proversity.edx.mobile.model.db.DownloadEntry.DownloadedState;
 
 import java.util.ArrayList;
 

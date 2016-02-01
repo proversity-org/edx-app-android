@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,22 +18,22 @@ import com.google.inject.Inject;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.MyVideosBaseFragment;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.model.api.SectionEntry;
-import org.edx.mobile.model.course.BlockPath;
-import org.edx.mobile.model.course.CourseComponent;
-import org.edx.mobile.model.course.HasDownloadEntry;
-import org.edx.mobile.model.db.DownloadEntry;
-import org.edx.mobile.module.storage.DownloadCompletedEvent;
-import org.edx.mobile.services.CourseManager;
-import org.edx.mobile.services.VideoDownloadHelper;
-import org.edx.mobile.util.NetworkUtil;
-import org.edx.mobile.util.ResourceUtil;
-import org.edx.mobile.view.adapters.CourseOutlineAdapter;
-import org.edx.mobile.view.common.TaskProcessCallback;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.MyVideosBaseFragment;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.model.api.SectionEntry;
+import org.proversity.edx.mobile.model.course.BlockPath;
+import org.proversity.edx.mobile.model.course.CourseComponent;
+import org.proversity.edx.mobile.model.course.HasDownloadEntry;
+import org.proversity.edx.mobile.model.db.DownloadEntry;
+import org.proversity.edx.mobile.module.storage.DownloadCompletedEvent;
+import org.proversity.edx.mobile.services.CourseManager;
+import org.proversity.edx.mobile.services.VideoDownloadHelper;
+import org.proversity.edx.mobile.util.NetworkUtil;
+import org.proversity.edx.mobile.util.ResourceUtil;
+import org.proversity.edx.mobile.view.adapters.CourseOutlineAdapter;
+import org.proversity.edx.mobile.view.common.TaskProcessCallback;
 
 import java.util.ArrayList;
 import java.util.List;

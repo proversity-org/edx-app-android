@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,11 +8,11 @@ import android.view.View;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.BaseFragmentActivity;
-import org.edx.mobile.http.IApi;
-import org.edx.mobile.interfaces.NetworkObserver;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.BaseFragmentActivity;
+import org.proversity.edx.mobile.http.IApi;
+import org.proversity.edx.mobile.interfaces.NetworkObserver;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
 
 
 public class CourseAnnouncementsActivity extends BaseFragmentActivity {

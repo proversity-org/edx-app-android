@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import org.edx.mobile.R;
-import org.edx.mobile.user.FormField;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.user.FormField;
 
 import roboguice.fragment.RoboFragment;
 

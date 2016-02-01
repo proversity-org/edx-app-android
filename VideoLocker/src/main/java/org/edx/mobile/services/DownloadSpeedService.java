@@ -1,4 +1,4 @@
-package org.edx.mobile.services;
+package org.proversity.edx.mobile.services;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -12,13 +12,13 @@ import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
-import org.edx.mobile.R;
-import org.edx.mobile.http.RestApiManager;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.DownloadDescriptor;
-import org.edx.mobile.module.analytics.ISegment;
-import org.edx.mobile.module.prefs.PrefManager;
-import org.edx.mobile.util.NetworkUtil;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.http.RestApiManager;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.DownloadDescriptor;
+import org.proversity.edx.mobile.module.analytics.ISegment;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.util.NetworkUtil;
 
 import java.io.IOException;
 import java.util.Timer;

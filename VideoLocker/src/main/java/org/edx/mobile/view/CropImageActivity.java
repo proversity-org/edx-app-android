@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,11 +10,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.BaseAppActivity;
-import org.edx.mobile.third_party.subscaleview.ImageSource;
-import org.edx.mobile.user.SaveUriToFileTask;
-import org.edx.mobile.view.custom.CropImageView;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.BaseAppActivity;
+import org.proversity.edx.mobile.third_party.subscaleview.ImageSource;
+import org.proversity.edx.mobile.user.SaveUriToFileTask;
+import org.proversity.edx.mobile.view.custom.CropImageView;
 
 public class CropImageActivity extends BaseAppActivity {
     public static final String EXTRA_IMAGE_URI = "imageUri";

@@ -1,9 +1,9 @@
-package org.edx.mobile.task;
+package org.proversity.edx.mobile.task;
 
 import android.content.Context;
 
-import org.edx.mobile.model.api.ResetPasswordResponse;
-import org.edx.mobile.services.ServiceManager;
+import org.proversity.edx.mobile.model.api.ResetPasswordResponse;
+import org.proversity.edx.mobile.services.ServiceManager;
 
 public abstract class ResetPasswordTask extends Task<ResetPasswordResponse> {
 

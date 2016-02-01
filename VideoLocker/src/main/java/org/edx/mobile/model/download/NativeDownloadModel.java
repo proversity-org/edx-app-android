@@ -1,4 +1,4 @@
-package org.edx.mobile.model.download;
+package org.proversity.edx.mobile.model.download;
 
 /**
  * This class represents a download in the native DownloadManager service.

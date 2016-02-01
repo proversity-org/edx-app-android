@@ -1,13 +1,13 @@
-package org.edx.mobile.model.api;
+package org.proversity.edx.mobile.model.api;
 
 import android.content.Context;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.social.SocialMember;
-import org.edx.mobile.util.Config;
-import org.edx.mobile.util.SocialUtils;
-import org.edx.mobile.util.images.CourseCardUtils;
+import org.proversity.edx.mobile.social.SocialMember;
+import org.proversity.edx.mobile.util.Config;
+import org.proversity.edx.mobile.util.SocialUtils;
+import org.proversity.edx.mobile.util.images.CourseCardUtils;
 
 import java.io.Serializable;
 import java.util.List;

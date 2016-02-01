@@ -1,4 +1,4 @@
-package org.edx.mobile.instrumentation;
+package org.proversity.edx.mobile.instrumentation;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Process;
 
-import org.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.logger.Logger;
 
 import java.io.File;
 

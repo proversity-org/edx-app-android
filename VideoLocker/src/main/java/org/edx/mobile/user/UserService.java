@@ -1,6 +1,6 @@
-package org.edx.mobile.user;
+package org.proversity.edx.mobile.user;
 
-import org.edx.mobile.http.RetroHttpException;
+import org.proversity.edx.mobile.http.RetroHttpException;
 
 import java.util.Map;
 

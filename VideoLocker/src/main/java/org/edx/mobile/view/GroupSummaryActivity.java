@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,10 +7,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.BaseSingleFragmentActivity;
-import org.edx.mobile.social.SocialGroup;
-import org.edx.mobile.util.ResourceUtil;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.BaseSingleFragmentActivity;
+import org.proversity.edx.mobile.social.SocialGroup;
+import org.proversity.edx.mobile.util.ResourceUtil;
 
 /**
  * Created by marcashman on 2014-12-17.

@@ -1,4 +1,4 @@
-package org.edx.mobile.discussion;
+package org.proversity.edx.mobile.discussion;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.R;
-import org.edx.mobile.util.Config;
-import org.edx.mobile.util.ResourceUtil;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.util.Config;
+import org.proversity.edx.mobile.util.ResourceUtil;
 
 import java.util.HashMap;
 

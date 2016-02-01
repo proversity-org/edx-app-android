@@ -1,9 +1,9 @@
-package org.edx.mobile.test;
+package org.proversity.edx.mobile.test;
 
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
-import org.edx.mobile.base.MainApplication;
+import org.proversity.edx.mobile.base.MainApplication;
 
 /**
  * The {@link MainApplication} class is overridden for testing in

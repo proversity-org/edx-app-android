@@ -1,4 +1,4 @@
-package org.edx.mobile.core;
+package org.proversity.edx.mobile.core;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;

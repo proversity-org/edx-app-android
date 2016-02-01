@@ -1,14 +1,14 @@
-package org.edx.mobile.social;
+package org.proversity.edx.mobile.social;
 
 import android.app.Activity;
 import android.content.Context;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.social.facebook.FacebookAuth;
-import org.edx.mobile.social.google.GoogleOauth2;
-import org.edx.mobile.util.Config;
-import org.edx.mobile.util.NetworkUtil;
+import org.proversity.edx.mobile.social.facebook.FacebookAuth;
+import org.proversity.edx.mobile.social.google.GoogleOauth2;
+import org.proversity.edx.mobile.util.Config;
+import org.proversity.edx.mobile.util.NetworkUtil;
 
 public class SocialFactory {
     @Inject

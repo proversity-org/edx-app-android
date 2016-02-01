@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -10,16 +10,16 @@ import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.TextView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.http.OkHttpUtil;
-import org.edx.mobile.model.Filter;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.model.course.BlockType;
-import org.edx.mobile.model.course.CourseComponent;
-import org.edx.mobile.model.course.HtmlBlockModel;
-import org.edx.mobile.model.course.VideoBlockModel;
-import org.edx.mobile.module.prefs.PrefManager;
-import org.edx.mobile.view.custom.DisableableViewPager;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.http.OkHttpUtil;
+import org.proversity.edx.mobile.model.Filter;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.model.course.BlockType;
+import org.proversity.edx.mobile.model.course.CourseComponent;
+import org.proversity.edx.mobile.model.course.HtmlBlockModel;
+import org.proversity.edx.mobile.model.course.VideoBlockModel;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.view.custom.DisableableViewPager;
 import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;

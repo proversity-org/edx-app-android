@@ -1,4 +1,4 @@
-package org.edx.mobile.view.adapters;
+package org.proversity.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.os.SystemClock;
@@ -10,12 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.model.api.SectionEntry;
-import org.edx.mobile.module.db.DataCallback;
-import org.edx.mobile.util.NetworkUtil;
-import org.edx.mobile.view.custom.ProgressWheel;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.model.api.SectionEntry;
+import org.proversity.edx.mobile.module.db.DataCallback;
+import org.proversity.edx.mobile.util.NetworkUtil;
+import org.proversity.edx.mobile.view.custom.ProgressWheel;
 
 public abstract class ChapterAdapter extends BaseListAdapter<SectionEntry> {
 

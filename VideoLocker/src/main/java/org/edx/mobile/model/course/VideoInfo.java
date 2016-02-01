@@ -1,4 +1,4 @@
-package org.edx.mobile.model.course;
+package org.proversity.edx.mobile.model.course;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,11 +7,11 @@ import android.widget.ListView;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.R;
-import org.edx.mobile.discussion.DiscussionThread;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.view.adapters.DiscussionPostsAdapter;
-import org.edx.mobile.view.adapters.InfiniteScrollUtils;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.discussion.DiscussionThread;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.view.adapters.DiscussionPostsAdapter;
+import org.proversity.edx.mobile.view.adapters.InfiniteScrollUtils;
 
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectExtra;

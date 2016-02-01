@@ -1,4 +1,4 @@
-package org.edx.mobile.third_party.subscaleview.decoder;
+package org.proversity.edx.mobile.third_party.subscaleview.decoder;
 
 import android.content.Context;
 import android.graphics.Bitmap;

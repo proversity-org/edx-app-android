@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,16 +12,16 @@ import android.widget.TextView;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.R;
-import org.edx.mobile.discussion.DiscussionComment;
-import org.edx.mobile.discussion.DiscussionCommentPostedEvent;
-import org.edx.mobile.discussion.DiscussionThread;
-import org.edx.mobile.discussion.DiscussionUtils;
-import org.edx.mobile.discussion.ThreadComments;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.task.GetResponsesListTask;
-import org.edx.mobile.view.adapters.CourseDiscussionResponsesAdapter;
-import org.edx.mobile.view.adapters.InfiniteScrollUtils;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.discussion.DiscussionComment;
+import org.proversity.edx.mobile.discussion.DiscussionCommentPostedEvent;
+import org.proversity.edx.mobile.discussion.DiscussionThread;
+import org.proversity.edx.mobile.discussion.DiscussionUtils;
+import org.proversity.edx.mobile.discussion.ThreadComments;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.task.GetResponsesListTask;
+import org.proversity.edx.mobile.view.adapters.CourseDiscussionResponsesAdapter;
+import org.proversity.edx.mobile.view.adapters.InfiniteScrollUtils;
 
 import de.greenrobot.event.EventBus;
 import roboguice.fragment.RoboFragment;

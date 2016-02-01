@@ -5,7 +5,7 @@
             android:layout_height="match_parent"
             android:background="@color/edx_grayscale_neutral_white"
             android:fillViewport="true"
-            tools:context="org.edx.mobile.view.CourseCombinedInfoFragment">
+            tools:context="org.proversity.edx.mobile.view.CourseCombinedInfoFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,12 +32,12 @@
                 android:background="@color/grey_2"
                 android:padding="10dp">
 
-                <org.edx.mobile.view.custom.SocialShareView
+                <org.proversity.edx.mobile.view.custom.SocialShareView
                     android:id="@+id/combined_course_social_share"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"/>
 
-                <org.edx.mobile.view.custom.SocialAffirmView
+                <org.proversity.edx.mobile.view.custom.SocialAffirmView
                     android:id="@+id/course_affirm_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -78,7 +78,7 @@
                         android:text="@string/course_details_friends_in_course"
                         android:textSize="16sp"/>
 
-                    <org.edx.mobile.view.custom.SocialFacePileView
+                    <org.proversity.edx.mobile.view.custom.SocialFacePileView
                         android:id="@+id/combined_course_facepile"
                         android:layout_width="match_parent"
                         android:layout_height="26dp"
@@ -177,7 +177,7 @@
                 </LinearLayout>
 
 
-                <org.edx.mobile.view.custom.EdxWebView
+                <org.proversity.edx.mobile.view.custom.EdxWebView
                     android:id="@+id/announcement_webview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

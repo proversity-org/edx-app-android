@@ -1,4 +1,4 @@
-package org.edx.mobile.util;
+package org.proversity.edx.mobile.util;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -7,12 +7,12 @@ import android.text.TextUtils;
 
 import com.google.inject.Inject;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.BaseFragmentActivity;
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.module.analytics.ISegment;
-import org.edx.mobile.view.dialog.IDialogCallback;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.BaseFragmentActivity;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.module.analytics.ISegment;
+import org.proversity.edx.mobile.view.dialog.IDialogCallback;
 
 public class BrowserUtil {
 

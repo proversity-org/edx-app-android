@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,16 +20,16 @@ import android.widget.Toast;
 import com.facebook.widget.FacebookDialog;
 import com.google.inject.Inject;
 
-import org.edx.mobile.R;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.module.analytics.ISegment;
-import org.edx.mobile.module.facebook.IUiLifecycleHelper;
-import org.edx.mobile.social.SocialMember;
-import org.edx.mobile.social.SocialProvider;
-import org.edx.mobile.social.facebook.FacebookProvider;
-import org.edx.mobile.util.Config;
-import org.edx.mobile.util.ResourceUtil;
-import org.edx.mobile.view.dialog.InstallFacebookDialog;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.module.analytics.ISegment;
+import org.proversity.edx.mobile.module.facebook.IUiLifecycleHelper;
+import org.proversity.edx.mobile.social.SocialMember;
+import org.proversity.edx.mobile.social.SocialProvider;
+import org.proversity.edx.mobile.social.facebook.FacebookProvider;
+import org.proversity.edx.mobile.util.Config;
+import org.proversity.edx.mobile.util.ResourceUtil;
+import org.proversity.edx.mobile.view.dialog.InstallFacebookDialog;
 
 import java.util.ArrayList;
 import java.util.List;

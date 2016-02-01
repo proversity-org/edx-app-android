@@ -1,4 +1,4 @@
-package org.edx.mobile.model;
+package org.proversity.edx.mobile.model;
 
 import com.segment.analytics.AnalyticsContext;
 import com.segment.analytics.Properties;

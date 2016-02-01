@@ -1,4 +1,4 @@
-package org.edx.mobile.module.notification;
+package org.proversity.edx.mobile.module.notification;
 
 import android.text.TextUtils;
 

@@ -1,4 +1,4 @@
-package org.edx.mobile.shadows;
+package org.proversity.edx.mobile.shadows;
 
 import android.os.Handler;
 

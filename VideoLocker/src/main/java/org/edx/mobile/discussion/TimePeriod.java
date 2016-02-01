@@ -1,4 +1,4 @@
-package org.edx.mobile.discussion;
+package org.proversity.edx.mobile.discussion;
 
 import java.io.Serializable;
 import java.util.Date;

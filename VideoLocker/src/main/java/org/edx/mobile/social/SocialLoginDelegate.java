@@ -1,4 +1,4 @@
-package org.edx.mobile.social;
+package org.proversity.edx.mobile.social;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,22 +6,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import org.edx.mobile.R;
-import org.edx.mobile.exception.LoginErrorMessage;
-import org.edx.mobile.exception.LoginException;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.model.api.AuthResponse;
-import org.edx.mobile.model.api.ProfileModel;
-import org.edx.mobile.module.prefs.PrefManager;
-import org.edx.mobile.services.ServiceManager;
-import org.edx.mobile.social.facebook.FacebookProvider;
-import org.edx.mobile.social.google.GoogleOauth2;
-import org.edx.mobile.social.google.GoogleProvider;
-import org.edx.mobile.task.Task;
-import org.edx.mobile.util.Config;
-import org.edx.mobile.util.NetworkUtil;
-import org.edx.mobile.util.ResourceUtil;
-import org.edx.mobile.view.ICommonUI;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.exception.LoginErrorMessage;
+import org.proversity.edx.mobile.exception.LoginException;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.model.api.AuthResponse;
+import org.proversity.edx.mobile.model.api.ProfileModel;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.services.ServiceManager;
+import org.proversity.edx.mobile.social.facebook.FacebookProvider;
+import org.proversity.edx.mobile.social.google.GoogleOauth2;
+import org.proversity.edx.mobile.social.google.GoogleProvider;
+import org.proversity.edx.mobile.task.Task;
+import org.proversity.edx.mobile.util.Config;
+import org.proversity.edx.mobile.util.NetworkUtil;
+import org.proversity.edx.mobile.util.ResourceUtil;
+import org.proversity.edx.mobile.view.ICommonUI;
 
 import java.util.HashMap;
 

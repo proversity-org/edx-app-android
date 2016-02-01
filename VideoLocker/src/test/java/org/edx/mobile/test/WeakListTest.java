@@ -1,6 +1,6 @@
-package org.edx.mobile.test;
+package org.proversity.edx.mobile.test;
 
-import org.edx.mobile.util.WeakList;
+import org.proversity.edx.mobile.util.WeakList;
 import org.junit.Before;
 import org.junit.Test;
 

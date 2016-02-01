@@ -1,4 +1,4 @@
-package org.edx.mobile.view.view_holders;
+package org.proversity.edx.mobile.view.view_holders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.joanzapata.iconify.widget.IconImageView;
 
-import org.edx.mobile.R;
+import org.proversity.edx.mobile.R;
 
 public class NumberResponsesViewHolder extends RecyclerView.ViewHolder {
     public TextView numberResponsesOrCommentsLabel;

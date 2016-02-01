@@ -1,4 +1,4 @@
-package org.edx.mobile.model;
+package org.proversity.edx.mobile.model;
 
 /*
  * TODO: models to be refactored in GA+1

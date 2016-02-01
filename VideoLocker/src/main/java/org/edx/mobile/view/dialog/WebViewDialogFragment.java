@@ -1,4 +1,4 @@
-package org.edx.mobile.view.dialog;
+package org.proversity.edx.mobile.view.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,8 +14,8 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.edx.mobile.R;
-import org.edx.mobile.view.custom.URLInterceptorWebViewClient;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.view.custom.URLInterceptorWebViewClient;
 
 public class WebViewDialogFragment extends AppCompatDialogFragment {
 

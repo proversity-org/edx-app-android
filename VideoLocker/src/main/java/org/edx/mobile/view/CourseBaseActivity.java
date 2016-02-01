@@ -1,4 +1,4 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,17 +16,17 @@ import com.joanzapata.iconify.Icon;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
-import org.edx.mobile.R;
-import org.edx.mobile.base.BaseFragmentActivity;
-import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.model.course.CourseComponent;
-import org.edx.mobile.module.prefs.PrefManager;
-import org.edx.mobile.services.CourseManager;
-import org.edx.mobile.task.GetCourseStructureTask;
-import org.edx.mobile.util.BrowserUtil;
-import org.edx.mobile.view.common.MessageType;
-import org.edx.mobile.view.common.TaskProcessCallback;
-import org.edx.mobile.view.custom.popup.menu.PopupMenu;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.base.BaseFragmentActivity;
+import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.proversity.edx.mobile.model.course.CourseComponent;
+import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.proversity.edx.mobile.services.CourseManager;
+import org.proversity.edx.mobile.task.GetCourseStructureTask;
+import org.proversity.edx.mobile.util.BrowserUtil;
+import org.proversity.edx.mobile.view.common.MessageType;
+import org.proversity.edx.mobile.view.common.TaskProcessCallback;
+import org.proversity.edx.mobile.view.custom.popup.menu.PopupMenu;
 
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;

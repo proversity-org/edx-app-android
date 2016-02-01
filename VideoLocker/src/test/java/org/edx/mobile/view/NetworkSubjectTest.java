@@ -1,8 +1,8 @@
-package org.edx.mobile.view;
+package org.proversity.edx.mobile.view;
 
-import org.edx.mobile.base.BaseFragmentActivity;
-import org.edx.mobile.interfaces.NetworkObserver;
-import org.edx.mobile.interfaces.NetworkSubject;
+import org.proversity.edx.mobile.base.BaseFragmentActivity;
+import org.proversity.edx.mobile.interfaces.NetworkObserver;
+import org.proversity.edx.mobile.interfaces.NetworkSubject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

@@ -1,4 +1,4 @@
-package org.edx.mobile.view.adapters;
+package org.proversity.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.util.SparseIntArray;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 
-import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.proversity.edx.mobile.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.Date;

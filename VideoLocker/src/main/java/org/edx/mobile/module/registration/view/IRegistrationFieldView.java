@@ -1,15 +1,15 @@
-package org.edx.mobile.module.registration.view;
+package org.proversity.edx.mobile.module.registration.view;
 
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.google.gson.JsonElement;
 
-import org.edx.mobile.R;
-import org.edx.mobile.logger.Logger;
-import org.edx.mobile.module.registration.model.RegistrationAgreement;
-import org.edx.mobile.module.registration.model.RegistrationFieldType;
-import org.edx.mobile.module.registration.model.RegistrationFormField;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.logger.Logger;
+import org.proversity.edx.mobile.module.registration.model.RegistrationAgreement;
+import org.proversity.edx.mobile.module.registration.model.RegistrationFieldType;
+import org.proversity.edx.mobile.module.registration.model.RegistrationFormField;
 
 public interface IRegistrationFieldView {
     // Returns the value that should be sent to the server when registering.
@@ -36,7 +36,7 @@ public interface IRegistrationFieldView {
 
     /**
      * Factory class to get instance {@link IRegistrationFieldView}
-     * for the given {@link org.edx.mobile.module.registration.model.RegistrationFormField}.
+     * for the given {@link org.proversity.edx.mobile.module.registration.model.RegistrationFormField}.
      */
     public static class Factory {
 

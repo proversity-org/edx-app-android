@@ -1,4 +1,4 @@
-package org.edx.mobile.util;
+package org.proversity.edx.mobile.util;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,8 +7,8 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 
-import org.edx.mobile.R;
-import org.edx.mobile.view.custom.RoundedProfilePictureView;
+import org.proversity.edx.mobile.R;
+import org.proversity.edx.mobile.view.custom.RoundedProfilePictureView;
 
 public class SocialUtils {
 
