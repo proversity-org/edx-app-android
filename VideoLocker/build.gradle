@@ -13,7 +13,7 @@ buildscript {
 
         //Included for NewRelic
         classpath "com.newrelic.agent.android:agent-gradle-plugin:5.3.1"
-        //classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
+        classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
     }
 }
 
@@ -284,4 +284,12 @@ android.applicationVariants.all { variant ->
             task.mustRunAfter(configureTask)
         }
     }
+}
+
+apply plugin: 'com.github.triplet.play'
+play {
+    jsonFile = file('keys.json')
+    track = 'production' // or 'rollout' or 'beta' or 'alpha'
+    userFraction = 0.2 // only necessary for 'rollout', in this case default is 0.1
+    errorOnSizeLimit = false
 }
