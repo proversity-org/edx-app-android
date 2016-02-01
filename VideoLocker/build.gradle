@@ -13,7 +13,7 @@ buildscript {
 
         //Included for NewRelic
         classpath "com.newrelic.agent.android:agent-gradle-plugin:5.3.1"
-        classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
+        //classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
     }
 }
 
