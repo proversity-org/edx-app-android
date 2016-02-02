@@ -23,7 +23,7 @@ dependencies:
     - sudo ~/edx-app-android/ruby-build/./install.sh
     - rbenv install 2.3.0
     - ~/.rbenv/versions/2.3.0/bin/gem install supply
-    - ./gradlew assembleRelease
+    #- ./gradlew assembleRelease
     - supply --apk VideoLocker/build/outputs/apk/VideoLocker-prod-release.apk -p org.proversity.edx.mobile -i proversity-edx@api-8032764440691596481-702575.iam.gserviceaccount.com
 test:
     override:
