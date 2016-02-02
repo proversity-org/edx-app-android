@@ -15,10 +15,14 @@ dependencies:
         - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-2.2.1,android-21,extra-google-m2repository,extra-google-google_play_services,extra-android-support
         - echo y | android update sdk --no-ui --all --filter build-tools-23.0.2
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
-    pre:
-    - cd ~/edx-app-android/ruby-2.3.0/ && ls && ./configure && make && sudo make install
-    - sudo gem install supply
+    post:
     - cd ~/edx-app-android/
+    - git clone https://github.com/rbenv/ruby-build.git
+    - cd ruby-build
+    - sudo ./install.sh
+    - rbenv install 2.3.0
+    - ~/.rbenv/versions/2.3.0/bin/gem install supply
+    - ./gradlew assembleRelease
     - supply --apk VideoLocker/build/outputs/apk/VideoLocker-prod-release.apk -p org.proversity.edx.mobile -i proversity-edx@api-8032764440691596481-702575.iam.gserviceaccount.com
 test:
     override:
