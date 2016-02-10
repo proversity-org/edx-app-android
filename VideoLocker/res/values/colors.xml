@@ -131,7 +131,7 @@
     <!--  see  http://ux.edx.org/elements/colors/ -->
     <color name="edx_brand_primary_x_dark">#003654</color>
     <color name="edx_brand_primary_dark">#005483</color>
-    <color name="edx_brand_primary_base">#0079BC</color>
+    <color name="edx_brand_primary_base">#363738</color>
     <color name="edx_brand_primary_light">#4CA1D0</color>
     <color name="edx_brand_primary_x_light">#B2D6EA</color>
     <color name="edx_brand_primary_accent">#0EA6EC</color>
@@ -141,7 +141,7 @@
     <color name="edx_brand_secondary_dark">#8E3E63</color>
     <color name="edx_brand_secondary_x_light">#EFCDDD</color>
     <color name="edx_brand_secondary_accent">#F26CAA</color>
-    <color name="edx_brand_secondary_base">#CB598D</color>
+    <color name="edx_brand_secondary_base">#06a8e0</color>
 
     <color name="edx_grayscale_neutral_white_t">#FFFFFF</color>
     <color name="edx_grayscale_neutral_white">#FCFCFC</color>
