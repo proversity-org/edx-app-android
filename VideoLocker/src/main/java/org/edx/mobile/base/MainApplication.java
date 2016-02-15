@@ -124,7 +124,7 @@ public class MainApplication extends MultiDexApplication {
         Iconify.with(new FontAwesomeModule());
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/OpenSans-Regular.ttf")
+                        .setDefaultFontPath("fonts/Lato-Bold.ttf")
                         .setFontAttrId(R.attr.fontPath)
                         .build()
         );

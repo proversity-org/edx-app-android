@@ -188,15 +188,15 @@
     </style>
 
     <style name="bold_text">
-        <item name="fontPath">fonts/OpenSans-Semibold.ttf</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
     </style>
     
     <style name="semibold_text">
-        <item name="fontPath">fonts/OpenSans-Semibold.ttf</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
     </style>
     
     <style name="regular_text">
-        <item name="fontPath">fonts/OpenSans-Regular.ttf</item>
+        <item name="fontPath">fonts/Lato-Bold.ttf</item>
     </style>
     
      <style name="text_network_error" parent="@style/semibold_white_text">
