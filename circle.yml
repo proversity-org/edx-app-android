@@ -22,7 +22,7 @@ dependencies:
     - sudo ~/edx-app-android/ruby-build/./install.sh
     - rbenv install 2.3.0
     - ~/.rbenv/versions/2.3.0/bin/gem install supply
-    - ./gradlew assembleRelease
+    #- ./gradlew assembleRelease
     - ./gradlew publishProdRelease
 test:
     override:
