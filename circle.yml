@@ -12,10 +12,6 @@ machine:
         GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
 
 dependencies:
-    override:
-        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-2.2.1,android-21,extra-google-m2repository,extra-google-google_play_services,extra-android-support
-        - echo y | android update sdk --no-ui --all --filter build-tools-23.0.2
-        - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
     post:
     - cd ~/edx-app-android/
     - git clone https://github.com/rbenv/ruby-build.git
