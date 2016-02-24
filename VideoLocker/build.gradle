@@ -285,10 +285,12 @@ android.applicationVariants.all { variant ->
     }
 }
 
+
 apply plugin: 'com.github.triplet.play'
 play {
-    jsonFile = file('Proversity-50d9f42e65f1.json')
-    track = 'production' // or 'rollout' or 'beta' or 'alpha'
+    serviceAccountEmail = 'proversity-edx@api-8032764440691596481-702575.iam.gserviceaccount.com'
+    pk12File = file('Google Play Android Developer-27e9e842e11a.p12')
+    track = 'beta' // or 'rollout' or 'beta' or 'alpha'
     userFraction = 0.2 // only necessary for 'rollout', in this case default is 0.1
     errorOnSizeLimit = false
 }
