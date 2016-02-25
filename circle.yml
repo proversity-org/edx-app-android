@@ -18,8 +18,17 @@ dependencies:
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
     post:
     - cd ~/edx-app-android/
-    #- ./gradlew assembleRelease
-    - ./gradlew publishProdRelease
+    - ./gradlew assembleRelease
+    #Todo:Define and  an avd
+    adb install -r VideoLocker/build/outputs/apk/VideoLocker-prod-release.apk
+    AppPackage=org.proversity.edx.mobile #Todo: Change package
+    cd VideoLocker/src/main/play/en-GB/listing/phoneScreenshots/
+    adb shell am start -n $AppPackage/.view.LoginActivity -W
+    adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > LoginActivity.png
+    adb shell am force-stop $AppPackage
+    adb shell am start -n $AppPackage/.view.RegisterActivity -W
+    adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > RegisterActivity.png
+    ./gradlew publishProdRelease
 test:
     override:
         - ./gradlew build -x test -PpreDexEnable=false -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs="-Xms512m -Xmx512m" --stacktrace
