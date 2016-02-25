@@ -18,7 +18,7 @@ dependencies:
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
     post:
     - cd ~/edx-app-android/
-    - ./gradlew assembleRelease
+    #- ./gradlew assembleRelease
     #Todo:Define and  an avd
     -  adb install -r VideoLocker/build/outputs/apk/VideoLocker-prod-release.apk
     - AppPackage=org.proversity.edx.mobile #Todo: Change package
