@@ -13,14 +13,15 @@ machine:
 
 dependencies:
     override:
-        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-23.0.2,android-21,extra-google-m2repository,extra-google-google_play_services,extra-android-support
+        #- echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-23.0.2,android-21,extra-google-m2repository,extra-google-google_play_services,extra-android-support
         - echo y | android update sdk --no-ui --all --filter build-tools-23.0.2
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
     post:
     - cd ~/edx-app-android/
     #- ./gradlew assembleRelease
     #Todo:Define and  an avd
-    -  adb install -r VideoLocker/build/outputs/apk/VideoLocker-prod-release.apk
+    - emulator -avd circleci-android21 -no-skin -no-audio -no-window & adb wait-for-device
+    - adb install -r VideoLocker/build/outputs/apk/VideoLocker-prod-release.apk
     - AppPackage=org.proversity.edx.mobile #Todo: Change package
     - cd VideoLocker/src/main/play/en-GB/listing/phoneScreenshots/
     - adb shell am start -n $AppPackage/.view.LoginActivity -W
