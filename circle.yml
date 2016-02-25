@@ -19,7 +19,9 @@ dependencies:
     post:
     - cd ~/edx-app-android/
     #- ./gradlew assembleRelease
-    #Todo:Define and  an avd
+    #Killing and starting adb. Somehow fixes hanging before starting emulator
+    - adb kill-server
+    - adb start-server
     - emulator -avd circleci-android21 -no-skin -no-audio -no-window & adb wait-for-device
     - adb install -r VideoLocker/build/outputs/apk/VideoLocker-prod-release.apk
     - AppPackage=org.proversity.edx.mobile #Todo: Change package
