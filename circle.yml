@@ -18,7 +18,7 @@ dependencies:
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
     post:
     - cd ~/edx-app-android/
-    #- ./gradlew assembleRelease
+    - ./gradlew assembleRelease
     - ./gradlew publishProdRelease
 test:
     override:
