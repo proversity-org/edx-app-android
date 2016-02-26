@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.base;
+package org.edx.mobile.base;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,13 +12,13 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.event.FlyingMessageEvent;
-import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.proversity.edx.mobile.task.EnrollForCourseTask;
-import org.proversity.edx.mobile.view.custom.URLInterceptorWebViewClient;
-import org.proversity.edx.mobile.view.dialog.EnrollmentFailureDialogFragment;
-import org.proversity.edx.mobile.view.dialog.IDialogCallback;
+import org.edx.mobile.R;
+import org.edx.mobile.event.FlyingMessageEvent;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.task.EnrollForCourseTask;
+import org.edx.mobile.view.custom.URLInterceptorWebViewClient;
+import org.edx.mobile.view.dialog.EnrollmentFailureDialogFragment;
+import org.edx.mobile.view.dialog.IDialogCallback;
 
 import java.util.HashMap;
 import java.util.Map;

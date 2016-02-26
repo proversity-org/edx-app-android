@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.player;
+package org.edx.mobile.player;
 
 import android.content.Context;
 import android.graphics.Color;

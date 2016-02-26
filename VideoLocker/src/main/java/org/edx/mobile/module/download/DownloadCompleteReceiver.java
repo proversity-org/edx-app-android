@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.module.download;
+package org.edx.mobile.module.download;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -6,14 +6,14 @@ import android.content.Intent;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.core.IEdxEnvironment;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.VideoModel;
-import org.proversity.edx.mobile.model.db.DownloadEntry;
-import org.proversity.edx.mobile.model.download.NativeDownloadModel;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.module.db.DataCallback;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.VideoModel;
+import org.edx.mobile.model.db.DownloadEntry;
+import org.edx.mobile.model.download.NativeDownloadModel;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.db.DataCallback;
+import org.edx.mobile.module.prefs.PrefManager;
 
 import roboguice.receiver.RoboBroadcastReceiver;
 

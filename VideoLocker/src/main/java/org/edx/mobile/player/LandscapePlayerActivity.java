@@ -1,10 +1,10 @@
-package org.proversity.edx.mobile.player;
+package org.edx.mobile.player;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.BaseFragmentActivity;
+import org.edx.mobile.R;
+import org.edx.mobile.base.BaseFragmentActivity;
 
 public class LandscapePlayerActivity extends BaseFragmentActivity {
 

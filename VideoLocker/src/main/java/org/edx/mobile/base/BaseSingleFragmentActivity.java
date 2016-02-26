@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.base;
+package org.edx.mobile.base;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.view.common.MessageType;
-import org.proversity.edx.mobile.view.common.TaskProcessCallback;
+import org.edx.mobile.R;
+import org.edx.mobile.view.common.MessageType;
+import org.edx.mobile.view.common.TaskProcessCallback;
 
 import roboguice.inject.InjectView;
 

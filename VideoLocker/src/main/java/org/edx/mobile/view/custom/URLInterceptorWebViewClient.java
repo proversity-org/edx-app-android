@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.custom;
+package org.edx.mobile.view.custom;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -15,14 +15,14 @@ import android.webkit.WebViewClient;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.util.BrowserUtil;
-import org.proversity.edx.mobile.util.Config;
-import org.proversity.edx.mobile.util.ConfigUtil;
-import org.proversity.edx.mobile.util.NetworkUtil;
-import org.proversity.edx.mobile.util.StandardCharsets;
-import org.proversity.edx.mobile.util.links.EdxCourseInfoLink;
-import org.proversity.edx.mobile.util.links.EdxEnrollLink;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.util.BrowserUtil;
+import org.edx.mobile.util.Config;
+import org.edx.mobile.util.ConfigUtil;
+import org.edx.mobile.util.NetworkUtil;
+import org.edx.mobile.util.StandardCharsets;
+import org.edx.mobile.util.links.EdxCourseInfoLink;
+import org.edx.mobile.util.links.EdxEnrollLink;
 
 import roboguice.RoboGuice;
 
@@ -60,7 +60,7 @@ public class URLInterceptorWebViewClient extends WebViewClient {
 
     /**
      * Sets action listener for this client. Use this method to get callbacks
-     * of actions as declared in {@link org.proversity.edx.mobile.view.custom.URLInterceptorWebViewClient.IActionListener}.
+     * of actions as declared in {@link org.edx.mobile.view.custom.URLInterceptorWebViewClient.IActionListener}.
      *
      * @param actionListener
      */
@@ -191,7 +191,7 @@ public class URLInterceptorWebViewClient extends WebViewClient {
 
     /**
      * Checks if {@param strUrl} is valid course info link and, if so,
-     * calls {@link org.proversity.edx.mobile.view.custom.URLInterceptorWebViewClient.IActionListener#onClickCourseInfo(String)}
+     * calls {@link org.edx.mobile.view.custom.URLInterceptorWebViewClient.IActionListener#onClickCourseInfo(String)}
      *
      * @return true if an action listener is set and URL was a valid course info link, false otherwise
      */
@@ -222,7 +222,7 @@ public class URLInterceptorWebViewClient extends WebViewClient {
 
     /**
      * Checks if {@param strUrl} is valid enroll link and, if so,
-     * calls {@link org.proversity.edx.mobile.view.custom.URLInterceptorWebViewClient.IActionListener#onClickEnroll(String, boolean)}
+     * calls {@link org.edx.mobile.view.custom.URLInterceptorWebViewClient.IActionListener#onClickEnroll(String, boolean)}
      *
      * @return true if an action listener is set and URL was a valid enroll link, false otherwise
      */

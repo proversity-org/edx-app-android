@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.base;
+package org.edx.mobile.base;
 
 import android.content.res.Configuration;
 import android.os.Build;
@@ -22,21 +22,21 @@ import android.widget.TextView;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.core.IEdxEnvironment;
-import org.proversity.edx.mobile.event.FlyingMessageEvent;
-import org.proversity.edx.mobile.event.LogoutEvent;
-import org.proversity.edx.mobile.event.NetworkConnectivityChangeEvent;
-import org.proversity.edx.mobile.interfaces.NetworkObserver;
-import org.proversity.edx.mobile.interfaces.NetworkSubject;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.api.ProfileModel;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
-import org.proversity.edx.mobile.util.NetworkUtil;
-import org.proversity.edx.mobile.util.ViewAnimationUtil;
-import org.proversity.edx.mobile.view.ICommonUI;
-import org.proversity.edx.mobile.view.NavigationFragment;
-import org.proversity.edx.mobile.view.dialog.WebViewDialogFragment;
+import org.edx.mobile.R;
+import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.event.FlyingMessageEvent;
+import org.edx.mobile.event.LogoutEvent;
+import org.edx.mobile.event.NetworkConnectivityChangeEvent;
+import org.edx.mobile.interfaces.NetworkObserver;
+import org.edx.mobile.interfaces.NetworkSubject;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.ProfileModel;
+import org.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.util.NetworkUtil;
+import org.edx.mobile.util.ViewAnimationUtil;
+import org.edx.mobile.view.ICommonUI;
+import org.edx.mobile.view.NavigationFragment;
+import org.edx.mobile.view.dialog.WebViewDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -609,7 +609,7 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
     }
 
     /**
-     * This method should be implemented by {@link org.proversity.edx.mobile.view.MyCoursesListActivity}.
+     * This method should be implemented by {@link org.edx.mobile.view.MyCoursesListActivity}.
      */
     protected void reloadMyCoursesData() {
         // nothing to do here

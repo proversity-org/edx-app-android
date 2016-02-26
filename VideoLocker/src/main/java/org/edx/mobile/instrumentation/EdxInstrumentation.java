@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.instrumentation;
+package org.edx.mobile.instrumentation;
 
 import android.app.Instrumentation;
 import android.content.Intent;

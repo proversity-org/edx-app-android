@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.proversity.edx.mobile.player;
+package org.edx.mobile.player;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -41,9 +41,9 @@ import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.widget.IconImageButton;
 import com.joanzapata.iconify.IconDrawable;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.R;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.module.prefs.PrefManager;
 
 import java.lang.ref.WeakReference;
 import java.util.Formatter;

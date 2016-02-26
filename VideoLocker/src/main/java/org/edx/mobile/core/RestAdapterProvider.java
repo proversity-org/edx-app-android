@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.core;
+package org.edx.mobile.core;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -7,9 +7,9 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.squareup.okhttp.OkHttpClient;
 
-import org.proversity.edx.mobile.discussion.RetroHttpExceptionHandler;
-import org.proversity.edx.mobile.util.Config;
-import org.proversity.edx.mobile.util.DateUtil;
+import org.edx.mobile.discussion.RetroHttpExceptionHandler;
+import org.edx.mobile.util.Config;
+import org.edx.mobile.util.DateUtil;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;

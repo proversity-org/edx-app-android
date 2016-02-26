@@ -1,14 +1,14 @@
-package org.proversity.edx.mobile.services;
+package org.edx.mobile.services;
 
 import android.content.Context;
 import android.os.Build;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
-import org.proversity.edx.mobile.base.MainApplication;
-import org.proversity.edx.mobile.event.SessionIdRefreshEvent;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.task.GetSessesionExchangeCookieTask;
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.event.SessionIdRefreshEvent;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.task.GetSessesionExchangeCookieTask;
 
 import java.io.File;
 import java.net.HttpCookie;

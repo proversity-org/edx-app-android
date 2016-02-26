@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.task;
+package org.edx.mobile.task;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.discussion.DiscussionComment;
+import org.edx.mobile.discussion.DiscussionComment;
 
 public abstract class FlagCommentTask extends
 Task<DiscussionComment> {

@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.social.google;
+package org.edx.mobile.social.google;
 
 import java.io.IOException;
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.BaseFragmentActivity;
+import org.edx.mobile.R;
+import org.edx.mobile.base.BaseFragmentActivity;
 
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;

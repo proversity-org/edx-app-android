@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.http.cache;
+package org.edx.mobile.http.cache;
 
 import android.content.Context;
 
@@ -6,8 +6,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import org.apache.commons.io.IOUtils;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.util.Sha1Util;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.util.Sha1Util;
 
 import java.io.File;
 import java.io.FileInputStream;

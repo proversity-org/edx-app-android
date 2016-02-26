@@ -1,10 +1,10 @@
-package org.proversity.edx.mobile.module.db.impl;
+package org.edx.mobile.module.db.impl;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import org.proversity.edx.mobile.model.VideoModel;
-import org.proversity.edx.mobile.module.db.DatabaseModelFactory;
+import org.edx.mobile.model.VideoModel;
+import org.edx.mobile.module.db.DatabaseModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;

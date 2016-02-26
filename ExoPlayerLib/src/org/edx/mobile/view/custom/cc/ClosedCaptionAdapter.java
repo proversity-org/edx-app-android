@@ -1,7 +1,7 @@
-package org.proversity.edx.mobile.view.custom.cc;
+package org.edx.mobile.view.custom.cc;
 
-import org.proversity.edx.mobile.player.IVideo.IClosedCaption;
-import org.proversity.edx.mobile.view.custom.BaseListAdapter;
+import org.edx.mobile.player.IVideo.IClosedCaption;
+import org.edx.mobile.view.custom.BaseListAdapter;
 
 import android.content.Context;
 import android.view.View;

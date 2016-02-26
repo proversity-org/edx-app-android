@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.task;
+package org.edx.mobile.task;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.discussion.DiscussionThread;
+import org.edx.mobile.discussion.DiscussionThread;
 
 public abstract class FlagThreadTask extends
 Task<DiscussionThread> {

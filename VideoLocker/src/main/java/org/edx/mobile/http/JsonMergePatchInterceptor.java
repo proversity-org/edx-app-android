@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.http;
+package org.edx.mobile.http;
 
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.MediaType;

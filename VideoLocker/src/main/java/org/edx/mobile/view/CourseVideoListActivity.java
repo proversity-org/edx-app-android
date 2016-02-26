@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -6,14 +6,14 @@ import android.os.SystemClock;
 import android.view.Menu;
 import android.view.View;
 
-import org.proversity.edx.mobile.base.MainApplication;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.course.BlockPath;
-import org.proversity.edx.mobile.model.course.CourseComponent;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
-import org.proversity.edx.mobile.services.LastAccessManager;
-import org.proversity.edx.mobile.services.VideoDownloadHelper;
-import org.proversity.edx.mobile.util.NetworkUtil;
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.course.BlockPath;
+import org.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.services.LastAccessManager;
+import org.edx.mobile.services.VideoDownloadHelper;
+import org.edx.mobile.util.NetworkUtil;
 
 /**
  * Created by hanning on 5/15/15.

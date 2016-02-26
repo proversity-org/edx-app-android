@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.test;
+package org.edx.mobile.test;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

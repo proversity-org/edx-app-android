@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.util.links;
+package org.edx.mobile.util.links;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;

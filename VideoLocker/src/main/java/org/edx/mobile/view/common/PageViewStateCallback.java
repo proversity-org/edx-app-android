@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.common;
+package org.edx.mobile.view.common;
 
 /**
  * For PageView, the onResume, onPause... is not called as it is still in memory. so we need

@@ -1,9 +1,9 @@
-package org.proversity.edx.mobile.model.json;
+package org.edx.mobile.model.json;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.proversity.edx.mobile.social.SocialMember;
+import org.edx.mobile.social.SocialMember;
 
 import java.util.List;
 

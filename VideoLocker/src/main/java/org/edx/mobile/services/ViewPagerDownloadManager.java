@@ -1,14 +1,14 @@
-package org.proversity.edx.mobile.services;
+package org.edx.mobile.services;
 
 import android.os.Handler;
 import android.os.Looper;
 
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.course.CourseComponent;
-import org.proversity.edx.mobile.util.UiUtil;
-import org.proversity.edx.mobile.util.WeakList;
-import org.proversity.edx.mobile.view.common.RunnableCourseComponent;
-import org.proversity.edx.mobile.view.common.TaskCallback;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.util.UiUtil;
+import org.edx.mobile.util.WeakList;
+import org.edx.mobile.view.common.RunnableCourseComponent;
+import org.edx.mobile.view.common.TaskCallback;
 
 import java.util.List;
 

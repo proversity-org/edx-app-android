@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,21 +17,21 @@ import com.facebook.SessionState;
 import com.facebook.widget.LoginButton;
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.core.IEdxEnvironment;
-import org.proversity.edx.mobile.loader.AsyncTaskResult;
-import org.proversity.edx.mobile.loader.CoursesVisibleLoader;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.module.facebook.IUiLifecycleHelper;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
-import org.proversity.edx.mobile.social.SocialMember;
-import org.proversity.edx.mobile.social.SocialProvider;
-import org.proversity.edx.mobile.social.facebook.FacebookProvider;
-import org.proversity.edx.mobile.util.ResourceUtil;
-import org.proversity.edx.mobile.util.SocialUtils;
-import org.proversity.edx.mobile.view.dialog.IDialogCallback;
-import org.proversity.edx.mobile.view.dialog.NetworkCheckDialogFragment;
+import org.edx.mobile.R;
+import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.loader.AsyncTaskResult;
+import org.edx.mobile.loader.CoursesVisibleLoader;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.facebook.IUiLifecycleHelper;
+import org.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.social.SocialMember;
+import org.edx.mobile.social.SocialProvider;
+import org.edx.mobile.social.facebook.FacebookProvider;
+import org.edx.mobile.util.ResourceUtil;
+import org.edx.mobile.util.SocialUtils;
+import org.edx.mobile.view.dialog.IDialogCallback;
+import org.edx.mobile.view.dialog.NetworkCheckDialogFragment;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.http;
+package org.edx.mobile.http;
 
 import android.content.Context;
 import android.net.http.AndroidHttpClient;
@@ -36,9 +36,9 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
-import org.proversity.edx.mobile.BuildConfig;
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.logger.Logger;
+import org.edx.mobile.BuildConfig;
+import org.edx.mobile.R;
+import org.edx.mobile.logger.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -1,7 +1,7 @@
-package org.proversity.edx.mobile.model;
+package org.edx.mobile.model;
 
-import org.proversity.edx.mobile.model.api.TranscriptModel;
-import org.proversity.edx.mobile.model.download.NativeDownloadModel;
+import org.edx.mobile.model.api.TranscriptModel;
+import org.edx.mobile.model.download.NativeDownloadModel;
 
 /**
  * Any video model should implement this interface.

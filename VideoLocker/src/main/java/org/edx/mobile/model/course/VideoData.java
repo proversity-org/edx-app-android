@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.model.course;
+package org.edx.mobile.model.course;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.proversity.edx.mobile.model.api.TranscriptModel;
+import org.edx.mobile.model.api.TranscriptModel;
 
 /**
  *

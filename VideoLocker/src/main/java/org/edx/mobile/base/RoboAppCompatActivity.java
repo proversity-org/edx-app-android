@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions
  * and limitations under the License.
  */
-package org.proversity.edx.mobile.base;
+package org.edx.mobile.base;
 
 import android.app.Activity;
 import android.content.Intent;

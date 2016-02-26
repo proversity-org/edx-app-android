@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,13 +14,13 @@ import android.widget.TextView;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.discussion.CommentBody;
-import org.proversity.edx.mobile.discussion.DiscussionComment;
-import org.proversity.edx.mobile.discussion.DiscussionCommentPostedEvent;
-import org.proversity.edx.mobile.discussion.DiscussionTextUtils;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.task.CreateCommentTask;
+import org.edx.mobile.R;
+import org.edx.mobile.discussion.CommentBody;
+import org.edx.mobile.discussion.DiscussionComment;
+import org.edx.mobile.discussion.DiscussionCommentPostedEvent;
+import org.edx.mobile.discussion.DiscussionTextUtils;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.task.CreateCommentTask;
 
 import de.greenrobot.event.EventBus;
 import roboguice.fragment.RoboFragment;

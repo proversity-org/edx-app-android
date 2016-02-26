@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.player;
+package org.edx.mobile.player;
 
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
@@ -13,8 +13,8 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View.OnClickListener;
 
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.view.OnSwipeListener;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.view.OnSwipeListener;
 
 import java.io.File;
 import java.io.FileInputStream;

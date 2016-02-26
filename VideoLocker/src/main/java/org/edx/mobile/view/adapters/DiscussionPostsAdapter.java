@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.adapters;
+package org.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.support.annotation.ColorInt;
@@ -13,9 +13,9 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.widget.IconImageView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.core.IEdxEnvironment;
-import org.proversity.edx.mobile.discussion.DiscussionThread;
+import org.edx.mobile.R;
+import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.discussion.DiscussionThread;
 
 public class DiscussionPostsAdapter extends BaseListAdapter<DiscussionThread> {
 

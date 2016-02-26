@@ -1,6 +1,6 @@
-package org.proversity.edx.mobile.view.common;
+package org.edx.mobile.view.common;
 
-import org.proversity.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.model.course.CourseComponent;
 
 /**
  * Created by hanning on 6/9/15.

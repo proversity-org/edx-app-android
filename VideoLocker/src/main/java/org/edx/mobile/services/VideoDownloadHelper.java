@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.services;
+package org.edx.mobile.services;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -6,19 +6,19 @@ import android.support.v4.app.FragmentActivity;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.BaseFragmentActivity;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.course.HasDownloadEntry;
-import org.proversity.edx.mobile.model.db.DownloadEntry;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.module.storage.IStorage;
-import org.proversity.edx.mobile.task.EnqueueDownloadTask;
-import org.proversity.edx.mobile.util.Config;
-import org.proversity.edx.mobile.util.MediaConsentUtils;
-import org.proversity.edx.mobile.util.MemoryUtil;
-import org.proversity.edx.mobile.view.dialog.DownloadSizeExceedDialog;
-import org.proversity.edx.mobile.view.dialog.IDialogCallback;
+import org.edx.mobile.R;
+import org.edx.mobile.base.BaseFragmentActivity;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.course.HasDownloadEntry;
+import org.edx.mobile.model.db.DownloadEntry;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.storage.IStorage;
+import org.edx.mobile.task.EnqueueDownloadTask;
+import org.edx.mobile.util.Config;
+import org.edx.mobile.util.MediaConsentUtils;
+import org.edx.mobile.util.MemoryUtil;
+import org.edx.mobile.view.dialog.DownloadSizeExceedDialog;
+import org.edx.mobile.view.dialog.IDialogCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;

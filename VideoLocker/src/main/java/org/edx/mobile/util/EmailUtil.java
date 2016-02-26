@@ -1,11 +1,11 @@
-package org.proversity.edx.mobile.util;
+package org.edx.mobile.util;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.view.dialog.IDialogCallback;
+import org.edx.mobile.R;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.view.dialog.IDialogCallback;
 
 public class EmailUtil {
 

@@ -64,33 +64,33 @@ public interface IMyVideosLocators_Offline {
 	// Android Locators
 	String btnHeaderId = "android:id/up";
 	String btnHeaderNameId = "android:id/action_bar_title";
-	String btnCourseId = "org.proversity.edx.mobile:id/course_row_layout";
+	String btnCourseId = "org.edx.mobile:id/course_row_layout";
 	String txtMyVideosName = "My Videos";
-	String txtMyVideosId = "org.proversity.edx.mobile:id/drawer_option_my_videos";
+	String txtMyVideosId = "org.edx.mobile:id/drawer_option_my_videos";
 	String txtAllVideosName = "All Videos";
 
-	String btnOkPopupId = "org.proversity.edx.mobile:id/positiveButton";
-	String btnCancelPopupId = "org.proversity.edx.mobile:id/negativeButton";
-	String btnLMS = "org.proversity.edx.mobile:id/lms_btn";
-	String btnPlayPause = "org.proversity.edx.mobile:id/pause";
-	String btnRewind = "org.proversity.edx.mobile:id/rew";
-	String btnSettings = "org.proversity.edx.mobile:id/settings";
-	String btnFullScreenId = "org.proversity.edx.mobile:id/fullscreen";
-	String vpVideoPlayerId = "org.proversity.edx.mobile:id/preview";
+	String btnOkPopupId = "org.edx.mobile:id/positiveButton";
+	String btnCancelPopupId = "org.edx.mobile:id/negativeButton";
+	String btnLMS = "org.edx.mobile:id/lms_btn";
+	String btnPlayPause = "org.edx.mobile:id/pause";
+	String btnRewind = "org.edx.mobile:id/rew";
+	String btnSettings = "org.edx.mobile:id/settings";
+	String btnFullScreenId = "org.edx.mobile:id/fullscreen";
+	String vpVideoPlayerId = "org.edx.mobile:id/preview";
 
-	String btnViewId = "org.proversity.edx.mobile:id/button_view";
+	String btnViewId = "org.edx.mobile:id/button_view";
 
 	String txtRecentVideosName = "Recent Videos";
-	String lstVideoId = "org.proversity.edx.mobile:id/video_row_layout";
-	String btnEditId = "org.proversity.edx.mobile:id/edit_btn";
-	String btnDeleteId = "org.proversity.edx.mobile:id/delete_btn";
-	String btnCancelId = "org.proversity.edx.mobile:id/cancel_btn";
-	String cbAllSelectId = "org.proversity.edx.mobile:id/select_checkbox";
-	String cbVideoSelectId = "org.proversity.edx.mobile:id/video_select_checkbox";
-	String lstAllVideos_Courses = "org.proversity.edx.mobile:id/my_video_course_list";
-	String lstRecentVideos = "org.proversity.edx.mobile:id/list_video";
+	String lstVideoId = "org.edx.mobile:id/video_row_layout";
+	String btnEditId = "org.edx.mobile:id/edit_btn";
+	String btnDeleteId = "org.edx.mobile:id/delete_btn";
+	String btnCancelId = "org.edx.mobile:id/cancel_btn";
+	String cbAllSelectId = "org.edx.mobile:id/select_checkbox";
+	String cbVideoSelectId = "org.edx.mobile:id/video_select_checkbox";
+	String lstAllVideos_Courses = "org.edx.mobile:id/my_video_course_list";
+	String lstRecentVideos = "org.edx.mobile:id/list_video";
 	
-	String offlineBarId = "org.proversity.edx.mobile:id/offline_bar";
+	String offlineBarId = "org.edx.mobile:id/offline_bar";
 	
 
 	// iOS Id's

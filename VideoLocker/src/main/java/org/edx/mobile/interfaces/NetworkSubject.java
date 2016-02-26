@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.interfaces;
+package org.edx.mobile.interfaces;
 
 public interface NetworkSubject {
     public void registerNetworkObserver(NetworkObserver observer);

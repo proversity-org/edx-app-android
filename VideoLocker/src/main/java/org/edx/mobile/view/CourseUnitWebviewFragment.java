@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -21,18 +21,18 @@ import com.joanzapata.iconify.Icon;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.event.NetworkConnectivityChangeEvent;
-import org.proversity.edx.mobile.event.SessionIdRefreshEvent;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.api.AuthResponse;
-import org.proversity.edx.mobile.model.course.CourseComponent;
-import org.proversity.edx.mobile.model.course.HtmlBlockModel;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
-import org.proversity.edx.mobile.services.EdxCookieManager;
-import org.proversity.edx.mobile.services.ViewPagerDownloadManager;
-import org.proversity.edx.mobile.util.NetworkUtil;
-import org.proversity.edx.mobile.view.custom.URLInterceptorWebViewClient;
+import org.edx.mobile.R;
+import org.edx.mobile.event.NetworkConnectivityChangeEvent;
+import org.edx.mobile.event.SessionIdRefreshEvent;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.AuthResponse;
+import org.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.model.course.HtmlBlockModel;
+import org.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.services.EdxCookieManager;
+import org.edx.mobile.services.ViewPagerDownloadManager;
+import org.edx.mobile.util.NetworkUtil;
+import org.edx.mobile.view.custom.URLInterceptorWebViewClient;
 
 import java.net.HttpURLConnection;
 import java.util.HashMap;

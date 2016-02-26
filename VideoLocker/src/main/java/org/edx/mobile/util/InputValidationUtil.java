@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.util;
+package org.edx.mobile.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

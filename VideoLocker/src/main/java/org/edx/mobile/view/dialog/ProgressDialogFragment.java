@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.dialog;
+package org.edx.mobile.view.dialog;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.proversity.edx.mobile.R;
+import org.edx.mobile.R;
 
 public class ProgressDialogFragment extends DialogFragment {
 

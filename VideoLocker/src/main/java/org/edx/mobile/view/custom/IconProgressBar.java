@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.custom;
+package org.edx.mobile.view.custom;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -17,7 +17,7 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
-import org.proversity.edx.mobile.R;
+import org.edx.mobile.R;
 
 /**
  * ProgressBar with convenience methods and attributes for using

@@ -1,7 +1,7 @@
-package org.proversity.edx.mobile.http;
+package org.edx.mobile.http;
 
 import android.content.Context;
-import org.proversity.edx.mobile.view.common.TaskProcessCallback;
+import org.edx.mobile.view.common.TaskProcessCallback;
 
 import java.lang.ref.WeakReference;
 

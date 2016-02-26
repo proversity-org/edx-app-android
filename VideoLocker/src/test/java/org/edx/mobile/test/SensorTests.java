@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.test;
+package org.edx.mobile.test;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -6,7 +6,7 @@ import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
 
-import org.proversity.edx.mobile.util.OrientationDetector;
+import org.edx.mobile.util.OrientationDetector;
 import org.junit.Test;
 import org.robolectric.RuntimeEnvironment;
 

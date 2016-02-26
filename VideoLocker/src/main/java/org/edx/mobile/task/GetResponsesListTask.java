@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.task;
+package org.edx.mobile.task;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.discussion.ThreadComments;
+import org.edx.mobile.discussion.ThreadComments;
 
 public abstract class GetResponsesListTask extends Task<ThreadComments> {
 

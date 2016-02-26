@@ -1,6 +1,6 @@
-package org.proversity.edx.mobile.http;
+package org.edx.mobile.http;
 
-import org.proversity.edx.mobile.logger.Logger;
+import org.edx.mobile.logger.Logger;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

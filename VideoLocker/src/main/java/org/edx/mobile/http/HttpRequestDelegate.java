@@ -1,14 +1,14 @@
-package org.proversity.edx.mobile.http;
+package org.edx.mobile.http;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
-import org.proversity.edx.mobile.base.MainApplication;
-import org.proversity.edx.mobile.http.cache.CacheManager;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.util.NetworkUtil;
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.http.cache.CacheManager;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.util.NetworkUtil;
 
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;

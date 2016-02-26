@@ -1,11 +1,11 @@
-package org.proversity.edx.mobile.module.registration.view;
+package org.edx.mobile.module.registration.view;
 
 import android.text.InputType;
 import android.view.View;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.module.registration.model.RegistrationFormField;
-import org.proversity.edx.mobile.util.InputValidationUtil;
+import org.edx.mobile.R;
+import org.edx.mobile.module.registration.model.RegistrationFormField;
+import org.edx.mobile.util.InputValidationUtil;
 
 /**
  * Created by rohan on 2/11/15.

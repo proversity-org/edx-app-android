@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.adapters;
+package org.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.discussion.DiscussionTopic;
-import org.proversity.edx.mobile.discussion.DiscussionTopicDepth;
-import org.proversity.edx.mobile.util.ResourceUtil;
+import org.edx.mobile.R;
+import org.edx.mobile.discussion.DiscussionTopic;
+import org.edx.mobile.discussion.DiscussionTopicDepth;
+import org.edx.mobile.util.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;

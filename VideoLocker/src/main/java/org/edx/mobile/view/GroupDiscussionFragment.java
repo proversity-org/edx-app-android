@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
 
-import org.proversity.edx.mobile.R;
+import org.edx.mobile.R;
 
 public class GroupDiscussionFragment extends Fragment {
     @Override

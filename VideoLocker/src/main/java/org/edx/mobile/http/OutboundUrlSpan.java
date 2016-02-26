@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.http;
+package org.edx.mobile.http;
 
 import android.content.Context;
 import android.os.Parcel;
@@ -8,7 +8,7 @@ import android.text.Spanned;
 import android.text.style.URLSpan;
 import android.view.View;
 
-import org.proversity.edx.mobile.util.BrowserUtil;
+import org.edx.mobile.util.BrowserUtil;
 
 /**
  * Created by yervant on 1/28/15.

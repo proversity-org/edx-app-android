@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,21 +20,21 @@ import android.widget.TextView;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.discussion.DiscussionCommentPostedEvent;
-import org.proversity.edx.mobile.discussion.DiscussionPostsFilter;
-import org.proversity.edx.mobile.discussion.DiscussionPostsSort;
-import org.proversity.edx.mobile.discussion.DiscussionThread;
-import org.proversity.edx.mobile.discussion.DiscussionThreadPostedEvent;
-import org.proversity.edx.mobile.discussion.DiscussionThreadUpdatedEvent;
-import org.proversity.edx.mobile.discussion.DiscussionTopic;
-import org.proversity.edx.mobile.discussion.TopicThreads;
-import org.proversity.edx.mobile.task.GetFollowingThreadListTask;
-import org.proversity.edx.mobile.task.GetThreadListTask;
-import org.proversity.edx.mobile.view.adapters.DiscussionPostsSpinnerAdapter;
-import org.proversity.edx.mobile.view.adapters.InfiniteScrollUtils;
-import org.proversity.edx.mobile.view.common.MessageType;
-import org.proversity.edx.mobile.view.common.TaskProcessCallback;
+import org.edx.mobile.R;
+import org.edx.mobile.discussion.DiscussionCommentPostedEvent;
+import org.edx.mobile.discussion.DiscussionPostsFilter;
+import org.edx.mobile.discussion.DiscussionPostsSort;
+import org.edx.mobile.discussion.DiscussionThread;
+import org.edx.mobile.discussion.DiscussionThreadPostedEvent;
+import org.edx.mobile.discussion.DiscussionThreadUpdatedEvent;
+import org.edx.mobile.discussion.DiscussionTopic;
+import org.edx.mobile.discussion.TopicThreads;
+import org.edx.mobile.task.GetFollowingThreadListTask;
+import org.edx.mobile.task.GetThreadListTask;
+import org.edx.mobile.view.adapters.DiscussionPostsSpinnerAdapter;
+import org.edx.mobile.view.adapters.InfiniteScrollUtils;
+import org.edx.mobile.view.common.MessageType;
+import org.edx.mobile.view.common.TaskProcessCallback;
 
 import java.util.Collections;
 

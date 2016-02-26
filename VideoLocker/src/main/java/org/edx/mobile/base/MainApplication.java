@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.base;
+package org.edx.mobile.base;
 
 
 import android.app.Activity;
@@ -16,19 +16,19 @@ import com.newrelic.agent.android.NewRelic;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 
-import org.proversity.edx.mobile.BuildConfig;
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.core.EdxDefaultModule;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.module.notification.NotificationDelegate;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
-import org.proversity.edx.mobile.module.storage.IStorage;
-import org.proversity.edx.mobile.services.EdxCookieManager;
-import org.proversity.edx.mobile.util.Config;
-import org.proversity.edx.mobile.util.NetworkUtil;
-import org.proversity.edx.mobile.util.PropertyUtil;
-import org.proversity.edx.mobile.view.Router;
+import org.edx.mobile.BuildConfig;
+import org.edx.mobile.R;
+import org.edx.mobile.core.EdxDefaultModule;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.notification.NotificationDelegate;
+import org.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.module.storage.IStorage;
+import org.edx.mobile.services.EdxCookieManager;
+import org.edx.mobile.util.Config;
+import org.edx.mobile.util.NetworkUtil;
+import org.edx.mobile.util.PropertyUtil;
+import org.edx.mobile.view.Router;
 
 import java.util.Locale;
 

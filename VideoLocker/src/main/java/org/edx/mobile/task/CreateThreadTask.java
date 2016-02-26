@@ -1,9 +1,9 @@
-package org.proversity.edx.mobile.task;
+package org.edx.mobile.task;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.discussion.DiscussionThread;
-import org.proversity.edx.mobile.discussion.ThreadBody;
+import org.edx.mobile.discussion.DiscussionThread;
+import org.edx.mobile.discussion.ThreadBody;
 
 public abstract class CreateThreadTask extends
 Task<DiscussionThread> {

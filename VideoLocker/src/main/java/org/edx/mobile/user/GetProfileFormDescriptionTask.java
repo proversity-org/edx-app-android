@@ -1,12 +1,12 @@
-package org.proversity.edx.mobile.user;
+package org.edx.mobile.user;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 
-import org.proversity.edx.mobile.module.registration.model.RegistrationDescription;
-import org.proversity.edx.mobile.task.Task;
+import org.edx.mobile.module.registration.model.RegistrationDescription;
+import org.edx.mobile.task.Task;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

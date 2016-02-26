@@ -1,10 +1,10 @@
-package org.proversity.edx.mobile.module.registration.view;
+package org.edx.mobile.module.registration.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
 
-import org.proversity.edx.mobile.module.registration.model.RegistrationOption;
-import org.proversity.edx.mobile.view.custom.CustomSelectView;
+import org.edx.mobile.module.registration.model.RegistrationOption;
+import org.edx.mobile.view.custom.CustomSelectView;
 
 /**
  * Created by rohan on 2/16/15.

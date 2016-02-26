@@ -1,9 +1,9 @@
-package org.proversity.edx.mobile.test;
+package org.edx.mobile.test;
 
 
-import org.proversity.edx.mobile.model.api.CourseEntry;
-import org.proversity.edx.mobile.module.notification.EdxLocalParseChannel;
-import org.proversity.edx.mobile.module.notification.NotificationPreference;
+import org.edx.mobile.model.api.CourseEntry;
+import org.edx.mobile.module.notification.EdxLocalParseChannel;
+import org.edx.mobile.module.notification.NotificationPreference;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.test;
+package org.edx.mobile.test;
 
 import android.content.Context;
 
@@ -9,10 +9,10 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
 
-import org.proversity.edx.mobile.CustomRobolectricTestRunner;
-import org.proversity.edx.mobile.core.EdxDefaultModule;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.util.Config;
+import org.edx.mobile.CustomRobolectricTestRunner;
+import org.edx.mobile.core.EdxDefaultModule;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.util.Config;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;

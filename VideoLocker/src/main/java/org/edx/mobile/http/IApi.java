@@ -1,23 +1,23 @@
-package org.proversity.edx.mobile.http;
+package org.edx.mobile.http;
 
 import android.os.Bundle;
 
-import org.proversity.edx.mobile.interfaces.SectionItemInterface;
-import org.proversity.edx.mobile.model.api.AnnouncementsModel;
-import org.proversity.edx.mobile.model.api.AuthResponse;
-import org.proversity.edx.mobile.model.api.CourseInfoModel;
-import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.proversity.edx.mobile.model.api.HandoutModel;
-import org.proversity.edx.mobile.model.api.LectureModel;
-import org.proversity.edx.mobile.model.api.ProfileModel;
-import org.proversity.edx.mobile.model.api.RegisterResponse;
-import org.proversity.edx.mobile.model.api.ResetPasswordResponse;
-import org.proversity.edx.mobile.model.api.SectionEntry;
-import org.proversity.edx.mobile.model.api.SyncLastAccessedSubsectionResponse;
-import org.proversity.edx.mobile.model.api.VideoResponseModel;
-import org.proversity.edx.mobile.module.registration.model.RegistrationDescription;
-import org.proversity.edx.mobile.social.SocialFactory;
-import org.proversity.edx.mobile.social.SocialMember;
+import org.edx.mobile.interfaces.SectionItemInterface;
+import org.edx.mobile.model.api.AnnouncementsModel;
+import org.edx.mobile.model.api.AuthResponse;
+import org.edx.mobile.model.api.CourseInfoModel;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.model.api.HandoutModel;
+import org.edx.mobile.model.api.LectureModel;
+import org.edx.mobile.model.api.ProfileModel;
+import org.edx.mobile.model.api.RegisterResponse;
+import org.edx.mobile.model.api.ResetPasswordResponse;
+import org.edx.mobile.model.api.SectionEntry;
+import org.edx.mobile.model.api.SyncLastAccessedSubsectionResponse;
+import org.edx.mobile.model.api.VideoResponseModel;
+import org.edx.mobile.module.registration.model.RegistrationDescription;
+import org.edx.mobile.social.SocialFactory;
+import org.edx.mobile.social.SocialMember;
 
 import java.net.HttpCookie;
 import java.util.ArrayList;

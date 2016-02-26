@@ -1,9 +1,9 @@
-package org.proversity.edx.mobile.task;
+package org.edx.mobile.task;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.discussion.DiscussionComment;
-import org.proversity.edx.mobile.discussion.ResponseBody;
+import org.edx.mobile.discussion.DiscussionComment;
+import org.edx.mobile.discussion.ResponseBody;
 
 public abstract class CreateResponseTask extends
 Task<DiscussionComment> {

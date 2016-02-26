@@ -1,7 +1,7 @@
-package org.proversity.edx.mobile.test;
+package org.edx.mobile.test;
 
-import org.proversity.edx.mobile.util.DateUtil;
-import org.proversity.edx.mobile.util.EmailUtil;
+import org.edx.mobile.util.DateUtil;
+import org.edx.mobile.util.EmailUtil;
 import org.junit.Test;
 
 import java.text.ParseException;

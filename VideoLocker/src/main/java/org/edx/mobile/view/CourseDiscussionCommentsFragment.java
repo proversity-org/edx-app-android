@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -14,12 +14,12 @@ import android.widget.TextView;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.discussion.DiscussionComment;
-import org.proversity.edx.mobile.discussion.DiscussionCommentPostedEvent;
-import org.proversity.edx.mobile.discussion.DiscussionUtils;
-import org.proversity.edx.mobile.task.FlagCommentTask;
-import org.proversity.edx.mobile.view.adapters.DiscussionCommentsAdapter;
+import org.edx.mobile.R;
+import org.edx.mobile.discussion.DiscussionComment;
+import org.edx.mobile.discussion.DiscussionCommentPostedEvent;
+import org.edx.mobile.discussion.DiscussionUtils;
+import org.edx.mobile.task.FlagCommentTask;
+import org.edx.mobile.view.adapters.DiscussionCommentsAdapter;
 
 import de.greenrobot.event.EventBus;
 import roboguice.fragment.RoboFragment;

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package org.proversity.edx.mobile.third_party.subscaleview;
+package org.edx.mobile.third_party.subscaleview;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -45,12 +45,12 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.proversity.edx.mobile.third_party.subscaleview.decoder.CompatDecoderFactory;
-import org.proversity.edx.mobile.third_party.subscaleview.decoder.DecoderFactory;
-import org.proversity.edx.mobile.third_party.subscaleview.decoder.ImageDecoder;
-import org.proversity.edx.mobile.third_party.subscaleview.decoder.ImageRegionDecoder;
-import org.proversity.edx.mobile.third_party.subscaleview.decoder.SkiaImageDecoder;
-import org.proversity.edx.mobile.third_party.subscaleview.decoder.SkiaImageRegionDecoder;
+import org.edx.mobile.third_party.subscaleview.decoder.CompatDecoderFactory;
+import org.edx.mobile.third_party.subscaleview.decoder.DecoderFactory;
+import org.edx.mobile.third_party.subscaleview.decoder.ImageDecoder;
+import org.edx.mobile.third_party.subscaleview.decoder.ImageRegionDecoder;
+import org.edx.mobile.third_party.subscaleview.decoder.SkiaImageDecoder;
+import org.edx.mobile.third_party.subscaleview.decoder.SkiaImageRegionDecoder;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;

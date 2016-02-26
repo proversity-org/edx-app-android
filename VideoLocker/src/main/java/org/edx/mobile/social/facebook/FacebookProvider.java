@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.social.facebook;
+package org.edx.mobile.social.facebook;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,22 +21,22 @@ import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.api.CourseEntry;
-import org.proversity.edx.mobile.model.json.FriendListResponse;
-import org.proversity.edx.mobile.model.json.GroupListResponse;
-import org.proversity.edx.mobile.social.SocialFactory;
-import org.proversity.edx.mobile.social.SocialGroup;
-import org.proversity.edx.mobile.social.SocialLoginDelegate;
-import org.proversity.edx.mobile.social.SocialMember;
-import org.proversity.edx.mobile.social.SocialProvider;
-import org.proversity.edx.mobile.task.social.CreateGroupTask;
-import org.proversity.edx.mobile.task.social.InviteFriendsListToGroupTask;
-import org.proversity.edx.mobile.module.facebook.FacebookSessionUtil;
-import org.proversity.edx.mobile.util.Config;
-import org.proversity.edx.mobile.util.ResourceUtil;
-import org.proversity.edx.mobile.util.SocialUtils;
+import org.edx.mobile.R;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.CourseEntry;
+import org.edx.mobile.model.json.FriendListResponse;
+import org.edx.mobile.model.json.GroupListResponse;
+import org.edx.mobile.social.SocialFactory;
+import org.edx.mobile.social.SocialGroup;
+import org.edx.mobile.social.SocialLoginDelegate;
+import org.edx.mobile.social.SocialMember;
+import org.edx.mobile.social.SocialProvider;
+import org.edx.mobile.task.social.CreateGroupTask;
+import org.edx.mobile.task.social.InviteFriendsListToGroupTask;
+import org.edx.mobile.module.facebook.FacebookSessionUtil;
+import org.edx.mobile.util.Config;
+import org.edx.mobile.util.ResourceUtil;
+import org.edx.mobile.util.SocialUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

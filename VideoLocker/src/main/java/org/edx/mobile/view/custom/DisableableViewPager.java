@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.custom;
+package org.edx.mobile.view.custom;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

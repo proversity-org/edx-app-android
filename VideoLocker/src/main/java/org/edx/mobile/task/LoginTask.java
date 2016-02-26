@@ -1,9 +1,9 @@
-package org.proversity.edx.mobile.task;
+package org.edx.mobile.task;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.model.api.AuthResponse;
-import org.proversity.edx.mobile.services.ServiceManager;
+import org.edx.mobile.model.api.AuthResponse;
+import org.edx.mobile.services.ServiceManager;
 
 /**
  * This task represents Task for login by edX username and password.

@@ -1,7 +1,7 @@
-package org.proversity.edx.mobile.social.google;
+package org.edx.mobile.social.google;
 
 import java.io.IOException;
-import org.proversity.edx.mobile.social.ISocialImpl;
+import org.edx.mobile.social.ISocialImpl;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;

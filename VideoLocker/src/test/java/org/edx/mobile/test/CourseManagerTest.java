@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.test;
+package org.edx.mobile.test;
 
-import org.proversity.edx.mobile.model.course.CourseStructureV1Model;
-import org.proversity.edx.mobile.model.course.IBlock;
-import org.proversity.edx.mobile.services.CourseManager;
+import org.edx.mobile.model.course.CourseStructureV1Model;
+import org.edx.mobile.model.course.IBlock;
+import org.edx.mobile.services.CourseManager;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

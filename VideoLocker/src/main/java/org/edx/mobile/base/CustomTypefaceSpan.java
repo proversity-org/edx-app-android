@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.base;
+package org.edx.mobile.base;
 
 import android.content.Context;
 import android.graphics.Paint;

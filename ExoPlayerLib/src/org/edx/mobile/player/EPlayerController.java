@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.proversity.edx.mobile.player;
+package org.edx.mobile.player;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -22,10 +22,10 @@ import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
 
-import org.proversity.edx.mobile.player.IVideo.IClosedCaption;
-import org.proversity.edx.mobile.view.custom.SettingPopup;
-import org.proversity.edx.mobile.view.custom.cc.CCLanguageDialogFragment;
-import org.proversity.edx.mobile.view.custom.speed.SpeedDialogFragment;
+import org.edx.mobile.player.IVideo.IClosedCaption;
+import org.edx.mobile.view.custom.SettingPopup;
+import org.edx.mobile.view.custom.cc.CCLanguageDialogFragment;
+import org.edx.mobile.view.custom.speed.SpeedDialogFragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

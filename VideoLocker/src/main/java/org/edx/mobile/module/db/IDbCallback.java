@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.module.db;
+package org.edx.mobile.module.db;
 
 /**
  * This is callback interface for database operations. Each database operation either sends back a result or 

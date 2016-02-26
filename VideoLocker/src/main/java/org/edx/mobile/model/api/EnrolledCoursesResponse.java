@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.model.api;
+package org.edx.mobile.model.api;
 
 import android.text.TextUtils;
 
-import org.proversity.edx.mobile.interfaces.SectionItemInterface;
+import org.edx.mobile.interfaces.SectionItemInterface;
 
 @SuppressWarnings("serial")
 public class EnrolledCoursesResponse implements SectionItemInterface {

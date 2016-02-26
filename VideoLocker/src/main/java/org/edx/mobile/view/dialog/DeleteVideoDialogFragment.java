@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.dialog;
+package org.edx.mobile.view.dialog;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.logger.Logger;
+import org.edx.mobile.R;
+import org.edx.mobile.logger.Logger;
 
 import java.util.Map;
 

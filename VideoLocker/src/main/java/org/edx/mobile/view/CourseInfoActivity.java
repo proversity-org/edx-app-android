@@ -1,11 +1,11 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.os.Bundle;
 import android.webkit.WebView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.FindCoursesBaseActivity;
-import org.proversity.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.R;
+import org.edx.mobile.base.FindCoursesBaseActivity;
+import org.edx.mobile.module.analytics.ISegment;
 
 import roboguice.inject.ContentView;
 

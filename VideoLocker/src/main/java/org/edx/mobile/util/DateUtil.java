@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.util;
+package org.edx.mobile.util;
 
 import android.annotation.SuppressLint;
 import android.text.format.DateUtils;
@@ -6,7 +6,7 @@ import android.text.format.DateUtils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.proversity.edx.mobile.logger.Logger;
+import org.edx.mobile.logger.Logger;
 
 @SuppressLint("SimpleDateFormat")
 public class DateUtil {

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.custom;
+package org.edx.mobile.view.custom;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.proversity.edx.mobile.R;
+import org.edx.mobile.R;
 
-import static org.proversity.edx.mobile.R.*;
+import static org.edx.mobile.R.*;
 
 /**
  * custom view to support 3 type of text decoration for one row

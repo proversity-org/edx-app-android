@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.http.model;
+package org.edx.mobile.http.model;
 
 
 import java.io.Serializable;

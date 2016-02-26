@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.event;
+package org.edx.mobile.event;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;

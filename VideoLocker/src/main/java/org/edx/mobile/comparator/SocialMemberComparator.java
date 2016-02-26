@@ -1,6 +1,6 @@
-package org.proversity.edx.mobile.comparator;
+package org.edx.mobile.comparator;
 
-import org.proversity.edx.mobile.social.SocialMember;
+import org.edx.mobile.social.SocialMember;
 
 import java.text.Collator;
 import java.util.Comparator;

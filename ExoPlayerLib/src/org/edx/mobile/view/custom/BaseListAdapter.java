@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.custom;
+package org.edx.mobile.view.custom;
 
 import java.util.ArrayList;
 import java.util.List;

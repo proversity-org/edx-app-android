@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.dialog;
+package org.edx.mobile.view.dialog;
 
 import java.util.HashMap;
 

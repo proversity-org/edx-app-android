@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proversity.edx.mobile.player;
+package org.edx.mobile.player;
 
-import org.proversity.edx.mobile.player.PlayerDemoActivity.RendererBuilder;
-import org.proversity.edx.mobile.player.PlayerDemoActivity.RendererBuilderCallback;
+import org.edx.mobile.player.PlayerDemoActivity.RendererBuilder;
+import org.edx.mobile.player.PlayerDemoActivity.RendererBuilderCallback;
 
 import android.app.Activity;
 import android.media.MediaCodec;

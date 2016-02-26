@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.user;
+package org.edx.mobile.user;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.proversity.edx.mobile.module.registration.model.ErrorMessage;
+import org.edx.mobile.module.registration.model.ErrorMessage;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.view_holders;
+package org.edx.mobile.view.view_holders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,10 +6,10 @@ import android.widget.TextView;
 
 import com.joanzapata.iconify.widget.IconImageView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.discussion.DiscussionComment;
-import org.proversity.edx.mobile.discussion.DiscussionThread;
-import org.proversity.edx.mobile.util.ResourceUtil;
+import org.edx.mobile.R;
+import org.edx.mobile.discussion.DiscussionComment;
+import org.edx.mobile.discussion.DiscussionThread;
+import org.edx.mobile.util.ResourceUtil;
 
 public class DiscussionSocialLayoutViewHolder extends RecyclerView.ViewHolder {
 

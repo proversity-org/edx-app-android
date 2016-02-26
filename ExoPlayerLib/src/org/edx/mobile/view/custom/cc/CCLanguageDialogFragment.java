@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.view.custom.cc;
+package org.edx.mobile.view.custom.cc;
 
 import java.util.List;
 
-import org.proversity.edx.mobile.player.IVideo.IClosedCaption;
+import org.edx.mobile.player.IVideo.IClosedCaption;
 
 import android.app.DialogFragment;
 import android.content.Context;

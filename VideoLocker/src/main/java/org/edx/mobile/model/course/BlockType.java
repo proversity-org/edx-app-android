@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.model.course;
+package org.edx.mobile.model.course;
 
 /**
  * Created by hanning on 5/21/15.

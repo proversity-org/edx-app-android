@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.task;
+package org.edx.mobile.task;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.discussion.TopicThreads;
+import org.edx.mobile.discussion.TopicThreads;
 
 public abstract class SearchThreadListTask extends
         Task<TopicThreads> {

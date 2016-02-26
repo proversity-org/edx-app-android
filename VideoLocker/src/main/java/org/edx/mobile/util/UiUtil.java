@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.util;
+package org.edx.mobile.util;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.MainApplication;
-import org.proversity.edx.mobile.logger.Logger;
+import org.edx.mobile.R;
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.logger.Logger;
 
 /**
  * Created by marcashman on 2014-12-02.

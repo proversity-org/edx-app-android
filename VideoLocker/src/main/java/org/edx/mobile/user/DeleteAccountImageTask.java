@@ -1,11 +1,11 @@
-package org.proversity.edx.mobile.user;
+package org.edx.mobile.user;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.task.Task;
+import org.edx.mobile.task.Task;
 
 public abstract class DeleteAccountImageTask extends
         Task<Void> {

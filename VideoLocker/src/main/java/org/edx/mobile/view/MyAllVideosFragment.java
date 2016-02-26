@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.MyVideosBaseFragment;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.util.AppConstants;
-import org.proversity.edx.mobile.view.adapters.MyAllVideoCourseAdapter;
+import org.edx.mobile.R;
+import org.edx.mobile.base.MyVideosBaseFragment;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.util.AppConstants;
+import org.edx.mobile.view.adapters.MyAllVideoCourseAdapter;
 
 import java.util.ArrayList;
 

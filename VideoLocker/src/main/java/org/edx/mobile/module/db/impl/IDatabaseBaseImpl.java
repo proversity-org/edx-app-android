@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.module.db.impl;
+package org.edx.mobile.module.db.impl;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.logger.Logger;
+import org.edx.mobile.logger.Logger;
 
 import java.util.LinkedList;
 import java.util.Queue;

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,12 +24,12 @@ import com.joanzapata.iconify.Icon;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.user.FormField;
-import org.proversity.edx.mobile.user.FormOption;
-import org.proversity.edx.mobile.user.FormOptions;
-import org.proversity.edx.mobile.user.GetFormOptionsTask;
-import org.proversity.edx.mobile.util.ResourceUtil;
+import org.edx.mobile.R;
+import org.edx.mobile.user.FormField;
+import org.edx.mobile.user.FormOption;
+import org.edx.mobile.user.FormOptions;
+import org.edx.mobile.user.GetFormOptionsTask;
+import org.edx.mobile.util.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;

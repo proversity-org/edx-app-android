@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.module.prefs;
+package org.edx.mobile.module.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
@@ -7,13 +7,13 @@ import android.support.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.proversity.edx.mobile.base.MainApplication;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.api.AuthResponse;
-import org.proversity.edx.mobile.model.api.ProfileModel;
-import org.proversity.edx.mobile.services.EdxCookieManager;
-import org.proversity.edx.mobile.util.DateUtil;
-import org.proversity.edx.mobile.util.Sha1Util;
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.AuthResponse;
+import org.edx.mobile.model.api.ProfileModel;
+import org.edx.mobile.services.EdxCookieManager;
+import org.edx.mobile.util.DateUtil;
+import org.edx.mobile.util.Sha1Util;
 
 /**
  * This is a Utility for reading and writing to shared preferences.

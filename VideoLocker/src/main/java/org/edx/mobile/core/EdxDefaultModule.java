@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.core;
+package org.edx.mobile.core;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -6,28 +6,28 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.google.inject.AbstractModule;
 import com.squareup.okhttp.OkHttpClient;
 
-import org.proversity.edx.mobile.base.MainApplication;
-import org.proversity.edx.mobile.discussion.DiscussionTextUtils;
-import org.proversity.edx.mobile.http.Api;
-import org.proversity.edx.mobile.http.IApi;
-import org.proversity.edx.mobile.http.OkHttpUtil;
-import org.proversity.edx.mobile.http.RestApiManager;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.module.analytics.ISegmentEmptyImpl;
-import org.proversity.edx.mobile.module.analytics.ISegmentImpl;
-import org.proversity.edx.mobile.module.analytics.ISegmentTracker;
-import org.proversity.edx.mobile.module.analytics.ISegmentTrackerImpl;
-import org.proversity.edx.mobile.module.db.IDatabase;
-import org.proversity.edx.mobile.module.db.impl.IDatabaseImpl;
-import org.proversity.edx.mobile.module.download.IDownloadManager;
-import org.proversity.edx.mobile.module.download.IDownloadManagerImpl;
-import org.proversity.edx.mobile.module.notification.DummyNotificationDelegate;
-import org.proversity.edx.mobile.module.notification.NotificationDelegate;
-import org.proversity.edx.mobile.module.notification.ParseNotificationDelegate;
-import org.proversity.edx.mobile.module.storage.IStorage;
-import org.proversity.edx.mobile.module.storage.Storage;
-import org.proversity.edx.mobile.util.BrowserUtil;
-import org.proversity.edx.mobile.util.Config;
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.discussion.DiscussionTextUtils;
+import org.edx.mobile.http.Api;
+import org.edx.mobile.http.IApi;
+import org.edx.mobile.http.OkHttpUtil;
+import org.edx.mobile.http.RestApiManager;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.analytics.ISegmentEmptyImpl;
+import org.edx.mobile.module.analytics.ISegmentImpl;
+import org.edx.mobile.module.analytics.ISegmentTracker;
+import org.edx.mobile.module.analytics.ISegmentTrackerImpl;
+import org.edx.mobile.module.db.IDatabase;
+import org.edx.mobile.module.db.impl.IDatabaseImpl;
+import org.edx.mobile.module.download.IDownloadManager;
+import org.edx.mobile.module.download.IDownloadManagerImpl;
+import org.edx.mobile.module.notification.DummyNotificationDelegate;
+import org.edx.mobile.module.notification.NotificationDelegate;
+import org.edx.mobile.module.notification.ParseNotificationDelegate;
+import org.edx.mobile.module.storage.IStorage;
+import org.edx.mobile.module.storage.Storage;
+import org.edx.mobile.util.BrowserUtil;
+import org.edx.mobile.util.Config;
 
 import retrofit.RestAdapter;
 

@@ -1,17 +1,17 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.MainApplication;
-import org.proversity.edx.mobile.model.course.CourseComponent;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
-import org.proversity.edx.mobile.services.CourseManager;
-import org.proversity.edx.mobile.services.LastAccessManager;
+import org.edx.mobile.R;
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.services.CourseManager;
+import org.edx.mobile.services.LastAccessManager;
 
 
 /**

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.adapters;
+package org.edx.mobile.view.adapters;
 
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.joanzapata.iconify.widget.IconImageView;
 
-import org.proversity.edx.mobile.R;
+import org.edx.mobile.R;
 
 public class DiscussionReportViewHolder {
 

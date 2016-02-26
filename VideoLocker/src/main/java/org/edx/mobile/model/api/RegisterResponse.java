@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.model.api;
+package org.edx.mobile.model.api;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.proversity.edx.mobile.module.registration.view.IRegistrationFieldView;
+import org.edx.mobile.module.registration.view.IRegistrationFieldView;
 
 import java.util.List;
 

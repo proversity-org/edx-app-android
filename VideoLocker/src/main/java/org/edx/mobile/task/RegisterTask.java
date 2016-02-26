@@ -1,13 +1,13 @@
-package org.proversity.edx.mobile.task;
+package org.edx.mobile.task;
 
 import android.content.Context;
 import android.os.Bundle;
 
-import org.proversity.edx.mobile.model.api.AuthResponse;
-import org.proversity.edx.mobile.model.api.ProfileModel;
-import org.proversity.edx.mobile.model.api.RegisterResponse;
-import org.proversity.edx.mobile.services.ServiceManager;
-import org.proversity.edx.mobile.social.SocialFactory;
+import org.edx.mobile.model.api.AuthResponse;
+import org.edx.mobile.model.api.ProfileModel;
+import org.edx.mobile.model.api.RegisterResponse;
+import org.edx.mobile.services.ServiceManager;
+import org.edx.mobile.social.SocialFactory;
 
 
 public abstract class RegisterTask extends Task<RegisterResponse> {

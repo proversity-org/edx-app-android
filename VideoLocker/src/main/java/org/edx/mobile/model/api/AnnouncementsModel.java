@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.model.api;
+package org.edx.mobile.model.api;
 
 import android.os.Parcel;
 import android.os.Parcelable;

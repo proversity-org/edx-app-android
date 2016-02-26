@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package org.proversity.edx.mobile.third_party.subscaleview;
+package org.edx.mobile.third_party.subscaleview;
 
 import android.graphics.PointF;
 

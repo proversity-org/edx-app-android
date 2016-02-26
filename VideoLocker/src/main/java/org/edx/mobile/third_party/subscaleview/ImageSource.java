@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.third_party.subscaleview;
+package org.edx.mobile.third_party.subscaleview;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;

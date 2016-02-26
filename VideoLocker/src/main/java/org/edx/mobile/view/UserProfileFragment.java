@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -21,17 +21,17 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.event.AccountUpdatedEvent;
-import org.proversity.edx.mobile.event.ProfilePhotoUpdatedEvent;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.api.ProfileModel;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
-import org.proversity.edx.mobile.user.Account;
-import org.proversity.edx.mobile.user.GetAccountTask;
-import org.proversity.edx.mobile.util.InvalidLocaleException;
-import org.proversity.edx.mobile.util.LocaleUtils;
+import org.edx.mobile.R;
+import org.edx.mobile.event.AccountUpdatedEvent;
+import org.edx.mobile.event.ProfilePhotoUpdatedEvent;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.ProfileModel;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.user.Account;
+import org.edx.mobile.user.GetAccountTask;
+import org.edx.mobile.util.InvalidLocaleException;
+import org.edx.mobile.util.LocaleUtils;
 
 import de.greenrobot.event.EventBus;
 import roboguice.fragment.RoboFragment;

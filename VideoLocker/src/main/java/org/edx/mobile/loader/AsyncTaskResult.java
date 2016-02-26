@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.loader;
+package org.edx.mobile.loader;
 
 public class AsyncTaskResult<T> {
 

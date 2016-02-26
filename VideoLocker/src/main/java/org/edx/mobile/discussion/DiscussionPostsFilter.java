@@ -1,9 +1,9 @@
-package org.proversity.edx.mobile.discussion;
+package org.edx.mobile.discussion;
 
 import android.support.annotation.StringRes;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.interfaces.TextResourceProvider;
+import org.edx.mobile.R;
+import org.edx.mobile.interfaces.TextResourceProvider;
 
 /**
  * Filter options for discussion posts.

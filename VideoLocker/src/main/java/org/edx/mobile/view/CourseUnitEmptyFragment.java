@@ -1,13 +1,13 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.model.course.CourseComponent;
-import org.proversity.edx.mobile.services.ViewPagerDownloadManager;
+import org.edx.mobile.R;
+import org.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.services.ViewPagerDownloadManager;
 
 /**
  *

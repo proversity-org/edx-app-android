@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.module.prefs;
+package org.edx.mobile.module.prefs;
 
 
 import android.content.Context;
@@ -8,8 +8,8 @@ import android.support.annotation.Nullable;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.api.ProfileModel;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.ProfileModel;
 
 import java.io.File;
 import java.io.IOException;

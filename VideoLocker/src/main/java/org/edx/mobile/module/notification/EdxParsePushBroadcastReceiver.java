@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.module.notification;
+package org.edx.mobile.module.notification;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -12,11 +12,11 @@ import com.google.inject.Inject;
 import com.parse.ParseAnalytics;
 import com.parse.ParsePushBroadcastReceiver;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.MainApplication;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.view.MyCoursesListActivity;
-import org.proversity.edx.mobile.view.Router;
+import org.edx.mobile.R;
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.view.MyCoursesListActivity;
+import org.edx.mobile.view.Router;
 
 import java.util.Random;
 

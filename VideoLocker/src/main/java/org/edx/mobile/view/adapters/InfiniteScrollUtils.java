@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.adapters;
+package org.edx.mobile.view.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +9,7 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import org.proversity.edx.mobile.R;
+import org.edx.mobile.R;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;

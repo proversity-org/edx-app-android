@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.module.facebook;
+package org.edx.mobile.module.facebook;
 
 import android.app.Activity;
 import android.content.Intent;

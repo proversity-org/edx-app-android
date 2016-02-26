@@ -1,7 +1,7 @@
-package org.proversity.edx.mobile.model.course;
+package org.edx.mobile.model.course;
 
-import org.proversity.edx.mobile.model.db.DownloadEntry;
-import org.proversity.edx.mobile.module.storage.IStorage;
+import org.edx.mobile.model.db.DownloadEntry;
+import org.edx.mobile.module.storage.IStorage;
 
 /**
  * Created by hanning on 5/20/15.

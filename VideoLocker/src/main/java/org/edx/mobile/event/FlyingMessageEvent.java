@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.event;
+package org.edx.mobile.event;
 
 /**
  * Created by hanning on 4/16/15.

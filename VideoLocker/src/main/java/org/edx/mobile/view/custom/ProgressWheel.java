@@ -1,6 +1,6 @@
-package org.proversity.edx.mobile.view.custom;
+package org.edx.mobile.view.custom;
 
-import org.proversity.edx.mobile.R;
+import org.edx.mobile.R;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;

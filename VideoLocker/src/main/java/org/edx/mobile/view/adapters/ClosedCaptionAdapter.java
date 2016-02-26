@@ -1,12 +1,12 @@
-package org.proversity.edx.mobile.view.adapters;
+package org.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.R;
+import org.edx.mobile.core.IEdxEnvironment;
 
 import java.util.HashMap;
 

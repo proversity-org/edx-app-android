@@ -1,7 +1,7 @@
-package org.proversity.edx.mobile.discussion;
+package org.edx.mobile.discussion;
 
-import org.proversity.edx.mobile.http.RetroHttpException;
-import org.proversity.edx.mobile.logger.Logger;
+import org.edx.mobile.http.RetroHttpException;
+import org.edx.mobile.logger.Logger;
 
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;

@@ -1,14 +1,14 @@
-package org.proversity.edx.mobile.services;
+package org.edx.mobile.services;
 
 import android.view.View;
 
-import org.proversity.edx.mobile.base.MainApplication;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.api.ProfileModel;
-import org.proversity.edx.mobile.model.api.SyncLastAccessedSubsectionResponse;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
-import org.proversity.edx.mobile.task.GetLastAccessedTask;
-import org.proversity.edx.mobile.task.SyncLastAccessedTask;
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.ProfileModel;
+import org.edx.mobile.model.api.SyncLastAccessedSubsectionResponse;
+import org.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.task.GetLastAccessedTask;
+import org.edx.mobile.task.SyncLastAccessedTask;
 
 /**
  * This can be injected in the future when we use DI

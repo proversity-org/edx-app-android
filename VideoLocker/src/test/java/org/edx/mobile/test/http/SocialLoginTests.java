@@ -1,7 +1,7 @@
-package org.proversity.edx.mobile.test.http;
+package org.edx.mobile.test.http;
 
-import org.proversity.edx.mobile.http.Api;
-import org.proversity.edx.mobile.model.api.ProfileModel;
+import org.edx.mobile.http.Api;
+import org.edx.mobile.model.api.ProfileModel;
 import org.junit.Test;
 import org.robolectric.RuntimeEnvironment;
 

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.discussion;
+package org.edx.mobile.discussion;
 
 import android.support.annotation.NonNull;
 

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -15,13 +15,13 @@ import android.webkit.WebView;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.services.EdxCookieManager;
-import org.proversity.edx.mobile.util.ResourceUtil;
-import org.proversity.edx.mobile.util.images.ShareUtils;
-import org.proversity.edx.mobile.view.custom.URLInterceptorWebViewClient;
+import org.edx.mobile.R;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.services.EdxCookieManager;
+import org.edx.mobile.util.ResourceUtil;
+import org.edx.mobile.util.images.ShareUtils;
+import org.edx.mobile.view.custom.URLInterceptorWebViewClient;
 
 import java.util.HashMap;
 import java.util.Map;

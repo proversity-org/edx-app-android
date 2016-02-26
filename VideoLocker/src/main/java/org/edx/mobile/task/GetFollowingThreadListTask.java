@@ -1,11 +1,11 @@
-package org.proversity.edx.mobile.task;
+package org.edx.mobile.task;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.discussion.DiscussionPostsFilter;
-import org.proversity.edx.mobile.discussion.DiscussionPostsSort;
-import org.proversity.edx.mobile.discussion.TopicThreads;
-import org.proversity.edx.mobile.http.RetroHttpException;
+import org.edx.mobile.discussion.DiscussionPostsFilter;
+import org.edx.mobile.discussion.DiscussionPostsSort;
+import org.edx.mobile.discussion.TopicThreads;
+import org.edx.mobile.http.RetroHttpException;
 
 public abstract class GetFollowingThreadListTask extends Task<TopicThreads> {
     private static final int PAGE_SIZE = 20;

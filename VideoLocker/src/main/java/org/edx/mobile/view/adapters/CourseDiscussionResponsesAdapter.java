@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.adapters;
+package org.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,21 +12,21 @@ import android.widget.TextView;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.widget.IconImageView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.discussion.DiscussionComment;
-import org.proversity.edx.mobile.discussion.DiscussionTextUtils;
-import org.proversity.edx.mobile.discussion.DiscussionThread;
-import org.proversity.edx.mobile.discussion.DiscussionThreadUpdatedEvent;
-import org.proversity.edx.mobile.task.FlagCommentTask;
-import org.proversity.edx.mobile.task.FlagThreadTask;
-import org.proversity.edx.mobile.task.FollowThreadTask;
-import org.proversity.edx.mobile.task.VoteCommentTask;
-import org.proversity.edx.mobile.task.VoteThreadTask;
-import org.proversity.edx.mobile.util.ResourceUtil;
-import org.proversity.edx.mobile.util.UiUtil;
-import org.proversity.edx.mobile.view.view_holders.AuthorLayoutViewHolder;
-import org.proversity.edx.mobile.view.view_holders.DiscussionSocialLayoutViewHolder;
-import org.proversity.edx.mobile.view.view_holders.NumberResponsesViewHolder;
+import org.edx.mobile.R;
+import org.edx.mobile.discussion.DiscussionComment;
+import org.edx.mobile.discussion.DiscussionTextUtils;
+import org.edx.mobile.discussion.DiscussionThread;
+import org.edx.mobile.discussion.DiscussionThreadUpdatedEvent;
+import org.edx.mobile.task.FlagCommentTask;
+import org.edx.mobile.task.FlagThreadTask;
+import org.edx.mobile.task.FollowThreadTask;
+import org.edx.mobile.task.VoteCommentTask;
+import org.edx.mobile.task.VoteThreadTask;
+import org.edx.mobile.util.ResourceUtil;
+import org.edx.mobile.util.UiUtil;
+import org.edx.mobile.view.view_holders.AuthorLayoutViewHolder;
+import org.edx.mobile.view.view_holders.DiscussionSocialLayoutViewHolder;
+import org.edx.mobile.view.view_holders.NumberResponsesViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

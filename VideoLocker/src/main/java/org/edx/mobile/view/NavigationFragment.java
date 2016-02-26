@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,23 +25,23 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.BaseFragmentActivity;
-import org.proversity.edx.mobile.core.IEdxEnvironment;
-import org.proversity.edx.mobile.event.ProfilePhotoUpdatedEvent;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.api.ProfileModel;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.module.facebook.IUiLifecycleHelper;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
-import org.proversity.edx.mobile.user.Account;
-import org.proversity.edx.mobile.user.GetAccountTask;
-import org.proversity.edx.mobile.user.ProfileImage;
-import org.proversity.edx.mobile.util.Config;
-import org.proversity.edx.mobile.util.EmailUtil;
-import org.proversity.edx.mobile.util.PropertyUtil;
-import org.proversity.edx.mobile.view.dialog.IDialogCallback;
-import org.proversity.edx.mobile.view.dialog.NetworkCheckDialogFragment;
+import org.edx.mobile.R;
+import org.edx.mobile.base.BaseFragmentActivity;
+import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.event.ProfilePhotoUpdatedEvent;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.ProfileModel;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.facebook.IUiLifecycleHelper;
+import org.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.user.Account;
+import org.edx.mobile.user.GetAccountTask;
+import org.edx.mobile.user.ProfileImage;
+import org.edx.mobile.util.Config;
+import org.edx.mobile.util.EmailUtil;
+import org.edx.mobile.util.PropertyUtil;
+import org.edx.mobile.view.dialog.IDialogCallback;
+import org.edx.mobile.view.dialog.NetworkCheckDialogFragment;
 
 import de.greenrobot.event.EventBus;
 import roboguice.fragment.RoboFragment;

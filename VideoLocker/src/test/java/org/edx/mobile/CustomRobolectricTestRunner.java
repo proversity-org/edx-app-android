@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile;
+package org.edx.mobile;
 
 import org.junit.runners.model.InitializationError;
 import org.robolectric.RobolectricGradleTestRunner;

@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.logger;
+package org.edx.mobile.logger;
 
 import android.util.Log;
 
-import org.proversity.edx.mobile.BuildConfig;
+import org.edx.mobile.BuildConfig;
 
 class LogUtil {
     /**

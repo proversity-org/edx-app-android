@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.module.notification;
+package org.edx.mobile.module.notification;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,9 +13,9 @@ import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParsePushBroadcastReceiver;
 
-import org.proversity.edx.mobile.base.MainApplication;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.module.prefs.PrefManager;
 
 import java.util.Locale;
 

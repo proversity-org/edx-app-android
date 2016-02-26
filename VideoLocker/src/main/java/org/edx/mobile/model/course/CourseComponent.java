@@ -1,13 +1,13 @@
-package org.proversity.edx.mobile.model.course;
+package org.edx.mobile.model.course;
 
 import android.text.TextUtils;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.MainApplication;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.Filter;
-import org.proversity.edx.mobile.model.api.IPathNode;
-import org.proversity.edx.mobile.module.storage.IStorage;
+import org.edx.mobile.R;
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.Filter;
+import org.edx.mobile.model.api.IPathNode;
+import org.edx.mobile.module.storage.IStorage;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -234,7 +234,7 @@ public class CourseComponent implements IBlock, IPathNode {
 
     /**
      * Returns the count of videos that have the boolean
-     * {@link org.proversity.edx.mobile.model.db.DownloadEntry#isVideoForWebOnly} set to <code>false</code>
+     * {@link org.edx.mobile.model.db.DownloadEntry#isVideoForWebOnly} set to <code>false</code>
      *
      * @param storage The local storage object to look into
      * @return The count of videos that are downloadable

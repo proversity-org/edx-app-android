@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.util;
+package org.edx.mobile.util;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import org.proversity.edx.mobile.logger.Logger;
+import org.edx.mobile.logger.Logger;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

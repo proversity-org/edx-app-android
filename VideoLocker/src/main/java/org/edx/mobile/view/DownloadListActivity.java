@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -6,13 +6,13 @@ import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.ListView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.BaseFragmentActivity;
-import org.proversity.edx.mobile.model.VideoModel;
-import org.proversity.edx.mobile.model.db.DownloadEntry;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.module.db.DataCallback;
-import org.proversity.edx.mobile.view.adapters.DownloadEntryAdapter;
+import org.edx.mobile.R;
+import org.edx.mobile.base.BaseFragmentActivity;
+import org.edx.mobile.model.VideoModel;
+import org.edx.mobile.model.db.DownloadEntry;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.db.DataCallback;
+import org.edx.mobile.view.adapters.DownloadEntryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.module.download;
+package org.edx.mobile.module.download;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.custom;
+package org.edx.mobile.view.custom;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,8 +9,8 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.util.UiUtil;
+import org.edx.mobile.R;
+import org.edx.mobile.util.UiUtil;
 
 import java.util.List;
 

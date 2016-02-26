@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.BaseFragmentActivity;
+import org.edx.mobile.R;
+import org.edx.mobile.base.BaseFragmentActivity;
 
 import java.util.List;
 

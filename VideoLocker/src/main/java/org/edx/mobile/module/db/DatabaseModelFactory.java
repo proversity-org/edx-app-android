@@ -1,14 +1,14 @@
-package org.proversity.edx.mobile.module.db;
+package org.edx.mobile.module.db;
 
 import android.database.Cursor;
 
-import org.proversity.edx.mobile.model.VideoModel;
-import org.proversity.edx.mobile.model.api.VideoResponseModel;
-import org.proversity.edx.mobile.model.course.BlockPath;
-import org.proversity.edx.mobile.model.course.IBlock;
-import org.proversity.edx.mobile.model.course.VideoBlockModel;
-import org.proversity.edx.mobile.model.course.VideoData;
-import org.proversity.edx.mobile.model.db.DownloadEntry;
+import org.edx.mobile.model.VideoModel;
+import org.edx.mobile.model.api.VideoResponseModel;
+import org.edx.mobile.model.course.BlockPath;
+import org.edx.mobile.model.course.IBlock;
+import org.edx.mobile.model.course.VideoBlockModel;
+import org.edx.mobile.model.course.VideoData;
+import org.edx.mobile.model.db.DownloadEntry;
 
 /**
  * Model Factory class for the database models.
@@ -18,7 +18,7 @@ import org.proversity.edx.mobile.model.db.DownloadEntry;
 public class DatabaseModelFactory {
 
     /**
-     * Returns new instance of {@link org.proversity.edx.mobile.model.VideoModel} initialized with given cursor.
+     * Returns new instance of {@link org.edx.mobile.model.VideoModel} initialized with given cursor.
      * @param c
      * @return
      */

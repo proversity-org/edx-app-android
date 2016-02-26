@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.player;
+package org.edx.mobile.player;
 
 import java.util.ArrayList;
 import java.util.List;

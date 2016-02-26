@@ -1,14 +1,14 @@
-package org.proversity.edx.mobile.base;
+package org.edx.mobile.base;
 
 import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.module.db.DataCallback;
-import org.proversity.edx.mobile.util.NetworkUtil;
-import org.proversity.edx.mobile.view.custom.ProgressWheel;
+import org.edx.mobile.R;
+import org.edx.mobile.module.db.DataCallback;
+import org.edx.mobile.util.NetworkUtil;
+import org.edx.mobile.view.custom.ProgressWheel;
 
 public abstract class BaseVideosDownloadStateActivity extends BaseFragmentActivity {
     private ProgressWheel progressWheel;

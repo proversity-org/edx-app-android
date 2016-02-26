@@ -1,10 +1,10 @@
-package org.proversity.edx.mobile.task;
+package org.edx.mobile.task;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.model.api.AnnouncementsModel;
-import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.proversity.edx.mobile.services.ServiceManager;
+import org.edx.mobile.model.api.AnnouncementsModel;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.services.ServiceManager;
 
 import java.util.List;
 

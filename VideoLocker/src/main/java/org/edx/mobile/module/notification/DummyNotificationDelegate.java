@@ -1,6 +1,6 @@
-package org.proversity.edx.mobile.module.notification;
+package org.edx.mobile.module.notification;
 
-import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
 
 import java.util.List;
 

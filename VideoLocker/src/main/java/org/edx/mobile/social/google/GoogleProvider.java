@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.social.google;
+package org.edx.mobile.social.google;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,14 +8,14 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.proversity.edx.mobile.http.HttpManager;
-import org.proversity.edx.mobile.model.api.CourseEntry;
-import org.proversity.edx.mobile.social.SocialFactory;
-import org.proversity.edx.mobile.social.SocialGroup;
-import org.proversity.edx.mobile.social.SocialLoginDelegate;
-import org.proversity.edx.mobile.social.SocialMember;
-import org.proversity.edx.mobile.social.SocialProvider;
-import org.proversity.edx.mobile.task.Task;
+import org.edx.mobile.http.HttpManager;
+import org.edx.mobile.model.api.CourseEntry;
+import org.edx.mobile.social.SocialFactory;
+import org.edx.mobile.social.SocialGroup;
+import org.edx.mobile.social.SocialLoginDelegate;
+import org.edx.mobile.social.SocialMember;
+import org.edx.mobile.social.SocialProvider;
+import org.edx.mobile.task.Task;
 
 import java.util.List;
 

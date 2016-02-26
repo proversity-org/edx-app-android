@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.custom;
+package org.edx.mobile.view.custom;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,10 +11,10 @@ import android.graphics.Region;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.third_party.subscaleview.SubsamplingScaleImageView;
+import org.edx.mobile.R;
+import org.edx.mobile.third_party.subscaleview.SubsamplingScaleImageView;
 
-public class CropImageView extends org.proversity.edx.mobile.third_party.subscaleview.SubsamplingScaleImageView {
+public class CropImageView extends org.edx.mobile.third_party.subscaleview.SubsamplingScaleImageView {
 
     private Paint borderPaint;
     private Paint backgroundPaint;

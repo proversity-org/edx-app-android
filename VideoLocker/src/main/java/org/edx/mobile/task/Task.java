@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.task;
+package org.edx.mobile.task;
 
 import android.content.Context;
 import android.os.Handler;
@@ -8,15 +8,15 @@ import android.widget.ProgressBar;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.core.IEdxEnvironment;
-import org.proversity.edx.mobile.http.RetroHttpException;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.util.NetworkUtil;
-import org.proversity.edx.mobile.view.common.MessageType;
-import org.proversity.edx.mobile.view.common.TaskMessageCallback;
-import org.proversity.edx.mobile.view.common.TaskProcessCallback;
-import org.proversity.edx.mobile.view.common.TaskProgressCallback;
+import org.edx.mobile.R;
+import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.http.RetroHttpException;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.util.NetworkUtil;
+import org.edx.mobile.view.common.MessageType;
+import org.edx.mobile.view.common.TaskMessageCallback;
+import org.edx.mobile.view.common.TaskProcessCallback;
+import org.edx.mobile.view.common.TaskProgressCallback;
 
 import java.lang.ref.WeakReference;
 

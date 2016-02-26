@@ -1,14 +1,14 @@
-package org.proversity.edx.mobile.http;
+package org.edx.mobile.http;
 
-import org.proversity.edx.mobile.http.model.EnrollmentRequestBody;
-import org.proversity.edx.mobile.http.serialization.ShareCourseResult;
-import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.proversity.edx.mobile.model.api.ProfileModel;
-import org.proversity.edx.mobile.model.api.SyncLastAccessedSubsectionResponse;
-import org.proversity.edx.mobile.model.api.VideoResponseModel;
-import org.proversity.edx.mobile.model.json.CreateGroupResponse;
-import org.proversity.edx.mobile.model.json.SuccessResponse;
-import org.proversity.edx.mobile.social.SocialMember;
+import org.edx.mobile.http.model.EnrollmentRequestBody;
+import org.edx.mobile.http.serialization.ShareCourseResult;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.model.api.ProfileModel;
+import org.edx.mobile.model.api.SyncLastAccessedSubsectionResponse;
+import org.edx.mobile.model.api.VideoResponseModel;
+import org.edx.mobile.model.json.CreateGroupResponse;
+import org.edx.mobile.model.json.SuccessResponse;
+import org.edx.mobile.social.SocialMember;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
-import static org.proversity.edx.mobile.http.ApiConstants.*;
+import static org.edx.mobile.http.ApiConstants.*;
 
 /**
  * we group all the mobile endpoints which require oauth token together

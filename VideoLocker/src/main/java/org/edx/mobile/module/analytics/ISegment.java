@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.module.analytics;
+package org.edx.mobile.module.analytics;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import com.segment.analytics.Properties;
 import com.segment.analytics.Traits;
 
-import org.proversity.edx.mobile.util.images.ShareUtils;
+import org.edx.mobile.util.images.ShareUtils;
 
 public interface ISegment {
 

@@ -1,6 +1,6 @@
-package org.proversity.edx.mobile.util;
+package org.edx.mobile.util;
 
-import org.proversity.edx.mobile.R;
+import org.edx.mobile.R;
 
 import android.content.Context;
 import android.view.View;

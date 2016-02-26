@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.model.json;
+package org.edx.mobile.model.json;
 
 public class FriendListResponse {
 

@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.test;
+package org.edx.mobile.test;
 
-import org.proversity.edx.mobile.model.course.CourseComponent;
-import org.proversity.edx.mobile.services.ViewPagerDownloadManager;
-import org.proversity.edx.mobile.view.common.RunnableCourseComponent;
+import org.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.services.ViewPagerDownloadManager;
+import org.edx.mobile.view.common.RunnableCourseComponent;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

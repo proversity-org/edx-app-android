@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.util;
+package org.edx.mobile.util;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.logger.Logger;
+import org.edx.mobile.logger.Logger;
 
 import java.io.IOException;
 

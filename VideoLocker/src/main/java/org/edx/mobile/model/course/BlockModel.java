@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.model.course;
+package org.edx.mobile.model.course;
 
 import android.support.annotation.Nullable;
 

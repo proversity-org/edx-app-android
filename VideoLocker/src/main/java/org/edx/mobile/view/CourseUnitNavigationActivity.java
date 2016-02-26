@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,19 +15,19 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.MainApplication;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.course.BlockType;
-import org.proversity.edx.mobile.model.course.CourseComponent;
-import org.proversity.edx.mobile.model.course.HtmlBlockModel;
-import org.proversity.edx.mobile.model.course.VideoBlockModel;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
-import org.proversity.edx.mobile.services.ViewPagerDownloadManager;
-import org.proversity.edx.mobile.util.NetworkUtil;
-import org.proversity.edx.mobile.view.common.PageViewStateCallback;
-import org.proversity.edx.mobile.view.custom.DisableableViewPager;
+import org.edx.mobile.R;
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.course.BlockType;
+import org.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.model.course.HtmlBlockModel;
+import org.edx.mobile.model.course.VideoBlockModel;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.services.ViewPagerDownloadManager;
+import org.edx.mobile.util.NetworkUtil;
+import org.edx.mobile.view.common.PageViewStateCallback;
+import org.edx.mobile.view.custom.DisableableViewPager;
 
 import java.util.ArrayList;
 import java.util.EnumSet;

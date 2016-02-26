@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.dialog;
+package org.edx.mobile.view.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,13 +10,13 @@ import android.widget.ListView;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.core.IEdxEnvironment;
-import org.proversity.edx.mobile.course.CourseDetail;
-import org.proversity.edx.mobile.course.CourseList;
-import org.proversity.edx.mobile.course.GetCourseListTask;
-import org.proversity.edx.mobile.view.adapters.FindCoursesListAdapter;
-import org.proversity.edx.mobile.view.adapters.InfiniteScrollUtils;
+import org.edx.mobile.R;
+import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.course.CourseDetail;
+import org.edx.mobile.course.CourseList;
+import org.edx.mobile.course.GetCourseListTask;
+import org.edx.mobile.view.adapters.FindCoursesListAdapter;
+import org.edx.mobile.view.adapters.InfiniteScrollUtils;
 
 import roboguice.fragment.RoboFragment;
 

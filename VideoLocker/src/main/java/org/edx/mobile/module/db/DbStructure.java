@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.module.db;
+package org.edx.mobile.module.db;
 
 /**
  * This class defines databse structure and databse version number.

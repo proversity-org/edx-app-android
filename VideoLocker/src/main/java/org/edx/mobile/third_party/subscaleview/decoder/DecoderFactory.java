@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.third_party.subscaleview.decoder;
+package org.edx.mobile.third_party.subscaleview.decoder;
 
 /**
  * Interface for decoder (and region decoder) factories.

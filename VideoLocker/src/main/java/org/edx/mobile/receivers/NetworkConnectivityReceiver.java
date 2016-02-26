@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.receivers;
+package org.edx.mobile.receivers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,14 +9,14 @@ import android.telephony.TelephonyManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.core.IEdxEnvironment;
-import org.proversity.edx.mobile.event.NetworkConnectivityChangeEvent;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.DownloadDescriptor;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.services.DownloadSpeedService;
-import org.proversity.edx.mobile.util.NetworkUtil;
+import org.edx.mobile.R;
+import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.event.NetworkConnectivityChangeEvent;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.DownloadDescriptor;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.services.DownloadSpeedService;
+import org.edx.mobile.util.NetworkUtil;
 
 import de.greenrobot.event.EventBus;
 import roboguice.receiver.RoboBroadcastReceiver;

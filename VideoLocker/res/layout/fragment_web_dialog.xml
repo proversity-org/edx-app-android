@@ -51,7 +51,7 @@
             android:textSize="15sp" />
     </LinearLayout>
 
-    <org.proversity.edx.mobile.view.custom.EdxWebView
+    <org.edx.mobile.view.custom.EdxWebView
         android:id="@+id/eula_webView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

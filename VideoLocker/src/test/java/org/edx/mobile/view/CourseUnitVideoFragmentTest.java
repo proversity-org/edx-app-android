@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -13,11 +13,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.http.OkHttpUtil;
-import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.proversity.edx.mobile.model.course.CourseComponent;
-import org.proversity.edx.mobile.model.course.VideoBlockModel;
+import org.edx.mobile.R;
+import org.edx.mobile.http.OkHttpUtil;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.model.course.VideoBlockModel;
 import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.annotation.Config;

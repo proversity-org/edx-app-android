@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.custom.popup;
+package org.edx.mobile.view.custom.popup;
 
 import android.graphics.drawable.Drawable;
 import android.support.v7.graphics.drawable.DrawableWrapper;

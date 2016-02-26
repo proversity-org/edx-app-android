@@ -1,10 +1,10 @@
-package org.proversity.edx.mobile.util;
+package org.edx.mobile.util;
 
 import android.content.Context;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 
-import org.proversity.edx.mobile.logger.Logger;
+import org.edx.mobile.logger.Logger;
 
 public class DeviceSettingUtil {
     private static final Logger logger = new Logger(DeviceSettingUtil.class.getName());

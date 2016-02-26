@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.dialog;
+package org.edx.mobile.view.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 
-import org.proversity.edx.mobile.R;
+import org.edx.mobile.R;
 
 /**
  * Created by marcashman on 2014-12-18.

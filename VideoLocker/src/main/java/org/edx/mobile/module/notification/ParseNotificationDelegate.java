@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.module.notification;
+package org.edx.mobile.module.notification;
 
 import android.text.TextUtils;
 
@@ -7,13 +7,13 @@ import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.SaveCallback;
 
-import org.proversity.edx.mobile.base.MainApplication;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.api.CourseEntry;
-import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.proversity.edx.mobile.module.prefs.PrefManager;
-import org.proversity.edx.mobile.module.prefs.UserBasedPrefManager;
-import org.proversity.edx.mobile.util.NetworkUtil;
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.CourseEntry;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.module.prefs.UserBasedPrefManager;
+import org.edx.mobile.util.NetworkUtil;
 
 import java.util.ArrayList;
 import java.util.List;

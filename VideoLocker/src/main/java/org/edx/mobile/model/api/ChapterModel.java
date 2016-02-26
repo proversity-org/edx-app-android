@@ -1,6 +1,6 @@
-package org.proversity.edx.mobile.model.api;
+package org.edx.mobile.model.api;
 
-import org.proversity.edx.mobile.interfaces.SectionItemInterface;
+import org.edx.mobile.interfaces.SectionItemInterface;
 
 import java.io.Serializable;
 

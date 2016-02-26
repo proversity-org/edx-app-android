@@ -1,13 +1,13 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.os.Bundle;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.core.IEdxEnvironment;
-import org.proversity.edx.mobile.model.course.CourseComponent;
-import org.proversity.edx.mobile.view.common.PageViewStateCallback;
-import org.proversity.edx.mobile.view.common.RunnableCourseComponent;
+import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.view.common.PageViewStateCallback;
+import org.edx.mobile.view.common.RunnableCourseComponent;
 
 import roboguice.fragment.RoboFragment;
 

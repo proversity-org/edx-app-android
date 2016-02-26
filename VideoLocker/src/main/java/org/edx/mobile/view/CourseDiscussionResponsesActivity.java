@@ -1,13 +1,13 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.base.BaseSingleFragmentActivity;
-import org.proversity.edx.mobile.discussion.DiscussionThread;
+import org.edx.mobile.R;
+import org.edx.mobile.base.BaseSingleFragmentActivity;
+import org.edx.mobile.discussion.DiscussionThread;
 
 import roboguice.inject.InjectExtra;
 

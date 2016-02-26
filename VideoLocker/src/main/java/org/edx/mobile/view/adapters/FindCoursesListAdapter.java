@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.adapters;
+package org.edx.mobile.view.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,9 +6,9 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.AdapterView;
 
-import org.proversity.edx.mobile.core.IEdxEnvironment;
-import org.proversity.edx.mobile.course.CourseDetail;
-import org.proversity.edx.mobile.util.images.CourseCardUtils;
+import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.course.CourseDetail;
+import org.edx.mobile.util.images.CourseCardUtils;
 
 
 public abstract class FindCoursesListAdapter extends BaseListAdapter<CourseDetail> {

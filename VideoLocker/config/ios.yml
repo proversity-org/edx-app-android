@@ -2,8 +2,8 @@
   API_HOST_URL: "http://10.0.2.2:8000" #"https://courses.edx.org"
   ENVIRONMENT_DISPLAY_NAME: "Localhost"
   PLATFORM_NAME: "Proversity"
-  PLATFORM_DESTINATION_NAME: "proversity.io"
-  FEEDBACK_EMAIL_ADDRESS: "rene@proversity.org"
+  PLATFORM_DESTINATION_NAME: "io"
+  FEEDBACK_EMAIL_ADDRESS: "rene@org"
   OAUTH_CLIENT_ID: "android-key"
   SOCIAL_SHARING:
     ENABLED: true

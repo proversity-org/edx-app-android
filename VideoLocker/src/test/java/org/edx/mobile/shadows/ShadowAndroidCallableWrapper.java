@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.shadows;
+package org.edx.mobile.shadows;
 
 import android.view.Menu;
 

@@ -1,9 +1,9 @@
-package org.proversity.edx.mobile.social;
+package org.edx.mobile.social;
 
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.content.Intent;
 
-import org.proversity.edx.mobile.logger.Logger;
+import org.edx.mobile.logger.Logger;
 
 public interface ISocial extends ActivityLifecycleCallbacks {
 

@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.task;
+package org.edx.mobile.task;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.services.ServiceManager;
+import org.edx.mobile.services.ServiceManager;
 
 import java.net.HttpCookie;
 import java.util.List;

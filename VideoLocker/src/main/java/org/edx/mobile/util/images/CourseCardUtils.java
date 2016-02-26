@@ -1,16 +1,16 @@
-package org.proversity.edx.mobile.util.images;
+package org.edx.mobile.util.images;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.course.CourseDetail;
-import org.proversity.edx.mobile.model.api.CourseEntry;
-import org.proversity.edx.mobile.model.api.StartType;
-import org.proversity.edx.mobile.util.DateUtil;
-import org.proversity.edx.mobile.util.ResourceUtil;
+import org.edx.mobile.R;
+import org.edx.mobile.course.CourseDetail;
+import org.edx.mobile.model.api.CourseEntry;
+import org.edx.mobile.model.api.StartType;
+import org.edx.mobile.util.DateUtil;
+import org.edx.mobile.util.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.Date;

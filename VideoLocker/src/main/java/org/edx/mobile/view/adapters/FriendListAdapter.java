@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.adapters;
+package org.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -10,10 +10,10 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.comparator.SocialMemberComparator;
-import org.proversity.edx.mobile.social.SocialMember;
-import org.proversity.edx.mobile.util.SocialUtils;
+import org.edx.mobile.R;
+import org.edx.mobile.comparator.SocialMemberComparator;
+import org.edx.mobile.social.SocialMember;
+import org.edx.mobile.util.SocialUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;

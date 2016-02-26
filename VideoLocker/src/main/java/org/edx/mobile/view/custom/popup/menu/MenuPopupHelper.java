@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.custom.popup.menu;
+package org.edx.mobile.view.custom.popup.menu;
 
 /*
  * This class is copied and modified according to our specifications from
@@ -56,7 +56,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import org.proversity.edx.mobile.R;
+import org.edx.mobile.R;
 
 import java.util.List;
 

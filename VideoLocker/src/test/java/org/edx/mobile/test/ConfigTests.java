@@ -1,10 +1,10 @@
-package org.proversity.edx.mobile.test;
+package org.edx.mobile.test;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-import org.proversity.edx.mobile.util.Config;
+import org.edx.mobile.util.Config;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

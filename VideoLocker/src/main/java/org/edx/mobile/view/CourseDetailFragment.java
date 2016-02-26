@@ -5,7 +5,7 @@
  * and then the additional items are added if given.
  */
 
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -28,20 +28,20 @@ import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.widget.IconImageView;
 
 import org.apache.http.protocol.HTTP;
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.core.IEdxEnvironment;
-import org.proversity.edx.mobile.course.CourseDetail;
-import org.proversity.edx.mobile.course.GetCourseDetailTask;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.proversity.edx.mobile.services.ServiceManager;
-import org.proversity.edx.mobile.task.EnrollForCourseTask;
-import org.proversity.edx.mobile.task.GetEnrolledCourseTask;
-import org.proversity.edx.mobile.util.WebViewUtil;
-import org.proversity.edx.mobile.util.images.CourseCardUtils;
-import org.proversity.edx.mobile.util.images.TopAnchorFillWidthTransformation;
-import org.proversity.edx.mobile.view.custom.EdxWebView;
-import org.proversity.edx.mobile.view.custom.URLInterceptorWebViewClient;
+import org.edx.mobile.R;
+import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.course.CourseDetail;
+import org.edx.mobile.course.GetCourseDetailTask;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.services.ServiceManager;
+import org.edx.mobile.task.EnrollForCourseTask;
+import org.edx.mobile.task.GetEnrolledCourseTask;
+import org.edx.mobile.util.WebViewUtil;
+import org.edx.mobile.util.images.CourseCardUtils;
+import org.edx.mobile.util.images.TopAnchorFillWidthTransformation;
+import org.edx.mobile.view.custom.EdxWebView;
+import org.edx.mobile.view.custom.URLInterceptorWebViewClient;
 
 import java.util.List;
 
@@ -313,7 +313,7 @@ public class CourseDetailFragment extends RoboFragment {
 
     /**
      * Enroll in a course, then send a local broadcast to notify
-     * {@link org.proversity.edx.mobile.view.MyCoursesListActivity} to refresh when it is resumed. Then open
+     * {@link org.edx.mobile.view.MyCoursesListActivity} to refresh when it is resumed. Then open
      * the course dashboard of the enrolled course.
      */
     public void enrollInCourse() {

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.module.analytics;
+package org.edx.mobile.module.analytics;
 
 import com.segment.analytics.Options;
 import com.segment.analytics.Properties;

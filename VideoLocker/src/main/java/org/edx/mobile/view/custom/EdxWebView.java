@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.custom;
+package org.edx.mobile.view.custom;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,8 +6,8 @@ import android.util.AttributeSet;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import org.proversity.edx.mobile.BuildConfig;
-import org.proversity.edx.mobile.R;
+import org.edx.mobile.BuildConfig;
+import org.edx.mobile.R;
 
 public class EdxWebView extends WebView {
     @SuppressLint("SetJavaScriptEnabled")

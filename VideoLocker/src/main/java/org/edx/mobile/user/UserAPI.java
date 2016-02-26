@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.user;
+package org.edx.mobile.user;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -12,12 +12,12 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.squareup.okhttp.OkHttpClient;
 
-import org.proversity.edx.mobile.discussion.RetroHttpExceptionHandler;
-import org.proversity.edx.mobile.event.ProfilePhotoUpdatedEvent;
-import org.proversity.edx.mobile.http.RetroHttpException;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.util.Config;
-import org.proversity.edx.mobile.util.DateUtil;
+import org.edx.mobile.discussion.RetroHttpExceptionHandler;
+import org.edx.mobile.event.ProfilePhotoUpdatedEvent;
+import org.edx.mobile.http.RetroHttpException;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.util.Config;
+import org.edx.mobile.util.DateUtil;
 
 import java.io.File;
 import java.io.IOException;

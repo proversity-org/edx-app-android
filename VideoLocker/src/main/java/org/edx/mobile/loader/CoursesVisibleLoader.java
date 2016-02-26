@@ -1,11 +1,11 @@
-package org.proversity.edx.mobile.loader;
+package org.edx.mobile.loader;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
-import org.proversity.edx.mobile.core.IEdxEnvironment;
-import org.proversity.edx.mobile.logger.Logger;
+import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.logger.Logger;
 
 /**
  * Created by yervant on 1/19/15.

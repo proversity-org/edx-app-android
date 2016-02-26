@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.module.db.impl;
+package org.edx.mobile.module.db.impl;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import org.proversity.edx.mobile.module.db.DataCallback;
+import org.edx.mobile.module.db.DataCallback;
 
 /**
  * This interface defines a database operation that we want to perform.

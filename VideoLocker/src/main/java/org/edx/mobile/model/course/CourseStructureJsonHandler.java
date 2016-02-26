@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.model.course;
+package org.edx.mobile.model.course;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,7 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
-import org.proversity.edx.mobile.logger.Logger;
+import org.edx.mobile.logger.Logger;
 
 import java.lang.reflect.Type;
 import java.util.Locale;

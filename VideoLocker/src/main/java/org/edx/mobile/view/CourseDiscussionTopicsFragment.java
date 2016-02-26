@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view;
+package org.edx.mobile.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,14 +16,14 @@ import com.google.inject.Inject;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.discussion.CourseTopics;
-import org.proversity.edx.mobile.discussion.DiscussionTopic;
-import org.proversity.edx.mobile.discussion.DiscussionTopicDepth;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.proversity.edx.mobile.task.GetTopicListTask;
-import org.proversity.edx.mobile.view.adapters.DiscussionTopicsAdapter;
+import org.edx.mobile.R;
+import org.edx.mobile.discussion.CourseTopics;
+import org.edx.mobile.discussion.DiscussionTopic;
+import org.edx.mobile.discussion.DiscussionTopicDepth;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.task.GetTopicListTask;
+import org.edx.mobile.view.adapters.DiscussionTopicsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

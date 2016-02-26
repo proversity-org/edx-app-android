@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.util.images;
+package org.edx.mobile.util.images;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,9 +11,9 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.view.custom.popup.SizedDrawable;
-import org.proversity.edx.mobile.view.custom.popup.menu.PopupMenu;
+import org.edx.mobile.R;
+import org.edx.mobile.view.custom.popup.SizedDrawable;
+import org.edx.mobile.view.custom.popup.menu.PopupMenu;
 
 import java.util.List;
 

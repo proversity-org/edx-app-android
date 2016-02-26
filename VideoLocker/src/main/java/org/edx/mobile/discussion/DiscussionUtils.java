@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.discussion;
+package org.edx.mobile.discussion;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
-import org.proversity.edx.mobile.R;
+import org.edx.mobile.R;
 
 public abstract class DiscussionUtils {
     /**

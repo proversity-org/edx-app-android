@@ -1,6 +1,6 @@
-package org.proversity.edx.mobile.test;
+package org.edx.mobile.test;
 
-import org.proversity.edx.mobile.util.MemoryUtil;
+import org.edx.mobile.util.MemoryUtil;
 import org.junit.Test;
 import org.robolectric.RuntimeEnvironment;
 

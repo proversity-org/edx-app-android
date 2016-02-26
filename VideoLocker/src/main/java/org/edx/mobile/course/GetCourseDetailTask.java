@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.course;
+package org.edx.mobile.course;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.task.Task;
+import org.edx.mobile.task.Task;
 
 public abstract class GetCourseDetailTask extends Task<CourseDetail> {
 

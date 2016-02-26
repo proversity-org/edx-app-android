@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.adapters;
+package org.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.view.MotionEvent;
@@ -11,15 +11,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.core.IEdxEnvironment;
-import org.proversity.edx.mobile.interfaces.SectionItemInterface;
-import org.proversity.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.proversity.edx.mobile.model.db.DownloadEntry;
-import org.proversity.edx.mobile.module.db.DataCallback;
-import org.proversity.edx.mobile.module.db.IDatabase;
-import org.proversity.edx.mobile.util.AppConstants;
-import org.proversity.edx.mobile.util.MemoryUtil;
+import org.edx.mobile.R;
+import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.interfaces.SectionItemInterface;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.model.db.DownloadEntry;
+import org.edx.mobile.module.db.DataCallback;
+import org.edx.mobile.module.db.IDatabase;
+import org.edx.mobile.util.AppConstants;
+import org.edx.mobile.util.MemoryUtil;
 
 public abstract class MyRecentVideoAdapter extends VideoBaseAdapter<SectionItemInterface> {
 

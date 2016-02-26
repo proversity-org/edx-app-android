@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.custom;
+package org.edx.mobile.view.custom;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.util.SocialUtils;
+import org.edx.mobile.R;
+import org.edx.mobile.util.SocialUtils;
 
 
 public class SocialShareView extends FrameLayout {

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.view.adapters;
+package org.edx.mobile.view.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -16,9 +16,9 @@ import android.widget.TextView;
 import com.joanzapata.iconify.Icon;
 import com.joanzapata.iconify.IconDrawable;
 
-import org.proversity.edx.mobile.R;
-import org.proversity.edx.mobile.interfaces.TextResourceProvider;
-import org.proversity.edx.mobile.view.CourseDiscussionPostsThreadFragment;
+import org.edx.mobile.R;
+import org.edx.mobile.interfaces.TextResourceProvider;
+import org.edx.mobile.view.CourseDiscussionPostsThreadFragment;
 
 /**
  * Adapter for the filter and sort spinners in {@link CourseDiscussionPostsThreadFragment}

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.services;
+package org.edx.mobile.services;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,9 +7,9 @@ import android.text.TextUtils;
 
 import com.google.inject.Inject;
 
-import org.proversity.edx.mobile.http.IApi;
-import org.proversity.edx.mobile.loader.AsyncTaskResult;
-import org.proversity.edx.mobile.social.SocialMember;
+import org.edx.mobile.http.IApi;
+import org.edx.mobile.loader.AsyncTaskResult;
+import org.edx.mobile.social.SocialMember;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +22,7 @@ public class FetchCourseFriendsService extends RoboIntentService {
 
     public static final String TAG = FetchCourseFriendsService.class.getSimpleName();
 
-    public static final String NOTIFY_FILTER = "org.proversity.edx.mobile.FETCH_COURSE_FRIENDS";
+    public static final String NOTIFY_FILTER = "org.edx.mobile.FETCH_COURSE_FRIENDS";
     public static final String EXTRA_BROADCAST_COURSE_ID = TAG + ".course_identity";
 
     public static final String TAG_COURSE_ID = TAG + ".courseID";

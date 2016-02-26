@@ -43,8 +43,8 @@ public final class Config {
 			cap.setCapability("capture-html", true);
 			cap.setCapability("name","edX-Android-test");
 			
-			cap.setCapability("appPackage","org.proversity.edx.mobile");
-			cap.setCapability("appActivity","org.proversity.edx.mobile.view.SplashActivity");
+			cap.setCapability("appPackage","org.edx.mobile");
+			cap.setCapability("appActivity","org.edx.mobile.view.SplashActivity");
 			cap.setCapability("newCommandTimeout", 10000);
 			cap.setCapability("command-timeout", 600);
 			cap.setCapability("idle-timeout", 800);

@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.module.notification;
+package org.edx.mobile.module.notification;
 
 /**
  *

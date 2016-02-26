@@ -1,13 +1,13 @@
-package org.proversity.edx.mobile.module.download;
+package org.edx.mobile.module.download;
 
-import org.proversity.edx.mobile.model.download.NativeDownloadModel;
+import org.edx.mobile.model.download.NativeDownloadModel;
 
 import java.io.File;
 
 public interface IDownloadManager {
 
     /**
-     * Returns {@link org.proversity.edx.mobile.model.download.NativeDownloadModel} for the given dmid.
+     * Returns {@link org.edx.mobile.model.download.NativeDownloadModel} for the given dmid.
      * Returns null if no download exists for the given dmid.
      * @param dmid
      * @return

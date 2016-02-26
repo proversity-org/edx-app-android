@@ -1,9 +1,9 @@
-package org.proversity.edx.mobile.module.db;
+package org.edx.mobile.module.db;
 
-import org.proversity.edx.mobile.model.VideoModel;
-import org.proversity.edx.mobile.model.db.DownloadEntry.DownloadedState;
-import org.proversity.edx.mobile.model.db.DownloadEntry.WatchedState;
-import org.proversity.edx.mobile.module.db.impl.DatabaseFactory;
+import org.edx.mobile.model.VideoModel;
+import org.edx.mobile.model.db.DownloadEntry.DownloadedState;
+import org.edx.mobile.model.db.DownloadEntry.WatchedState;
+import org.edx.mobile.module.db.impl.DatabaseFactory;
 
 import java.util.List;
 
@@ -253,7 +253,7 @@ public interface IDatabase {
     VideoModel getVideoEntryByVideoId(String videoId, DataCallback<VideoModel> callback);
 
     /**
-     * Returns {@link org.proversity.edx.mobile.model.VideoModel} which is downloaded or download is in
+     * Returns {@link org.edx.mobile.model.VideoModel} which is downloaded or download is in
      * progress for given videoUrl.
      *
      * @param videoUrl

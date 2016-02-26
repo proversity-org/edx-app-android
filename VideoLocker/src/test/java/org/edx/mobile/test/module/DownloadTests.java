@@ -1,10 +1,10 @@
-package org.proversity.edx.mobile.test.module;
+package org.edx.mobile.test.module;
 
-import org.proversity.edx.mobile.model.download.NativeDownloadModel;
-import org.proversity.edx.mobile.module.download.DownloadFactory;
-import org.proversity.edx.mobile.module.download.IDownloadManager;
-import org.proversity.edx.mobile.module.prefs.UserPrefs;
-import org.proversity.edx.mobile.test.BaseTestCase;
+import org.edx.mobile.model.download.NativeDownloadModel;
+import org.edx.mobile.module.download.DownloadFactory;
+import org.edx.mobile.module.download.IDownloadManager;
+import org.edx.mobile.module.prefs.UserPrefs;
+import org.edx.mobile.test.BaseTestCase;
 import org.junit.Test;
 import org.robolectric.RuntimeEnvironment;
 

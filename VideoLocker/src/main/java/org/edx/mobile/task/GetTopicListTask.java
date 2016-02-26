@@ -1,8 +1,8 @@
-package org.proversity.edx.mobile.task;
+package org.edx.mobile.task;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.discussion.CourseTopics;
+import org.edx.mobile.discussion.CourseTopics;
 
 public abstract class GetTopicListTask extends
 Task<CourseTopics> {

@@ -1,10 +1,10 @@
-package org.proversity.edx.mobile.task.social;
+package org.edx.mobile.task.social;
 
 import android.content.Context;
 
-import org.proversity.edx.mobile.services.ServiceManager;
-import org.proversity.edx.mobile.social.SocialMember;
-import org.proversity.edx.mobile.task.Task;
+import org.edx.mobile.services.ServiceManager;
+import org.edx.mobile.social.SocialMember;
+import org.edx.mobile.task.Task;
 
 import java.util.List;
 

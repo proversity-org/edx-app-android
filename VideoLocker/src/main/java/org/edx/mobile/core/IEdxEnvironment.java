@@ -1,16 +1,16 @@
-package org.proversity.edx.mobile.core;
+package org.edx.mobile.core;
 
 
-import org.proversity.edx.mobile.discussion.DiscussionAPI;
-import org.proversity.edx.mobile.module.analytics.ISegment;
-import org.proversity.edx.mobile.module.db.IDatabase;
-import org.proversity.edx.mobile.module.download.IDownloadManager;
-import org.proversity.edx.mobile.module.notification.NotificationDelegate;
-import org.proversity.edx.mobile.module.prefs.UserPrefs;
-import org.proversity.edx.mobile.module.storage.IStorage;
-import org.proversity.edx.mobile.services.ServiceManager;
-import org.proversity.edx.mobile.util.Config;
-import org.proversity.edx.mobile.view.Router;
+import org.edx.mobile.discussion.DiscussionAPI;
+import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.db.IDatabase;
+import org.edx.mobile.module.download.IDownloadManager;
+import org.edx.mobile.module.notification.NotificationDelegate;
+import org.edx.mobile.module.prefs.UserPrefs;
+import org.edx.mobile.module.storage.IStorage;
+import org.edx.mobile.services.ServiceManager;
+import org.edx.mobile.util.Config;
+import org.edx.mobile.view.Router;
 
 /**
  * TODO - we should decompose this class into environment setting and service provider settings.

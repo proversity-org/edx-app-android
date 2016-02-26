@@ -1,4 +1,4 @@
-package org.proversity.edx.mobile.test.http;
+package org.edx.mobile.test.http;
 
 import android.text.TextUtils;
 
@@ -9,13 +9,13 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
-import org.proversity.edx.mobile.http.Api;
-import org.proversity.edx.mobile.http.IApi;
-import org.proversity.edx.mobile.model.api.AuthResponse;
-import org.proversity.edx.mobile.model.api.ProfileModel;
-import org.proversity.edx.mobile.services.ServiceManager;
-import org.proversity.edx.mobile.test.BaseTestCase;
-import org.proversity.edx.mobile.util.Config;
+import org.edx.mobile.http.Api;
+import org.edx.mobile.http.IApi;
+import org.edx.mobile.model.api.AuthResponse;
+import org.edx.mobile.model.api.ProfileModel;
+import org.edx.mobile.services.ServiceManager;
+import org.edx.mobile.test.BaseTestCase;
+import org.edx.mobile.util.Config;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Ignore;

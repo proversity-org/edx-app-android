@@ -1,27 +1,27 @@
-package org.proversity.edx.mobile.services;
+package org.edx.mobile.services;
 
 import android.util.LruCache;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import org.proversity.edx.mobile.interfaces.SectionItemInterface;
-import org.proversity.edx.mobile.logger.Logger;
-import org.proversity.edx.mobile.model.Filter;
-import org.proversity.edx.mobile.model.api.IPathNode;
-import org.proversity.edx.mobile.model.api.LectureModel;
-import org.proversity.edx.mobile.model.api.SectionEntry;
-import org.proversity.edx.mobile.model.api.SummaryModel;
-import org.proversity.edx.mobile.model.api.VideoResponseModel;
-import org.proversity.edx.mobile.model.course.BlockModel;
-import org.proversity.edx.mobile.model.course.BlockType;
-import org.proversity.edx.mobile.model.course.CourseComponent;
-import org.proversity.edx.mobile.model.course.CourseStructureV1Model;
-import org.proversity.edx.mobile.model.course.HasDownloadEntry;
-import org.proversity.edx.mobile.model.course.HtmlBlockModel;
-import org.proversity.edx.mobile.model.course.IBlock;
-import org.proversity.edx.mobile.model.course.VideoBlockModel;
-import org.proversity.edx.mobile.model.course.VideoData;
+import org.edx.mobile.interfaces.SectionItemInterface;
+import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.Filter;
+import org.edx.mobile.model.api.IPathNode;
+import org.edx.mobile.model.api.LectureModel;
+import org.edx.mobile.model.api.SectionEntry;
+import org.edx.mobile.model.api.SummaryModel;
+import org.edx.mobile.model.api.VideoResponseModel;
+import org.edx.mobile.model.course.BlockModel;
+import org.edx.mobile.model.course.BlockType;
+import org.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.model.course.CourseStructureV1Model;
+import org.edx.mobile.model.course.HasDownloadEntry;
+import org.edx.mobile.model.course.HtmlBlockModel;
+import org.edx.mobile.model.course.IBlock;
+import org.edx.mobile.model.course.VideoBlockModel;
+import org.edx.mobile.model.course.VideoData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
