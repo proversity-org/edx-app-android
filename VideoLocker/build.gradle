@@ -162,7 +162,7 @@ android {
     }
 
     defaultConfig {
-        applicationId 'org.proversity.edx.mobile'
+        applicationId 'org.edx.mobile'
         // minimum version is Android 4.0
         minSdkVersion 14
         targetSdkVersion 21
@@ -173,8 +173,8 @@ android {
         renderscriptSupportModeEnabled true
 
         // test configuration
-        testApplicationId 'org.proversity.edx.mobile.test'
-        testInstrumentationRunner 'org.proversity.edx.mobile.test.edXInstrumentRunner'
+        testApplicationId 'org.edx.mobile.test'
+        testInstrumentationRunner 'org.edx.mobile.test.edXInstrumentRunner'
         testHandleProfiling true
         testFunctionalTest true
 
@@ -289,7 +289,7 @@ android.applicationVariants.all { variant ->
 apply plugin: 'com.github.triplet.play'
 
 
-task generateScreenshots(type: Exec){
+task generateScreenshots(type: Exec) {
     commandLine './../generate_screenshots.sh'
 }
 
