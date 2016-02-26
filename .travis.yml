@@ -43,8 +43,8 @@ after_script:
 
 branches:
   only:
-    #- master
-     - travis-deployment
+    - master
+    - travis-deployment
 
 # Enable caching to speed up the build
 cache:
