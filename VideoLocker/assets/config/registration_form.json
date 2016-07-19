@@ -1275,23 +1275,23 @@
         "defaultValue": "",
         "instructions": "",
         "type": "textarea",
-        "label": "Tell us why you're interested in edX"
+        "label": "Tell us why you're interested in learning"
     }, {
         "restrictions": {},
         "required": true,
         "name": "honor_code",
         "errorMessages": {
-            "required": "You must agree to the edX <a href=\"https://www.edx.org/terms\">Terms of Service and Honor Code</a>."
+            "required": "You must agree to the Proversity.org <a href=\"https://learn.proversity.org/tos\">Terms of Service and Honor Code</a>."
         },
         "agreement" : {
             "url" : "edxapp://show_eula",
-            "text" : "edX Terms of Service and Honor Code"
+            "text" : "Proversity.org Terms of Service and Honor Code"
         },
         "placeholder" : "",
         "defaultValue": false,
         "instructions": "",
         "type": "checkbox",
-        "label": "I agree to the edX <a href=\"https://www.edx.org/terms\">Terms of Service and Honor Code</a>."
+        "label": "I agree to the Proversity.org <a href=\"https://learn.proversity.org/tos\">Terms of Service and Honor Code</a>."
     }],
     "method": "post"
 }

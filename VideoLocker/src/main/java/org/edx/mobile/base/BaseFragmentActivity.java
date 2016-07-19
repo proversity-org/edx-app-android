@@ -160,6 +160,11 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(false);
+    }
 
     @Override
     protected void onStop() {

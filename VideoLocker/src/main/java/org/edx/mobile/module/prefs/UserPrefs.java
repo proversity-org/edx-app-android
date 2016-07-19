@@ -39,10 +39,10 @@ public class UserPrefs {
         final PrefManager wifiPrefManager = new PrefManager(context,
                 PrefManager.Pref.WIFI);
         boolean onlyWifi = wifiPrefManager.getBoolean(
-                PrefManager.Key.DOWNLOAD_ONLY_ON_WIFI, true);
+                PrefManager.Key.DOWNLOAD_ONLY_ON_WIFI, false);
         return onlyWifi;
     }
-    
+
     /**
      * Returns user storage directory under /Android/data/ folder for the currently logged in user.
      * This is the folder where all video downloads should be kept.
@@ -50,7 +50,7 @@ public class UserPrefs {
      */
     public File getDownloadFolder() {
         ProfileModel profile = getProfile();
-        
+
         File android = new File(Environment.getExternalStorageDirectory(), "Android");
         File downloadsDir = new File(android, "data");
         File packDir = new File(downloadsDir, context.getPackageName());
@@ -62,7 +62,7 @@ public class UserPrefs {
         }catch (IOException ioException){
             logger.error(ioException);
         }
-        
+
         return edxDir;
     }
 

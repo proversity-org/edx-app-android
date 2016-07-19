@@ -319,7 +319,7 @@ public class NavigationFragment extends BaseFragment {
         Switch wifi_switch = (Switch) layout.findViewById(R.id.wifi_setting);
 
         wifi_switch.setOnCheckedChangeListener(null);
-        wifi_switch.setChecked(wifiPrefManager.getBoolean(PrefManager.Key.DOWNLOAD_ONLY_ON_WIFI, true));
+        wifi_switch.setChecked(wifiPrefManager.getBoolean(PrefManager.Key.DOWNLOAD_ONLY_ON_WIFI, false));
         wifi_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
