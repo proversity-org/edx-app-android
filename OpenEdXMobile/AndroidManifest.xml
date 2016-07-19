@@ -17,13 +17,13 @@
     <!-- Required by app for storing downloaded videos to the external storage -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!-- Required by app for capturing image -->
-    <uses-permission android:name="android.permission.CAMERA" />
-
     <!-- Required by legacy Google Sign In (TODO: Switch to new Google Sign In) -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <!-- Required by app for TelephonyManager to determine mobile network carrier ID -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <!-- Sticky broadcast passing a message from one screen and display on another -->
     <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
@@ -31,11 +31,6 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <uses-permission android:name="org.edx.mobile.permission.C2D_MESSAGE" />
-
-    <!-- Setup for Code Coverage -->
-    <instrumentation
-        android:name="org.edx.mobile.instrumentation.EdxInstrumentation"
-        android:targetPackage="org.edx.mobile" />
 
     <application
         android:name=".base.RuntimeApplication"
@@ -73,7 +68,7 @@
             android:name="org.edx.mobile.view.DiscoveryLaunchActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Launch" />
 
         <activity
             android:name="org.edx.mobile.view.LoginActivity"
@@ -88,7 +83,14 @@
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
+            android:name="org.edx.mobile.view.MyCoursesListActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
+
+        <activity
             android:name="org.edx.mobile.view.MainDashboardActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
@@ -98,8 +100,21 @@
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
+            android:name="org.edx.mobile.view.CourseDashboardActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
+
+        <activity
             android:name="org.edx.mobile.view.CourseOutlineActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
+
+        <activity
+            android:name="org.edx.mobile.view.NewCourseOutlineActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
@@ -154,6 +169,7 @@
         <activity
             android:name="org.edx.mobile.view.DownloadListActivity"
             android:label="@string/title_download"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
@@ -163,8 +179,15 @@
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
-            android:name=".view.ViewSubjectsActivity"
-            android:label="@string/browse_by_subject"
+            android:name=".view.WebViewExploreSubjectsActivity"
+            android:label="@string/launch_explore_subjects"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
+
+        <activity
+            android:name=".view.NativeFindCoursesActivity"
+            android:label="@string/label_find_courses"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
@@ -182,17 +205,19 @@
         <activity
             android:name="org.edx.mobile.view.CourseHandoutActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
-            android:name=".view.NativeFindCoursesActivity"
-            android:label="@string/label_find_courses"
+            android:name="org.edx.mobile.view.CourseDatesActivity"
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
             android:name=".view.CourseAnnouncementsActivity"
             android:label="@string/announcement_title"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
@@ -239,18 +264,13 @@
         <activity
             android:name=".view.CourseTabsDashboardActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"/>
 
         <activity
             android:name=".view.dialog.WebViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-                <action android:name="android.intent.action.VIEW" />
-                <data android:scheme="org.edx.mobile.innerlinks" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <receiver android:name="org.edx.mobile.module.download.DownloadCompleteReceiver">
             <intent-filter>
@@ -259,6 +279,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+
+        <!-- Setup for Code Coverage -->
+        <instrumentation
+            android:name="org.edx.mobile.instrumentation.EdxInstrumentation"
+            android:targetPackage="org.edx.mobile" />
 
         <!-- adb shell am broadcast -a org.edx.mobile.END_EMMA -->
         <receiver android:name="org.edx.mobile.instrumentation.EndEmmaBroadcast">
@@ -278,20 +303,16 @@
         <!-- Setup Firebase -->
         <meta-data android:name="firebase_analytics_collection_enabled" android:value="${firebaseEnabled}" />
 
+        <!-- Branch -->
+        <meta-data android:name="io.branch.sdk.BranchKey" android:value="${branchKey}" />
+
+        <receiver android:name="io.branch.referral.InstallListener" android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
         <service android:name="org.edx.mobile.services.DownloadSpeedService" />
-
-        <service android:name="org.edx.mobile.services.FirebaseNotificationsService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
-
-        <service android:name="org.edx.mobile.services.FirebaseTokenService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
-
     </application>
 
 </manifest>
