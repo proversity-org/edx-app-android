@@ -5,8 +5,12 @@ general:
 
 machine:
     environment:
+<<<<<<< 3c0b8902f513483a0e35da79d4e125bd09283a77
         GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
         RELEASE_PK12_FILE: "../config/release.p12"
+=======
+        GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx3072m -XX:+HeapDumpOnOutOfMemoryError"'
+>>>>>>> SuppressLint ValidFragment, more memory for gradle on deploy
 
 dependencies:
     pre:
