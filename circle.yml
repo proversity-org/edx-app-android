@@ -35,12 +35,22 @@ dependencies:
 
 test:
     pre:
+<<<<<<< 1a99141bba144b6a8ebdfa040c603181bd57f936
         - ./gradlew assembleProdRelease
+=======
+        - ./gradlew testProdReleaseUnitTestCoverage -PdisablePreDex
+        - ./gradlew assembleProdRelease -PdisablePreDex
+>>>>>>> testProdReleaseUnitTestCoverage on deploy, app_name untranslatable
     override:
         - ./gradlew testProdReleaseUnitTestCoverage
     post:
+<<<<<<< 1a99141bba144b6a8ebdfa040c603181bd57f936
         - cp -r OpenEdXMobile/build/reports $CIRCLE_ARTIFACTS
         - cp -r OpenEdXMobile/build/outputs $CIRCLE_ARTIFACTS
+=======
+        - cp -r VideoLocker/build/reports $CIRCLE_ARTIFACTS
+        - cp -r VideoLocker/build/outputs $CIRCLE_ARTIFACTS
+>>>>>>> testProdReleaseUnitTestCoverage on deploy, app_name untranslatable
 
 # https://github.com/Triple-T/gradle-play-publisher
 deployment:
