@@ -34,6 +34,7 @@ public class Config {
     private static final String FEEDBACK_EMAIL_ADDRESS = "FEEDBACK_EMAIL_ADDRESS";
     private static final String OAUTH_CLIENT_ID = "OAUTH_CLIENT_ID";
     private static final String SPEED_TEST_ENABLED = "SPEED_TEST_ENABLED";
+    private static final String ORGANIZATION_CODE = "ORGANIZATION_CODE";
 
     /* Composite configuration keys */
     private static final String COURSE_ENROLLMENT = "COURSE_ENROLLMENT";
@@ -363,6 +364,10 @@ public class Config {
 
     public String getOAuthClientId() {
         return getString(OAUTH_CLIENT_ID);
+    }
+
+    public String getOrganizationCode() {
+        return getString(ORGANIZATION_CODE);
     }
 
     public boolean isNotificationEnabled() {
