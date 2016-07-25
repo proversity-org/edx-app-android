@@ -22,6 +22,7 @@ public interface CourseService {
     @GET("/api/courses/v1/courses/")
     Page<CourseDetail> getCourseList(@Query("username") String username,
                                      @Query("mobile") boolean mobile,
+                                     @Query("org") String org,
                                      @Query("page") int page) throws HttpException;
 
     /**

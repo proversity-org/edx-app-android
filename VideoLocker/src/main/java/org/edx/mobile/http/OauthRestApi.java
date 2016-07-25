@@ -56,11 +56,11 @@ public interface OauthRestApi {
      * @throws Exception
      */
     @GET(URL_COURSE_ENROLLMENTS)
-    List<EnrolledCoursesResponse> getEnrolledCourses(@Path(USER_NAME) String username);
+    List<EnrolledCoursesResponse> getEnrolledCourses(@Path(USER_NAME) String username, @Query("org") String org);
 
     @Headers("Cache-Control: no-cache")
     @GET(URL_COURSE_ENROLLMENTS)
-    List<EnrolledCoursesResponse> getEnrolledCoursesNoCache(@Path(USER_NAME) String username);
+    List<EnrolledCoursesResponse> getEnrolledCoursesNoCache(@Path(USER_NAME) String username, @Query("org") String org);
 
     /* POST Calls */
 

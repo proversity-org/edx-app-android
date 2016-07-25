@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import org.edx.mobile.util.Config;
 import org.edx.mobile.http.HttpException;
 import org.edx.mobile.model.Page;
 import org.edx.mobile.model.api.ProfileModel;
@@ -16,6 +17,9 @@ import retrofit.RestAdapter;
 
 @Singleton
 public class CourseAPI {
+
+    @Inject
+    protected Config config;
 
     @NonNull
     private final CourseService courseService;
@@ -32,7 +36,7 @@ public class CourseAPI {
     public
     @NonNull
     Page<CourseDetail> getCourseList(int page) throws HttpException {
-        return courseService.getCourseList(getUsername(), true, page);
+        return courseService.getCourseList(getUsername(), true, config.getOrganizationCode(), page);
     }
 
     public
