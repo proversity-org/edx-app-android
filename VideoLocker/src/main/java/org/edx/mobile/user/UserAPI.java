@@ -115,7 +115,7 @@ public class UserAPI {
         // if we don't have a json yet, get it from userService
         if (json == null) {
             try {
-                Response response = userService.getUserEnrolledCourses(username);
+                Response response = userService.getUserEnrolledCourses(username, config.getOrganizationCode());
                 TypedInput input = response.getBody();
                 try {
                     json = IOUtils.toString(input.in(), Charset.defaultCharset());

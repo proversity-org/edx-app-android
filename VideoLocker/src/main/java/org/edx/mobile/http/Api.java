@@ -185,7 +185,7 @@ public class Api implements IApi {
             // iterate lectures
             for (Entry<String, ArrayList<VideoResponseModel>> entry :
                     chapterentry.getValue().sections.entrySet()) {
-                // iterate videos 
+                // iterate videos
                 for (VideoResponseModel v : entry.getValue()) {
 
                     // identify the video
@@ -243,6 +243,7 @@ public class Api implements IApi {
     public List<EnrolledCoursesResponse> getEnrolledCourses(boolean fetchFromCache) throws Exception {
         Bundle p = new Bundle();
         p.putString("format", "json");
+        p.putString("org", config.getOrganizationCode());
         String url = userApi.getUserEnrolledCoursesURL(loginPrefs.getUsername());
         String json = null;
 

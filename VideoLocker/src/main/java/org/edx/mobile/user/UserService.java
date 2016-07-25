@@ -31,7 +31,7 @@ public interface UserService {
     Response deleteProfileImage(@Path("username") String username) throws HttpException;
 
     @GET("/api/mobile/v0.5/users/{username}/course_enrollments")
-    Response getUserEnrolledCourses(@Path("username") String username) throws HttpException;
+    Response getUserEnrolledCourses(@Path("username") String username, @Query("org") String org) throws HttpException;
 
     @GET("/api/badges/v1/assertions/user/{username}")
     Page<BadgeAssertion> getBadges(@Path("username") String username,
