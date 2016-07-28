@@ -15,7 +15,11 @@ machine:
 =======
     branches:
         only:
+<<<<<<< 9461d676a225850ec77bcb5aabfa2f97eeafa5f6
             - proversity/production
+=======
+            - proversity/staging
+>>>>>>> update staging
 
 machine:
     environment:
@@ -94,7 +98,7 @@ notify:
 =======
 # deployment:
 #   beta:
-#     branch: proversity/release
+#     branch: proversity/staging
 #     commands:
 #       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
   # production:
