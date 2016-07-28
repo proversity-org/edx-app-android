@@ -1,7 +1,7 @@
 general:
     branches:
         only:
-            - proversity/release
+            - proversity/staging
 
 machine:
     environment:
@@ -68,7 +68,7 @@ test:
 # https://github.com/Triple-T/gradle-play-publisher
 # deployment:
 #   beta:
-#     branch: proversity/release
+#     branch: proversity/staging
 #     commands:
 #       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
   # production:
