@@ -75,6 +75,7 @@ test:
 >>>>>>> testProdReleaseUnitTestCoverage on deploy, app_name untranslatable
 
 # https://github.com/Triple-T/gradle-play-publisher
+<<<<<<< 315c1105cd00c3de18c41fa0b31a74e47f4a1072
 deployment:
   beta:
 <<<<<<< 8400db39c3a1bb51fd43e86b33c574852235e877
@@ -90,3 +91,14 @@ notify:
     commands:
       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 >>>>>>> deploy v2.6.0 to production, code version 5
+=======
+# deployment:
+#   beta:
+#     branch: proversity/release
+#     commands:
+#       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
+  # production:
+  #   branch: proversity/production
+  #   commands:
+  #     - ./gradlew publishApkRelease -Dorg.gradle.project.track=production
+>>>>>>> fixed git path for edx-app-gradle-plugin, don't publish
