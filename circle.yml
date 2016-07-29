@@ -79,6 +79,7 @@ test:
         - ./gradlew assembleProdRelease -PdisablePreDex
 >>>>>>> testProdReleaseUnitTestCoverage on deploy, app_name untranslatable
     override:
+<<<<<<< 998e870e5cc66b97d83cad2d808d21a915faf97f
 <<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
 <<<<<<< 8400db39c3a1bb51fd43e86b33c574852235e877
         - ./gradlew testProdReleaseUnitTestCoverage
@@ -107,6 +108,9 @@ test:
         - adb shell screencap /data/local/NativeFindCoursesActivity.png
         - adb pull /data/local/NativeFindCoursesActivity.png VideoLocker/build/outputs/NativeFindCoursesActivity.png
 >>>>>>> build lfm, try with screenshots
+=======
+        - sleep 10
+>>>>>>> org filter, deploy to playstore
     post:
 <<<<<<< 1a99141bba144b6a8ebdfa040c603181bd57f936
         - cp -r OpenEdXMobile/build/reports $CIRCLE_ARTIFACTS
@@ -117,6 +121,7 @@ test:
 >>>>>>> testProdReleaseUnitTestCoverage on deploy, app_name untranslatable
 
 # https://github.com/Triple-T/gradle-play-publisher
+<<<<<<< 998e870e5cc66b97d83cad2d808d21a915faf97f
 <<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
 <<<<<<< 315c1105cd00c3de18c41fa0b31a74e47f4a1072
 deployment:
@@ -152,3 +157,10 @@ notify:
 #     commands:
 #       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 >>>>>>> build lfm, try with screenshots
+=======
+deployment:
+  beta:
+    branch: proversity/lfm
+    commands:
+      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
+>>>>>>> org filter, deploy to playstore
