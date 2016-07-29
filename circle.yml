@@ -15,11 +15,15 @@ machine:
 =======
     branches:
         only:
+<<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
 <<<<<<< 9461d676a225850ec77bcb5aabfa2f97eeafa5f6
             - proversity/production
 =======
             - proversity/staging
 >>>>>>> update staging
+=======
+            - proversity/lfm
+>>>>>>> build lfm, try with screenshots
 
 machine:
     environment:
@@ -42,6 +46,7 @@ dependencies:
     override:
         - ./gradlew dependencies --stacktrace --info
     post:
+<<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
 <<<<<<< c646412934fcd2cb0360fc8a7f17586a4b3c1f2a
 <<<<<<< 8400db39c3a1bb51fd43e86b33c574852235e877
         - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/pro ./config
@@ -57,6 +62,9 @@ dependencies:
 >>>>>>> deploy v2.6.0 to production, code version 5
 =======
         - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/staging ./config
+=======
+        - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/lfm ./config
+>>>>>>> build lfm, try with screenshots
         - cp -r config/gradle.properties VideoLocker/gradle.properties
         - echo "edx.dir = '../config'" > VideoLocker/edx.properties
         - cp -r config/config.yaml $CIRCLE_ARTIFACTS
@@ -71,11 +79,34 @@ test:
         - ./gradlew assembleProdRelease -PdisablePreDex
 >>>>>>> testProdReleaseUnitTestCoverage on deploy, app_name untranslatable
     override:
+<<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
 <<<<<<< 8400db39c3a1bb51fd43e86b33c574852235e877
         - ./gradlew testProdReleaseUnitTestCoverage
 =======
         - sleep 10
 >>>>>>> deploy v2.6.0 to production, code version 5
+=======
+        - emulator -avd circleci-android22 -no-audio -no-window:
+            background: true
+            parallel: true
+        - circle-android wait-for-boot
+        - adb shell input keyevent 82 # unlock
+        - adb install VideoLocker/build/outputs/apk/VideoLocker-prod-debug.apk
+        - sleep 30
+        - adb shell am start -W -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -n io.proversity.edx/io.proversity.edx.view.SplashActivity
+        - adb shell screencap /data/local/SplashActivity.png
+        - adb pull /data/local/SplashActivity.png VideoLocker/build/outputs/SplashActivity.png
+        - adb shell am start -W -n io.proversity.edx/io.proversity.edx.view.LoginActivity
+        - adb shell screencap /data/local/LoginActivity.png
+        - adb pull /data/local/LoginActivity.png VideoLocker/build/outputs/LoginActivity.png
+        - sleep 10
+        - adb shell am start -W -n io.proversity.edx/io.proversity.edx.view.MyCoursesListActivity
+        - adb shell screencap /data/local/MyCoursesListActivity.png
+        - adb pull /data/local/MyCoursesListActivity.png VideoLocker/build/outputs/MyCoursesListActivity.png
+        - adb shell input tap 720 620 # find courses
+        - adb shell screencap /data/local/NativeFindCoursesActivity.png
+        - adb pull /data/local/NativeFindCoursesActivity.png VideoLocker/build/outputs/NativeFindCoursesActivity.png
+>>>>>>> build lfm, try with screenshots
     post:
 <<<<<<< 1a99141bba144b6a8ebdfa040c603181bd57f936
         - cp -r OpenEdXMobile/build/reports $CIRCLE_ARTIFACTS
@@ -86,6 +117,7 @@ test:
 >>>>>>> testProdReleaseUnitTestCoverage on deploy, app_name untranslatable
 
 # https://github.com/Triple-T/gradle-play-publisher
+<<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
 <<<<<<< 315c1105cd00c3de18c41fa0b31a74e47f4a1072
 deployment:
   beta:
@@ -113,3 +145,10 @@ notify:
   #   commands:
   #     - ./gradlew publishApkRelease -Dorg.gradle.project.track=production
 >>>>>>> fixed git path for edx-app-gradle-plugin, don't publish
+=======
+# deployment:
+#   beta:
+#     branch: proversity/lfm
+#     commands:
+#       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
+>>>>>>> build lfm, try with screenshots
