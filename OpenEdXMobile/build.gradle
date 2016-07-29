@@ -271,8 +271,8 @@ android {
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion TARGET_SDK_VERSION
 
-        versionCode 3 //getVersionCode()
-        versionName "2.6.3" //getVersionName()
+        versionCode getVersionCode()
+        versionName getVersionName()
 
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
