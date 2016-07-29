@@ -175,7 +175,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 21
 
-        versionCode 7
+        versionCode 1
         versionName "2.6.0"
 
         renderscriptTargetApi 22
