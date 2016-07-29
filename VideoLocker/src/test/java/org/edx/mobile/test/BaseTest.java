@@ -16,7 +16,7 @@ import java.util.concurrent.Executor;
 
 @Ignore
 @RunWith(CustomRobolectricTestRunner.class)
-@Config(constants=BuildConfig.class, packageName="org.edx.mobile")
+@Config(constants=BuildConfig.class, sdk=21, packageName="org.edx.mobile")
 public class BaseTest {
     @Before
     public final void beforeBaseTest() {
