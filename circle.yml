@@ -1,7 +1,7 @@
 general:
     branches:
         only:
-            - proversity/production
+            - proversity/aaa
 
 machine:
     environment:
@@ -23,7 +23,7 @@ dependencies:
     override:
         - ./gradlew dependencies --stacktrace --info
     post:
-        - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/production ./config
+        - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/aaa ./config
         - cp -r config/gradle.properties VideoLocker/gradle.properties
         - echo "edx.dir = '../config'" > VideoLocker/edx.properties
         - cp -r config/config.yaml $CIRCLE_ARTIFACTS
@@ -39,8 +39,8 @@ test:
         - cp -r VideoLocker/build/outputs $CIRCLE_ARTIFACTS
 
 # https://github.com/Triple-T/gradle-play-publisher
-deployment:
-  beta:
-    branch: proversity/production
-    commands:
-      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
+# deployment:
+#   beta:
+#     branch: proversity/aaa
+#     commands:
+#       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
