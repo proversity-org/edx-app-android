@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -12,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -38,6 +38,7 @@ import org.edx.mobile.task.RegisterTask;
 import org.edx.mobile.task.Task;
 import org.edx.mobile.util.ResourceUtil;
 import org.edx.mobile.util.images.ErrorUtils;
+import org.edx.mobile.util.IntentFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,43 +55,49 @@ public class RegisterActivity extends BaseFragmentActivity
     private TextView createAccountTv;
     private List<IRegistrationFieldView> mFieldViews = new ArrayList<>();
     private SocialLoginDelegate socialLoginDelegate;
+    private View facebookButton;
+    private View googleButton;
 
     @Inject
     LoginPrefs loginPrefs;
+
+    @NonNull
+    public static Intent newIntent() {
+        return IntentFactory.newIntentForComponent(RegisterActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        setTitle(ResourceUtil.getFormattedString(getResources(), R.string.register_title, "platform_name", environment.getConfig().getPlatformName()));
+
         environment.getSegment().trackScreenView(ISegment.Screens.LAUNCH_ACTIVITY);
 
         socialLoginDelegate = new SocialLoginDelegate(this, savedInstanceState, this, environment.getConfig(), loginPrefs);
 
-        boolean isSocialEnabled = SocialFactory.isSocialFeatureEnabled(
-                getApplicationContext(), SocialFactory.SOCIAL_SOURCE_TYPE.TYPE_UNKNOWN, environment.getConfig());
+        boolean isSocialEnabled = false;
+        facebookButton = findViewById(R.id.facebook_button);
+        googleButton = findViewById(R.id.google_button);
 
+        if (!SocialFactory.isSocialFeatureEnabled(getApplication(), SocialFactory.SOCIAL_SOURCE_TYPE.TYPE_FACEBOOK, environment.getConfig())) {
+            facebookButton.setVisibility(View.GONE);
+        } else {
+            isSocialEnabled = true;
+            facebookButton.setOnClickListener(socialLoginDelegate.createSocialButtonClickHandler(SocialFactory.SOCIAL_SOURCE_TYPE.TYPE_FACEBOOK));
+        }
+
+        if (!SocialFactory.isSocialFeatureEnabled(getApplication(), SocialFactory.SOCIAL_SOURCE_TYPE.TYPE_GOOGLE, environment.getConfig())) {
+            googleButton.setVisibility(View.GONE);
+        } else {
+            isSocialEnabled = true;
+            googleButton.setOnClickListener(socialLoginDelegate.createSocialButtonClickHandler(SocialFactory.SOCIAL_SOURCE_TYPE.TYPE_GOOGLE));
+        }
         if (!isSocialEnabled) {
             findViewById(R.id.panel_social_layout).setVisibility(View.GONE);
             findViewById(R.id.or_signup_with_email_title).setVisibility(View.GONE);
             findViewById(R.id.signup_with_row).setVisibility(View.GONE);
-        } else {
-            ImageView imgFacebook = (ImageView) findViewById(R.id.img_facebook);
-            ImageView imgGoogle = (ImageView) findViewById(R.id.img_google);
-
-            if (!environment.getConfig().getFacebookConfig().isEnabled()) {
-                findViewById(R.id.img_facebook).setVisibility(View.GONE);
-            } else {
-                imgFacebook.setClickable(true);
-                imgFacebook.setOnClickListener(socialLoginDelegate.createSocialButtonClickHandler(SocialFactory.SOCIAL_SOURCE_TYPE.TYPE_FACEBOOK));
-            }
-
-            if (!environment.getConfig().getGoogleConfig().isEnabled()) {
-                findViewById(R.id.img_google).setVisibility(View.GONE);
-            } else {
-                imgGoogle.setClickable(true);
-                imgGoogle.setOnClickListener(socialLoginDelegate.createSocialButtonClickHandler(SocialFactory.SOCIAL_SOURCE_TYPE.TYPE_GOOGLE));
-            }
         }
 
         TextView agreementMessageView = (TextView) findViewById(R.id.by_creating_account_tv);
@@ -123,27 +130,9 @@ public class RegisterActivity extends BaseFragmentActivity
             }
         });
 
-        View closeButton = findViewById(R.id.actionbar_close_btn);
-        if (closeButton != null) {
-            closeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    loginPrefs.clearSocialLoginToken();
-                    finish();
-                }
-            });
-        }
-
-        TextView customTitle = (TextView) findViewById(R.id.activity_title);
-        if (customTitle != null) {
-            CharSequence title = ResourceUtil.getFormattedString(getResources(), R.string.register_title, "platform_name", environment.getConfig().getPlatformName());
-            customTitle.setText(title);
-        }
-
         setupRegistrationForm();
         hideSoftKeypad();
         tryToSetUIInteraction(true);
-
     }
 
     public void showAgreement(RegistrationAgreement agreement) {
@@ -278,8 +267,7 @@ public class RegisterActivity extends BaseFragmentActivity
         final RegisterTask task = new RegisterTask(this, parameters, access_token, backsourceType) {
             @Override
             public void onSuccess(AuthResponse auth) {
-                environment.getRouter().showMyCourses(RegisterActivity.this);
-                finish();
+                onUserLoginSuccess(auth.profile);
             }
 
             @Override
@@ -305,7 +293,7 @@ public class RegisterActivity extends BaseFragmentActivity
                         return; // Return here to avoid showing the generic error pop-up.
                     }
                 }
-                RegisterActivity.this.showErrorMessage(null, ErrorUtils.getErrorMessage(ex, RegisterActivity.this));
+                RegisterActivity.this.showErrorDialog(null, ErrorUtils.getErrorMessage(ex, RegisterActivity.this));
             }
         };
         task.execute();
@@ -440,15 +428,6 @@ public class RegisterActivity extends BaseFragmentActivity
         });
     }
 
-    @Override
-    public boolean showErrorMessage(String header, String message, boolean isPersistent) {
-        if (message != null) {
-            return super.showErrorMessage(header, message, isPersistent);
-        } else {
-            return super.showErrorMessage(header, getString(R.string.login_failed), isPersistent);
-        }
-    }
-
     ///////section related to social login ///////////////
     // there are some duplicated code from login activity, as the logic
     //between login and registration is different subtly
@@ -509,12 +488,7 @@ public class RegisterActivity extends BaseFragmentActivity
      *  callback if login to edx success using social access_token
      */
     public void onUserLoginSuccess(ProfileModel profile) {
-        if (isActivityStarted()) {
-            // do NOT launch next screen if app minimized
-            showProgress();
-            environment.getRouter().showMyCourses(this);
-        }
-        // but finish this screen anyways as login is succeeded
+        setResult(RESULT_OK);
         finish();
     }
 
@@ -554,14 +528,12 @@ public class RegisterActivity extends BaseFragmentActivity
 
     //Disable the Create button during server call
     private void createButtonDisabled() {
-        createAccountBtn.setBackgroundResource(R.drawable.new_bt_signin_active);
         createAccountBtn.setEnabled(false);
         createAccountTv.setText(getString(R.string.create_account_text));
     }
 
     //Enable the Create button during server call
     private void createButtonEnabled() {
-        createAccountBtn.setBackgroundResource(R.drawable.bt_signin_active);
         createAccountBtn.setEnabled(true);
         createAccountTv.setText(getString(R.string.create_account_text));
     }
@@ -581,10 +553,8 @@ public class RegisterActivity extends BaseFragmentActivity
             v.setEnabled(enable);
         }
 
-        ImageView imgFacebook = (ImageView) findViewById(R.id.img_facebook);
-        ImageView imgGoogle = (ImageView) findViewById(R.id.img_google);
-        imgFacebook.setClickable(enable);
-        imgGoogle.setClickable(enable);
+        facebookButton.setClickable(enable);
+        googleButton.setClickable(enable);
 
         return true;
     }

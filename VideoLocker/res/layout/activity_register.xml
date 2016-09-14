@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,7 +11,6 @@
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
         android:background="@android:color/white">
 
         <LinearLayout
@@ -103,6 +101,8 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginEnd="12dp"
+                    android:focusable="true"
+                    android:background="@drawable/selectable_box_overlay"
                     android:text="@string/show_optional_text"
                     android:textColor="@color/grey_hide_optional_text"
                     android:textSize="14sp"
@@ -124,6 +124,7 @@
 
             <FrameLayout
                 style="@style/edX.Widget.SignInButtonLayout"
+                android:focusable="true"
                 android:id="@+id/createAccount_button_layout"
                 android:contentDescription="@string/create_account_btn">
 
@@ -152,33 +153,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"/>
 
-            <TextView
-                android:id="@+id/end_user_agreement_tv"
-                style="@style/regular_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:linksClickable="true"
-                android:text="@string/licensing_agreement"
-                android:textColor="@color/cyan_text_navigation"
-                android:textSize="11sp"
-                android:layout_marginTop="2dp"
-                android:visibility="gone"/>
-
-
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/error_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:visibility="gone">
-
-        <include layout="@layout/panel_error_message_with_title" />
-    </LinearLayout>
-
 
     <TextView
         android:id="@+id/flying_message"
@@ -186,14 +162,4 @@
         android:text="@string/started_downloading"
         android:layout_marginTop="50dp"
         android:visibility="gone" />
-
-    <LinearLayout
-        android:id="@+id/custom_action_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
-
-        <include layout="@layout/panel_custom_action_bar" />
-    </LinearLayout>
-
 </RelativeLayout>

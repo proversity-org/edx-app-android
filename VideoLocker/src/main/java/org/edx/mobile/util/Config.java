@@ -1,7 +1,9 @@
 package org.edx.mobile.util;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -11,7 +13,9 @@ import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.squareup.phrase.Phrase;
 
+import org.edx.mobile.BuildConfig;
 import org.edx.mobile.logger.Logger;
 
 import java.io.InputStream;
@@ -34,6 +38,7 @@ public class Config {
     private static final String FEEDBACK_EMAIL_ADDRESS = "FEEDBACK_EMAIL_ADDRESS";
     private static final String OAUTH_CLIENT_ID = "OAUTH_CLIENT_ID";
     private static final String SPEED_TEST_ENABLED = "SPEED_TEST_ENABLED";
+    private static final String APP_UPDATE_URIS = "APP_UPDATE_URIS";
     private static final String ORGANIZATION_CODE = "ORGANIZATION_CODE";
 
     /* Composite configuration keys */
@@ -56,6 +61,8 @@ public class Config {
     private static final String BADGES_ENABLED = "BADGES_ENABLED";
     private static final String SERVER_SIDE_CHANGED_THREAD = "SERVER_SIDE_CHANGED_THREAD";
     private static final String END_TO_END_TEST = "END_TO_END_TEST";
+    private static final String NEW_LOGISTRATION_ENABLED = "NEW_LOGISTRATION_ENABLED";
+    private static final String DISCUSSIONS_ENABLE_PROFILE_PICTURE_PARAM = "DISCUSSIONS_ENABLE_PROFILE_PICTURE_PARAM";
 
     public static class ZeroRatingConfig {
         @SerializedName("ENABLED")
@@ -80,9 +87,6 @@ public class Config {
         }
     }
 
-    /**
-     * If TYPE is not "webview" in any letter case, defaults to "native"
-     */
     public static class EnrollmentConfig {
         @SerializedName("WEBVIEW")
         private WebViewConfig mWebViewConfig;
@@ -90,38 +94,57 @@ public class Config {
         @SerializedName("TYPE")
         private String mCourseEnrollmentType;
 
-        public boolean isWebviewCourseDiscoveryEnabled() {
-            if (mCourseEnrollmentType == null) {
-                return false;
-            }
+        public enum CourseDiscoveryType {
+            WEBVIEW,
+            NATIVE
+        }
 
-            switch (mCourseEnrollmentType.toUpperCase(Locale.US)) {
-                case "WEBVIEW":
-                    return true;
-                case "NATIVE":
-                    return false;
-                default:
-                    logger.debug("No match in config for COURSE_ENROLLMENT.TYPE:" + mCourseEnrollmentType + ". Defaulting to Native");
-                    return false;
+        @Nullable
+        private CourseDiscoveryType getCourseDiscoveryType() {
+            if (null == mCourseEnrollmentType) {
+                return null;
             }
+            return CourseDiscoveryType.valueOf(mCourseEnrollmentType.toUpperCase(Locale.US));
+        }
+
+        public boolean isCourseDiscoveryEnabled() {
+            return getCourseDiscoveryType() != null;
+        }
+
+        public boolean isExploreSubjectsEnabled() {
+            // Explore Subjects is only supported for web course discovery, and requires a URL
+            return isWebviewCourseDiscoveryEnabled()
+                    && null != getWebViewConfig().getExploreSubjectsUrl()
+                    && !getWebViewConfig().getExploreSubjectsUrl().isEmpty();
+        }
+
+        public boolean isWebviewCourseDiscoveryEnabled() {
+            return getCourseDiscoveryType() == CourseDiscoveryType.WEBVIEW;
+        }
+
+        public WebViewConfig getWebViewConfig() {
+            return mWebViewConfig;
         }
 
         public String getCourseSearchUrl() {
-            return mWebViewConfig.getCourseSearchUrl();
+            return null == mWebViewConfig ? null : mWebViewConfig.getCourseSearchUrl();
         }
 
         public String getCourseInfoUrlTemplate() {
-            return mWebViewConfig.getCourseInfoUrlTemplate();
+            return null == mWebViewConfig ? null : mWebViewConfig.getCourseInfoUrlTemplate();
         }
 
         public boolean isWebCourseSearchEnabled() {
-            return mWebViewConfig.isWebCourseSearchEnabled();
+            return null != mWebViewConfig && mWebViewConfig.isWebCourseSearchEnabled();
         }
     }
 
     public static class WebViewConfig {
         @SerializedName("COURSE_SEARCH_URL")
         private String mSearchUrl;
+
+        @SerializedName("EXPLORE_SUBJECTS_URL")
+        private String mExploreSubjectsUrl;
 
         @SerializedName("COURSE_INFO_URL_TEMPLATE")
         private String mCourseInfoUrlTemplate;
@@ -131,6 +154,10 @@ public class Config {
 
         public String getCourseSearchUrl() {
             return mSearchUrl;
+        }
+
+        public String getExploreSubjectsUrl() {
+            return mExploreSubjectsUrl;
         }
 
         public String getCourseInfoUrlTemplate() {
@@ -370,8 +397,36 @@ public class Config {
         return getString(ORGANIZATION_CODE);
     }
 
+    /**
+     * @return A list of URIs for updating the app, or an empty list if none are available.
+     */
+    @NonNull
+    public List<Uri> getAppUpdateUris() {
+        //noinspection unchecked
+        final List<String> uriStrings = getObjectOrNewInstance(APP_UPDATE_URIS, ArrayList.class);
+        final List<Uri> uris = new ArrayList<>(uriStrings.size());
+        for (final String uriString : uriStrings) {
+            if (uriString != null) {
+                // Replace the 'application_id' token with the actual application ID.
+                uris.add(Uri.parse(Phrase.from(uriString)
+                        .put("application_id", BuildConfig.APPLICATION_ID)
+                        .format()
+                        .toString()));
+            }
+        }
+        return uris;
+    }
+
     public boolean isNotificationEnabled() {
         return getBoolean(PUSH_NOTIFICATIONS_FLAG, false);
+    }
+
+    public boolean isNewLogistrationEnabled() {
+        return getBoolean(NEW_LOGISTRATION_ENABLED, false);
+    }
+
+    public boolean isDiscussionProfilePicturesEnabled() {
+        return getBoolean(DISCUSSIONS_ENABLE_PROFILE_PICTURE_PARAM, false);
     }
 
     /**

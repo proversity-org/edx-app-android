@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.edx.mobile"
-    android:installLocation="auto" >
+    android:installLocation="auto">
 
     <!-- Required by app for server communication and video download -->
     <!-- Required by Segment -->
@@ -29,20 +29,15 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <!-- Sticky broadcast passing a message from one screen and display on another -->
-    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
-
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <permission android:protectionLevel="signature"
-        android:name="org.edx.mobile.permission.C2D_MESSAGE" />
-    <uses-permission android:name="org.edx.mobile.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
 
     <application
+        android:name=".base.RuntimeApplication"
         android:allowBackup="true"
-        android:supportsRtl="${supportsRtl}"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name=".base.RuntimeApplication" >
+        android:supportsRtl="${supportsRtl}"
+        android:theme="@style/AppTheme">
 
         <activity
             android:name="org.edx.mobile.view.SplashActivity"
@@ -60,124 +55,138 @@
             android:name="org.edx.mobile.view.LaunchActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Launch" />
+
+        <activity
+            android:name="org.edx.mobile.view.DiscoveryLaunchActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Launch" />
 
         <activity
             android:name="org.edx.mobile.view.LoginActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustNothing"
             android:configChanges="keyboardHidden|orientation"
-            >
-        </activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"></activity>
+
+        <activity
+            android:name=".view.dialog.ResetPasswordActivity"
+            android:label="@string/reset_dialog_title"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Dialog.NoTitle" />
+
+        <activity
+            android:name=".view.dialog.ResetPasswordSuccessActivity"
+            android:label="@string/success_dialog_title_help"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Dialog.NoTitle" />
 
         <activity
             android:name="org.edx.mobile.view.MyCoursesListActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"></activity>
 
         <activity
             android:name="org.edx.mobile.view.CourseDashboardActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="org.edx.mobile.view.CourseOutlineActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"></activity>
 
         <activity
             android:name=".view.CourseDiscussionTopicsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
             android:name=".view.CourseDiscussionPostsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/discussion_title" />
+            android:label="@string/discussion_title"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
             android:name=".view.CourseDiscussionCommentsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
             android:name=".view.CourseDiscussionResponsesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
             android:name="org.edx.mobile.view.DiscussionAddPostActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/discussion_post_create_new_post" />
+            android:label="@string/discussion_post_create_new_post"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
             android:name="org.edx.mobile.view.DiscussionAddResponseActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/discussion_add_response_title" />
+            android:label="@string/discussion_add_response_title"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
             android:name="org.edx.mobile.view.DiscussionAddCommentActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/discussion_add_comment_title" />
+            android:label="@string/discussion_add_comment_title"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
             android:name="org.edx.mobile.view.CourseUnitNavigationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="user"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"></activity>
 
-        <activity
-            android:name="org.edx.mobile.view.CourseLectureListActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            >
-        </activity>
 
         <activity
             android:name=".view.my_videos.MyVideosActivity"
             android:label="@string/label_my_videos"
             android:screenOrientation="portrait"
-            >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"></activity>
 
         <activity
             android:name="org.edx.mobile.view.DownloadListActivity"
             android:label="@string/title_download"
-            android:screenOrientation="portrait"
-            >
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".view.WebViewFindCoursesActivity"
             android:label="@string/find_courses_title"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"></activity>
+
+        <activity
+            android:name=".view.WebViewExploreSubjectsActivity"
+            android:label="@string/launch_explore_subjects"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"></activity>
 
         <activity
             android:name=".view.NativeFindCoursesActivity"
             android:label="@string/find_courses_title"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"></activity>
 
         <activity
             android:name="org.edx.mobile.view.CourseInfoActivity"
             android:label="@string/find_courses_title"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name="org.edx.mobile.view.CourseDetailActivity"
             android:label="@string/find_courses_title"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"></activity>
 
         <activity
             android:name="org.edx.mobile.view.VideoListActivity"
@@ -187,7 +196,8 @@
         <activity
             android:name="org.edx.mobile.view.CourseHandoutActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
             android:name=".view.CourseAnnouncementsActivity"
@@ -201,78 +211,71 @@
         <activity
             android:name="org.edx.mobile.view.SettingsActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
             android:name="org.edx.mobile.view.RegisterActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".profiles.UserProfileActivity"
+        <activity
+            android:name=".profiles.UserProfileActivity"
+            android:label="@string/profile_title"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoShadow"
-            android:label=""/>
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
-        <activity android:name=".view.EditUserProfileActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".view.FormFieldActivity"
+        <activity
+            android:name=".view.EditUserProfileActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
+
+        <activity
+            android:name=".view.FormFieldActivity"
             android:label=""
-            android:windowSoftInputMode="adjustResize"/>
-
-        <activity android:name=".view.CropImageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label=""/>
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"/>
 
-        <activity android:name=".view.dialog.WebViewDialogActivity"
+        <activity
+            android:name=".view.CropImageActivity"
+            android:label=""
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label=""/>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".view.dialog.WebViewDialogActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver android:name="org.edx.mobile.module.download.DownloadCompleteReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
         <!-- Setup for Code Coverage -->
         <instrumentation
             android:name="org.edx.mobile.instrumentation.EdxInstrumentation"
-            android:targetPackage="org.edx.mobile" >
-        </instrumentation>
+            android:targetPackage="org.edx.mobile"></instrumentation>
 
         <!-- adb shell am broadcast -a org.edx.mobile.END_EMMA -->
-        <receiver android:name="org.edx.mobile.instrumentation.EndEmmaBroadcast" >
+        <receiver android:name="org.edx.mobile.instrumentation.EndEmmaBroadcast">
             <intent-filter>
                 <action android:name="org.edx.mobile.END_EMMA" />
             </intent-filter>
         </receiver>
 
         <!-- Setup Google -->
-        <meta-data android:name="com.google.android.gms.version"
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <!-- Setup Facebook -->
         <activity android:name="com.facebook.LoginActivity" />
 
         <service android:name="org.edx.mobile.services.DownloadSpeedService" />
-
-        <!--   Parse Setup -->
-        <!--  https://www.parse.com/apps/quickstart#parse_push/android/existing  -->
-        <service android:name="com.parse.PushService" />
-        <!-- we have to add a level of indirection to avoid crash as parse maybe disabled by setting -->
-        <receiver android:name="com.parse.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="org.edx.mobile" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import org.edx.mobile.discussion.DiscussionComment;
+import org.edx.mobile.discussion.DiscussionRequestFields;
 import org.edx.mobile.model.Page;
 
 public abstract class GetCommentsListTask extends Task<Page<DiscussionComment>> {
@@ -21,6 +22,7 @@ public abstract class GetCommentsListTask extends Task<Page<DiscussionComment>> 
     }
 
     public Page<DiscussionComment> call() throws Exception {
-        return environment.getDiscussionAPI().getCommentsList(responseId, PAGE_SIZE, page);
+        return environment.getDiscussionAPI().getCommentsList(responseId, PAGE_SIZE, page,
+                DiscussionRequestFields.getRequestedFieldsList(environment.getConfig()));
     }
 }

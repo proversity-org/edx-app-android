@@ -11,7 +11,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
             android:background="@android:color/white"
             android:fillViewport="true">
 
@@ -28,18 +27,18 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/edx_logo_height"
-                        android:layout_marginBottom="@dimen/logo_margin_bottom"
+                        android:layout_height="@dimen/login_edx_logo_height"
+                        android:layout_marginBottom="@dimen/login_logo_margin_bottom"
                         android:layout_marginLeft="44dp"
                         android:layout_marginRight="44dp"
-                        android:layout_marginTop="@dimen/logo_margin_top">
+                        android:layout_marginTop="@dimen/login_logo_margin_top">
 
                         <ImageView
                             android:id="@+id/login_map"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:contentDescription="@string/app_name"
+                            android:contentDescription="@null"
                             android:scaleType="fitXY"
                             android:src="@drawable/edx_map_login" />
 
@@ -48,7 +47,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:contentDescription="@string/app_name"
+                            android:contentDescription="@string/phonetic_app_name"
                             android:src="@drawable/edx_logo_login" />
                     </RelativeLayout>
 
@@ -59,20 +58,46 @@
                         android:paddingLeft="44dp"
                         android:paddingRight="44dp">
 
-                        <EditText
-                            android:id="@+id/email_et"
-                            style="@style/edit_text_style"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/usernameWrapper"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="-4dp"
+                            android:paddingEnd="-4dp"
+                            android:paddingLeft="-4dp"
+                            android:paddingRight="-4dp"
                             android:hint="@string/email_username"
-                            android:inputType="textEmailAddress"
-                            android:maxLength="100" />
+                            android:textColorHint="@color/grey_text">
 
-                        <EditText
-                            android:id="@+id/password_et"
-                            style="@style/edit_text_style"
-                            android:layout_marginTop="8dp"
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/email_et"
+                                android:inputType="textEmailAddress"
+                                android:maxLength="100"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/passwordWrapper"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="-4dp"
+                            android:paddingEnd="-4dp"
+                            android:paddingLeft="-4dp"
+                            android:paddingRight="-4dp"
                             android:hint="@string/password"
-                            android:inputType="textPassword"
-                            android:maxLength="100" />
+                            android:textColorHint="@color/grey_text">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/password_et"
+                                android:layout_marginTop="8dp"
+                                android:inputType="textPassword"
+                                android:maxLength="100"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                        </android.support.design.widget.TextInputLayout>
 
                         <TextView
                             android:id="@+id/forgot_password_tv"
@@ -80,23 +105,27 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
+                            android:background="@drawable/selectable_box_overlay"
+                            android:focusable="true"
                             android:gravity="center"
                             android:text="@string/forgot_password"
-                            android:textColor="@color/cyan_text_navigation"
+                            android:textColor="@color/text_navigation"
                             android:textSize="12sp" />
 
                         <FrameLayout
                             android:id="@+id/login_button_layout"
                             style="@style/edX.Widget.SignInButtonLayout"
-                            android:contentDescription="@string/login_btn">
+                            android:contentDescription="@string/login_btn"
+                            android:focusable="true">
 
                             <TextView
                                 android:id="@+id/login_btn_tv"
                                 style="@style/edX.Widget.SignInButton"
                                 android:text="@string/login" />
 
-                            <include layout="@layout/button_progress_indicator"
-                                android:id="@+id/progress"/>
+                            <include
+                                android:id="@+id/progress"
+                                layout="@layout/button_progress_indicator" />
                         </FrameLayout>
 
                         <LinearLayout
@@ -107,8 +136,9 @@
 
                             <include layout="@layout/view_signin_title_row" />
 
-                            <include layout="@layout/panel_social_auth"
-                                android:id="@+id/social_auth"/>
+                            <include
+                                android:id="@+id/social_auth"
+                                layout="@layout/panel_social_auth" />
                         </LinearLayout>
 
                         <TextView
@@ -119,17 +149,19 @@
                             android:layout_marginTop="7dp"
                             android:gravity="center"
                             android:text="@string/by_signing_up"
-                            android:textColor="@color/grey_redirected_txt"
+                            android:textColor="@color/grey_text"
                             android:textSize="11sp" />
 
                         <TextView
                             android:id="@+id/end_user_agreement_tv"
                             style="@style/regular_text"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/selectable_box_overlay"
+                            android:focusable="true"
                             android:gravity="center"
-                            android:linksClickable="true"
-                            android:textColor="@color/cyan_text_navigation"
+                            android:textColor="@color/edx_brand_primary_base"
                             android:textSize="11sp"
                             tools:text="@string/licensing_agreement" />
 
@@ -148,26 +180,5 @@
                 </LinearLayout>
             </RelativeLayout>
         </ScrollView>
-
-        <LinearLayout
-            android:id="@+id/error_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:visibility="gone">
-
-            <include layout="@layout/panel_error_message_with_title" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/custom_action_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true">
-
-            <include layout="@layout/panel_custom_action_bar"
-                android:id="@+id/panel_custom_action_bar"/>
-        </LinearLayout>
-
     </RelativeLayout>
 </layout>

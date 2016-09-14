@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,11 +36,9 @@ public abstract class BaseSingleFragmentActivity extends BaseFragmentActivity im
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_fragment_base);
-
-
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
     }
 
     @Override
@@ -107,18 +106,6 @@ public abstract class BaseSingleFragmentActivity extends BaseFragmentActivity im
     }
 
     /**
-     * Call this function if you do not want to allow
-     * opening/showing the drawer(Navigation Fragment) on swiping left to right
-     */
-    protected void blockDrawerFromOpening(){
-        DrawerLayout drawerLayout = (DrawerLayout)
-                findViewById(R.id.drawer_layout);
-        if (drawerLayout != null) {
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        }
-    }
-
-    /**
      * implements TaskProcessCallback
      */
     public void startProcess(){
@@ -135,7 +122,7 @@ public abstract class BaseSingleFragmentActivity extends BaseFragmentActivity im
         //TODO - -we need to define different UI message view for different message type?
         switch (messageType) {
             case FLYIN_ERROR:
-                this.showErrorMessage("", message);
+                this.showErrorDialog(null, message);
                 break;
             case FLYIN_WARNING:
             case FLYIN_INFO:
@@ -150,7 +137,7 @@ public abstract class BaseSingleFragmentActivity extends BaseFragmentActivity im
                 this.hideMessageInSitu();
                 break;
             case DIALOG:
-                this.showErrorDialog(message);
+                this.showErrorDialog(null, message);
         }
     }
 
