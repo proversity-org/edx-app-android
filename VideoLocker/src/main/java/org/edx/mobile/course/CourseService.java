@@ -16,6 +16,9 @@ public interface CourseService {
      * @param mobile   (optional):
      *                 If specified, only visible `CourseOverview` objects that are
      *                 designated as mobile_available are returned.
+     * @param org      (optional):
+     *                 If specified, only courses with the relevant organization
+     *                 code are returned.
      * @param page     (optional):
      *                 Which page to fetch. If not given, defaults to page 1
      */
