@@ -123,7 +123,7 @@ public class RestApiManager implements IApi {
         if (!NetworkUtil.isConnected(context)) {
             return oauthRestApi.getEnrolledCourses(loginPrefs.getUsername(), orgCode);
         } else if (fetchFromCache) {
-            return oauthRestApi.getEnrolledCourses(loginPrefs.getUsername(), orgCode);
+            return oauthRestApi.getEnrolledCourses(loginPrefs.getUsername(), orgCode).execute().body();
         } else {
             return oauthRestApi.getEnrolledCoursesNoCache(loginPrefs.getUsername(), orgCode);
         }
