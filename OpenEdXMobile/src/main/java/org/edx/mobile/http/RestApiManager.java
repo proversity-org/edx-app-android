@@ -121,19 +121,11 @@ public class RestApiManager implements IApi {
     public List<EnrolledCoursesResponse> getEnrolledCourses(boolean fetchFromCache) throws Exception {
         String orgCode = environment.getConfig().getOrganizationCode();
         if (!NetworkUtil.isConnected(context)) {
-<<<<<<< HEAD:VideoLocker/src/main/java/org/edx/mobile/http/RestApiManager.java
-            return oauthRestApi.getEnrolledCourses(loginPrefs.getUsername(), orgCode);
+            return oauthRestApi.getEnrolledCourses(loginPrefs.getUsername(), orgCode).execute().body();
         } else if (fetchFromCache) {
-            return oauthRestApi.getEnrolledCourses(loginPrefs.getUsername(), orgCode);
+            return oauthRestApi.getEnrolledCourses(loginPrefs.getUsername(), orgCode).execute().body();
         } else {
-            return oauthRestApi.getEnrolledCoursesNoCache(loginPrefs.getUsername(), orgCode);
-=======
-            return oauthRestApi.getEnrolledCourses(loginPrefs.getUsername()).execute().body();
-        } else if (fetchFromCache) {
-            return oauthRestApi.getEnrolledCourses(loginPrefs.getUsername()).execute().body();
-        } else {
-            return oauthRestApi.getEnrolledCoursesNoCache(loginPrefs.getUsername()).execute().body();
->>>>>>> upstream/master:OpenEdXMobile/src/main/java/org/edx/mobile/http/RestApiManager.java
+            return oauthRestApi.getEnrolledCoursesNoCache(loginPrefs.getUsername(), orgCode).execute().body();
         }
     }
 
