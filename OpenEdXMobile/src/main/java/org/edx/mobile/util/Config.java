@@ -502,7 +502,7 @@ public class Config {
     }
 
     public String getOrganizationCode() {
-        return getString(ORGANIZATION_CODE, '');
+        return getString(ORGANIZATION_CODE, "");
     }
 
     /**
