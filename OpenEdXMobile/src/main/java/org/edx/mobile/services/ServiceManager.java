@@ -28,6 +28,7 @@ import org.edx.mobile.model.course.CourseStructureV1Model;
 import org.edx.mobile.module.prefs.LoginPrefs;
 import org.edx.mobile.module.registration.model.RegistrationDescription;
 import org.edx.mobile.util.Config;
+import org.json.JSONObject;
 
 import java.net.HttpCookie;
 import java.util.List;
@@ -203,7 +204,7 @@ public class ServiceManager {
     }
 
 
-    public Boolean enrollInACourse(String courseId, boolean email_opt_in) throws Exception {
+    public JSONObject enrollInACourse(String courseId, boolean email_opt_in) throws Exception {
         return api.enrollInACourse(courseId, email_opt_in);
     }
 
