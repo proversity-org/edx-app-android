@@ -39,8 +39,7 @@ public enum ErrorUtils {
                     errorMessage = context.getString(R.string.app_version_unsupported);
                     break;
             }
-        }
-        if (null == errorMessage) {
+        } else if (null == errorMessage) {
             logger.error(ex, true /* Submit crash report since this is an unknown type of error */);
             errorMessage = context.getString(R.string.error_unknown);
         }
