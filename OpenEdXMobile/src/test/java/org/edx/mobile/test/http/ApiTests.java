@@ -218,8 +218,8 @@ public class ApiTests extends HttpBaseTestCase {
 
         EnrolledCoursesResponse e = api.getEnrolledCourses().get(0);
         String courseId = e.getCourse().getId();
-        boolean success = api.enrollInACourse(courseId, true);
-        assertTrue(success);
+        JSONObject result = api.enrollInACourse(courseId, true);
+        assertFalse(result.has("error"));
         print("success");
         print("test: finished: reset password");
     }

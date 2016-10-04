@@ -594,7 +594,7 @@ public class Api implements IApi {
     }
 
     @Override
-    public Boolean enrollInACourse(String courseId, boolean email_opt_in) throws Exception {
+    public JSONObject enrollInACourse(String courseId, boolean email_opt_in) throws Exception {
         String enrollUrl = getBaseUrl() + "/api/enrollment/v1/enrollment";
         logger.debug("POST url for enrolling in a Course: " + enrollUrl);
 
@@ -609,15 +609,12 @@ public class Api implements IApi {
 
         if (json != null && !json.isEmpty()) {
             logger.debug("Response of Enroll in a course= " + json);
-            JSONObject resultJson = new JSONObject(json);
-            if (resultJson.has("error")) {
-                return false;
-            } else {
-                return true;
-            }
+            return new JSONObject(json);
+        }else{
+            JSONObject resultJson = new JSONObject();
+            resultJson.put("error", "No response");
+            return resultJson;
         }
-
-        return false;
     }
 
     public String getSessionTokenExchangeUrl() {

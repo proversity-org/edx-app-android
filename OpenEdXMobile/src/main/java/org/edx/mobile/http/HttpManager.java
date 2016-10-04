@@ -195,7 +195,7 @@ public class HttpManager {
      * @throws IOException
      */
     public String post(String url, String postBody, Bundle headers)
-            throws ParseException, ClientProtocolException, IOException {
+            throws ParseException, ClientProtocolException, IOException, JSONException {
         // this is POST, so isPathRequest=false
         return post(url, postBody, headers, false);
     }
@@ -212,7 +212,7 @@ public class HttpManager {
      * @throws IOException
      */
     public String post(String url, String postBody, Bundle headers, boolean isPatchRequest)
-            throws ParseException, ClientProtocolException, IOException {
+            throws ParseException, ClientProtocolException, IOException, JSONException {
         final DefaultHttpClient client = newClient();
 
         HttpPost post = null;
@@ -237,11 +237,16 @@ public class HttpManager {
         HttpResponse response = client.execute(post);
         int statusCode = response.getStatusLine().getStatusCode();
         //make this change to handle it consistent with iOS app
+
+        InputStream inputStream = AndroidHttpClient
+                .getUngzippedContent(response.getEntity());
+        String strRes = IOUtils.toString(inputStream, Charset.defaultCharset());
+
         if (statusCode != HttpStatus.OK ){
             // Enroll endpoint may return 404 and 400 errors
             logger.debug("Response of HTTP " + statusCode);
 
-            JSONObject json = new JSONObject();
+            JSONObject json = new JSONObject(strRes);
             try {
                 json.put("error", String.valueOf(statusCode));
             } catch (JSONException e) {
@@ -252,9 +257,6 @@ public class HttpManager {
             client.getConnectionManager().shutdown();
             return json.toString();
         }
-        InputStream inputStream = AndroidHttpClient
-                .getUngzippedContent(response.getEntity());
-        String strRes = IOUtils.toString(inputStream, Charset.defaultCharset());
 
         client.getConnectionManager().shutdown();
 
