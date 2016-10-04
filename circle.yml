@@ -15,6 +15,7 @@ machine:
 =======
     branches:
         only:
+<<<<<<< 1faa579ea64e01553c2725998d05c0c6753c4f10
 <<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
 <<<<<<< 9461d676a225850ec77bcb5aabfa2f97eeafa5f6
             - proversity/production
@@ -24,12 +25,18 @@ machine:
 =======
             - proversity/lfm
 >>>>>>> build lfm, try with screenshots
+=======
+            - proversity/lfm
+>>>>>>> updated versionCode, new circle build paths
 
 machine:
     environment:
         GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx3584m -XX:+HeapDumpOnOutOfMemoryError"'
         RELEASE_PK12_FILE: "../config/release.p12"
+<<<<<<< 1faa579ea64e01553c2725998d05c0c6753c4f10
 >>>>>>> deploy v2.6.0 to production, code version 5
+=======
+>>>>>>> updated versionCode, new circle build paths
 
 dependencies:
     pre:
@@ -46,10 +53,14 @@ dependencies:
     override:
         - ./gradlew dependencies --stacktrace --info
     post:
+<<<<<<< 1faa579ea64e01553c2725998d05c0c6753c4f10
 <<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
 <<<<<<< c646412934fcd2cb0360fc8a7f17586a4b3c1f2a
 <<<<<<< 8400db39c3a1bb51fd43e86b33c574852235e877
         - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/pro ./config
+=======
+        - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/lfm ./config
+>>>>>>> updated versionCode, new circle build paths
         - cp -r config/gradle.properties OpenEdXMobile/gradle.properties
         - cp -r config/google-services.json OpenEdXMobile/google-services.json
         - echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
@@ -79,6 +90,7 @@ test:
         - ./gradlew assembleProdRelease -PdisablePreDex
 >>>>>>> testProdReleaseUnitTestCoverage on deploy, app_name untranslatable
     override:
+<<<<<<< 1faa579ea64e01553c2725998d05c0c6753c4f10
 <<<<<<< 998e870e5cc66b97d83cad2d808d21a915faf97f
 <<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
 <<<<<<< 8400db39c3a1bb51fd43e86b33c574852235e877
@@ -111,6 +123,9 @@ test:
 =======
         - sleep 10
 >>>>>>> org filter, deploy to playstore
+=======
+        - sleep 10
+>>>>>>> updated versionCode, new circle build paths
     post:
 <<<<<<< 1a99141bba144b6a8ebdfa040c603181bd57f936
         - cp -r OpenEdXMobile/build/reports $CIRCLE_ARTIFACTS
@@ -121,6 +136,7 @@ test:
 >>>>>>> testProdReleaseUnitTestCoverage on deploy, app_name untranslatable
 
 # https://github.com/Triple-T/gradle-play-publisher
+<<<<<<< 1faa579ea64e01553c2725998d05c0c6753c4f10
 <<<<<<< 998e870e5cc66b97d83cad2d808d21a915faf97f
 <<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
 <<<<<<< 315c1105cd00c3de18c41fa0b31a74e47f4a1072
@@ -158,9 +174,15 @@ notify:
 #       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 >>>>>>> build lfm, try with screenshots
 =======
+=======
+>>>>>>> updated versionCode, new circle build paths
 deployment:
   beta:
     branch: proversity/lfm
     commands:
+<<<<<<< 1faa579ea64e01553c2725998d05c0c6753c4f10
       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 >>>>>>> org filter, deploy to playstore
+=======
+      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
+>>>>>>> updated versionCode, new circle build paths
