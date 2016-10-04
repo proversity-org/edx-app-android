@@ -211,7 +211,7 @@ public class RestApiManager implements IApi {
     }
 
     @Override
-    public Boolean enrollInACourse(String courseId, boolean email_opt_in) throws Exception {
+    public JSONObject enrollInACourse(String courseId, boolean email_opt_in) throws Exception {
         String enrollUrl = getBaseUrl() + "/api/enrollment/v1/enrollment";
         logger.debug("POST url for enrolling in a Course: " + enrollUrl);
 
@@ -230,8 +230,11 @@ public class RestApiManager implements IApi {
             } else {
                 return true;
             }
+        }else{
+            JSONObject resultJson = new JSONObject();
+            resultJson.put("error", "Request failed");
+            return resultJson;
         }
-        return false;
     }
 
     @Override
