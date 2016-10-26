@@ -501,10 +501,6 @@ public class Config {
         return getString(OAUTH_CLIENT_ID);
     }
 
-    public String getOrganizationCode() {
-        return getString(ORGANIZATION_CODE, "");
-    }
-
     /**
      * @return A list of URIs of app stores, or an empty list if none are available.
      */
