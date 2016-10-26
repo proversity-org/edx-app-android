@@ -43,7 +43,9 @@
 
     <!-- Course Card -->
     <dimen name="course_card_height">190dp</dimen>
+    <dimen name="course_card_play_icon_size">60dp</dimen>
     <dimen name="course_detail_card_height">70dp</dimen>
+    <dimen name="course_detail_share_icon_size">36dp</dimen>
 
     <!-- Course Dashboard-->
     <dimen name="dashboard_nav_element_height">85dp</dimen>
@@ -68,6 +70,10 @@
     <dimen name="signup_social_title_margin">5dp</dimen>
     <dimen name="signup_social_title_margin_large">13dp</dimen>
     <dimen name="signup_social_title_margin_bottom">6dp</dimen>
+    <dimen name="registration_field_vertical_padding">2dp</dimen>
+    <dimen name="registration_field_horizontal_padding">2dp</dimen>
+    <dimen name="registration_spinner_horizontal_padding">-10dp</dimen>
+    <dimen name="social_auth_bottom_margin">5dp</dimen>
 
     <!-- Switch -->
     <dimen name="switch_corner_radius">3dp</dimen>
@@ -179,5 +185,5 @@
     <dimen name="vertical_input_padding">8dp</dimen>
     <dimen name="edx_button_height">40dp</dimen>
     <dimen name="button_horizontal_padding">22dp</dimen>
-
+    <dimen name="divider_with_text_margin">12dp</dimen>
 </resources>

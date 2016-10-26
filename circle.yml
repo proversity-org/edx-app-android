@@ -71,7 +71,7 @@ test:
 #     branch: proversity/staging
 #     commands:
 #       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
-  # production:
-  #   branch: proversity/production
-  #   commands:
-  #     - ./gradlew publishApkRelease -Dorg.gradle.project.track=production
+#   production:
+#     branch: proversity/production
+#     commands:
+#       - ./gradlew publishApkRelease -Dorg.gradle.project.track=production

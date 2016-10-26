@@ -257,8 +257,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 21
 
-        versionCode getVersionCode()
-        versionName getVersionName()
+        versionCode 93
+        versionName "2.6.3"
 
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
@@ -285,6 +285,12 @@ android {
 
         def platformName = config.get('PLATFORM_NAME')
         resValue "string", "platform_name", platformName
+
+        def appShortcutName = config.get('APP_SHORTCUT_NAME')
+        if (appShortcutName == null) {
+            appShortcutName = platformName
+        }
+        resValue "string", "shortcut_name", appShortcutName
 
         def phoneticPlatformName = config.get('PHONETIC_PLATFORM_NAME')
         if (phoneticPlatformName == null) {

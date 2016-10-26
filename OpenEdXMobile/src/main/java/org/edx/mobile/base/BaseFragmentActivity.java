@@ -1,5 +1,6 @@
 package org.edx.mobile.base;
 
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.content.res.Configuration;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
@@ -479,6 +481,31 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
         }
     }
 
+    public boolean showErrorMessage(String header, String message) {
+        return showErrorMessage(header, message, true);
+    }
+
+    public boolean showErrorMessage(String header, String message, boolean isPersistent) {
+        LinearLayout error_layout = (LinearLayout) findViewById(R.id.error_layout);
+        if (error_layout == null) {
+            logger.warn("Error Layout not available, so couldn't show flying message");
+            return false;
+        }
+        TextView errorHeader = (TextView) findViewById(R.id.error_header);
+        TextView errorMessageView = (TextView) findViewById(R.id.error_message);
+        if (header == null || header.isEmpty()) {
+            errorHeader.setVisibility(View.GONE);
+        } else {
+            errorHeader.setVisibility(View.VISIBLE);
+            errorHeader.setText(header);
+        }
+        if (message != null) {
+            errorMessageView.setText(message);
+        }
+        ViewAnimationUtil.showMessageBar(error_layout, isPersistent);
+        return true;
+    }
+
     /**
      * Sub-classes may override this method to handle connected state.
      */
@@ -538,7 +565,11 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
     }
 
     public void showErrorDialog(@Nullable String title, @NonNull String message) {
-        AlertDialogFragment.newInstance(title, message).show(getSupportFragmentManager(), null);
+        showErrorDialog(title, message, null);
+    }
+
+    public void showErrorDialog(@Nullable String title, @NonNull String message, @Nullable DialogInterface.OnClickListener onPositiveClick) {
+        AlertDialogFragment.newInstance(title, message, onPositiveClick).show(getSupportFragmentManager(), null);
     }
 
     @Override

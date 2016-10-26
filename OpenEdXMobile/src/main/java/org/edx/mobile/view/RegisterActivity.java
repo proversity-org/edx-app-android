@@ -1,11 +1,13 @@
 package org.edx.mobile.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -39,6 +41,7 @@ import org.edx.mobile.task.Task;
 import org.edx.mobile.util.ResourceUtil;
 import org.edx.mobile.util.images.ErrorUtils;
 import org.edx.mobile.util.IntentFactory;
+import org.edx.mobile.view.custom.DividerWithTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +119,7 @@ public class RegisterActivity extends BaseFragmentActivity
         optionalFieldsLayout = (LinearLayout) findViewById(R.id.optional_fields_layout);
         agreementLayout = (LinearLayout) findViewById(R.id.layout_agreement);
         final TextView optional_text = (TextView) findViewById(R.id.optional_field_tv);
+        optional_text.setTextColor(optional_text.getLinkTextColors().getDefaultColor());
         optional_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,8 +227,7 @@ public class RegisterActivity extends BaseFragmentActivity
                 }
             } else {
                 if (!hasError) {
-                    // this is the first input field with error, so focus on it
-                    scrollToView(scrollView, v.getView());
+                    showErrorPopup();
                 }
                 hasError = true;
             }
@@ -288,6 +291,7 @@ public class RegisterActivity extends BaseFragmentActivity
                         }
                     }
                     if (fieldErrorShown) {
+                        showErrorPopup();
                         // We are showing an error message on a visible form field.
                         return; // Return here to avoid showing the generic error pop-up.
                     }
@@ -305,15 +309,47 @@ public class RegisterActivity extends BaseFragmentActivity
      * @param fieldView
      * @return
      */
-    private void showErrorOnField(List<RegisterResponseFieldError> errors, IRegistrationFieldView fieldView) {
+    private void showErrorOnField(List<RegisterResponseFieldError> errors, @NonNull IRegistrationFieldView fieldView) {
         if (errors != null && !errors.isEmpty()) {
             StringBuffer buffer = new StringBuffer();
             for (RegisterResponseFieldError e : errors) {
                 buffer.append(e.getUserMessage() + " ");
             }
-
             fieldView.handleError(buffer.toString());
         }
+    }
+
+    private void showErrorPopup() {
+        showErrorDialog(getResources().getString(R.string.registration_error_title), getResources().getString(R.string.registration_error_message), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ScrollView scrollView = (ScrollView) findViewById(R.id.scrollview);
+                View firstVisible = getFirstVisibleRegistrationField();
+                if (scrollView!=null && firstVisible!=null) {
+                    scrollToView(scrollView, firstVisible);
+                }
+            }
+        });
+    }
+
+    @Nullable
+    private View getFirstVisibleRegistrationField() {
+        View view = getFirstVisibleFieldView(requiredFieldsLayout);
+        if (view == null) getFirstVisibleFieldView(optionalFieldsLayout);
+        return view;
+    }
+
+    @Nullable
+    private View getFirstVisibleFieldView(@Nullable LinearLayout layout) {
+        if (layout!=null) {
+            for(int i=0; i<layout.getChildCount(); ++i) {
+                View child=layout.getChildAt(i);
+                if (child!=null && child.getVisibility()==View.VISIBLE)
+                    return child;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -335,11 +371,17 @@ public class RegisterActivity extends BaseFragmentActivity
                 @Override
                 public void run() {
                     scrollView.smoothScrollTo(0, view.getTop());
+                    view.requestFocus();
                 }
             });
         }
     }
 
+    // make sure that on the login activity, all errors show up as a dialog as opposed to a flying snackbar
+    @Override
+    public void showErrorDialog(String header, String message) {
+        super.showErrorDialog(header, message);
+    }
 
     @Override
     public boolean createOptionsMenu(Menu menu) {
@@ -383,7 +425,7 @@ public class RegisterActivity extends BaseFragmentActivity
         signupWith.setVisibility(View.GONE);
         View socialPanel = findViewById(R.id.panel_social_layout);
         socialPanel.setVisibility(View.GONE);
-        TextView signupWithEmailTitle = (TextView) findViewById(R.id.or_signup_with_email_title);
+        DividerWithTextView signupWithEmailTitle = (DividerWithTextView) findViewById(R.id.or_signup_with_email_title);
         signupWithEmailTitle.setText(getString(R.string.complete_registration));
         //help method
         showRegularMessage(socialType);

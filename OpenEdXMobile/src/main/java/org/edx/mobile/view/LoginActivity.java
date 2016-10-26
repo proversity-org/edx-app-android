@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
 
 import com.google.inject.Inject;
 
@@ -30,6 +33,7 @@ import org.edx.mobile.util.Config;
 import org.edx.mobile.util.IntentFactory;
 import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.util.ResourceUtil;
+import org.edx.mobile.util.ViewAnimationUtil;
 import org.edx.mobile.view.dialog.ResetPasswordActivity;
 import org.edx.mobile.view.dialog.SimpleAlertDialog;
 import org.edx.mobile.view.login.LoginPresenter;
@@ -106,7 +110,7 @@ public class LoginActivity extends PresenterActivity<LoginPresenter, LoginPresen
         tryToSetUIInteraction(true);
 
         Config config = environment.getConfig();
-        setTitle(ResourceUtil.getFormattedString(getResources(), R.string.login_title, "platform_name", config.getPlatformName()));
+        setTitle(getString(R.string.login_title));
 
         String envDisplayName = config.getEnvironmentDisplayName();
         if (envDisplayName != null && envDisplayName.length() > 0) {
@@ -255,10 +259,23 @@ public class LoginActivity extends PresenterActivity<LoginPresenter, LoginPresen
         noNetworkFragment.show(getSupportFragmentManager(), "dialog");
     }
 
+    // make sure that on the login activity, all errors show up as a dialog as opposed to a flying snackbar
+    @Override
+    public void showErrorDialog(String header, String message) {
+        super.showErrorDialog(header, message);
+    }
+
     @Override
     public boolean createOptionsMenu(Menu menu) {
-        // Login screen doesn't have any menu
-        return true;
+        if (!environment.getConfig().isRegistrationEnabled()) {
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setHomeButtonEnabled(false);
+                actionBar.setDisplayHomeAsUpEnabled(false);
+                actionBar.setDisplayShowHomeEnabled(false);
+            }
+        }
+        return false;
     }
 
     /**
@@ -275,6 +292,9 @@ public class LoginActivity extends PresenterActivity<LoginPresenter, LoginPresen
     public void onUserLoginSuccess(ProfileModel profile) {
         setResult(RESULT_OK);
         finish();
+        if (!environment.getConfig().isRegistrationEnabled()) {
+            environment.getRouter().showMyCourses(this);
+        }
     }
 
     public void onUserLoginFailure(Exception ex, String accessToken, String backend) {
