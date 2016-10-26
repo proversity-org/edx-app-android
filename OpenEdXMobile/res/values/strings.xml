@@ -612,4 +612,5 @@
     <string name="rating_bar">Rating control</string>
     <!-- accessibility label for rating selection on rating bar -->
     <string name="rating_bar_selection">{rating} out of {num_of_stars}</string>
+    <string name="lbl_cc">CC</string>
 </resources>

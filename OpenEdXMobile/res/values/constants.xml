@@ -6,5 +6,5 @@
     <integer name="speed_test_timeout_in_milliseconds">5000</integer>
     <integer name="threshold_kbps_for_video">9</integer>
     <integer name="delay_speed_test_in_milliseconds">10000</integer>
-    <string name="speed_test_url">http://bnotions.s3.amazonaws.com/128kb.file</string>
+    <string name="speed_test_url" translatable="false">http://bnotions.s3.amazonaws.com/128kb.file</string>
 </resources>
