@@ -394,10 +394,6 @@ public class Config {
         return getString(OAUTH_CLIENT_ID);
     }
 
-    public String getOrganizationCode() {
-        return getString(ORGANIZATION_CODE, "");
-    }
-
     /**
      * @return A list of URIs for updating the app, or an empty list if none are available.
      */
