@@ -24,8 +24,8 @@ dependencies:
         - ./gradlew dependencies --stacktrace --info
     post:
         - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/production ./config
-        - cp -r config/gradle.properties VideoLocker/gradle.properties
-        - echo "edx.dir = '../config'" > VideoLocker/edx.properties
+        - cp -r config/gradle.properties OpenEdXMobile/gradle.properties
+        - echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
         - cp -r config/config.yaml $CIRCLE_ARTIFACTS
 
 test:
@@ -35,8 +35,8 @@ test:
     override:
         - sleep 10
     post:
-        - cp -r VideoLocker/build/reports $CIRCLE_ARTIFACTS
-        - cp -r VideoLocker/build/outputs $CIRCLE_ARTIFACTS
+        - cp -r OpenEdXMobile/build/reports $CIRCLE_ARTIFACTS
+        - cp -r OpenEdXMobile/build/outputs $CIRCLE_ARTIFACTS
 
 # https://github.com/Triple-T/gradle-play-publisher
 deployment:
