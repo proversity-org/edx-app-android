@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import org.edx.mobile.event.EnrolledInCourseEvent;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import de.greenrobot.event.EventBus;
 
@@ -13,6 +15,7 @@ public abstract class EnrollForCourseTask extends Task<Void> {
     @NonNull
     private final String courseId;
     private final boolean emailOptIn;
+    protected JSONArray courseModes;
 
     public EnrollForCourseTask(@NonNull Context context, @NonNull String courseId, boolean emailOptIn) {
         super(context);
@@ -23,8 +26,11 @@ public abstract class EnrollForCourseTask extends Task<Void> {
 
     @Override
     public Void call() throws Exception {
-        final Boolean result = environment.getServiceManager().enrollInACourse(courseId, emailOptIn);
-        if (null == result || !result) {
+        final JSONObject result = environment.getServiceManager().enrollInACourse(courseId, emailOptIn);
+        if (result.has("error")) {
+            if (result.has("course_details")) {
+                this.courseModes = result.getJSONObject("course_details").getJSONArray("course_modes");
+            }
             throw new RuntimeException("Enrollment failure, course: " + courseId);
         }
         EventBus.getDefault().post(new EnrolledInCourseEvent());

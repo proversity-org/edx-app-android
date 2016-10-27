@@ -50,8 +50,7 @@ public class CoursesAsyncLoader extends AsyncTaskLoader<AsyncTaskResult<List<Enr
 
         try {
             if (profile != null) {
-                String orgCode = config.getOrganizationCode();
-                enrolledCoursesResponse = api.getUserEnrolledCourses(profile.username, orgCode, false);
+                enrolledCoursesResponse = api.getUserEnrolledCourses(profile.username, config.getOrganizationCode(), false);
                 environment.getNotificationDelegate().syncWithServerForFailure();
                 environment.getNotificationDelegate().checkCourseEnrollment(enrolledCoursesResponse);
             }

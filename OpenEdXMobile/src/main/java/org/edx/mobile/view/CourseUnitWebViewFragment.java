@@ -103,6 +103,8 @@ public class CourseUnitWebViewFragment extends CourseUnitFragment {
                     public void onReceivedHttpError(WebView view, WebResourceRequest request,
                                                     WebResourceResponse errorResponse) {
                         didReceiveError = true;
+                        hideLoadingProgress();
+                        pageIsLoaded = false;
                         switch (errorResponse.getStatusCode()) {
                             case HttpStatus.FORBIDDEN:
                             case HttpStatus.UNAUTHORIZED:
@@ -110,8 +112,6 @@ public class CourseUnitWebViewFragment extends CourseUnitFragment {
                                 EdxCookieManager.getSharedInstance().tryToRefreshSessionCookie();
                                 break;
                         }
-                        showErrorMessage(R.string.network_error_message,
-                                FontAwesomeIcons.fa_exclamation_circle);
                     }
 
                     public void onPageFinished(WebView view, String url) {

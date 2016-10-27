@@ -8,6 +8,7 @@ import org.edx.mobile.model.api.SectionEntry;
 import org.edx.mobile.model.api.SyncLastAccessedSubsectionResponse;
 import org.edx.mobile.model.api.VideoResponseModel;
 import org.edx.mobile.module.registration.model.RegistrationDescription;
+import org.json.JSONObject;
 
 import java.net.HttpCookie;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public interface IApi {
 
     RegistrationDescription getRegistrationDescription() throws Exception;
 
-    Boolean enrollInACourse(String courseId, boolean email_opt_in) throws Exception;
+    JSONObject enrollInACourse(String courseId, boolean email_opt_in) throws Exception;
 
     List<HttpCookie> getSessionExchangeCookie() throws Exception;
 
