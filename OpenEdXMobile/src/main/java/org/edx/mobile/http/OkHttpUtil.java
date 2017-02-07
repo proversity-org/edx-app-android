@@ -12,6 +12,7 @@ import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.Cookie;
@@ -74,6 +75,8 @@ public class OkHttpUtil {
         }
 
         builder.authenticator(new OauthRefreshTokenAuthenticator(context));
+        builder.readTimeout(30, TimeUnit.SECONDS);
+        builder.connectTimeout(30, TimeUnit.SECONDS);
 
         return builder.build();
     }
