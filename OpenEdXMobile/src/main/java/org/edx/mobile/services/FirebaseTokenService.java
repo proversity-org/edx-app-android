@@ -11,7 +11,6 @@ public class FirebaseTokenService extends FirebaseInstanceIdService {
 
     @Override
     public void onTokenRefresh() {
-        // Create the mobile endpoint for the device
         KonnekteerUtil.createMobileEndpoint(this);
     }
 }
