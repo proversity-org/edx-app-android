@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +27,12 @@ import org.edx.mobile.interfaces.RefreshListener;
 import org.edx.mobile.loader.AsyncTaskResult;
 import org.edx.mobile.loader.CoursesAsyncLoader;
 import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.CourseEntry;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
 import org.edx.mobile.module.db.DataCallback;
 import org.edx.mobile.module.prefs.LoginPrefs;
+import org.edx.mobile.task.RestoreVideosCacheDataTask;
+import org.edx.mobile.util.KonnekteerUtil;
 import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.view.adapters.MyCoursesAdapter;
 
@@ -152,6 +156,16 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
             ArrayList<EnrolledCoursesResponse> newItems = new ArrayList<EnrolledCoursesResponse>(result.getResult());
 
             updateDatabaseAfterDownload(newItems);
+
+            // Subscribe to organization (app) level push notifications
+            String orgCode = environment.getConfig().getPushNotificationsConfig().getmKonnekteerOrgCode();
+            KonnekteerUtil.subscribe(orgCode, null, this.getContext());
+
+            // Subscribe to course level push notifications
+            for (EnrolledCoursesResponse enrolledCoursesResponse : newItems) {
+                CourseEntry course = enrolledCoursesResponse.getCourse();
+                KonnekteerUtil.subscribe(null, course.getId(), this.getContext());
+            }
 
             if (result.getResult().size() > 0) {
                 adapter.setItems(newItems);
