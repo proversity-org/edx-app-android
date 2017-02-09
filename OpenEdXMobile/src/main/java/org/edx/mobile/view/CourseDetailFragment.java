@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,6 @@ import org.edx.mobile.view.common.TaskProgressCallback;
 import org.edx.mobile.view.custom.EdxWebView;
 import org.edx.mobile.view.custom.URLInterceptorWebViewClient;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -314,30 +314,11 @@ public class CourseDetailFragment extends BaseFragment {
             logger.debug("Unable to get cached enrollments list");
         }
 
-        Boolean is_old_enough = true;
-        if(courseDetail.minimum_age != null && courseDetail.minimum_age > 0) {
-            Integer year_of_birth = environment.getLoginPrefs().getYearOfBirth();
-            if(year_of_birth != null){
-                Integer year = Calendar.getInstance().get(Calendar.YEAR);
-                if(year - year_of_birth <= courseDetail.minimum_age){
-                    is_old_enough = false;
-                }
-            }
-        }
-
         if (mEnrolled) {
             mEnrollButton.setText(R.string.view_course_button_text);
         } else if (courseDetail.invitation_only != null && courseDetail.invitation_only) {
             mEnrollButton.setText(R.string.invitation_only_button_text);
-            mEnrollButton.setBackgroundColor(getResources().getColor(R.color.edx_brand_gray_back));
-            mEnrollButton.setEnabled(false);
-        } else if (!is_old_enough){
-            mEnrollButton.setText(R.string.not_old_enough_button_text);
-            mEnrollButton.setBackgroundColor(getResources().getColor(R.color.edx_brand_gray_back));
-            mEnrollButton.setEnabled(false);
-        } else if (!is_old_enough){
-            mEnrollButton.setText(R.string.not_old_enough_button_text);
-            mEnrollButton.setBackgroundColor(getResources().getColor(R.color.edx_brand_gray_back));
+            mEnrollButton.setBackgroundColor(getResources().getColor(R.color.edx_grayscale_neutral_light));
             mEnrollButton.setEnabled(false);
         } else {
             mEnrollButton.setText(R.string.enroll_now_button_text);
@@ -390,8 +371,8 @@ public class CourseDetailFragment extends BaseFragment {
                                         courseDetail.course_id) {
                                     @Override
                                     protected void onResponse(@NonNull EnrolledCoursesResponse course) {
-                                        environment.getRouter().showMainDashboard(getActivity());
-                                        environment.getRouter().showCourseDashboardTabs(getActivity(), course, false);
+                                        environment.getRouter().showMyCourses(getActivity());
+                                        environment.getRouter().showCourseDashboardTabs(getActivity(), environment.getConfig(), course, false);
                                     }
                                 });
                             }
@@ -456,8 +437,8 @@ public class CourseDetailFragment extends BaseFragment {
                     executeStrict(courseApi.getEnrolledCoursesFromCache());
             for (EnrolledCoursesResponse course : enrolledCoursesResponse) {
                 if (course.getCourse().getId().equals(courseDetail.course_id)) {
-                    environment.getRouter().showMainDashboard(getActivity());
-                    environment.getRouter().showCourseDashboardTabs(getActivity(), course, false);
+                    environment.getRouter().showMyCourses(getActivity());
+                    environment.getRouter().showCourseDashboardTabs(getActivity(), environment.getConfig(), course, false);
                 }
             }
         } catch (Exception exception) {

@@ -70,13 +70,11 @@ public class Config {
     private static final String FIREBASE_ENABLED = "FIREBASE_ENABLED";
     private static final String APP_REVIEWS_ENABLED = "APP_REVIEWS_ENABLED";
     private static final String VIDEO_TRANSCRIPT_ENABLED = "VIDEO_TRANSCRIPT_ENABLED";
+    private static final String USING_VIDEO_PIPELINE = "USING_VIDEO_PIPELINE";
     private static final String COURSE_DATES_ENABLED = "COURSE_DATES_ENABLED";
     private static final String WHATS_NEW_ENABLED = "WHATS_NEW_ENABLED";
-    private static final String MY_VIDEOS_ENABLED = "MY_VIDEOS_ENABLED";
     private static final String COURSE_VIDEOS_ENABLED = "COURSE_VIDEOS_ENABLED";
-    private static final String ANNOUNCEMENTS_ENABLED = "ANNOUNCEMENTS_ENABLED";
-    private static final String JUMP_TO_LAST_ACCESSED_MODULE_ENABLED = "JUMP_TO_LAST_ACCESSED_MODULE_ENABLED";
-    private static final String JUMP_TO_FIND_COURSES_ENABLED = "JUMP_TO_FIND_COURSES_ENABLED";
+    private static final String TAB_LAYOUTS_ENABLED = "TAB_LAYOUTS_ENABLED";
 
     public static class ZeroRatingConfig {
         @SerializedName("ENABLED")
@@ -260,7 +258,7 @@ public class Config {
             return mFabricBuildSecret;
         }
 
-        public FabricKitsConfig getKitsConfig()   {
+        public FabricKitsConfig getKitsConfig() {
             return mKitsConfig;
         }
     }
@@ -272,6 +270,9 @@ public class Config {
         @SerializedName("ANSWERS")
         private boolean mAnswersEnabled;
 
+        @SerializedName("BRANCH")
+        private FabricBranchConfig mBranchConfig;
+
         public boolean isCrashlyticsEnabled() {
             return mCrashlyticsEnabled;
         }
@@ -280,10 +281,10 @@ public class Config {
             return mAnswersEnabled;
         }
 
-        public Kit[] getEnabledKits()   {
+        public Kit[] getEnabledKits() {
             List<Kit> fabricKits = new ArrayList<>();
 
-            if (isCrashlyticsEnabled())    {
+            if (isCrashlyticsEnabled()) {
                 fabricKits.add(new CrashlyticsCore());
             }
 
@@ -294,8 +295,52 @@ public class Config {
             return fabricKits.toArray(new Kit[fabricKits.size()]);
         }
 
-        public boolean hasEnabledKits()  {
+        public boolean hasEnabledKits() {
             return getEnabledKits().length != 0;
+        }
+
+        public FabricBranchConfig getBranchConfig() {
+            return mBranchConfig;
+        }
+    }
+
+    public static class FabricBranchConfig {
+        @SerializedName("ENABLED")
+        private boolean mEnabled;
+
+        @SerializedName("BRANCH_KEY")
+        private String mBranchKey;
+
+        @SerializedName("BRANCH_SECRET")
+        private String mBranchSecret;
+
+        public boolean isEnabled() {
+            return mEnabled;
+        }
+
+        public String getBranchKey() {
+            return mBranchKey;
+        }
+
+        public String getBranchSecret() {
+            return mBranchSecret;
+        }
+
+        /**
+         * Utility function to traverse through {@link FabricConfig} and tell if Branch is enabled.
+         *
+         * @param fabricConfig The Fabric config.
+         * @return <code>true</code> if Branch is enabled, <code>false</code> otherwise.
+         */
+        public static boolean isBranchEnabled(@NonNull FabricConfig fabricConfig) {
+            final FabricKitsConfig kitsConfig = fabricConfig.getKitsConfig();
+            if (kitsConfig != null) {
+                final FabricBranchConfig branchConfig = kitsConfig.getBranchConfig();
+                if (branchConfig != null) {
+                    return branchConfig.isEnabled();
+                }
+            }
+            return false;
         }
     }
 
@@ -579,6 +624,10 @@ public class Config {
         return getBoolean(VIDEO_TRANSCRIPT_ENABLED, false);
     }
 
+    public boolean isUsingVideoPipeline() {
+        return getBoolean(USING_VIDEO_PIPELINE, true);
+    }
+
     public boolean isCourseDatesEnabled() {
         return getBoolean(COURSE_DATES_ENABLED, false);
     }
@@ -587,24 +636,12 @@ public class Config {
         return getBoolean(WHATS_NEW_ENABLED, false);
     }
 
-    public boolean isMyVideosEnabled() {
-        return getBoolean(MY_VIDEOS_ENABLED, false);
-    }
-
     public boolean isCourseVideosEnabled() {
-        return getBoolean(COURSE_VIDEOS_ENABLED, false);
+        return getBoolean(COURSE_VIDEOS_ENABLED, true);
     }
 
-    public boolean isAnnoucementsEnabled() {
-        return getBoolean(ANNOUNCEMENTS_ENABLED, false);
-    }
-
-    public boolean isJumpToLastAccessedModuleEnabled() {
-        return getBoolean(JUMP_TO_LAST_ACCESSED_MODULE_ENABLED, false);
-    }
-
-    public boolean isJumpToFindCoursesEnabled() {
-        return getBoolean(JUMP_TO_FIND_COURSES_ENABLED, false);
+    public boolean isTabsLayoutEnabled() {
+        return getBoolean(TAB_LAYOUTS_ENABLED, false);
     }
 
     @NonNull

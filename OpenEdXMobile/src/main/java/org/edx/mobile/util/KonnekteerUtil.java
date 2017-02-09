@@ -43,6 +43,7 @@ public class KonnekteerUtil {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+                            logger.debug(response);
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -54,7 +55,9 @@ public class KonnekteerUtil {
                 @Override
                 protected Map<String, String> getParams() {
 
-                    String token = FirebaseInstanceId.getInstance().getToken();
+                    SharedPreferences shared = context.getSharedPreferences("pushnotifications", 0);
+                    String token = shared.getString("token", "");
+
                     String orgCode = environment.getConfig().getPushNotificationsConfig().getmKonnekteerOrgCode();
                     String apiKey = environment.getConfig().getPushNotificationsConfig().getmKonnekteerApiKey();
 
@@ -82,6 +85,7 @@ public class KonnekteerUtil {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+                            logger.debug(response);
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -102,7 +106,9 @@ public class KonnekteerUtil {
                         params.put(KEY_TOPIC_TYPE, "organization");
                     }
 
-                    String token = FirebaseInstanceId.getInstance().getToken();
+                    SharedPreferences shared = context.getSharedPreferences("pushnotifications", 0);
+                    String token = shared.getString("token", "");
+
                     String apiKey = environment.getConfig().getPushNotificationsConfig().getmKonnekteerApiKey();
                     String username = environment.getLoginPrefs().getUsername();
                     String email = environment.getLoginPrefs().getLastAuthenticatedEmail();

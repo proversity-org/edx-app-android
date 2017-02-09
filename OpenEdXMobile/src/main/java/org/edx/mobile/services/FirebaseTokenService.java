@@ -13,6 +13,13 @@ public class FirebaseTokenService extends FirebaseInstanceIdService {
 
     @Override
     public void onTokenRefresh() {
+        // Get updated InstanceID token.
+        final String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        SharedPreferences settings = getSharedPreferences("pushnotifications", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("token", refreshedToken);
+        editor.apply();
+        // Create the mobile endpoint for the device token
         KonnekteerUtil.createMobileEndpoint(this);
     }
 }

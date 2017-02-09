@@ -1,6 +1,5 @@
 package org.edx.mobile.services;
 
-import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -25,15 +24,23 @@ public class FirebaseNotificationsService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        String messageText = remoteMessage.getData().get("default");
+        String message = "";
 
-        Notification.Builder mBuilder =
-                new Notification.Builder(this)
-                        .setSmallIcon(R.mipmap.small_icon)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+        // Check if message contains a data payload.
+        if (remoteMessage.getData().size() > 0) {
+            logger.debug(remoteMessage.getData().get("default"));
+        }
+
+        // Check if message contains a notification payload.
+        if (remoteMessage.getNotification() != null) {
+            logger.debug(remoteMessage.getNotification().getBody());
+        }
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.launch_screen_logo)
                         .setContentTitle(getString(R.string.platform_name))
-                        .setContentText(messageText)
-                        .setStyle(new Notification.BigTextStyle().bigText(messageText));
+                        .setContentText(remoteMessage.getData().get("default"));
 
         Intent resultIntent = new Intent(this, SplashActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
