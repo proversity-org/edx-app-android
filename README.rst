@@ -113,3 +113,8 @@ A: Our build system requires Java 7 or later. If you see this error, install Jav
 	 You will also need to specify the new JDK version in Android Studio. Refer to this Stack Overflow entry for help doing so:
 
 	 http://stackoverflow.com/questions/30631286/how-to-specify-the-jdk-version-in-android-studio
+
+
+Get google-services.json
+==========================
+https://developers.google.com/identity/sign-in/android/start
