@@ -54,9 +54,8 @@ public class Config {
     private static final String FABRIC = "FABRIC";
     private static final String NEW_RELIC = "NEW_RELIC";
     private static final String SEGMENT_IO = "SEGMENT_IO";
-    private static final String FIREBASE = "FIREBASE";
-    private static final String PUSH_NOTIFICATIONS_FLAG = "PUSH_NOTIFICATIONS";
     private static final String WHITE_LIST_OF_DOMAINS = "WHITE_LIST_OF_DOMAINS";
+    private static final String PUSH_NOTIFICATIONS = "PUSH_NOTIFICATIONS";
 
     // Features
     private static final String USER_PROFILES_ENABLED = "USER_PROFILES_ENABLED";
@@ -68,11 +67,12 @@ public class Config {
     private static final String NEW_LOGISTRATION_ENABLED = "NEW_LOGISTRATION_ENABLED";
     private static final String DISCUSSIONS_ENABLE_PROFILE_PICTURE_PARAM = "DISCUSSIONS_ENABLE_PROFILE_PICTURE_PARAM";
     private static final String REGISTRATION_ENABLED = "REGISTRATION_ENABLED";
+    private static final String FIREBASE_ENABLED = "FIREBASE_ENABLED";
     private static final String APP_REVIEWS_ENABLED = "APP_REVIEWS_ENABLED";
     private static final String VIDEO_TRANSCRIPT_ENABLED = "VIDEO_TRANSCRIPT_ENABLED";
-    private static final String USING_VIDEO_PIPELINE = "USING_VIDEO_PIPELINE";
     private static final String COURSE_DATES_ENABLED = "COURSE_DATES_ENABLED";
     private static final String WHATS_NEW_ENABLED = "WHATS_NEW_ENABLED";
+    private static final String MY_VIDEOS_ENABLED = "MY_VIDEOS_ENABLED";
     private static final String COURSE_VIDEOS_ENABLED = "COURSE_VIDEOS_ENABLED";
 
     public static class ZeroRatingConfig {
@@ -122,6 +122,13 @@ public class Config {
             return getCourseDiscoveryType() != null;
         }
 
+        public boolean isExploreSubjectsEnabled() {
+            // Explore Subjects is only supported for web course discovery, and requires a URL
+            return isWebviewCourseDiscoveryEnabled()
+                    && null != getWebViewConfig().getExploreSubjectsUrl()
+                    && !getWebViewConfig().getExploreSubjectsUrl().isEmpty();
+        }
+
         public boolean isWebviewCourseDiscoveryEnabled() {
             return getCourseDiscoveryType() == CourseDiscoveryType.WEBVIEW;
         }
@@ -141,15 +148,14 @@ public class Config {
         public boolean isWebCourseSearchEnabled() {
             return null != mWebViewConfig && mWebViewConfig.isWebCourseSearchEnabled();
         }
-
-        public boolean isSubjectDiscoveryEnabled() {
-            return null != mWebViewConfig && mWebViewConfig.isSubjectDiscoveryEnabled();
-        }
     }
 
     public static class WebViewConfig {
         @SerializedName("COURSE_SEARCH_URL")
         private String mSearchUrl;
+
+        @SerializedName("EXPLORE_SUBJECTS_URL")
+        private String mExploreSubjectsUrl;
 
         @SerializedName("COURSE_INFO_URL_TEMPLATE")
         private String mCourseInfoUrlTemplate;
@@ -157,11 +163,12 @@ public class Config {
         @SerializedName("SEARCH_BAR_ENABLED")
         private boolean mSearchBarEnabled;
 
-        @SerializedName("SUBJECT_DISCOVERY_ENABLED")
-        private boolean subjectDiscovery;
-
         public String getCourseSearchUrl() {
             return mSearchUrl;
+        }
+
+        public String getExploreSubjectsUrl() {
+            return mExploreSubjectsUrl;
         }
 
         public String getCourseInfoUrlTemplate() {
@@ -170,10 +177,6 @@ public class Config {
 
         public boolean isWebCourseSearchEnabled() {
             return mSearchBarEnabled;
-        }
-
-        public boolean isSubjectDiscoveryEnabled() {
-            return subjectDiscovery;
         }
     }
 
@@ -254,7 +257,7 @@ public class Config {
             return mFabricBuildSecret;
         }
 
-        public FabricKitsConfig getKitsConfig() {
+        public FabricKitsConfig getKitsConfig()   {
             return mKitsConfig;
         }
     }
@@ -266,9 +269,6 @@ public class Config {
         @SerializedName("ANSWERS")
         private boolean mAnswersEnabled;
 
-        @SerializedName("BRANCH")
-        private FabricBranchConfig mBranchConfig;
-
         public boolean isCrashlyticsEnabled() {
             return mCrashlyticsEnabled;
         }
@@ -277,10 +277,10 @@ public class Config {
             return mAnswersEnabled;
         }
 
-        public Kit[] getEnabledKits() {
+        public Kit[] getEnabledKits()   {
             List<Kit> fabricKits = new ArrayList<>();
 
-            if (isCrashlyticsEnabled()) {
+            if (isCrashlyticsEnabled())    {
                 fabricKits.add(new CrashlyticsCore());
             }
 
@@ -291,52 +291,8 @@ public class Config {
             return fabricKits.toArray(new Kit[fabricKits.size()]);
         }
 
-        public boolean hasEnabledKits() {
+        public boolean hasEnabledKits()  {
             return getEnabledKits().length != 0;
-        }
-
-        public FabricBranchConfig getBranchConfig() {
-            return mBranchConfig;
-        }
-    }
-
-    public static class FabricBranchConfig {
-        @SerializedName("ENABLED")
-        private boolean mEnabled;
-
-        @SerializedName("BRANCH_KEY")
-        private String mBranchKey;
-
-        @SerializedName("BRANCH_SECRET")
-        private String mBranchSecret;
-
-        public boolean isEnabled() {
-            return mEnabled;
-        }
-
-        public String getBranchKey() {
-            return mBranchKey;
-        }
-
-        public String getBranchSecret() {
-            return mBranchSecret;
-        }
-
-        /**
-         * Utility function to traverse through {@link FabricConfig} and tell if Branch is enabled.
-         *
-         * @param fabricConfig The Fabric config.
-         * @return <code>true</code> if Branch is enabled, <code>false</code> otherwise.
-         */
-        public static boolean isBranchEnabled(@NonNull FabricConfig fabricConfig) {
-            final FabricKitsConfig kitsConfig = fabricConfig.getKitsConfig();
-            if (kitsConfig != null) {
-                final FabricBranchConfig branchConfig = kitsConfig.getBranchConfig();
-                if (branchConfig != null) {
-                    return branchConfig.isEnabled();
-                }
-            }
-            return false;
         }
     }
 
@@ -406,26 +362,55 @@ public class Config {
         }
     }
 
-    public static class FirebaseConfig {
+    public static class PushNotificationsConfig {
         @SerializedName("ENABLED")
         private boolean mEnabled;
 
-        @SerializedName("ANALYTICS_ENABLED")
-        private boolean mAnalyticsEnabled;
+        @SerializedName("KONNEKTEER_API_KEY")
+        private String mKonnekteerApiKey;
 
-        @SerializedName("CLOUD_MESSAGING_ENABLED")
-        private boolean mCloudMessagingEnabled;
+        @SerializedName("KONNEKTEER_ORGANIZATION_CODE")
+        private String mKonnekteerOrgCode;
+
+        @SerializedName("KONNEKTEER_MOBILE_ENDPOINTS")
+        private String mKonnekteerMobileEndpoints;
+
+        @SerializedName("KONNEKTEER_MOBILE_ENDPOINT_SUBSCRIBE")
+        private String mKonnekteerMobileEndpointsSubscribe;
+
+        public PushNotificationsConfig() {
+        }
+
+        public PushNotificationsConfig(boolean mEnabled,
+                                       String mKonnekteerApiKey,
+                                       String mKonnekteerOrgCode,
+                                       String mKonnekteerMobileEndpoints,
+                                       String mKonnekteerMobileEndpointsSubscribe) {
+            this.mEnabled = mEnabled;
+            this.mKonnekteerApiKey = mKonnekteerApiKey;
+            this.mKonnekteerOrgCode = mKonnekteerOrgCode;
+            this.mKonnekteerMobileEndpoints = mKonnekteerMobileEndpoints;
+            this.mKonnekteerMobileEndpointsSubscribe = mKonnekteerMobileEndpointsSubscribe;
+        }
 
         public boolean isEnabled() {
-            return mEnabled;
+            return mEnabled && !TextUtils.isEmpty(mKonnekteerApiKey);
         }
 
-        public boolean isAnalyticsEnabled() {
-            return mEnabled && mAnalyticsEnabled;
+        public String getmKonnekteerApiKey() {
+            return mKonnekteerApiKey;
         }
 
-        public boolean areNotificationsEnabled() {
-            return mEnabled && mCloudMessagingEnabled;
+        public String getmKonnekteerOrgCode() {
+            return mKonnekteerOrgCode;
+        }
+
+        public String getmKonnekteerMobileEndpoints() {
+            return mKonnekteerMobileEndpoints;
+        }
+
+        public String getmKonnekteerMobileEndpointsSubscribe() {
+            return mKonnekteerMobileEndpointsSubscribe;
         }
     }
 
@@ -537,14 +522,6 @@ public class Config {
         return getString(ORGANIZATION_CODE);
     }
 
-    public boolean areFirebasePushNotificationsEnabled() {
-        return getFirebaseConfig().areNotificationsEnabled() && arePushNotificationEnabled();
-    }
-
-    private boolean arePushNotificationEnabled() {
-        return getBoolean(PUSH_NOTIFICATIONS_FLAG, false);
-    }
-
     public boolean isNewLogistrationEnabled() {
         return getBoolean(NEW_LOGISTRATION_ENABLED, false);
     }
@@ -591,12 +568,12 @@ public class Config {
         return getBoolean(COURSE_SHARING_ENABLED, false);
     }
 
-    public boolean isVideoTranscriptEnabled() {
-        return getBoolean(VIDEO_TRANSCRIPT_ENABLED, false);
+    public boolean isFirebaseEnabled() {
+        return getBoolean(FIREBASE_ENABLED, false);
     }
 
-    public boolean isUsingVideoPipeline() {
-        return getBoolean(USING_VIDEO_PIPELINE, true);
+    public boolean isVideoTranscriptEnabled() {
+        return getBoolean(VIDEO_TRANSCRIPT_ENABLED, false);
     }
 
     public boolean isCourseDatesEnabled() {
@@ -607,8 +584,12 @@ public class Config {
         return getBoolean(WHATS_NEW_ENABLED, false);
     }
 
+    public boolean isMyVideosEnabled() {
+        return getBoolean(MY_VIDEOS_ENABLED, false);
+    }
+
     public boolean isCourseVideosEnabled() {
-        return getBoolean(COURSE_VIDEOS_ENABLED, true);
+        return getBoolean(COURSE_VIDEOS_ENABLED, false);
     }
 
     @NonNull
@@ -652,13 +633,13 @@ public class Config {
     }
 
     @NonNull
-    public FirebaseConfig getFirebaseConfig() {
-        return getObjectOrNewInstance(FIREBASE, FirebaseConfig.class);
+    public EndToEndConfig getEndToEndConfig() {
+        return getObjectOrNewInstance(END_TO_END_TEST, EndToEndConfig.class);
     }
 
     @NonNull
-    public EndToEndConfig getEndToEndConfig() {
-        return getObjectOrNewInstance(END_TO_END_TEST, EndToEndConfig.class);
+    public PushNotificationsConfig getPushNotificationsConfig() {
+        return getObjectOrNewInstance(PUSH_NOTIFICATIONS, PushNotificationsConfig.class);
     }
 
     @NonNull
