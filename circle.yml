@@ -1,3 +1,4 @@
+<<<<<<< 79036c54071e0ec8054df5a54780360b35685251
 general:
 <<<<<<< 8400db39c3a1bb51fd43e86b33c574852235e877
   branches:
@@ -29,6 +30,8 @@ machine:
             - proversity/lfm
 >>>>>>> updated versionCode, new circle build paths
 
+=======
+>>>>>>> push notifications
 machine:
     environment:
         GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx3584m -XX:+HeapDumpOnOutOfMemoryError"'
