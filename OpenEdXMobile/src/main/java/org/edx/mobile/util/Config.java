@@ -54,8 +54,8 @@ public class Config {
     private static final String FABRIC = "FABRIC";
     private static final String NEW_RELIC = "NEW_RELIC";
     private static final String SEGMENT_IO = "SEGMENT_IO";
-    private static final String PUSH_NOTIFICATIONS_FLAG = "PUSH_NOTIFICATIONS";
     private static final String WHITE_LIST_OF_DOMAINS = "WHITE_LIST_OF_DOMAINS";
+    private static final String PUSH_NOTIFICATIONS = "PUSH_NOTIFICATIONS";
 
     // Features
     private static final String USER_PROFILES_ENABLED = "USER_PROFILES_ENABLED";
@@ -70,7 +70,6 @@ public class Config {
     private static final String FIREBASE_ENABLED = "FIREBASE_ENABLED";
     private static final String APP_REVIEWS_ENABLED = "APP_REVIEWS_ENABLED";
     private static final String VIDEO_TRANSCRIPT_ENABLED = "VIDEO_TRANSCRIPT_ENABLED";
-
 
     public static class ZeroRatingConfig {
         @SerializedName("ENABLED")
@@ -359,6 +358,58 @@ public class Config {
         }
     }
 
+    public static class PushNotificationsConfig {
+        @SerializedName("ENABLED")
+        private boolean mEnabled;
+
+        @SerializedName("KONNEKTEER_API_KEY")
+        private String mKonnekteerApiKey;
+
+        @SerializedName("KONNEKTEER_ORGANIZATION_CODE")
+        private String mKonnekteerOrgCode;
+
+        @SerializedName("KONNEKTEER_MOBILE_ENDPOINTS")
+        private String mKonnekteerMobileEndpoints;
+
+        @SerializedName("KONNEKTEER_MOBILE_ENDPOINT_SUBSCRIBE")
+        private String mKonnekteerMobileEndpointsSubscribe;
+
+        public PushNotificationsConfig() {
+        }
+
+        public PushNotificationsConfig(boolean mEnabled,
+                                       String mKonnekteerApiKey,
+                                       String mKonnekteerOrgCode,
+                                       String mKonnekteerMobileEndpoints,
+                                       String mKonnekteerMobileEndpointsSubscribe) {
+            this.mEnabled = mEnabled;
+            this.mKonnekteerApiKey = mKonnekteerApiKey;
+            this.mKonnekteerOrgCode = mKonnekteerOrgCode;
+            this.mKonnekteerMobileEndpoints = mKonnekteerMobileEndpoints;
+            this.mKonnekteerMobileEndpointsSubscribe = mKonnekteerMobileEndpointsSubscribe;
+        }
+
+        public boolean isEnabled() {
+            return mEnabled && !TextUtils.isEmpty(mKonnekteerApiKey);
+        }
+
+        public String getmKonnekteerApiKey() {
+            return mKonnekteerApiKey;
+        }
+
+        public String getmKonnekteerOrgCode() {
+            return mKonnekteerOrgCode;
+        }
+
+        public String getmKonnekteerMobileEndpoints() {
+            return mKonnekteerMobileEndpoints;
+        }
+
+        public String getmKonnekteerMobileEndpointsSubscribe() {
+            return mKonnekteerMobileEndpointsSubscribe;
+        }
+    }
+
     @Inject
     public Config(Context context) {
         try {
@@ -467,10 +518,6 @@ public class Config {
         return getString(ORGANIZATION_CODE);
     }
 
-    public boolean isNotificationEnabled() {
-        return getBoolean(PUSH_NOTIFICATIONS_FLAG, false);
-    }
-
     public boolean isNewLogistrationEnabled() {
         return getBoolean(NEW_LOGISTRATION_ENABLED, false);
     }
@@ -568,6 +615,11 @@ public class Config {
     @NonNull
     public EndToEndConfig getEndToEndConfig() {
         return getObjectOrNewInstance(END_TO_END_TEST, EndToEndConfig.class);
+    }
+
+    @NonNull
+    public PushNotificationsConfig getPushNotificationsConfig() {
+        return getObjectOrNewInstance(PUSH_NOTIFICATIONS, PushNotificationsConfig.class);
     }
 
     @NonNull

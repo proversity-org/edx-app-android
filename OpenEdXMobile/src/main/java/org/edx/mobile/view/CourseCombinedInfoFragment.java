@@ -118,7 +118,7 @@ public class CourseCombinedInfoFragment extends BaseFragment {
                 }
             }
 
-            if (environment.getConfig().isNotificationEnabled()
+            if (environment.getConfig().getPushNotificationsConfig().isEnabled()
                     && courseData != null && courseData.getCourse() != null) {
                 notificationSettingRow.setVisibility(View.VISIBLE);
                 final String courseId = courseData.getCourse().getId();
