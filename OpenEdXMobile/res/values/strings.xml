@@ -21,6 +21,8 @@
 
     <string name="invitation_only_button_text">Invitation only</string>
 
+    <!-- Not old enough button text-->
+    <string name="not_old_enough_button_text">You are not old enough to enroll</string>
 
     <!-- Effort field name -->
     <string name="effort_field_name">Effort:</string>
