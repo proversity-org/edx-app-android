@@ -56,6 +56,7 @@ dependencies:
     override:
         - ./gradlew dependencies --stacktrace --info
     post:
+<<<<<<< 229c94db66795bf51155f6a496db12f1a739a0a9
 <<<<<<< 1faa579ea64e01553c2725998d05c0c6753c4f10
 <<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
 <<<<<<< c646412934fcd2cb0360fc8a7f17586a4b3c1f2a
@@ -64,6 +65,9 @@ dependencies:
 =======
         - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/lfm ./config
 >>>>>>> updated versionCode, new circle build paths
+=======
+        - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/tea ./config
+>>>>>>> Correct circle deployment config
         - cp -r config/gradle.properties OpenEdXMobile/gradle.properties
         - cp -r config/google-services.json OpenEdXMobile/google-services.json
         - echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
@@ -145,8 +149,12 @@ test:
 <<<<<<< 315c1105cd00c3de18c41fa0b31a74e47f4a1072
 deployment:
   beta:
+<<<<<<< 229c94db66795bf51155f6a496db12f1a739a0a9
 <<<<<<< 8400db39c3a1bb51fd43e86b33c574852235e877
     branch: proversity/pro
+=======
+    branch: proversity/tea
+>>>>>>> Correct circle deployment config
     commands:
       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 
