@@ -4,18 +4,21 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.media.MediaMetadataRetriever;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import org.edx.mobile.course.CourseAPI;
+import org.edx.mobile.interfaces.SectionItemInterface;
 import org.edx.mobile.logger.Logger;
 import org.edx.mobile.model.VideoModel;
+import org.edx.mobile.model.api.ChapterModel;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
 import org.edx.mobile.model.api.ProfileModel;
+import org.edx.mobile.model.api.SectionEntry;
+import org.edx.mobile.model.api.SectionItemModel;
 import org.edx.mobile.model.api.VideoResponseModel;
-import org.edx.mobile.model.course.CourseComponent;
 import org.edx.mobile.model.course.VideoBlockModel;
 import org.edx.mobile.model.db.DownloadEntry;
 import org.edx.mobile.model.download.NativeDownloadModel;
@@ -26,17 +29,20 @@ import org.edx.mobile.module.db.impl.DatabaseFactory;
 import org.edx.mobile.module.download.IDownloadManager;
 import org.edx.mobile.module.prefs.LoginPrefs;
 import org.edx.mobile.module.prefs.UserPrefs;
-import org.edx.mobile.module.prefs.VideoPrefs;
 import org.edx.mobile.util.Config;
 import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.util.Sha1Util;
-import org.edx.mobile.view.BulkDownloadFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import de.greenrobot.event.EventBus;
+
+import static org.edx.mobile.http.util.CallUtil.executeStrict;
 
 @Singleton
 public class Storage implements IStorage {
@@ -55,8 +61,6 @@ public class Storage implements IStorage {
     private LoginPrefs loginPrefs;
     @Inject
     private CourseAPI api;
-    @Inject
-    private VideoPrefs videoPrefs;
 
     private final Logger logger = new Logger(getClass().getName());
 
@@ -124,35 +128,21 @@ public class Storage implements IStorage {
         return model.getDmId();
     }
 
-    @Override
     public int removeDownload(VideoModel model) {
-        // FIXME: Refactor this function to use the list variant of removeDownload function below.
         int count = db.getVideoCountByVideoUrl(model.getVideoUrl(), null);
         if (count <= 1) {
             // if only one video exists, then mark it as DELETED
             // Also, remove its downloaded file
             dm.removeDownloads(model.getDmId());
-
             deleteFile(model.getFilePath());
         }
 
         // anyways, we mark the video as DELETED
         int videosDeleted = db.deleteVideoByVideoId(model, null);
-        // Reset the state of Videos Bulk Download view whenever a delete happens
-        videoPrefs.setBulkDownloadSwitchState(BulkDownloadFragment.SwitchState.DEFAULT, model.getEnrollmentId());
         EventBus.getDefault().post(new DownloadedVideoDeletedEvent());
         return videosDeleted;
     }
 
-    @Override
-    public int removeDownloads(List<VideoModel> modelList) {
-        final int deletedVideos = removeDownloadsFromApp(modelList, null);
-        logger.debug("Number of downloads removed by Download Manager: " + deletedVideos);
-        EventBus.getDefault().post(new DownloadedVideoDeletedEvent());
-        return deletedVideos;
-    }
-
-    @Override
     public void removeAllDownloads() {
         final String username = loginPrefs.getUsername();
         final String sha1Username;
@@ -161,11 +151,21 @@ public class Storage implements IStorage {
         } else {
             sha1Username = Sha1Util.SHA1(username);
         }
+
         // Get all on going downloads
         db.getListOfOngoingDownloads(new DataCallback<List<VideoModel>>(false) {
             @Override
             public void onResult(List<VideoModel> result) {
-                removeDownloadsFromApp(result, sha1Username);
+                // Remove all downloads from db
+                long [] videoIds = new long[result.size()];
+                VideoModel model;
+                for (int i=0; i<result.size(); i++) {
+                    model = result.get(i);
+                    db.deleteVideoByVideoId(model, null, sha1Username);
+                    videoIds[i] = model.getDmId();
+                }
+                // Remove all downloads from NativeDownloadManager
+                dm.removeDownloads(videoIds);
                 EventBus.getDefault().post(new DownloadedVideoDeletedEvent());
             }
 
@@ -173,30 +173,6 @@ public class Storage implements IStorage {
             public void onFail(Exception ex) {
             }
         });
-    }
-
-    private int removeDownloadsFromApp(List<VideoModel> result, String username) {
-        if (result == null || result.size() <= 0) {
-            return 0;
-        }
-        // Remove all downloads from NativeDownloadManager
-        final long[] videoIds = new long[result.size()];
-        for (int i = 0; i < result.size(); i++) {
-            videoIds[i] = result.get(i).getDmId();
-        }
-        final int downloadsRemoved = dm.removeDownloads(videoIds);
-        // Remove all downloads from db
-        VideoModel model;
-        for (int i = 0; i < result.size(); i++) {
-            model = result.get(i);
-            if (username == null) {
-                db.deleteVideoByVideoId(model, null);
-            } else {
-                db.deleteVideoByVideoId(model, username, null);
-            }
-            deleteFile(model.getFilePath());
-        }
-        return downloadsRemoved;
     }
 
     /**
@@ -270,6 +246,7 @@ public class Storage implements IStorage {
                 long[] dmids = new long[result.size()];
                 for (int i=0; i< result.size(); i++) {
                     dmids[i] = result.get(i).getDmId();
+                    logger.debug("xxxxxxxx =" +dmids[i]);
                 }
 
                 int averageProgress = dm.getAverageProgressForDownloads(dmids);
@@ -281,51 +258,6 @@ public class Storage implements IStorage {
                 callback.onFail(ex);
             }
         });
-    }
-
-    @Override
-    public void getDownloadProgressOfCourseVideos(@Nullable String courseId,
-                                                  final DataCallback<NativeDownloadModel> callback) {
-        final IDatabase db = DatabaseFactory.getInstance(DatabaseFactory.TYPE_DATABASE_NATIVE);
-        db.getListOfOngoingDownloadsByCourseId(courseId, new DataCallback<List<VideoModel>>() {
-            @Override
-            public void onResult(List<VideoModel> result) {
-                final long[] dmids = new long[result.size()];
-                for (int i = 0; i < result.size(); i++) {
-                    dmids[i] = result.get(i).getDmId();
-                }
-
-                callback.onResult(dm.getProgressDetailsForDownloads(dmids));
-            }
-
-            @Override
-            public void onFail(Exception ex) {
-                callback.onFail(ex);
-            }
-        });
-    }
-
-    @Override
-    public void getDownloadProgressOfVideos(@NonNull List<CourseComponent> videoComponents,
-                                            final DataCallback<NativeDownloadModel> callback) {
-        final IDatabase db = DatabaseFactory.getInstance(DatabaseFactory.TYPE_DATABASE_NATIVE);
-        db.getVideosByVideoIds(videoComponents, DownloadEntry.DownloadedState.DOWNLOADING,
-                new DataCallback<List<VideoModel>>() {
-                    @Override
-                    public void onResult(List<VideoModel> result) {
-                        final long[] dmids = new long[result.size()];
-                        for (int i = 0; i < result.size(); i++) {
-                            dmids[i] = result.get(i).getDmId();
-                        }
-
-                        callback.onResult(dm.getProgressDetailsForDownloads(dmids));
-                    }
-
-                    @Override
-                    public void onFail(Exception ex) {
-                        callback.onFail(ex);
-                    }
-                });
     }
 
     @Override
@@ -374,6 +306,51 @@ public class Storage implements IStorage {
     }
 
     @Override
+    @NonNull
+    public ArrayList<EnrolledCoursesResponse> getDownloadedCoursesWithVideoCountAndSize() throws Exception {
+        ArrayList<EnrolledCoursesResponse> downloadedCourseList = new ArrayList<>();
+
+        for (EnrolledCoursesResponse enrolledCoursesResponse :
+                executeStrict(api.getEnrolledCoursesFromCache())) {
+            int videoCount = db.getDownloadedVideoCountByCourse(
+                    enrolledCoursesResponse.getCourse().getId(),null);
+            if(videoCount>0){
+                enrolledCoursesResponse.videoCount = videoCount;
+                enrolledCoursesResponse.size = db.getDownloadedVideosSizeByCourse(
+                        enrolledCoursesResponse.getCourse().getId(),null);
+                downloadedCourseList.add(enrolledCoursesResponse);
+            }
+        }
+
+        return downloadedCourseList;
+    }
+
+    @Override
+    @NonNull
+    public ArrayList<SectionItemInterface> getRecentDownloadedVideosList() throws Exception {
+        ArrayList<SectionItemInterface> recentVideolist = new ArrayList<>();
+
+        for (final EnrolledCoursesResponse course :
+                executeStrict(api.getEnrolledCoursesFromCache())) {
+            // add all videos to the list for this course
+            List<VideoModel> videos = db.getSortedDownloadsByDownloadedDateForCourseId(
+                    course.getCourse().getId(), null);
+
+            // ArrayList<IVideoModel> videos = new ArrayList<IVideoModel>();
+            if (videos != null && videos.size() > 0) {
+                // add course header to the list
+                recentVideolist.add(course);
+                for (VideoModel videoModel : videos) {
+                    //TODO : Need to check how SectionItemInterface can be converted to IVideoModel
+                    recentVideolist.add((SectionItemInterface) videoModel);
+                }
+            }
+        }
+
+        return recentVideolist;
+    }
+
+    @Override
     public DownloadEntry reloadDownloadEntry(DownloadEntry video) {
         try{
             DownloadEntry de = (DownloadEntry) db.getVideoEntryByVideoId(video.videoId, null);
@@ -406,6 +383,63 @@ public class Storage implements IStorage {
             logger.error(ex);
             callback.sendException(ex);
         }
+    }
+
+    @Override
+    public ArrayList<SectionItemInterface> getSortedOrganizedVideosByCourse(
+            String courseId) {
+        ArrayList<SectionItemInterface> list = new ArrayList<>();
+
+        ArrayList<VideoModel> downloadList = (ArrayList<VideoModel>) db
+                .getDownloadedVideoListForCourse(courseId, null);
+        if(downloadList==null||downloadList.size()==0){
+            return list;
+        }
+
+        try {
+            Map<String, SectionEntry> courseHeirarchyMap =
+                api.getCourseHierarchy(courseId);
+
+            // iterate chapters
+            for (Entry<String, SectionEntry> chapterentry : courseHeirarchyMap.entrySet()) {
+                boolean chapterAddedFlag=false;
+                // iterate lectures
+                for (Entry<String, ArrayList<VideoResponseModel>> lectureEntry :
+                    chapterentry.getValue().sections.entrySet()) {
+                    boolean lectureAddedFlag=false;
+                    // iterate videos
+                    for (VideoResponseModel v : lectureEntry.getValue()) {
+                        for(VideoModel de : downloadList){
+                            // identify the video
+                            if (de.getVideoId().equalsIgnoreCase(v.getSummary().getId())) {
+                                // add this chapter to the list
+                                if(!chapterAddedFlag){
+                                    ChapterModel chModel = new ChapterModel();
+                                    chModel.name = chapterentry.getKey();
+                                    list.add(chModel);
+                                    chapterAddedFlag = true;
+                                }
+                                if(!lectureAddedFlag){
+                                    SectionItemModel lectureModel = new SectionItemModel();
+                                    lectureModel.name = lectureEntry.getKey();
+                                    list.add(lectureModel);
+                                    lectureAddedFlag = true;
+                                }
+
+                                // add section below this chapter
+                                list.add((DownloadEntry)de);
+                                break;
+                            }   // If condition for videoId
+                        }       //for loop for downloadedvideos for CourseId
+                    }           // for loop for VRM
+                }               //  For loop for lectures
+            }                   // For loop for Chapters
+            return list;
+        } catch (Exception e) {
+            logger.error(e);
+        }
+
+        return null;
     }
 
     @Override
