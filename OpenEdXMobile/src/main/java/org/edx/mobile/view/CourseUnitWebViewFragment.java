@@ -9,6 +9,7 @@ import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
@@ -33,6 +34,7 @@ import org.edx.mobile.services.ViewPagerDownloadManager;
 import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.view.custom.URLInterceptorWebViewClient;
 
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,6 +78,27 @@ public class CourseUnitWebViewFragment extends CourseUnitFragment {
         return inflater.inflate(R.layout.fragment_course_unit_webview, container, false);
     }
 
+    public class WebViewInterface {
+        Context mContext;
+
+        WebViewInterface(Context c) {
+            mContext = c;
+        }
+
+        @JavascriptInterface
+        public void saveAs(String data) {
+            String filename = "recap.pdf";
+            FileOutputStream outputStream;
+            try {
+                outputStream = mContext.openFileOutput(filename, Context.MODE_PRIVATE);
+                outputStream.write(data.getBytes());
+                outputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -83,6 +106,7 @@ public class CourseUnitWebViewFragment extends CourseUnitFragment {
 
         webView.clearCache(true);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(new WebViewInterface(this.getContext()), "Android");
         URLInterceptorWebViewClient client =
                 new URLInterceptorWebViewClient(getActivity(), webView) {
                     private boolean didReceiveError = false;
