@@ -276,8 +276,8 @@ android {
         minSdkVersion 16
         targetSdkVersion 21
 
-        versionCode getVersionCode()
-        versionName getVersionName()
+        //versionCode getVersionCode()
+        //versionName getVersionName()
 
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
