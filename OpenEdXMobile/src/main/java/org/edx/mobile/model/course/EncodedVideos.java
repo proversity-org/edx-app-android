@@ -13,8 +13,6 @@ import org.edx.mobile.util.VideoUtil;
 import java.io.Serializable;
 
 public class EncodedVideos implements Serializable {
-    @SerializedName("fallback")
-    public VideoInfo fallback;
 
     @SerializedName("mobile_high")
     public VideoInfo mobileHigh;
@@ -24,6 +22,9 @@ public class EncodedVideos implements Serializable {
 
     @SerializedName("youtube")
     public VideoInfo youtube;
+
+    @SerializedName("fallback")
+    public VideoInfo fallback;
 
     @Nullable
     public VideoInfo getPreferredVideoInfo() {
