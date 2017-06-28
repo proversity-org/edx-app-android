@@ -44,4 +44,4 @@ deployment:
   beta:
     branch: proversity/foo
     commands:
-      - echo "not deploying Foo Fighters"
+      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
