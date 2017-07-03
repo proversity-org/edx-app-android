@@ -1,7 +1,7 @@
 general:
   branches:
     only:
-      - proversity/pro
+      - proversity/cdh
 
 machine:
     environment:
@@ -23,7 +23,7 @@ dependencies:
     override:
         - ./gradlew dependencies --stacktrace --info
     post:
-        - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/pro ./config
+        - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/cdh ./config
         - cp -r config/gradle.properties OpenEdXMobile/gradle.properties
         - cp -r config/google-services.json OpenEdXMobile/google-services.json
         - echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
@@ -42,9 +42,9 @@ test:
 # https://github.com/Triple-T/gradle-play-publisher
 deployment:
   beta:
-    branch: proversity/pro
+    branch: proversity/cdh
     commands:
-      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
+      - echo "not deploying Cliffe Dekker Hofmeyr"
 
 notify:
   webhooks:
