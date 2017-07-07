@@ -1,0 +1,26 @@
+---
+  PLATFORM_NAME: "Cliffe Dekker Hofmeyr"
+  ENVIRONMENT_DISPLAY_NAME: "Cliffe Dekker Hofmeyr"
+  PLATFORM_DESTINATION_NAME: "cdh.proversity.org"
+  FEEDBACK_EMAIL_ADDRESS: "support@proversity.org"
+  API_HOST_URL: "https://cdh.proversity.org"
+  OAUTH_CLIENT_ID: "907e61b75b557151f27f"
+  COURSE_SHARING_ENABLED: false
+  DISCUSSIONS_ENABLED: false
+  CERTIFICATES_ENABLED: false
+  USER_PROFILES_ENABLED: false
+  BADGES_ENABLED: false
+  COURSE_ENROLLMENT:
+    TYPE: 'native'
+    ENABLED: true
+  SPEED_TEST_ENABLED: false
+  SEGMENT:
+    SEGMENT_IO_WRITE_KEY: ''
+    ENABLED: false
+  PUSH_NOTIFICATIONS:
+    KONNEKTEER_MOBILE_ENDPOINTS: "https://konnekteer-api.proversity.org/mobileEndpoints"
+    KONNEKTEER_MOBILE_ENDPOINT_SUBSCRIBE: "https://konnekteer-api.proversity.org/mobileEndpoints/subscribe"
+    KONNEKTEER_API_KEY: ""
+    KONNEKTEER_ORGANIZATION_CODE: "CDH"
+    ENABLED: false
+  DEBUG: false
