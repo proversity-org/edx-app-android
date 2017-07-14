@@ -43,7 +43,7 @@ deployment:
   beta:
     branch: proversity/ioo
     commands:
-      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
+      - echo "not deploying io"
 
 notify:
   webhooks:
