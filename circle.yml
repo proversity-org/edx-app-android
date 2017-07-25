@@ -44,7 +44,7 @@ deployment:
   beta:
     branch: proversity/udi
     commands:
-      - echo "not deploying Udify"
+      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 
 notify:
   webhooks:
