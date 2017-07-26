@@ -29,7 +29,7 @@
     In that case, a play icon is shown on top of the course image. This is the content description. -->
     <string name="go_to_video">Go to video</string>
     <!-- View Course button text text-->
-    <string name="view_course_button_text">View course</string>
+    <string name="view_course_button_text">View nugget</string>
     <!-- Floating overlay text shown to user when they succeed at enrolling in a course -->
     <string name="you_are_now_enrolled">You are now enrolled in this course.</string>
     <!-- Error message shown when dashboard cannot be shown from course detail view -->
@@ -165,7 +165,7 @@
 
     <!-- My Courses -->
     <!-- Row of course on dashboard screen -->
-    <string name="courseware_title">Course</string>
+    <string name="courseware_title">Nugget</string>
     <!-- Row of course on dashboard screen -->
     <!-- NOTE: TODO - not final one -->
     <string name="courseware_subtitle">Access videos and assignments</string>
@@ -182,7 +182,7 @@
     <string name="handouts_title">Handouts</string>
     <!-- Row of Handouts on dashboard screen -->
     <!-- NOTE: TODO - not final one -->
-    <string name="handouts_subtitle">Find important course information</string>
+    <string name="handouts_subtitle">Find important nugget information</string>
     <!-- Row of announcement on dashboard screen -->
     <string name="announcement_title">Announcements</string>
     <!-- Title text for the important dates section on the course dashboard  -->
@@ -207,7 +207,7 @@
 
     <!-- Course Details -->
     <!-- Accessible content description of label for course content -->
-    <string name="course_content">Course Content</string>
+    <string name="course_content">Nugget Content</string>
     <!-- Tab title for course handouts section -->
     <string name="tab_label_handouts">Handouts</string>
     <!-- Button for last accessed course section. Will be followed by course name -->
@@ -217,9 +217,9 @@
     <!-- Label shown when no mobile-friendly videos are available in a course -->
     <string name="no_videos_text" tools:ignore="MissingTranslation">This course does not include any videos.</string>
     <!-- Label shown when user is enrolled in no courses -->
-    <string name="no_courses_to_display">It looks like you are not enrolled in any courses yet.</string>
+    <string name="no_courses_to_display">It looks like you are not enrolled in any nuggets yet.</string>
     <!-- Label shown when no announcements are available for a course -->
-    <string name="no_announcements_to_display">There are currently no announcements for this course.</string>
+    <string name="no_announcements_to_display">There are currently no announcements for this nugget.</string>
     <!-- Label shown when no handouts are available for a course -->
     <string name="no_handouts_to_display">There are currently no handouts for this course.</string>
     <!-- Label shown when no important dates are available for a course -->
@@ -460,7 +460,7 @@
     <!-- Button label to bring up course finder -->
     <string name="find_course_text">Looking for a new challenge?</string>
     <!-- Button label to bring up course finder -->
-    <string name="find_course_btn_text">Find a Course</string>
+    <string name="find_course_btn_text">Find a Nugget</string>
     <!-- Message between sign in button and social login buttons -->
     <string name="or_sign_in_with">Or sign in with</string>
     <!-- Facebook login method -->
