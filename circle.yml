@@ -44,7 +44,7 @@ deployment:
   beta:
     branch: proversity/alj
     commands:
-      - echo "not deploying Africa Legal Jobs"
+      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 
 notify:
   webhooks:
