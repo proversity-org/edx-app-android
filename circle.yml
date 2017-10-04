@@ -44,7 +44,7 @@ deployment:
   beta:
     branch: proversity/pfn
     commands:
-      - echo "not deploying Pearson FinTech Navigator"
+      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 
 notify:
   webhooks:
