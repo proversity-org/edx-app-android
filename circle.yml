@@ -43,7 +43,7 @@ deployment:
   beta:
     branch: proversity/pat
     commands:
-      - echo "not deploying PATA"
+      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 
 notify:
   webhooks:
