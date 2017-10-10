@@ -34,7 +34,7 @@ test:
         - ./gradlew testProdReleaseUnitTestCoverage -PdisablePreDex
         - ./gradlew assembleProdRelease -PdisablePreDex
     override:
-        - sleep 10
+        - sleep 15
     post:
         - cp -r OpenEdXMobile/build/reports $CIRCLE_ARTIFACTS
         - cp -r OpenEdXMobile/build/outputs $CIRCLE_ARTIFACTS
