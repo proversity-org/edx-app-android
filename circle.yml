@@ -44,7 +44,7 @@ deployment:
   beta:
     branch: proversity/emi
     commands:
-      - echo "not deploying Fly Emirates"
+      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 
 notify:
   webhooks:
