@@ -1,6 +1,7 @@
 package org.edx.mobile.model.course;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.webkit.URLUtil;
 
 import com.google.gson.annotations.SerializedName;
@@ -23,6 +24,9 @@ public class EncodedVideos implements Serializable {
     @SerializedName("youtube")
     public VideoInfo youtube;
 
+    @SerializedName("hls")
+    public VideoInfo hls;
+
     @SerializedName("fallback")
     public VideoInfo fallback;
 
@@ -44,6 +48,20 @@ public class EncodedVideos implements Serializable {
                 return fallback;
             }
         }
+        if (hls != null && URLUtil.isNetworkUrl(hls.url))
+            return hls;
+        return null;
+    }
+
+    @Nullable
+    public VideoInfo getDownloadableVideoInfo() {
+        if (mobileLow != null && URLUtil.isNetworkUrl(mobileLow.url))
+            return mobileLow;
+        if (mobileHigh != null && URLUtil.isNetworkUrl(mobileHigh.url))
+            return mobileHigh;
+        if (fallback != null && URLUtil.isNetworkUrl(fallback.url))
+            return fallback;
+>>>>>>> 360a314... fix for hls streaming vs fallback download url [ci skip]
         return null;
     }
 
@@ -72,6 +90,10 @@ public class EncodedVideos implements Serializable {
         if (mobileHigh != null ? !mobileHigh.equals(that.mobileHigh) : that.mobileHigh != null)
             return false;
         if (mobileLow != null ? !mobileLow.equals(that.mobileLow) : that.mobileLow != null)
+            return false;
+        if (hls != null ? !hls.equals(that.hls) : that.hls != null)
+            return false;
+        if (fallback != null ? !fallback.equals(that.fallback) : that.fallback != null)
             return false;
         return youtube != null ? youtube.equals(that.youtube) : that.youtube == null;
 
