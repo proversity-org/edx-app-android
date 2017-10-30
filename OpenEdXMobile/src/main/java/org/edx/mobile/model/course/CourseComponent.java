@@ -7,6 +7,7 @@ import org.edx.mobile.base.MainApplication;
 import org.edx.mobile.logger.Logger;
 import org.edx.mobile.model.Filter;
 import org.edx.mobile.model.api.IPathNode;
+import org.edx.mobile.util.VideoUtil;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -263,6 +264,8 @@ public class CourseComponent implements IBlock, IPathNode {
         int downloadableCount = 0;
         List<VideoBlockModel> videos = getVideos();
         for (VideoBlockModel video : videos) {
+            if (VideoUtil.isVideoDownloadable(video.getData())) {
+asdasd fix this
             if (video.getData().encodedVideos.getDownloadableVideoInfo() != null && !video.getData().onlyOnWeb) {
                 downloadableCount++;
             }
