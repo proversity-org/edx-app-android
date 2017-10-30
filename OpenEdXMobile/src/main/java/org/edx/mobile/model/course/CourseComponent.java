@@ -265,6 +265,8 @@ public class CourseComponent implements IBlock, IPathNode {
         List<VideoBlockModel> videos = getVideos();
         for (VideoBlockModel video : videos) {
             if (VideoUtil.isVideoDownloadable(video.getData())) {
+asdasd fix this
+            if (video.getData().encodedVideos.getDownloadableVideoInfo() != null && !video.getData().onlyOnWeb) {
                 downloadableCount++;
             }
         }
