@@ -1,8 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<<<<<<< HEAD
 <resources xmlns:tools="http://schemas.android.com/tools">
-=======
-<resources>
   <string name="eula_file_link">file:///android_asset/EULA.htm</string>
   <!--Certificates-->
   <!--Label congratulation user on finishing course-->
