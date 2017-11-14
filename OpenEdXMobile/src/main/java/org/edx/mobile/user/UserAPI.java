@@ -16,6 +16,7 @@ import org.edx.mobile.event.AccountDataLoadedEvent;
 import org.edx.mobile.http.callback.CallTrigger;
 import org.edx.mobile.http.callback.ErrorHandlingCallback;
 import org.edx.mobile.http.notifications.ErrorNotification;
+import org.edx.mobile.logger.Logger;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
 import org.edx.mobile.module.prefs.LoginPrefs;
 import org.edx.mobile.util.Config;
@@ -110,64 +111,6 @@ public class UserAPI {
             Response<ResponseBody> response = userService.getUserEnrolledCourses(username, org).execute();
             if (response.isSuccessful()) {
                 json = userService.getUserEnrolledCourses(username, org).execute().body().string();
-            }
-        }
-
-        // We aren't use TypeToken here because it throws NoClassDefFoundError
-        final JsonArray ary = gson.fromJson(json, JsonArray.class);
-        final List<EnrolledCoursesResponse> ret = new ArrayList<>(ary.size());
-        for (int cnt = 0; cnt < ary.size(); ++cnt) {
-            ret.add(gson.fromJson(ary.get(cnt), EnrolledCoursesResponse.class));
-        }
-        return ret;
-    }
-
-    public
-    @NonNull
-    String getUserEnrolledCoursesURL(@NonNull String username) {
-        return config.getApiHostURL() + "/api/mobile/v0.5/users/" + username + "/course_enrollments";
-    }
-
-    public
-    @NonNull
-    List<EnrolledCoursesResponse> getUserEnrolledCourses(@NonNull String username, String org, boolean tryCache) throws Exception {
-        String json = null;
-
-        final String cacheKey = getUserEnrolledCoursesURL(username);
-
-        // try to get from cache if we should
-        if (tryCache) {
-            try {
-                json = cache.get(cacheKey);
-            } catch (Exception e) {
-                logger.debug(e.toString());
-            }
-        }
-
-        // if we don't have a json yet, get it from userService
-        if (json == null) {
-            Response<ResponseBody> response = userService.getUserEnrolledCourses(username, org).execute();
-            if (response.isSuccessful()) {
-                json = userService.getUserEnrolledCourses(username, org).execute().body().string();
-                // cache result
-                try {
-                    cache.put(cacheKey, json);
-                } catch (IOException e) {
-                    logger.debug(e.toString());
-                }
-            } else {
-                // Cache has already been checked, and connectivity
-                // can't be established, so throw an exception.
-                if (tryCache) throw new HttpStatusException(response);
-                // Otherwise fall back to fetching from the cache
-                try {
-                    json = cache.get(cacheKey);
-                } catch (Exception e) {
-                    logger.debug(e.toString());
-                    throw new HttpStatusException(response);
-                }
-                // If the cache is empty, then throw an exception.
-                if (json == null) throw new HttpStatusException(response);
             }
         }
 
