@@ -43,7 +43,7 @@ deployment:
   beta:
     branch: proversity/sys
     commands:
-      - echo "not deploying Systematic - CMMI5 certified"
+      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 
 notify:
   webhooks:
