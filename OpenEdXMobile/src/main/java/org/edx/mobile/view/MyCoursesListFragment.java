@@ -170,6 +170,8 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
             if (result.getResult().size() > 0) {
                 adapter.setItems(newItems);
                 adapter.notifyDataSetChanged();
+            }else if(environment.getConfig().isJumpToFindCoursesEnabled()){
+                environment.getRouter().showFindCourses(getActivity());
             }
 
             if (adapter.isEmpty() && !environment.getConfig().getCourseDiscoveryConfig().isCourseDiscoveryEnabled()) {
