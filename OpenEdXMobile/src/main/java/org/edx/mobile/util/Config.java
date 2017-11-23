@@ -77,6 +77,7 @@ public class Config {
     private static final String TAB_LAYOUTS_ENABLED = "TAB_LAYOUTS_ENABLED";
     private static final String ANNOUNCEMENTS_ENABLED = "ANNOUNCEMENTS_ENABLED";
     private static final String JUMP_TO_LAST_ACCESSED_MODULE_ENABLED = "JUMP_TO_LAST_ACCESSED_MODULE_ENABLED";
+    private static final String JUMP_TO_FIND_COURSES_ENABLED = "JUMP_TO_FIND_COURSES_ENABLED";
 
     public static class ZeroRatingConfig {
         @SerializedName("ENABLED")
@@ -652,6 +653,10 @@ public class Config {
 
     public boolean isJumpToLastAccessedModuleEnabled() {
         return getBoolean(JUMP_TO_LAST_ACCESSED_MODULE_ENABLED, false);
+    }
+
+    public boolean isJumpToFindCoursesEnabled() {
+        return getBoolean(JUMP_TO_FIND_COURSES_ENABLED, false);
     }
 
     @NonNull
