@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -23,6 +25,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import io.fabric.sdk.android.Kit;
 
 @Singleton
 public class Config {
@@ -63,6 +67,16 @@ public class Config {
     private static final String NEW_LOGISTRATION_ENABLED = "NEW_LOGISTRATION_ENABLED";
     private static final String DISCUSSIONS_ENABLE_PROFILE_PICTURE_PARAM = "DISCUSSIONS_ENABLE_PROFILE_PICTURE_PARAM";
     private static final String REGISTRATION_ENABLED = "REGISTRATION_ENABLED";
+    private static final String FIREBASE_ENABLED = "FIREBASE_ENABLED";
+    private static final String APP_REVIEWS_ENABLED = "APP_REVIEWS_ENABLED";
+    private static final String VIDEO_TRANSCRIPT_ENABLED = "VIDEO_TRANSCRIPT_ENABLED";
+    private static final String COURSE_DATES_ENABLED = "COURSE_DATES_ENABLED";
+    private static final String WHATS_NEW_ENABLED = "WHATS_NEW_ENABLED";
+    private static final String MY_VIDEOS_ENABLED = "MY_VIDEOS_ENABLED";
+    private static final String COURSE_VIDEOS_ENABLED = "COURSE_VIDEOS_ENABLED";
+    private static final String ANNOUNCEMENTS_ENABLED = "ANNOUNCEMENTS_ENABLED";
+    private static final String JUMP_TO_LAST_ACCESSED_MODULE_ENABLED = "JUMP_TO_LAST_ACCESSED_MODULE_ENABLED";
+    private static final String JUMP_TO_FIND_COURSES_ENABLED = "JUMP_TO_FIND_COURSES_ENABLED";
 
     public static class ZeroRatingConfig {
         @SerializedName("ENABLED")
@@ -228,10 +242,14 @@ public class Config {
         @SerializedName("FABRIC_BUILD_SECRET")
         private String mFabricBuildSecret;
 
+        @SerializedName("KITS")
+        private FabricKitsConfig mKitsConfig;
+
         public boolean isEnabled() {
             return mEnabled
                     && !TextUtils.isEmpty(mFabricKey)
-                    && !TextUtils.isEmpty(mFabricBuildSecret);
+                    && !TextUtils.isEmpty(mFabricBuildSecret)
+                    && mKitsConfig != null && mKitsConfig.hasEnabledKits();
         }
 
         public String getFabricKey() {
@@ -240,6 +258,44 @@ public class Config {
 
         public String getFabricBuildSecret() {
             return mFabricBuildSecret;
+        }
+
+        public FabricKitsConfig getKitsConfig()   {
+            return mKitsConfig;
+        }
+    }
+
+    public static class FabricKitsConfig {
+        @SerializedName("CRASHLYTICS")
+        private boolean mCrashlyticsEnabled;
+
+        @SerializedName("ANSWERS")
+        private boolean mAnswersEnabled;
+
+        public boolean isCrashlyticsEnabled() {
+            return mCrashlyticsEnabled;
+        }
+
+        public boolean isAnswersEnabled() {
+            return mAnswersEnabled;
+        }
+
+        public Kit[] getEnabledKits()   {
+            List<Kit> fabricKits = new ArrayList<>();
+
+            if (isCrashlyticsEnabled())    {
+                fabricKits.add(new CrashlyticsCore());
+            }
+
+            if (isAnswersEnabled()) {
+                fabricKits.add(new Answers());
+            }
+
+            return fabricKits.toArray(new Kit[fabricKits.size()]);
+        }
+
+        public boolean hasEnabledKits()  {
+            return getEnabledKits().length != 0;
         }
     }
 
@@ -446,10 +502,10 @@ public class Config {
     }
 
     /**
-     * @return A list of URIs for updating the app, or an empty list if none are available.
+     * @return A list of URIs of app stores, or an empty list if none are available.
      */
     @NonNull
-    public List<Uri> getAppUpdateUris() {
+    public List<Uri> getAppStoreUris() {
         //noinspection unchecked
         final List<String> uriStrings = getObjectOrNewInstance(APP_UPDATE_URIS, ArrayList.class);
         final List<Uri> uris = new ArrayList<>(uriStrings.size());
@@ -503,12 +559,52 @@ public class Config {
         return getBoolean(DISCUSSIONS_ENABLED, false);
     }
 
+    public boolean isAppReviewsEnabled() {
+        return getBoolean(APP_REVIEWS_ENABLED, false);
+    }
+
     public boolean areCertificateLinksEnabled() {
         return getBoolean(CERTIFICATES_ENABLED, false);
     }
 
     public boolean isCourseSharingEnabled() {
         return getBoolean(COURSE_SHARING_ENABLED, false);
+    }
+
+    public boolean isFirebaseEnabled() {
+        return getBoolean(FIREBASE_ENABLED, false);
+    }
+
+    public boolean isVideoTranscriptEnabled() {
+        return getBoolean(VIDEO_TRANSCRIPT_ENABLED, false);
+    }
+
+    public boolean isCourseDatesEnabled() {
+        return getBoolean(COURSE_DATES_ENABLED, false);
+    }
+
+    public boolean isWhatsNewEnabled() {
+        return getBoolean(WHATS_NEW_ENABLED, false);
+    }
+
+    public boolean isMyVideosEnabled() {
+        return getBoolean(MY_VIDEOS_ENABLED, false);
+    }
+
+    public boolean isCourseVideosEnabled() {
+        return getBoolean(COURSE_VIDEOS_ENABLED, false);
+    }
+
+    public boolean isAnnoucementsEnabled() {
+        return getBoolean(ANNOUNCEMENTS_ENABLED, false);
+    }
+
+    public boolean isJumpToLastAccessedModuleEnabled() {
+        return getBoolean(JUMP_TO_LAST_ACCESSED_MODULE_ENABLED, false);
+    }
+
+    public boolean isJumpToFindCoursesEnabled() {
+        return getBoolean(JUMP_TO_FIND_COURSES_ENABLED, false);
     }
 
     @NonNull

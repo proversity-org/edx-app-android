@@ -3,7 +3,6 @@ package org.edx.mobile.view;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -19,17 +18,26 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.joanzapata.iconify.Icon;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
+
 import org.edx.mobile.BuildConfig;
 import org.edx.mobile.R;
 import org.edx.mobile.authentication.AuthResponse;
 import org.edx.mobile.authentication.LoginAPI;
+import org.edx.mobile.authentication.LoginService;
 import org.edx.mobile.base.BaseFragmentActivity;
+import org.edx.mobile.http.HttpStatus;
+import org.edx.mobile.http.HttpStatusException;
+import org.edx.mobile.http.callback.CallTrigger;
+import org.edx.mobile.http.callback.ErrorHandlingCallback;
 import org.edx.mobile.model.api.FormFieldMessageBody;
 import org.edx.mobile.model.api.ProfileModel;
 import org.edx.mobile.model.api.RegisterResponseFieldError;
-import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.analytics.Analytics;
+import org.edx.mobile.module.analytics.AnalyticsRegistry;
 import org.edx.mobile.module.prefs.LoginPrefs;
-import org.edx.mobile.module.registration.model.RegistrationAgreement;
 import org.edx.mobile.module.registration.model.RegistrationDescription;
 import org.edx.mobile.module.registration.model.RegistrationFieldType;
 import org.edx.mobile.module.registration.model.RegistrationFormField;
@@ -38,15 +46,19 @@ import org.edx.mobile.social.SocialFactory;
 import org.edx.mobile.social.SocialLoginDelegate;
 import org.edx.mobile.task.RegisterTask;
 import org.edx.mobile.task.Task;
+import org.edx.mobile.util.AppStoreUtils;
+import org.edx.mobile.util.IntentFactory;
+import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.util.ResourceUtil;
 import org.edx.mobile.util.images.ErrorUtils;
-import org.edx.mobile.util.IntentFactory;
 import org.edx.mobile.view.custom.DividerWithTextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import retrofit2.Call;
 
 public class RegisterActivity extends BaseFragmentActivity
         implements SocialLoginDelegate.MobileLoginCallback {
@@ -58,11 +70,22 @@ public class RegisterActivity extends BaseFragmentActivity
     private TextView createAccountTv;
     private List<IRegistrationFieldView> mFieldViews = new ArrayList<>();
     private SocialLoginDelegate socialLoginDelegate;
+    private View loadingIndicator;
+    private View registrationForm;
     private View facebookButton;
     private View googleButton;
+    private TextView errorTextView;
 
     @Inject
     LoginPrefs loginPrefs;
+    @Inject
+    private LoginAPI loginAPI;
+
+    @Inject
+    AnalyticsRegistry analyticsRegistry;
+
+    @Inject
+    private LoginService loginService;
 
     @NonNull
     public static Intent newIntent() {
@@ -74,11 +97,16 @@ public class RegisterActivity extends BaseFragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        setTitle(ResourceUtil.getFormattedString(getResources(), R.string.register_title, "platform_name", environment.getConfig().getPlatformName()));
+        setTitle(R.string.register_title);
 
-        environment.getSegment().trackScreenView(ISegment.Screens.LAUNCH_ACTIVITY);
+        environment.getAnalyticsRegistry().trackScreenView(Analytics.Screens.REGISTER);
+
+        loadingIndicator = findViewById(R.id.loadingIndicator);
+        registrationForm = findViewById(R.id.registration_form);
 
         socialLoginDelegate = new SocialLoginDelegate(this, savedInstanceState, this, environment.getConfig(), loginPrefs);
+
+        errorTextView = (TextView) findViewById(R.id.content_unavailable_error_text);
 
         boolean isSocialEnabled = false;
         facebookButton = findViewById(R.id.facebook_button);
@@ -133,43 +161,66 @@ public class RegisterActivity extends BaseFragmentActivity
             }
         });
 
-        setupRegistrationForm();
+        getRegistrationForm();
+
         hideSoftKeypad();
         tryToSetUIInteraction(true);
     }
 
-    public void showAgreement(RegistrationAgreement agreement) {
-        boolean isInAppEULALink = false;
-        try {
-            Uri uri = Uri.parse(agreement.getLink());
-            if (uri.getScheme().equals("edxapp")
-                    && uri.getHost().equals("show_eula")) {
-                isInAppEULALink = true;
-            }
-        } catch (Exception ex) {
-            logger.error(ex);
-        }
-
-        if (isInAppEULALink) {
-            // show EULA license that is shipped with app
-            environment.getRouter().showWebViewDialog(this, getString(R.string.eula_file_link), getString(R.string.end_user_title));
-        } else {
-            // for any other link, open agreement link in a webview container
-            environment.getRouter().showWebViewDialog(this, agreement.getLink(), agreement.getText());
-        }
+    private void showErrorMessage(String errorMsg, @NonNull Icon errorIcon) {
+        errorTextView.setVisibility(View.VISIBLE);
+        errorTextView.setText(errorMsg);
+        errorTextView.setCompoundDrawablesWithIntrinsicBounds(null,
+                new IconDrawable(this, errorIcon)
+                        .sizeRes(this, R.dimen.content_unavailable_error_icon_size)
+                        .colorRes(this, R.color.edx_brand_gray_back),
+                null, null
+        );
     }
 
-    private void setupRegistrationForm() {
-        try {
-            RegistrationDescription form = environment.getServiceManager().getRegistrationDescription();
+    public void getRegistrationForm() {
+        if (!NetworkUtil.isConnected(this)) {
+            showErrorMessage(getString(R.string.reset_no_network_message),
+                    FontAwesomeIcons.fa_wifi);
+            return;
+        }
 
+        tryToSetUIInteraction(false);
+        loadingIndicator.setVisibility(View.VISIBLE);
+
+        final Call<RegistrationDescription> getRegistrationFormCall = loginService.getRegistrationForm();
+        getRegistrationFormCall.enqueue(new ErrorHandlingCallback<RegistrationDescription>(this) {
+            @Override
+            protected void onResponse(@NonNull RegistrationDescription registrationDescription) {
+                updateUI(true);
+                setupRegistrationForm(registrationDescription);
+            }
+
+            @Override
+            protected void onFailure(@NonNull Throwable error) {
+                updateUI(false);
+                showErrorMessage(ErrorUtils.getErrorMessage(error, RegisterActivity.this),
+                        FontAwesomeIcons.fa_exclamation_circle);
+                logger.error(error);
+            }
+
+            private void updateUI(boolean isSuccess) {
+                tryToSetUIInteraction(true);
+                registrationForm.setVisibility(isSuccess ? View.VISIBLE : View.GONE);
+                loadingIndicator.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void setupRegistrationForm(RegistrationDescription form) {
+        try {
             LayoutInflater inflater = getLayoutInflater();
 
             List<RegistrationFormField> agreements = new ArrayList<>();
 
             for (RegistrationFormField field : form.getFields()) {
                 if (field.getFieldType().equals(RegistrationFieldType.CHECKBOX)
-                        && field.getAgreement() != null) {
+                        && field.getSupplementalLink() != null) {
                     // this is agreement field
                     // this must be added at the end of the form
                     // hold on it
@@ -194,8 +245,10 @@ public class RegisterActivity extends BaseFragmentActivity
                 IRegistrationFieldView agreementView = IRegistrationFieldView.Factory.getInstance(inflater, agreement);
                 agreementView.setActionListener(new IRegistrationFieldView.IActionListener() {
                     @Override
-                    public void onClickAgreement(RegistrationAgreement agreement) {
-                        showAgreement(agreement);
+                    public void onClickAgreement() {
+                        // show EULA license that is shipped with app
+                        environment.getRouter().showWebViewActivity(RegisterActivity.this,
+                                getString(R.string.eula_file_link), getString(R.string.end_user_title));
                     }
                 });
                 agreementLayout.addView(agreementView.getView());
@@ -206,6 +259,12 @@ public class RegisterActivity extends BaseFragmentActivity
             optionalFieldsLayout.requestLayout();
             agreementLayout.requestLayout();
 
+            // Set focus to first form field
+            final IRegistrationFieldView fieldView = mFieldViews.get(0);
+            if (fieldView != null) {
+                fieldView.getView().requestFocus();
+            }
+
             // enable all the views
             tryToSetUIInteraction(true);
         } catch (Exception ex) {
@@ -214,8 +273,6 @@ public class RegisterActivity extends BaseFragmentActivity
     }
 
     private void createAccount() {
-        ScrollView scrollView = (ScrollView) findViewById(R.id.scrollview);
-
         boolean hasError = false;
         // prepare query (POST body)
         Bundle parameters = new Bundle();
@@ -227,7 +284,9 @@ public class RegisterActivity extends BaseFragmentActivity
                 }
             } else {
                 if (!hasError) {
-                    showErrorPopup();
+                    // this is the first input field with error,
+                    // so focus on it after showing the popup
+                    showErrorPopup(v.getView());
                 }
                 hasError = true;
             }
@@ -258,7 +317,7 @@ public class RegisterActivity extends BaseFragmentActivity
             String versionName = BuildConfig.VERSION_NAME;
             String appVersion = String.format("%s v%s", getString(R.string.android), versionName);
 
-            environment.getSegment().trackCreateAccountClicked(appVersion, backstore);
+            environment.getAnalyticsRegistry().trackCreateAccountClicked(appVersion, backstore);
         } catch (Exception e) {
             logger.error(e);
         }
@@ -277,7 +336,7 @@ public class RegisterActivity extends BaseFragmentActivity
                 hideProgress();
                 if (ex instanceof LoginAPI.RegistrationException) {
                     final FormFieldMessageBody messageBody = ((LoginAPI.RegistrationException) ex).getFormErrorBody();
-                    boolean fieldErrorShown = false;
+                    boolean errorShown = false;
                     for (String key : messageBody.keySet()) {
                         if (key == null)
                             continue;
@@ -285,18 +344,36 @@ public class RegisterActivity extends BaseFragmentActivity
                             if (key.equalsIgnoreCase(fieldView.getField().getName())) {
                                 List<RegisterResponseFieldError> error = messageBody.get(key);
                                 showErrorOnField(error, fieldView);
-                                fieldErrorShown = true;
+                                if (!errorShown) {
+                                    // this is the first input field with error,
+                                    // so focus on it after showing the popup
+                                    showErrorPopup(fieldView.getView());
+                                    errorShown = true;
+                                }
                                 break;
                             }
                         }
                     }
-                    if (fieldErrorShown) {
-                        showErrorPopup();
-                        // We are showing an error message on a visible form field.
-                        return; // Return here to avoid showing the generic error pop-up.
+                    if (errorShown) {
+                        // We have already shown a specific error message.
+                        return; // Return here to avoid falling back to the generic error handler.
                     }
                 }
-                RegisterActivity.this.showErrorDialog(null, ErrorUtils.getErrorMessage(ex, RegisterActivity.this));
+                // If app version is un-supported
+                if (ex instanceof HttpStatusException &&
+                        ((HttpStatusException) ex).getStatusCode() == HttpStatus.UPGRADE_REQUIRED) {
+                    RegisterActivity.this.showAlertDialog(null,
+                            getString(R.string.app_version_unsupported_register_msg),
+                            getString(R.string.label_update),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    AppStoreUtils.openAppInAppStore(RegisterActivity.this);
+                                }
+                            }, getString(android.R.string.cancel), null);
+                } else {
+                    RegisterActivity.this.showAlertDialog(null, ErrorUtils.getErrorMessage(ex, RegisterActivity.this));
+                }
             }
         };
         task.execute();
@@ -319,37 +396,13 @@ public class RegisterActivity extends BaseFragmentActivity
         }
     }
 
-    private void showErrorPopup() {
-        showErrorDialog(getResources().getString(R.string.registration_error_title), getResources().getString(R.string.registration_error_message), new DialogInterface.OnClickListener() {
+    private void showErrorPopup(@NonNull final View errorView) {
+        showAlertDialog(getResources().getString(R.string.registration_error_title), getResources().getString(R.string.registration_error_message), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ScrollView scrollView = (ScrollView) findViewById(R.id.scrollview);
-                View firstVisible = getFirstVisibleRegistrationField();
-                if (scrollView!=null && firstVisible!=null) {
-                    scrollToView(scrollView, firstVisible);
-                }
+                scrollToView((ScrollView) findViewById(R.id.scrollview), errorView);
             }
         });
-    }
-
-    @Nullable
-    private View getFirstVisibleRegistrationField() {
-        View view = getFirstVisibleFieldView(requiredFieldsLayout);
-        if (view == null) getFirstVisibleFieldView(optionalFieldsLayout);
-        return view;
-    }
-
-    @Nullable
-    private View getFirstVisibleFieldView(@Nullable LinearLayout layout) {
-        if (layout!=null) {
-            for(int i=0; i<layout.getChildCount(); ++i) {
-                View child=layout.getChildAt(i);
-                if (child!=null && child.getVisibility()==View.VISIBLE)
-                    return child;
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -371,22 +424,9 @@ public class RegisterActivity extends BaseFragmentActivity
                 @Override
                 public void run() {
                     scrollView.smoothScrollTo(0, view.getTop());
-                    view.requestFocus();
                 }
             });
         }
-    }
-
-    // make sure that on the login activity, all errors show up as a dialog as opposed to a flying snackbar
-    @Override
-    public void showErrorDialog(String header, String message) {
-        super.showErrorDialog(header, message);
-    }
-
-    @Override
-    public boolean createOptionsMenu(Menu menu) {
-        // Register screen doesn't have any menu
-        return true;
     }
 
     /**
@@ -505,7 +545,7 @@ public class RegisterActivity extends BaseFragmentActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         socialLoginDelegate.onActivityResult(requestCode, resultCode, data);
         tryToSetUIInteraction(true);

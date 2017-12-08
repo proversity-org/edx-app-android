@@ -1,8 +1,12 @@
 package org.edx.mobile.view.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +19,6 @@ import com.joanzapata.iconify.internal.Animation;
 import com.joanzapata.iconify.widget.IconImageView;
 
 import org.edx.mobile.R;
-import org.edx.mobile.base.MainApplication;
 import org.edx.mobile.logger.Logger;
 import org.edx.mobile.model.course.BlockPath;
 import org.edx.mobile.model.course.BlockType;
@@ -27,12 +30,18 @@ import org.edx.mobile.model.course.VideoBlockModel;
 import org.edx.mobile.model.db.DownloadEntry;
 import org.edx.mobile.module.db.DataCallback;
 import org.edx.mobile.module.db.IDatabase;
-import org.edx.mobile.module.prefs.PrefManager;
 import org.edx.mobile.module.storage.IStorage;
 import org.edx.mobile.util.Config;
+import org.edx.mobile.util.DateUtil;
+import org.edx.mobile.util.MemoryUtil;
+import org.edx.mobile.util.ResourceUtil;
+import org.edx.mobile.util.TimeZoneUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Used for pinned behavior.
@@ -49,6 +58,7 @@ public class CourseOutlineAdapter extends BaseAdapter {
         void viewDownloadsStatus();
     }
 
+    private Context context;
     private CourseComponent rootComponent;
     private LayoutInflater mInflater;
     private List<SectionRow> mData;
@@ -56,19 +66,17 @@ public class CourseOutlineAdapter extends BaseAdapter {
     private IDatabase dbStore;
     private IStorage storage;
     private DownloadListener mDownloadListener;
-    private Context context;
     private Config config;
-
-    private boolean currentVideoMode;
-    private int numOfTotalUnits;
+    private boolean isVideoMode;
 
     public CourseOutlineAdapter(Context context, Config config, IDatabase dbStore, IStorage storage,
-                                DownloadListener listener) {
+                                DownloadListener listener, boolean isVideoMode) {
         this.context = context;
         this.config = config;
         this.dbStore = dbStore;
         this.storage = storage;
         this.mDownloadListener = listener;
+        this.isVideoMode = isVideoMode;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mData = new ArrayList();
     }
@@ -157,24 +165,19 @@ public class CourseOutlineAdapter extends BaseAdapter {
         if (component != null && !component.isContainer())
             return;//
         this.rootComponent = component;
-        this.numOfTotalUnits = 0;
         mData.clear();
         if (rootComponent != null) {
-            PrefManager.UserPrefManager userPrefManager = new PrefManager.UserPrefManager(MainApplication.instance());
-            currentVideoMode = userPrefManager.isUserPrefVideoModel();
             List<IBlock> children = rootComponent.getChildren();
-            this.numOfTotalUnits = children.size();
             for (IBlock block : children) {
                 CourseComponent comp = (CourseComponent) block;
-                if (currentVideoMode && comp.getBlockCount().videoCount == 0)
+                if (isVideoMode && comp.getVideos().size() == 0)
                     continue;
-
                 if (comp.isContainer()) {
                     SectionRow header = new SectionRow(SectionRow.SECTION, comp);
                     mData.add(header);
                     for (IBlock childBlock : comp.getChildren()) {
                         CourseComponent child = (CourseComponent) childBlock;
-                        if (currentVideoMode && child.getBlockCount().videoCount == 0)
+                        if (isVideoMode && child.getVideos().size() == 0)
                             continue;
                         SectionRow row = new SectionRow(SectionRow.ITEM, false, child);
                         mData.add(row);
@@ -215,6 +218,7 @@ public class CourseOutlineAdapter extends BaseAdapter {
         viewHolder.rowType.setVisibility(View.GONE);
         viewHolder.rowSubtitleIcon.setVisibility(View.GONE);
         viewHolder.rowSubtitle.setVisibility(View.GONE);
+        viewHolder.rowSubtitleDueDate.setVisibility(View.GONE);
         viewHolder.rowSubtitlePanel.setVisibility(View.GONE);
         viewHolder.numOfVideoAndDownloadArea.setVisibility(View.GONE);
 
@@ -231,6 +235,7 @@ public class CourseOutlineAdapter extends BaseAdapter {
         final CourseComponent unit = row.component;
         viewHolder.rowType.setVisibility(View.VISIBLE);
         viewHolder.rowSubtitleIcon.setVisibility(View.GONE);
+        viewHolder.rowSubtitleDueDate.setVisibility(View.GONE);
         viewHolder.rowSubtitle.setVisibility(View.GONE);
         viewHolder.rowSubtitlePanel.setVisibility(View.GONE);
         viewHolder.bulkDownload.setVisibility(View.INVISIBLE);
@@ -284,10 +289,23 @@ public class CourseOutlineAdapter extends BaseAdapter {
         viewHolder.rowType.setIcon(FontAwesomeIcons.fa_film);
         viewHolder.numOfVideoAndDownloadArea.setVisibility(View.VISIBLE);
         viewHolder.bulkDownload.setVisibility(View.VISIBLE);
-
         viewHolder.rowSubtitlePanel.setVisibility(View.VISIBLE);
-        viewHolder.rowSubtitle.setVisibility(View.VISIBLE);
-        viewHolder.rowSubtitle.setText(videoData.getDurationReadable());
+        if (videoData.getDuration() > 0L) {
+            viewHolder.rowSubtitle.setVisibility(View.VISIBLE);
+            viewHolder.rowSubtitle.setText(videoData.getDurationReadable());
+        }
+        if (videoData.getSize() > 0L) {
+            viewHolder.rowSubtitleDueDate.setVisibility(View.VISIBLE);
+            viewHolder.rowSubtitleDueDate.setText(MemoryUtil.format(context, videoData.getSize()));
+            // Set appropriate right margin of subtitle
+            final int rightMargin = (int) context.getResources().getDimension(R.dimen.widget_margin_double);
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)
+                    viewHolder.rowSubtitle.getLayoutParams();
+            params.setMargins(0, 0, rightMargin, 0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                params.setMarginEnd(rightMargin);
+            }
+        }
 
         dbStore.getWatchedStateForVideoId(videoData.videoId,
                 new DataCallback<DownloadEntry.WatchedState>(true) {
@@ -365,6 +383,17 @@ public class CourseOutlineAdapter extends BaseAdapter {
             holder.rowSubtitleIcon.setVisibility(View.VISIBLE);
             holder.rowSubtitle.setVisibility(View.VISIBLE);
             holder.rowSubtitle.setText(component.getFormat());
+            holder.rowSubtitle.setTypeface(holder.rowSubtitle.getTypeface(), Typeface.BOLD);
+            holder.rowSubtitle.setTextColor(ContextCompat.getColor(context,
+                    R.color.edx_brand_gray_dark));
+            if (!TextUtils.isEmpty(component.getDueDate())) {
+                try {
+                    holder.rowSubtitleDueDate.setText(getFormattedDueDate(component.getDueDate()));
+                    holder.rowSubtitleDueDate.setVisibility(View.VISIBLE);
+                } catch (IllegalArgumentException e) {
+                    logger.error(e);
+                }
+            }
         }
 
         final int totalDownloadableVideos = component.getDownloadableVideosCount();
@@ -405,6 +434,22 @@ public class CourseOutlineAdapter extends BaseAdapter {
         }
     }
 
+    private String getFormattedDueDate(final String date) throws IllegalArgumentException {
+        final SimpleDateFormat dateFormat;
+        final Date dueDate = DateUtil.convertToDate(date);
+        if (android.text.format.DateUtils.isToday(dueDate.getTime())) {
+            dateFormat = new SimpleDateFormat("HH:mm");
+            String formattedDate = ResourceUtil.getFormattedString(context.getResources(), R.string.due_date_today,
+                    "due_date", dateFormat.format(dueDate)).toString();
+            formattedDate += " " + TimeZoneUtils.getTimeZoneAbbreviation(TimeZone.getDefault());
+            return formattedDate;
+        } else {
+            dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+            return ResourceUtil.getFormattedString(context.getResources(), R.string.due_date_past_future,
+                    "due_date", dateFormat.format(dueDate)).toString();
+        }
+    }
+
     /**
      * Makes various changes to the row based on a video element's download status
      *
@@ -426,12 +471,15 @@ public class CourseOutlineAdapter extends BaseAdapter {
                 row.bulkDownload.setIconColorResource(R.color.edx_brand_gray_accent);
                 break;
             case ONLINE:
-                row.bulkDownload.setIcon(FontAwesomeIcons.fa_arrow_down);
+                row.bulkDownload.setIcon(FontAwesomeIcons.fa_download);
                 row.bulkDownload.setIconAnimation(Animation.NONE);
                 row.bulkDownload.setIconColorResource(R.color.edx_brand_gray_accent);
                 break;
         }
         row.numOfVideoAndDownloadArea.setOnClickListener(listener);
+        if (listener == null) {
+            row.numOfVideoAndDownloadArea.setClickable(false);
+        }
     }
 
     public View getHeaderView(int position, View convertView) {
@@ -447,27 +495,6 @@ public class CourseOutlineAdapter extends BaseAdapter {
         return convertView;
     }
 
-    /**
-     * @return <code>true</code> if we rebuild the list due to the change of mode preference
-     */
-    public boolean checkModeChange() {
-        PrefManager.UserPrefManager userPrefManager = new PrefManager.UserPrefManager(MainApplication.instance());
-        boolean modeInConfiguration = userPrefManager.isUserPrefVideoModel();
-        if (modeInConfiguration != currentVideoMode) {
-            setData(rootComponent);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * if the app is in the video-only mode, some unit will not show up
-     */
-    public boolean hasFilteredUnits() {
-        return this.numOfTotalUnits > mData.size();
-    }
-
     public ViewHolder getTag(View convertView) {
         ViewHolder holder = new ViewHolder();
         holder.rowType = (IconImageView) convertView
@@ -476,9 +503,11 @@ public class CourseOutlineAdapter extends BaseAdapter {
                 .findViewById(R.id.row_title);
         holder.rowSubtitle = (TextView) convertView
                 .findViewById(R.id.row_subtitle);
+        holder.rowSubtitleDueDate = (TextView) convertView
+                .findViewById(R.id.row_subtitle_due_date);
         holder.rowSubtitleIcon = (IconImageView) convertView
                 .findViewById(R.id.row_subtitle_icon);
-        holder.rowSubtitleIcon.setIconColorResource(R.color.edx_brand_gray_back);
+        holder.rowSubtitleIcon.setIconColorResource(R.color.edx_brand_primary_base);
         holder.noOfVideos = (TextView) convertView
                 .findViewById(R.id.no_of_videos);
         holder.bulkDownload = (IconImageView) convertView
@@ -500,6 +529,7 @@ public class CourseOutlineAdapter extends BaseAdapter {
         IconImageView rowType;
         TextView rowTitle;
         TextView rowSubtitle;
+        TextView rowSubtitleDueDate;
         IconImageView rowSubtitleIcon;
         IconImageView bulkDownload;
         TextView noOfVideos;

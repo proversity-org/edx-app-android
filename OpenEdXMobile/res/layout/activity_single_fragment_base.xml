@@ -3,13 +3,13 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_act_background"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:splitMotionEvents="false">
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coorinator_layout"
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
@@ -39,28 +39,16 @@
                     <include layout="@layout/panel_error_message_with_title"/>
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/offline_bar"
-                    style="@style/offline_bar"
-                    android:layout_alignParentTop="true"
-                    android:visibility="gone" />
+                <RelativeLayout
+                    android:id="@+id/my_groups_list_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1">
 
-                    <RelativeLayout
-                        android:id="@+id/my_groups_list_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="0px"
-                        android:layout_below="@id/offline_bar"
-                        android:layout_weight="1">
+                </RelativeLayout>
 
-                    </RelativeLayout>
-
-                    <fragment
-                        android:name="org.edx.mobile.view.LogInSignUpFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:tag="org.edx.mobile.view.LogInSignUpFragment" />
-
-                </LinearLayout>
+                <include layout="@layout/auth_panel" android:id="@+id/auth_panel" />
+            </LinearLayout>
 
                 <TextView
                     android:id="@+id/flying_message"

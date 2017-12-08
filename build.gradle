@@ -5,14 +5,16 @@ buildscript {
         mavenCentral()  //  This is the Maven Central repo
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.3'
-        classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
+        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.google.gms:google-services:3.0.0'
+        classpath 'com.github.triplet.gradle:play-publisher:1.2.0'
         classpath 'com.google.gms:google-services:3.0.0' // Google Services
     }
 }
 
 project.ext {
-    BUILD_TOOLS_VERSION = "23.0.3"
+    BUILD_TOOLS_VERSION = "25.0.3"
+    COMPILE_SDK_VERSION = 25
 
     // dummy keystore configuration if not already defined
     if ( !project.properties.containsKey("RELEASE_STORE_FILE")) {

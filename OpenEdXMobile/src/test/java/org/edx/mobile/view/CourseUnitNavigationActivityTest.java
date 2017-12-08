@@ -14,18 +14,19 @@ import android.widget.TextView;
 import com.google.gson.JsonObject;
 
 import org.edx.mobile.R;
-import org.edx.mobile.http.OkHttpUtil;
+import org.edx.mobile.course.CourseAPI;
+import org.edx.mobile.http.provider.OkHttpClientProvider;
 import org.edx.mobile.model.Filter;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
 import org.edx.mobile.model.course.BlockType;
 import org.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.model.course.CourseStructureV1Model;
 import org.edx.mobile.model.course.DiscussionBlockModel;
 import org.edx.mobile.model.course.EncodedVideos;
 import org.edx.mobile.model.course.HtmlBlockModel;
 import org.edx.mobile.model.course.VideoBlockModel;
 import org.edx.mobile.model.course.VideoData;
 import org.edx.mobile.model.course.VideoInfo;
-import org.edx.mobile.module.prefs.PrefManager;
 import org.edx.mobile.view.adapters.CourseUnitPagerAdapter;
 import org.edx.mobile.view.custom.DisableableViewPager;
 import org.junit.Ignore;
@@ -34,7 +35,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.util.ActivityController;
 
@@ -47,6 +47,7 @@ import java.util.List;
 
 import static org.assertj.android.api.Assertions.assertThat;
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.edx.mobile.http.util.CallUtil.executeStrict;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -71,15 +72,20 @@ public class CourseUnitNavigationActivityTest extends CourseBaseActivityTest {
     @Override
     protected Intent getIntent() {
         EnrolledCoursesResponse courseData;
-        CourseComponent courseComponent;
         try {
-            courseData = api.getEnrolledCourses().get(0);
-            courseComponent = serviceManager.getCourseStructure(
-                    courseData.getCourse().getId(),
-                    OkHttpUtil.REQUEST_CACHE_TYPE.IGNORE_CACHE);
+            courseData = executeStrict(courseAPI.getEnrolledCourses()).get(0);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        String courseId = courseData.getCourse().getId();
+        CourseStructureV1Model model;
+        try {
+            model = executeStrict(courseAPI.getCourseStructure(courseId));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        CourseComponent courseComponent = (CourseComponent)
+                CourseAPI.normalizeCourseStructure(model, courseId);
         List<CourseComponent> leafComponents = new ArrayList<>();
         courseComponent.fetchAllLeafComponents(leafComponents,
                 EnumSet.allOf(BlockType.class));
@@ -89,11 +95,6 @@ public class CourseUnitNavigationActivityTest extends CourseBaseActivityTest {
         extras.putSerializable(Router.EXTRA_COURSE_DATA, courseData);
         extras.putString(Router.EXTRA_COURSE_COMPONENT_ID, courseUnit.getId());
         intent.putExtra(Router.EXTRA_BUNDLE, extras);
-
-        // Change the settings to show all the course content for easier and
-        // more comprehensive testing
-        new PrefManager.UserPrefManager(RuntimeEnvironment.application)
-                .setUserPrefVideoModel(false);
         return intent;
     }
 
@@ -148,14 +149,15 @@ public class CourseUnitNavigationActivityTest extends CourseBaseActivityTest {
         EnrolledCoursesResponse courseData = (EnrolledCoursesResponse)
                 extras.getSerializable(Router.EXTRA_COURSE_DATA);
         assertNotNull(courseData);
-        CourseComponent courseComponent;
+        String courseId = courseData.getCourse().getId();
+        CourseStructureV1Model model;
         try {
-            courseComponent = serviceManager.getCourseStructure(
-                    courseData.getCourse().getId(),
-                    OkHttpUtil.REQUEST_CACHE_TYPE.IGNORE_CACHE);
+            model = executeStrict(courseAPI.getCourseStructure(courseId));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        CourseComponent courseComponent = (CourseComponent)
+                CourseAPI.normalizeCourseStructure(model, courseId);
         assertNotNull(courseComponent);
         final String unitId = extras.getString(Router.EXTRA_COURSE_COMPONENT_ID);
         assertNotNull(unitId);

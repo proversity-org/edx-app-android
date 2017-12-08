@@ -3,7 +3,6 @@ package org.edx.mobile.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,7 +19,6 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.google.inject.Inject;
 
-import org.edx.mobile.BuildConfig;
 import org.edx.mobile.R;
 import org.edx.mobile.base.BaseFragment;
 import org.edx.mobile.base.BaseFragmentActivity;
@@ -28,10 +26,9 @@ import org.edx.mobile.core.IEdxEnvironment;
 import org.edx.mobile.databinding.DrawerNavigationBinding;
 import org.edx.mobile.event.AccountDataLoadedEvent;
 import org.edx.mobile.event.ProfilePhotoUpdatedEvent;
-import org.edx.mobile.http.CallTrigger;
 import org.edx.mobile.logger.Logger;
 import org.edx.mobile.model.api.ProfileModel;
-import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.analytics.AnalyticsRegistry;
 import org.edx.mobile.module.facebook.IUiLifecycleHelper;
 import org.edx.mobile.module.prefs.LoginPrefs;
 import org.edx.mobile.profiles.UserProfileActivity;
@@ -40,17 +37,11 @@ import org.edx.mobile.user.ProfileImage;
 import org.edx.mobile.user.UserAPI;
 import org.edx.mobile.user.UserService;
 import org.edx.mobile.util.Config;
-import org.edx.mobile.util.EmailUtil;
 import org.edx.mobile.util.ResourceUtil;
-import org.edx.mobile.view.common.TaskProgressCallback;
 import org.edx.mobile.view.my_videos.MyVideosActivity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 import retrofit2.Call;
-
 
 public class NavigationFragment extends BaseFragment {
 
@@ -93,8 +84,8 @@ public class NavigationFragment extends BaseFragment {
             getAccountCall.enqueue(new UserAPI.AccountDataUpdatedCallback(
                     getActivity(),
                     profile.username,
-                    CallTrigger.LOADING_UNCACHED,
-                    (TaskProgressCallback) null)); // Disable global loading indicator
+                    null, // Disable global loading indicator
+                    null)); // No place to show an error notification
         }
         EventBus.getDefault().register(this);
     }
@@ -155,30 +146,34 @@ public class NavigationFragment extends BaseFragment {
             }
         });
 
-        drawerNavigationBinding.drawerOptionMyVideos.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Activity act = getActivity();
-                ((BaseFragmentActivity) act).closeDrawer();
+        if (environment.getConfig().isMyVideosEnabled()) {
+            drawerNavigationBinding.drawerOptionMyVideos.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Activity act = getActivity();
+                    ((BaseFragmentActivity) act).closeDrawer();
 
-                if (!(act instanceof MyVideosActivity)) {
-                    environment.getRouter().showMyVideos(act);
-                    //Finish need not be called if the current activity is MyCourseListing
-                    // as on returning back from FindCourses,
-                    // the student should be returned to the MyCourses screen
-                    if (!(act instanceof MyCoursesListActivity)) {
-                        act.finish();
+                    if (!(act instanceof MyVideosActivity)) {
+                        environment.getRouter().showMyVideos(act);
+                        //Finish need not be called if the current activity is MyCourseListing
+                        // as on returning back from FindCourses,
+                        // the student should be returned to the MyCourses screen
+                        if (!(act instanceof MyCoursesListActivity)) {
+                            act.finish();
+                        }
                     }
                 }
-            }
-        });
+            });
+        } else {
+            drawerNavigationBinding.drawerOptionMyVideos.setVisibility(View.GONE);
+        }
 
         if (environment.getConfig().getCourseDiscoveryConfig().isCourseDiscoveryEnabled()) {
             drawerNavigationBinding.drawerOptionFindCourses.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ISegment segIO = environment.getSegment();
-                    segIO.trackUserFindsCourses();
+                    AnalyticsRegistry analyticsRegistry = environment.getAnalyticsRegistry();
+                    analyticsRegistry.trackUserFindsCourses();
                     FragmentActivity act = getActivity();
                     ((BaseFragmentActivity) act).closeDrawer();
                     if (!(act instanceof WebViewFindCoursesActivity || act instanceof NativeFindCoursesActivity)) {
@@ -193,18 +188,23 @@ public class NavigationFragment extends BaseFragment {
                     }
                 }
             });
+            if (config.getCourseDiscoveryConfig().isWebviewCourseDiscoveryEnabled()) {
+                drawerNavigationBinding.drawerOptionFindCourses.setText(R.string.label_discover);
+            } else {
+                drawerNavigationBinding.drawerOptionFindCourses.setText(R.string.label_find_courses);
+            }
         } else {
             drawerNavigationBinding.drawerOptionFindCourses.setVisibility(View.GONE);
         }
 
-        drawerNavigationBinding.drawerOptionMySettings.setOnClickListener(new OnClickListener() {
+        drawerNavigationBinding.drawerOptionAccount.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Activity act = getActivity();
                 ((BaseFragmentActivity) act).closeDrawer();
 
-                if (!(act instanceof SettingsActivity)) {
-                    environment.getRouter().showSettings(act);
+                if (!(act instanceof AccountActivity)) {
+                    environment.getRouter().showAccountActivity(act);
 
                     if (!(act instanceof MyCoursesListActivity)) {
                         act.finish();
@@ -213,45 +213,14 @@ public class NavigationFragment extends BaseFragment {
             }
         });
 
-        drawerNavigationBinding.drawerOptionSubmitFeedback.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String to = environment.getConfig().getFeedbackEmailAddress();
-                String subject = getString(R.string.email_subject);
-
-                String osVersionText = String.format("%s %s", getString(R.string.android_os_version), android.os.Build.VERSION.RELEASE);
-                String appVersionText = String.format("%s %s", getString(R.string.app_version), BuildConfig.VERSION_NAME);
-                String deviceModelText = String.format("%s %s", getString(R.string.android_device_model), Build.MODEL);
-                String feedbackText = getString(R.string.insert_feedback);
-                String body = osVersionText + "\n" + appVersionText + "\n" + deviceModelText + "\n\n" + feedbackText;
-                EmailUtil.openEmailClient(getActivity(), to, subject, body, environment.getConfig());
-            }
-        });
-
-
         if (profile != null) {
             if (profile.name != null) {
                 drawerNavigationBinding.nameTv.setText(profile.name);
+                drawerNavigationBinding.nameTv.setContentDescription(
+                        ResourceUtil.getFormattedString(getResources(),
+                                R.string.navigation_header, "username", profile.name));
             }
-            if (profile.email != null) {
-                drawerNavigationBinding.emailTv.setText(profile.email);
-            }
-            Map<String,CharSequence> map = new HashMap<>();
-            map.put("username", profile.name);
-            map.put("email", profile.email);
-            drawerNavigationBinding.userInfoLayout.setContentDescription(ResourceUtil.getFormattedString(getResources(), R.string.navigation_header, map));
         }
-
-        drawerNavigationBinding.logoutButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                environment.getRouter().performManualLogout(getActivity(), environment.getSegment(), environment.getNotificationDelegate());
-            }
-        });
-
-        drawerNavigationBinding.tvVersionNo.setText(String.format("%s %s %s",
-                getString(R.string.label_version), BuildConfig.VERSION_NAME, environment.getConfig().getEnvironmentDisplayName()));
 
         return drawerNavigationBinding.getRoot();
     }

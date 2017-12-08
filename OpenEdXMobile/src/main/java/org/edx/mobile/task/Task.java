@@ -9,7 +9,7 @@ import android.view.View;
 import com.google.inject.Inject;
 
 import org.edx.mobile.core.IEdxEnvironment;
-import org.edx.mobile.http.CallTrigger;
+import org.edx.mobile.http.callback.CallTrigger;
 import org.edx.mobile.logger.Logger;
 import org.edx.mobile.util.images.ErrorUtils;
 import org.edx.mobile.view.common.MessageType;
@@ -133,7 +133,7 @@ public abstract class Task<T> extends RoboAsyncTask<T> {
             return;
         }
 
-        callback.onMessage(getMessageType(), ErrorUtils.getErrorMessage(ex, context));
+        callback.onMessage(getMessageType(), ErrorUtils.getErrorMessage(ex, callTrigger, context));
     }
 
     /**

@@ -9,7 +9,6 @@ import android.net.wifi.WifiManager;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 
-import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.inject.Injector;
 import com.google.inject.Module;
@@ -21,7 +20,12 @@ import org.edx.mobile.BuildConfig;
 import org.edx.mobile.R;
 import org.edx.mobile.core.EdxDefaultModule;
 import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.event.AppUpdatedEvent;
+import org.edx.mobile.event.NewRelicEvent;
 import org.edx.mobile.logger.Logger;
+import org.edx.mobile.module.analytics.AnalyticsRegistry;
+import org.edx.mobile.module.analytics.FirebaseAnalytics;
+import org.edx.mobile.module.analytics.SegmentAnalytics;
 import org.edx.mobile.module.prefs.PrefManager;
 import org.edx.mobile.module.storage.IStorage;
 import org.edx.mobile.receivers.NetworkConnectivityReceiver;
@@ -41,9 +45,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  */
 public abstract class MainApplication extends MultiDexApplication {
 
-    //FIXME - temporary solution
-    public static final boolean RETROFIT_ENABLED = false;
-
     protected final Logger logger = new Logger(getClass().getName());
 
     public static MainApplication application;
@@ -56,6 +57,9 @@ public abstract class MainApplication extends MultiDexApplication {
 
     @Inject
     protected Config config;
+
+    @Inject
+    protected AnalyticsRegistry analyticsRegistry;
 
     @Override
     public void onCreate() {
@@ -81,8 +85,15 @@ public abstract class MainApplication extends MultiDexApplication {
 
         // initialize Fabric
         if (config.getFabricConfig().isEnabled() && !BuildConfig.DEBUG) {
-            Fabric.with(this, new CrashlyticsCore(), new Answers());
-            EventBus.getDefault().register(new CrashlyticsCrashReportObserver());
+            Fabric.with(this, config.getFabricConfig().getKitsConfig().getEnabledKits());
+
+            if (config.getFabricConfig().getKitsConfig().isCrashlyticsEnabled())    {
+                EventBus.getDefault().register(new CrashlyticsCrashReportObserver());
+            }
+        }
+
+        if (config.getNewRelicConfig().isEnabled()) {
+            EventBus.getDefault().register(new NewRelicObserver());
         }
 
         // initialize NewRelic with crash reporting disabled
@@ -91,6 +102,16 @@ public abstract class MainApplication extends MultiDexApplication {
             NewRelic.withApplicationToken(config.getNewRelicConfig().getNewRelicKey())
                     .withCrashReportingEnabled(false)
                     .start(this);
+        }
+
+        // Add Segment as an analytics provider if enabled in the config
+        if (config.getSegmentConfig().isEnabled())  {
+            analyticsRegistry.addAnalyticsProvider(injector.getInstance(SegmentAnalytics.class));
+        }
+
+        // Add Firebase as an analytics provider if enabled in the config
+        if (config.isFirebaseEnabled())  {
+            analyticsRegistry.addAnalyticsProvider(injector.getInstance(FirebaseAnalytics.class));
         }
 
         registerReceiver(new NetworkConnectivityReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -103,10 +124,7 @@ public abstract class MainApplication extends MultiDexApplication {
             com.facebook.Settings.setApplicationId(config.getFacebookConfig().getFacebookAppId());
         }
 
-        if (needVersionUpgrade(this)) {
-            // try repair of download data if app version is updated
-            injector.getInstance(IStorage.class).repairDownloadCompletionData();
-        }
+        checkIfAppVersionUpgraded(this);
 
         // Register Font Awesome module in android-iconify library
         Iconify.with(new FontAwesomeModule());
@@ -118,22 +136,47 @@ public abstract class MainApplication extends MultiDexApplication {
         );
     }
 
-    private boolean needVersionUpgrade(Context context) {
-        boolean needVersionUpgrade = false;
-        PrefManager.AppInfoPrefManager pmanager = new PrefManager.AppInfoPrefManager(context);
-        Long previousVersion = pmanager.getAppVersionCode();
-        final int curVersion = BuildConfig.VERSION_CODE;
-        if (previousVersion < curVersion) {
-            needVersionUpgrade = true;
-            pmanager.setAppVersionCode(curVersion);
+    private void checkIfAppVersionUpgraded(Context context) {
+        PrefManager.AppInfoPrefManager prefManager = new PrefManager.AppInfoPrefManager(context);
+        long previousVersionCode = prefManager.getAppVersionCode();
+        final long curVersionCode = BuildConfig.VERSION_CODE;
+        if (previousVersionCode < 0) {
+            // App opened first time after installation
+            // Save version code and name in preferences
+            prefManager.setAppVersionCode(curVersionCode);
+            prefManager.setAppVersionName(BuildConfig.VERSION_NAME);
+            logger.debug("App opened first time, VersionCode:"+curVersionCode);
+        } else if (previousVersionCode < curVersionCode) {
+            final String previousVersionName = prefManager.getAppVersionName();
+            // Update version code and name in preferences
+            prefManager.setAppVersionCode(curVersionCode);
+            prefManager.setAppVersionName(BuildConfig.VERSION_NAME);
+            logger.debug("App updated, VersionCode:"+previousVersionCode+"->"+curVersionCode);
+            // App updated
+            onAppUpdated(previousVersionCode, curVersionCode, previousVersionName, BuildConfig.VERSION_NAME);
         }
-        return needVersionUpgrade;
+    }
+
+    private void onAppUpdated(final long previousVersionCode, final long curVersionCode,
+                             final String previousVersionName, final String curVersionName) {
+        // Try repair of download data on updating of app version
+        injector.getInstance(IStorage.class).repairDownloadCompletionData();
+        // Fire app updated event
+        EventBus.getDefault().postSticky(new AppUpdatedEvent(previousVersionCode, curVersionCode,
+                previousVersionName, curVersionName));
     }
 
     public static class CrashlyticsCrashReportObserver {
         @SuppressWarnings("unused")
         public void onEventMainThread(Logger.CrashReportEvent e) {
             CrashlyticsCore.getInstance().logException(e.getError());
+        }
+    }
+
+    public static class NewRelicObserver {
+        @SuppressWarnings("unused")
+        public void onEventMainThread(NewRelicEvent e) {
+            NewRelic.setInteractionName("Display " + e.getScreenName());
         }
     }
 

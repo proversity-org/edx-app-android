@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.TextViewCompat;
+import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -38,8 +39,9 @@ import org.edx.mobile.R;
 import org.edx.mobile.base.BaseFragment;
 import org.edx.mobile.event.AccountDataLoadedEvent;
 import org.edx.mobile.event.ProfilePhotoUpdatedEvent;
-import org.edx.mobile.http.CallTrigger;
-import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.http.callback.CallTrigger;
+import org.edx.mobile.http.notifications.DialogErrorNotification;
+import org.edx.mobile.module.analytics.AnalyticsRegistry;
 import org.edx.mobile.task.Task;
 import org.edx.mobile.user.Account;
 import org.edx.mobile.user.DataType;
@@ -55,8 +57,8 @@ import org.edx.mobile.util.InvalidLocaleException;
 import org.edx.mobile.util.LocaleUtils;
 import org.edx.mobile.util.ResourceUtil;
 import org.edx.mobile.util.images.ImageCaptureHelper;
-import org.edx.mobile.view.common.TaskProgressCallback;
-import org.edx.mobile.view.custom.popup.menu.PopupMenu;
+import org.edx.mobile.util.images.ImageUtils;
+import org.edx.mobile.view.common.TaskMessageCallback;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -99,7 +101,7 @@ public class EditUserProfileFragment extends BaseFragment {
     private Router router;
 
     @Inject
-    private ISegment segment;
+    private AnalyticsRegistry analyticsRegistry;
 
     @NonNull
     private final ImageCaptureHelper helper = new ImageCaptureHelper();
@@ -111,14 +113,16 @@ public class EditUserProfileFragment extends BaseFragment {
         setHasOptionsMenu(true);
         EventBus.getDefault().register(this);
 
+
+        final Activity activity = getActivity();
+        final TaskMessageCallback mCallback = activity instanceof TaskMessageCallback ? (TaskMessageCallback) activity : null;
         getAccountCall = userService.getAccount(username);
         getAccountCall.enqueue(new AccountDataUpdatedCallback(
-                getActivity(),
-                username,
-                CallTrigger.LOADING_UNCACHED,
-                (TaskProgressCallback) null)); // Disable default loading indicator, we have our own
+                activity, username,
+                null, // Disable default loading indicator, we have our own
+                mCallback, CallTrigger.LOADING_CACHED));
 
-        getProfileFormDescriptionTask = new GetProfileFormDescriptionTask(getActivity()) {
+        getProfileFormDescriptionTask = new GetProfileFormDescriptionTask(activity) {
             @Override
             protected void onSuccess(@NonNull FormDescription formDescription) throws Exception {
                 EditUserProfileFragment.this.formDescription = formDescription;
@@ -396,8 +400,14 @@ public class EditUserProfileFragment extends BaseFragment {
         }
         switch (requestCode) {
             case CAPTURE_PHOTO_REQUEST: {
-                final Uri imageUri = helper.getImageUriFromResult();
+                Uri imageUri = helper.getImageUriFromResult();
                 if (null != imageUri) {
+                    // Rotate image according to exif tag, because exif rotation is creating rotation issues
+                    // in thirdparty libraries used for zooming and cropping in this project. [MA-3175]
+                    final Uri rotatedImageUri = ImageUtils.rotateImageAccordingToExifTag(getContext(), imageUri);
+                    if (null != rotatedImageUri) {
+                        imageUri = rotatedImageUri;
+                    }
                     startActivityForResult(CropImageActivity.newIntent(getActivity(), imageUri, true), CROP_PHOTO_REQUEST);
                 }
                 break;
@@ -416,7 +426,7 @@ public class EditUserProfileFragment extends BaseFragment {
                     final Task task = new SetAccountImageTask(getActivity(), username, imageUri, cropRect);
                     task.setProgressDialog(viewHolder.profileImageProgress);
                     executePhotoTask(task);
-                    segment.trackProfilePhotoSet(CropImageActivity.isResultFromCamera(data));
+                    analyticsRegistry.trackProfilePhotoSet(CropImageActivity.isResultFromCamera(data));
                 }
                 break;
             }
@@ -442,7 +452,7 @@ public class EditUserProfileFragment extends BaseFragment {
         }
         userService.updateAccount(username, Collections.singletonMap(field.getName(), valueObject))
                 .enqueue(new AccountDataUpdatedCallback(getActivity(), username,
-                        CallTrigger.USER_ACTION) {
+                        new DialogErrorNotification(this)) {
                     @Override
                     protected void onResponse(@NonNull final Account account) {
                         super.onResponse(account);

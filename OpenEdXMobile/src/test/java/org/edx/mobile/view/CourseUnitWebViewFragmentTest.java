@@ -4,10 +4,11 @@ import android.view.View;
 import android.webkit.WebView;
 
 import org.edx.mobile.R;
-import org.edx.mobile.http.OkHttpUtil;
+import org.edx.mobile.course.CourseAPI;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
 import org.edx.mobile.model.course.BlockType;
 import org.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.model.course.CourseStructureV1Model;
 import org.edx.mobile.model.course.HtmlBlockModel;
 import org.junit.Test;
 import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
@@ -17,7 +18,9 @@ import java.util.EnumSet;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.junit.Assert.*;
+import static org.edx.mobile.http.util.CallUtil.executeStrict;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class CourseUnitWebViewFragmentTest extends UiTest {
     /**
@@ -28,15 +31,20 @@ public class CourseUnitWebViewFragmentTest extends UiTest {
      */
     private HtmlBlockModel getHtmlUnit() {
         EnrolledCoursesResponse courseData;
-        CourseComponent courseComponent;
         try {
-            courseData = api.getEnrolledCourses().get(0);
-            courseComponent = serviceManager.getCourseStructure(
-                    courseData.getCourse().getId(),
-                    OkHttpUtil.REQUEST_CACHE_TYPE.IGNORE_CACHE);
+            courseData = executeStrict(courseAPI.getEnrolledCourses()).get(0);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        String courseId = courseData.getCourse().getId();
+        CourseStructureV1Model model;
+        try {
+            model = executeStrict(courseAPI.getCourseStructure(courseId));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        CourseComponent courseComponent = (CourseComponent)
+                CourseAPI.normalizeCourseStructure(model, courseId);
         List<CourseComponent> htmlBlockUnits = new ArrayList<>();
         courseComponent.fetchAllLeafComponents(htmlBlockUnits,
                 EnumSet.of(BlockType.HTML));
@@ -53,7 +61,7 @@ public class CourseUnitWebViewFragmentTest extends UiTest {
         View view = fragment.getView();
         assertNotNull(view);
 
-        View courseUnitWebView = view.findViewById(R.id.course_unit_webView);
+        View courseUnitWebView = view.findViewById(R.id.webview);
         assertNotNull(courseUnitWebView);
         assertThat(courseUnitWebView).isInstanceOf(WebView.class);
         WebView webView = (WebView) courseUnitWebView;

@@ -13,8 +13,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -86,35 +84,6 @@ public abstract class BaseFragmentActivityTest extends UiTest {
      */
     protected boolean appliesPrevTransitionOnRestart() {
         return false;
-    }
-
-    /**
-     * Testing window content overlay hack for API level 18
-     */
-    @Test
-    @Config(sdk = Build.VERSION_CODES.JELLY_BEAN_MR2)
-    public void updateActionBarShadowTest() {
-        BaseFragmentActivity activity =
-                Robolectric.buildActivity(getActivityClass())
-                        .withIntent(getIntent()).create().get();
-
-        // Get the content view
-        View contentView = activity.findViewById(android.R.id.content);
-
-        // Make sure it's a valid instance of a FrameLayout
-        assumeThat(contentView, instanceOf(FrameLayout.class));
-        TypedValue tv = new TypedValue();
-
-        // Get the windowContentOverlay value of the current theme
-        assumeTrue(activity.getTheme().resolveAttribute(
-                android.R.attr.windowContentOverlay, tv, true));
-
-        // If it's a valid resource, confirm that is has been set as
-        // the foreground drawable for the content view
-        assumeTrue(tv.resourceId != 0);
-        Drawable contentForeground = ((FrameLayout) contentView).getForeground();
-        assertEquals(tv.resourceId, Shadows.shadowOf(
-                contentForeground).getCreatedFromResId());
     }
 
     /**
@@ -196,21 +165,6 @@ public abstract class BaseFragmentActivityTest extends UiTest {
             activity.finish();
         }
         assertThat(activity).isFinishing();
-    }
-
-    /**
-     * Testing options menu initialization
-     */
-    @Test
-    public void initializeOptionsMenuTest() {
-        BaseFragmentActivity activity =
-                Robolectric.buildActivity(getActivityClass())
-                        .withIntent(getIntent()).setup().get();
-        Menu menu = Shadows.shadowOf(activity).getOptionsMenu();
-        assertNotNull(menu);
-        MenuItem offlineItem = menu.findItem(R.id.offline);
-        assertNotNull(offlineItem);
-        assertThat(offlineItem).hasTitle(activity.getText(R.string.offline_text));
     }
 
     /**

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import org.edx.mobile.R;
@@ -13,7 +13,7 @@ import org.edx.mobile.base.BaseFragmentActivity;
 import org.edx.mobile.model.VideoModel;
 import org.edx.mobile.model.db.DownloadEntry;
 import org.edx.mobile.model.download.NativeDownloadModel;
-import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.analytics.Analytics;
 import org.edx.mobile.module.db.DataCallback;
 import org.edx.mobile.module.db.IDbCallback;
 import org.edx.mobile.module.db.ObservableDataCallback;
@@ -29,9 +29,6 @@ public class DownloadListActivity extends BaseFragmentActivity {
     @Nullable
     private DownloadEntryAdapter adapter;
 
-    @Nullable
-    private View offlineBar;
-
     @NonNull
     private final Handler handler = new Handler();
 
@@ -43,9 +40,7 @@ public class DownloadListActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_downloads_list);
 
-        environment.getSegment().trackScreenView(ISegment.Screens.DOWNLOADS);
-
-        offlineBar = findViewById(R.id.offline_bar);
+        environment.getAnalyticsRegistry().trackScreenView(Analytics.Screens.DOWNLOADS);
 
         adapter = new DownloadEntryAdapter(this, environment) {
             @Override
@@ -104,17 +99,28 @@ public class DownloadListActivity extends BaseFragmentActivity {
     }
 
     @Override
-    protected void onOffline() {
-        super.onOffline();
-        assert offlineBar != null;
-        offlineBar.setVisibility(View.VISIBLE);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // If this activity was opened from notification
+                if (isTaskRoot()) {
+                    finish();
+                    environment.getRouter().showSplashScreen(this);
+                    return true;
+                }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
-    protected void onOnline() {
-        super.onOnline();
-        assert offlineBar != null;
-        offlineBar.setVisibility(View.GONE);
+    public void onBackPressed() {
+        // If this activity was opened from notification
+        if (isTaskRoot()) {
+            finish();
+            environment.getRouter().showSplashScreen(this);
+            return;
+        }
+        super.onBackPressed();
     }
 
     private void fetchOngoingDownloads() {

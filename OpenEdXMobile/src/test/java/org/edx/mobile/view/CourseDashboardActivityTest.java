@@ -19,6 +19,7 @@ import org.robolectric.util.ActivityController;
 
 import static org.assertj.android.api.Assertions.assertThat;
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.edx.mobile.http.util.CallUtil.executeStrict;
 import static org.junit.Assert.*;
 
 public class CourseDashboardActivityTest extends BaseVideosDownloadStateActivityTest {
@@ -40,7 +41,7 @@ public class CourseDashboardActivityTest extends BaseVideosDownloadStateActivity
     protected Intent getIntent() {
         EnrolledCoursesResponse courseData;
         try {
-            courseData = api.getEnrolledCourses().get(0);
+            courseData = executeStrict(courseAPI.getEnrolledCourses()).get(0);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -97,17 +98,22 @@ public class CourseDashboardActivityTest extends BaseVideosDownloadStateActivity
         View coursewareRowView = rowsContainerGroup.getChildAt(rowNum++);
         assertRow(coursewareRowView, FontAwesomeIcons.fa_list_alt,
                 R.string.courseware_title, R.string.courseware_subtitle);
+
         if (config.isDiscussionsEnabled()) {
             View discussionRowView = rowsContainerGroup.getChildAt(rowNum++);
             assertRow(discussionRowView, FontAwesomeIcons.fa_comments_o,
                     R.string.discussion_title, R.string.discussion_subtitle);
         }
+
         View handoutsRowView = rowsContainerGroup.getChildAt(rowNum++);
         assertRow(handoutsRowView, FontAwesomeIcons.fa_file_text_o,
                 R.string.handouts_title, R.string.handouts_subtitle);
-        View announcementRowView = rowsContainerGroup.getChildAt(rowNum++);
-        assertRow(announcementRowView, FontAwesomeIcons.fa_bullhorn,
-                R.string.announcement_title, R.string.announcement_subtitle);
+
+        if (config.isAnnoucementsEnabled()) {
+            View announcementRowView = rowsContainerGroup.getChildAt(rowNum++);
+            assertRow(announcementRowView, FontAwesomeIcons.fa_bullhorn,
+                    R.string.announcement_title, R.string.announcement_subtitle);
+        }
 
         assertTrue(coursewareRowView.performClick());
         Intent newIntent = assertNextStartedActivity(activity, CourseOutlineActivity.class);

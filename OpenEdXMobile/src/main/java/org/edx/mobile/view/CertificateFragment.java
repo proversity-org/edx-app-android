@@ -11,13 +11,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 
 import com.google.inject.Inject;
 
 import org.edx.mobile.R;
+import org.edx.mobile.base.BaseFragment;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.analytics.Analytics;
+import org.edx.mobile.module.analytics.AnalyticsRegistry;
 import org.edx.mobile.services.EdxCookieManager;
 import org.edx.mobile.util.ResourceUtil;
 import org.edx.mobile.util.images.ShareUtils;
@@ -26,7 +30,6 @@ import org.edx.mobile.view.custom.URLInterceptorWebViewClient;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.edx.mobile.base.BaseFragment;
 import roboguice.inject.InjectExtra;
 
 public class CertificateFragment extends BaseFragment {
@@ -35,7 +38,7 @@ public class CertificateFragment extends BaseFragment {
     static public final String ENROLLMENT = "enrollment";
 
     @Inject
-    private ISegment segIO;
+    AnalyticsRegistry analyticsRegistry;
 
     @InjectExtra(ENROLLMENT)
     EnrolledCoursesResponse courseData;
@@ -45,7 +48,7 @@ public class CertificateFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        segIO.trackScreenView(ISegment.Screens.CERTIFICATE);
+        analyticsRegistry.trackScreenView(Analytics.Screens.CERTIFICATE);
         setHasOptionsMenu(true);
     }
 
@@ -68,13 +71,12 @@ public class CertificateFragment extends BaseFragment {
                         new ShareUtils.ShareMenuItemListener() {
                             @Override
                             public void onMenuItemClick(@NonNull ComponentName componentName, @NonNull ShareUtils.ShareType shareType) {
-                                segIO.certificateShared(courseData.getCourse().getId(), courseData.getCertificateURL(), shareType);
+                                analyticsRegistry.certificateShared(courseData.getCourse().getId(), courseData.getCertificateURL(), shareType);
                                 final Intent intent = ShareUtils.newShareIntent(shareText);
                                 intent.setComponent(componentName);
                                 startActivity(intent);
                             }
-                        },
-                R.string.share_certificate_popup_header);
+                        });
                 return true;
             }
             default: {
@@ -102,8 +104,16 @@ public class CertificateFragment extends BaseFragment {
             }
 
             @Override
-            public void onPageLoadError() {
+            public void onPageLoadError(WebView view, int errorCode, String description, String failingUrl) {
                 loadingIndicator.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onPageLoadError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse,
+                                        boolean isMainRequestFailure) {
+                if (isMainRequestFailure) {
+                    loadingIndicator.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -119,7 +129,7 @@ public class CertificateFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         // Clear cookies before loading so that social sharing buttons are not displayed inside web view
-        EdxCookieManager.getSharedInstance().clearWebWiewCookie(getActivity());
+        EdxCookieManager.getSharedInstance(getContext()).clearWebWiewCookie();
 
         webview.loadUrl(courseData.getCertificateURL());
     }

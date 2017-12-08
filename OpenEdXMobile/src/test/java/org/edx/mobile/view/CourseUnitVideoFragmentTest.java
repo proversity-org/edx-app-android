@@ -4,31 +4,27 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import org.edx.mobile.R;
-import org.edx.mobile.http.OkHttpUtil;
+import org.edx.mobile.course.CourseAPI;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
 import org.edx.mobile.model.course.CourseComponent;
+import org.edx.mobile.model.course.CourseStructureV1Model;
 import org.edx.mobile.model.course.VideoBlockModel;
 import org.junit.Test;
-import org.robolectric.Robolectric;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
 
-import static org.assertj.android.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.assertj.android.api.Assertions.assertThat;
+import static org.edx.mobile.http.util.CallUtil.executeStrict;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeNotNull;
 
 // We should add mock downloads, mock play, and state retention tests
 // later. Also, online/offline transition tests; although the
@@ -47,15 +43,20 @@ public class CourseUnitVideoFragmentTest extends UiTest {
      */
     private VideoBlockModel getVideoUnit() {
         EnrolledCoursesResponse courseData;
-        CourseComponent courseComponent;
         try {
-            courseData = api.getEnrolledCourses().get(0);
-            courseComponent = serviceManager.getCourseStructure(
-                    courseData.getCourse().getId(),
-                    OkHttpUtil.REQUEST_CACHE_TYPE.IGNORE_CACHE);
+            courseData = executeStrict(courseAPI.getEnrolledCourses()).get(0);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        String courseId = courseData.getCourse().getId();
+        CourseStructureV1Model model;
+        try {
+            model = executeStrict(courseAPI.getCourseStructure(courseId));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        CourseComponent courseComponent = (CourseComponent)
+                CourseAPI.normalizeCourseStructure(model, courseId);
         return (VideoBlockModel) courseComponent.getVideos().get(0);
     }
 
@@ -72,43 +73,6 @@ public class CourseUnitVideoFragmentTest extends UiTest {
         assertNotNull(view);
         View messageContainer = view.findViewById(R.id.message_container);
         assertNotNull(messageContainer);
-    }
-
-
-    /**
-     * Generic method to assert action bar visibility state on a specified orientation
-     *
-     * @param orientation The orientation it should be tested on
-     * @param expected The expected visibility state
-     */
-    private void assertActionBarShowing(int orientation, boolean expected) {
-        AppCompatActivity activity = Robolectric.setupActivity(FragmentUtilActivity.class);
-        activity.getResources().getConfiguration().orientation = orientation;
-        CourseUnitVideoFragment fragment = CourseUnitVideoFragment.newInstance(getVideoUnit(), false, false);
-        activity.getSupportFragmentManager()
-                .beginTransaction().add(1, fragment, null).commit();
-        assertTrue(fragment.getRetainInstance());
-        ActionBar bar = activity.getSupportActionBar();
-        assumeNotNull(bar);
-        assertEquals(expected, bar.isShowing());
-    }
-
-    /**
-     * Testing whether action bar is displayed in portrait orientation
-     */
-    @Test
-    @Config(qualifiers = "port")
-    public void showActionBarOnPortraitTest() {
-        assertActionBarShowing(Configuration.ORIENTATION_PORTRAIT, true);
-    }
-
-    /**
-     * Testing whether action bar is hidden in landscape orientation
-     */
-    @Test
-    @Config(qualifiers = "land")
-    public void showActionBarOnLandscapeTest() {
-        assertActionBarShowing(Configuration.ORIENTATION_LANDSCAPE, true);
     }
 
     /**
@@ -158,7 +122,7 @@ public class CourseUnitVideoFragmentTest extends UiTest {
         testOrientationChange(fragment, Configuration.ORIENTATION_PORTRAIT);
     }
 
-    private static class FragmentUtilActivity extends AppCompatActivity implements CourseUnitFragment.HasComponent {
+    private static class FragmentUtilActivity extends FragmentActivity implements CourseUnitFragment.HasComponent {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);

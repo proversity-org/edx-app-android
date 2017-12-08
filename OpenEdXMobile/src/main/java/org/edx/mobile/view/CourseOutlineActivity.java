@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import org.edx.mobile.R;
 import org.edx.mobile.model.course.CourseComponent;
-import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.analytics.Analytics;
 import org.edx.mobile.services.CourseManager;
 import org.edx.mobile.services.LastAccessManager;
 
@@ -18,6 +18,8 @@ import javax.inject.Inject;
 public class CourseOutlineActivity extends CourseVideoListActivity {
 
     private CourseOutlineFragment fragment;
+    private boolean isVideoMode = false;
+    private boolean isOnCourseOutline = false;
 
     @Inject
     CourseManager courseManager;
@@ -27,19 +29,26 @@ public class CourseOutlineActivity extends CourseVideoListActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isOnCourseOutline = isOnCourseOutline();
+        if (getIntent() != null) {
+            isVideoMode = getIntent().getBooleanExtra(Router.EXTRA_IS_VIDEOS_MODE, false);
+        }
 
-        if (isOnCourseOutline()) {
-            environment.getSegment().trackScreenView(
-                    ISegment.Screens.COURSE_OUTLINE, courseData.getCourse().getId(), null);
+        if (isOnCourseOutline) {
+            environment.getAnalyticsRegistry().trackScreenView(
+                    isVideoMode ? Analytics.Screens.VIDEOS_COURSE_VIDEOS : Analytics.Screens.COURSE_OUTLINE,
+                    courseData.getCourse().getId(), null);
         }
     }
 
     public void onResume(){
         super.onResume();
 
-        if (isOnCourseOutline()) {
+        if (isOnCourseOutline) {
             setTitle(courseData.getCourse().getName());
-            lastAccessManager.fetchLastAccessed(this, courseData.getCourse().getId());
+            if (!isVideoMode) {
+                lastAccessManager.fetchLastAccessed(this, courseData.getCourse().getId());
+            }
         }
     }
 
@@ -56,8 +65,10 @@ public class CourseOutlineActivity extends CourseVideoListActivity {
             Bundle bundle = new Bundle();
             bundle.putSerializable(Router.EXTRA_COURSE_DATA, courseData);
             bundle.putString(Router.EXTRA_COURSE_COMPONENT_ID, courseComponentId);
-            bundle.putString(Router.EXTRA_LAST_ACCESSED_ID
-                    , getIntent().getStringExtra(Router.EXTRA_LAST_ACCESSED_ID));
+            bundle.putString(Router.EXTRA_LAST_ACCESSED_ID,
+                    getIntent().getStringExtra(Router.EXTRA_LAST_ACCESSED_ID));
+            bundle.putBoolean(Router.EXTRA_IS_VIDEOS_MODE, isVideoMode);
+            bundle.putBoolean(Router.EXTRA_IS_ON_COURSE_OUTLINE, isOnCourseOutline);
             fragment.setArguments(bundle);
             //this activity will only ever hold this lone fragment, so we
             // can afford to retain the instance during activity recreation
@@ -69,22 +80,17 @@ public class CourseOutlineActivity extends CourseVideoListActivity {
             fragmentTransaction.commitAllowingStateLoss();
         }
 
-        if (isOnCourseOutline()) {
-            lastAccessManager.fetchLastAccessed(this, courseData.getCourse().getId());
+        if (isOnCourseOutline) {
+            if (!isVideoMode) {
+                lastAccessManager.fetchLastAccessed(this, courseData.getCourse().getId());
+            }
         } else {
-            environment.getSegment().trackScreenView(
-                    ISegment.Screens.SECTION_OUTLINE, courseData.getCourse().getId(), courseComponent.getInternalName());
+            environment.getAnalyticsRegistry().trackScreenView(
+                    Analytics.Screens.SECTION_OUTLINE, courseData.getCourse().getId(), courseComponent.getInternalName());
 
             // Update the last accessed item reference if we are in the course subsection view
             lastAccessManager.setLastAccessed(courseComponent.getCourseId(), courseComponent.getId());
         }
-    }
-
-    @Override
-    protected String getUrlForWebView() {
-        if ( courseComponentId == null ) return "";
-        CourseComponent courseComponent = courseManager.getComponentById(courseData.getCourse().getId(), courseComponentId);
-        return courseComponent.getWebUrl();
     }
 
     @Override

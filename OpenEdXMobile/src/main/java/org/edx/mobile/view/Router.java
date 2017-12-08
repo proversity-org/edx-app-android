@@ -3,15 +3,19 @@ package org.edx.mobile.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.TaskStackBuilder;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import org.edx.mobile.BuildConfig;
+import org.edx.mobile.R;
 import org.edx.mobile.authentication.LoginAPI;
 import org.edx.mobile.course.CourseDetail;
 import org.edx.mobile.discussion.DiscussionComment;
@@ -19,14 +23,17 @@ import org.edx.mobile.discussion.DiscussionThread;
 import org.edx.mobile.discussion.DiscussionTopic;
 import org.edx.mobile.event.LogoutEvent;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.analytics.AnalyticsRegistry;
 import org.edx.mobile.module.notification.NotificationDelegate;
 import org.edx.mobile.module.prefs.LoginPrefs;
+import org.edx.mobile.module.storage.IStorage;
 import org.edx.mobile.profiles.UserProfileActivity;
 import org.edx.mobile.util.Config;
+import org.edx.mobile.util.EmailUtil;
 import org.edx.mobile.util.SecurityUtil;
-import org.edx.mobile.view.dialog.WebViewDialogActivity;
+import org.edx.mobile.view.dialog.WebViewActivity;
 import org.edx.mobile.view.my_videos.MyVideosActivity;
+import org.edx.mobile.whatsnew.WhatsNewActivity;
 
 import de.greenrobot.event.EventBus;
 
@@ -45,6 +52,8 @@ public class Router {
     public static final String EXTRA_DISCUSSION_THREAD = "discussion_thread";
     public static final String EXTRA_DISCUSSION_COMMENT = "discussion_comment";
     public static final String EXTRA_DISCUSSION_TOPIC_ID = "discussion_topic_id";
+    public static final String EXTRA_IS_VIDEOS_MODE = "videos_mode";
+    public static final String EXTRA_IS_ON_COURSE_OUTLINE = "is_on_course_outline";
 
     @Inject
     Config config;
@@ -53,10 +62,19 @@ public class Router {
     private LoginAPI loginAPI;
     @Inject
     private LoginPrefs loginPrefs;
+    @Inject
+    private IStorage storage;
 
     public void showDownloads(Activity sourceActivity) {
         Intent downloadIntent = new Intent(sourceActivity, DownloadListActivity.class);
         sourceActivity.startActivity(downloadIntent);
+    }
+
+    public void showDownloads(Context context) {
+        Intent downloadIntent = new Intent(context, DownloadListActivity.class);
+        downloadIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        context.startActivity(downloadIntent);
     }
 
     public void showCourseInfo(Activity sourceActivity, String pathId) {
@@ -143,28 +161,39 @@ public class Router {
         showCourseContainerOutline(activity, model, null);
     }
 
-    public void showCourseContainerOutline(Activity activity, EnrolledCoursesResponse model, String courseComponentId) {
-        showCourseContainerOutline(activity, -1, model, courseComponentId, null);
+    public void showCourseContainerOutline(Activity activity, EnrolledCoursesResponse model,
+                                           boolean isVideosMode) {
+        showCourseContainerOutline(activity, -1, model, null, null, isVideosMode);
+    }
+
+    public void showCourseContainerOutline(Activity activity, EnrolledCoursesResponse model,
+                                           String courseComponentId) {
+        showCourseContainerOutline(activity, -1, model, courseComponentId, null, false);
     }
 
     public void showCourseContainerOutline(Activity activity, int requestCode,
-                                           EnrolledCoursesResponse model, String courseComponentId, String lastAccessedId) {
-        Intent courseDetail = createCourseOutlineIntent(activity, model, courseComponentId, lastAccessedId);
+                                           EnrolledCoursesResponse model, String courseComponentId,
+                                           String lastAccessedId, boolean isVideosMode) {
+        Intent courseDetail = createCourseOutlineIntent(activity, model, courseComponentId,
+                lastAccessedId, isVideosMode);
         //TODO - what's the most suitable FLAG?
         // courseDetail.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         activity.startActivityForResult(courseDetail, requestCode);
     }
 
     public void showCourseContainerOutline(Fragment fragment, int requestCode,
-                                           EnrolledCoursesResponse model, String courseComponentId, String lastAccessedId) {
-        Intent courseDetail = createCourseOutlineIntent(fragment.getActivity(), model, courseComponentId, lastAccessedId);
+                                           EnrolledCoursesResponse model, String courseComponentId,
+                                           String lastAccessedId, boolean isVideosMode) {
+        Intent courseDetail = createCourseOutlineIntent(fragment.getActivity(), model,
+                courseComponentId, lastAccessedId, isVideosMode);
         //TODO - what's the most suitable FLAG?
         // courseDetail.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         fragment.startActivityForResult(courseDetail, requestCode);
     }
 
     private Intent createCourseOutlineIntent(Activity activity, EnrolledCoursesResponse model,
-                                             String courseComponentId, String lastAccessedId) {
+                                             String courseComponentId, String lastAccessedId,
+                                             boolean isVideosMode) {
         Bundle courseBundle = new Bundle();
         courseBundle.putSerializable(EXTRA_COURSE_DATA, model);
         courseBundle.putString(EXTRA_COURSE_COMPONENT_ID, courseComponentId);
@@ -172,18 +201,20 @@ public class Router {
         Intent courseDetail = new Intent(activity, CourseOutlineActivity.class);
         courseDetail.putExtra(EXTRA_BUNDLE, courseBundle);
         courseDetail.putExtra(EXTRA_LAST_ACCESSED_ID, lastAccessedId);
+        courseDetail.putExtra(EXTRA_IS_VIDEOS_MODE, isVideosMode);
 
         return courseDetail;
     }
 
     public void showCourseUnitDetail(Fragment fragment, int requestCode, EnrolledCoursesResponse model,
-                                     String courseComponentId) {
+                                     String courseComponentId, boolean isVideosMode) {
         Bundle courseBundle = new Bundle();
         courseBundle.putSerializable(EXTRA_COURSE_DATA, model);
         courseBundle.putSerializable(EXTRA_COURSE_COMPONENT_ID, courseComponentId);
 
         Intent courseDetail = new Intent(fragment.getActivity(), CourseUnitNavigationActivity.class);
         courseDetail.putExtra(EXTRA_BUNDLE, courseBundle);
+        courseDetail.putExtra(EXTRA_IS_VIDEOS_MODE, isVideosMode);
         courseDetail.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         fragment.startActivityForResult(courseDetail, requestCode);
     }
@@ -217,8 +248,9 @@ public class Router {
         activity.startActivity(addPostIntent);
     }
 
-    public void showCourseDiscussionComments(Context context, DiscussionComment comment, DiscussionThread discussionThread) {
+    public void showCourseDiscussionComments(Context context, DiscussionComment comment, DiscussionThread discussionThread, EnrolledCoursesResponse courseData) {
         Intent commentListIntent = new Intent(context, CourseDiscussionCommentsActivity.class);
+        commentListIntent.putExtra(EXTRA_COURSE_DATA, courseData);
         commentListIntent.putExtra(Router.EXTRA_DISCUSSION_COMMENT, comment);
         commentListIntent.putExtra(Router.EXTRA_DISCUSSION_THREAD, discussionThread);
         commentListIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -267,20 +299,20 @@ public class Router {
     /**
      * Clear the login data and exit to the splash screen. This should only be called internally;
      * for handling manual logout,
-     * {@link #performManualLogout(Context, ISegment, NotificationDelegate)} should be used instead.
+     * {@link #performManualLogout(Context, AnalyticsRegistry, NotificationDelegate)} should be used instead.
      *
      * @param context  The context.
-     * @param segment  The segment object.
+     * @param analyticsRegistry  The analytics provider object.
      * @param delegate The notification delegate.
-     * @see #performManualLogout(Context, ISegment, NotificationDelegate)
+     * @see #performManualLogout(Context, AnalyticsRegistry, NotificationDelegate)
      */
-    public void forceLogout(Context context, ISegment segment, NotificationDelegate delegate) {
+    public void forceLogout(Context context, AnalyticsRegistry analyticsRegistry, NotificationDelegate delegate) {
         loginPrefs.clear();
 
         EventBus.getDefault().post(new LogoutEvent());
 
-        segment.trackUserLogout();
-        segment.resetIdentifyUser();
+        analyticsRegistry.trackUserLogout();
+        analyticsRegistry.resetIdentifyUser();
 
         delegate.unsubscribeAll();
 
@@ -291,16 +323,18 @@ public class Router {
      * Clears all the user data, revokes the refresh and access tokens, and exit to the splash
      * screen. This should only be called in response to manual logout by the user; for performing
      * logout internally (e.g. in response to refresh token expiration),
-     * {@link #forceLogout(Context, ISegment, NotificationDelegate)} should be used instead.
+     * {@link #forceLogout(Context, AnalyticsRegistry, NotificationDelegate)} should be used instead.
      *
      * @param context  The context.
-     * @param segment  The segment object.
+     * @param analyticsRegistry  The analytics provider object.
      * @param delegate The notification delegate.
-     * @see #forceLogout(Context, ISegment, NotificationDelegate)
+     * @see #forceLogout(Context, AnalyticsRegistry, NotificationDelegate)
      */
-    public void performManualLogout(Context context, ISegment segment, NotificationDelegate delegate) {
+    public void performManualLogout(Context context, AnalyticsRegistry analyticsRegistry, NotificationDelegate delegate) {
+        // Remove all ongoing downloads first which requires username
+        storage.removeAllDownloads();
         loginAPI.logOut();
-        forceLogout(context, segment, delegate);
+        forceLogout(context, analyticsRegistry, delegate);
         SecurityUtil.clearUserData(context);
     }
 
@@ -358,7 +392,39 @@ public class Router {
         context.startActivity(findCoursesIntent);
     }
 
-    public void showWebViewDialog(@NonNull Activity activity, @NonNull String url, @Nullable String dialogTitle) {
-        activity.startActivity(WebViewDialogActivity.newIntent(activity, url, dialogTitle));
+    public void showWebViewActivity(@NonNull Activity activity, @NonNull String url, @Nullable String title) {
+        activity.startActivity(WebViewActivity.newIntent(activity, url, title));
+    }
+
+    public void showCourseDatesActivity(@NonNull Activity activity, @NonNull EnrolledCoursesResponse model) {
+        activity.startActivity(CourseDatesActivity.newIntent(activity, model));
+    }
+
+    public void showWhatsNewActivity(@NonNull Activity activity) {
+        activity.startActivity(WhatsNewActivity.newIntent(activity));
+    }
+
+    public void showAccountActivity(@NonNull Activity activity) {
+        activity.startActivity(AccountActivity.newIntent(activity));
+    }
+
+    /**
+     * Open an email client for user to write feedback
+     *
+     * @param activity Activity context
+     * @param subject  Subject of email
+     */
+    public void showFeedbackScreen(@NonNull FragmentActivity activity, @NonNull String subject) {
+        final String NEW_LINE = "\n";
+        final String to = config.getFeedbackEmailAddress();
+        StringBuilder body = new StringBuilder();
+        body.append(String.format("%s %s", activity.getString(R.string.android_os_version), android.os.Build.VERSION.RELEASE))
+                .append(NEW_LINE)
+                .append(String.format("%s %s", activity.getString(R.string.app_version), BuildConfig.VERSION_NAME))
+                .append(NEW_LINE)
+                .append(String.format("%s %s", activity.getString(R.string.android_device_model), Build.MODEL))
+                .append(NEW_LINE).append(NEW_LINE)
+                .append(activity.getString(R.string.insert_feedback));
+        EmailUtil.openEmailClient(activity, to, subject, body.toString(), config);
     }
 }

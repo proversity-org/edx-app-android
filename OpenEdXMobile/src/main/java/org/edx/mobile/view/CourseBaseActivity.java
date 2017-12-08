@@ -3,47 +3,45 @@ package org.edx.mobile.view;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
-import com.joanzapata.iconify.Icon;
-import com.joanzapata.iconify.IconDrawable;
-import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
 import org.edx.mobile.R;
 import org.edx.mobile.base.BaseFragmentActivity;
+import org.edx.mobile.course.CourseAPI;
+import org.edx.mobile.http.notifications.FullScreenErrorNotification;
+import org.edx.mobile.http.notifications.SnackbarErrorNotification;
+import org.edx.mobile.interfaces.RefreshListener;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.model.course.BlockPath;
 import org.edx.mobile.model.course.CourseComponent;
-import org.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.model.course.CourseStructureV1Model;
 import org.edx.mobile.services.CourseManager;
-import org.edx.mobile.task.GetCourseStructureTask;
-import org.edx.mobile.util.BrowserUtil;
+import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.view.common.MessageType;
 import org.edx.mobile.view.common.TaskProcessCallback;
-import org.edx.mobile.view.custom.popup.menu.PopupMenu;
 
+import retrofit2.Call;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
 /**
  *  A base class to handle some common task
- *  NOTE- in the layout file,  these should be defined
- *  1. offlineBar
- *  2. progress_spinner
- *  3. offline_mode_message
+ *  NOTE - in the layout file,  these should be defined
+ *  1. content_error_root (The layout that contains all of the following)
+ *  2. content_error (The layout having the views that'll be used to show error)
+ *  3. content_area (The layout having the views that'll be used to present data on screen)
+ *  4. loading_indicator (A view or layout to show loading while data loads)
  */
 @ContentView(R.layout.activity_course_base)
-public abstract  class CourseBaseActivity  extends BaseFragmentActivity implements TaskProcessCallback{
-
-    @InjectView(R.id.offline_bar)
-    View offlineBar;
+public abstract  class CourseBaseActivity  extends BaseFragmentActivity
+        implements TaskProcessCallback, RefreshListener{
 
     @InjectView(R.id.last_accessed_bar)
     View lastAccessBar;
@@ -51,24 +49,43 @@ public abstract  class CourseBaseActivity  extends BaseFragmentActivity implemen
     @InjectView(R.id.loading_indicator)
     ProgressBar progressWheel;
 
+    @InjectView(R.id.content_area)
+    ViewGroup contentLayout;
+
+    @Inject
+    CourseAPI courseApi;
+
     @Inject
     CourseManager courseManager;
 
     protected EnrolledCoursesResponse courseData;
     protected String courseComponentId;
 
-    private GetCourseStructureTask getHierarchyTask;
-
-    private boolean isDestroyed;
-
-    protected abstract String getUrlForWebView();
+    private Call<CourseStructureV1Model> getHierarchyCall;
 
     protected abstract void onLoadData();
+
+    private FullScreenErrorNotification errorNotification;
+
+    private SnackbarErrorNotification snackbarErrorNotification;
+
+    // Reason of usage: Helps in deciding if we want to show a full screen error or a SnackBar.
+    private boolean isInitialServerCallDone = false;
 
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayShowHomeEnabled(true);
+            bar.setDisplayHomeAsUpEnabled(true);
+            bar.setIcon(android.R.color.transparent);
+        }
+        errorNotification = new FullScreenErrorNotification(contentLayout);
+        snackbarErrorNotification = new SnackbarErrorNotification(contentLayout);
+
         Bundle bundle = arg0;
         if ( bundle == null ) {
             if ( getIntent() != null )
@@ -88,11 +105,10 @@ public abstract  class CourseBaseActivity  extends BaseFragmentActivity implemen
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (getHierarchyTask != null) {
-            getHierarchyTask.cancel(true);
-            getHierarchyTask = null;
+        if (getHierarchyCall != null) {
+            getHierarchyCall.cancel();
+            getHierarchyCall = null;
         }
-        isDestroyed = true;
     }
 
     @Override
@@ -107,31 +123,23 @@ public abstract  class CourseBaseActivity  extends BaseFragmentActivity implemen
         courseComponentId = savedInstanceState.getString(Router.EXTRA_COURSE_COMPONENT_ID);
 
         if (courseComponentId == null) {
-            getHierarchyTask = new GetCourseStructureTask(this, courseData.getCourse().getId()) {
+            final String courseId = courseData.getCourse().getId();
+            getHierarchyCall = courseApi.getCourseStructure(courseId);
+            getHierarchyCall.enqueue(new CourseAPI.GetCourseStructureCallback(this, courseId,
+                    new ProgressViewController(progressWheel), errorNotification,
+                    snackbarErrorNotification, this) {
                 @Override
-                public void onSuccess(CourseComponent courseComponent) {
-                    if (courseComponent != null) {
-                        courseComponentId = courseComponent.getId();
-                        // Only trigger the callback if the task has not been cancelled, and
-                        // the Activity has not been destroyed. The task should be canceled
-                        // in Activity destruction anyway, so the latter check is just a
-                        // precaution.
-                        if (getHierarchyTask != null && !isDestroyed) {
-                            invalidateOptionsMenu();
-                            onLoadData();
-                            getHierarchyTask = null;
-                        }
-                    }
+                protected void onResponse(@NonNull final CourseComponent courseComponent) {
+                    courseComponentId = courseComponent.getId();
+                    invalidateOptionsMenu();
+                    onLoadData();
                 }
 
                 @Override
-                public void onException(Exception ex) {
-                    showInfoMessage(getString(R.string.no_connectivity));
+                protected void onFinish() {
+                    isInitialServerCallDone = true;
                 }
-            };
-            getHierarchyTask.setTaskProcessCallback(this);
-            getHierarchyTask.setProgressDialog(progressWheel);
-            getHierarchyTask.execute();
+            });
         }
     }
 
@@ -142,131 +150,22 @@ public abstract  class CourseBaseActivity  extends BaseFragmentActivity implemen
         // after basic initialization
         if (courseComponentId != null) {
             onLoadData();
+            isInitialServerCallDone = true;
         }
     }
 
     @Override
-    protected void onOnline() {
-        offlineBar.setVisibility(View.GONE);
-        hideOfflineMessage();
-    }
-
-    @Override
     protected void onOffline() {
-        offlineBar.setVisibility(View.VISIBLE);
         hideLoadingProgress();
+        if (isInitialServerCallDone && !errorNotification.isShowing()) {
+            snackbarErrorNotification.showOfflineError(CourseBaseActivity.this);
+        }
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-    }
-
-    @Override
-    protected boolean createOptionsMenu(Menu menu) {
-        if (courseComponentId != null) {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.course_detail, menu);
-            menu.findItem(R.id.action_share_on_web).setIcon(
-                    new IconDrawable(this, FontAwesomeIcons.fa_share_square_o)
-                            .actionBarSize(this).colorRes(this, R.color.edx_white));
-            Icon changeModeIcon = new PrefManager.UserPrefManager(this)
-                    .isUserPrefVideoModel() ? FontAwesomeIcons.fa_list :
-                    FontAwesomeIcons.fa_film;
-            menu.findItem(R.id.action_change_mode).setIcon(
-                    new IconDrawable(this, changeModeIcon)
-                            .actionBarSize(this).colorRes(this, R.color.edx_white));
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    protected boolean handleOptionsItemSelected(final MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_share_on_web: {
-                PopupMenu popup = new PopupMenu(this, findViewById(R.id.action_share_on_web),
-                        Gravity.END, R.attr.edgePopupMenuStyle, R.style.edX_Widget_EdgePopupMenu);
-                popup.getMenuInflater().inflate(R.menu.share_on_web, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        BrowserUtil.open(CourseBaseActivity.this, getUrlForWebView());
-                        CourseComponent courseComponent = courseManager.getComponentById(
-                                courseData.getCourse().getId(), courseComponentId);
-                        environment.getSegment().trackOpenInBrowser(courseComponentId,
-                                courseData.getCourse().getId(), courseComponent.isMultiDevice());
-                        return true;
-                    }
-                });
-                popup.show();
-                return true;
-            } case R.id.action_change_mode: {
-                PopupMenu popup = new PopupMenu(this, findViewById(R.id.action_change_mode), Gravity.END);
-                popup.getMenuInflater().inflate(R.menu.change_mode, popup.getMenu());
-                final PrefManager.UserPrefManager userPrefManager = new PrefManager.UserPrefManager(this);
-                final MenuItem videoOnlyItem = popup.getMenu().findItem(R.id.change_mode_video_only);
-                MenuItem fullCourseItem = popup.getMenu().findItem(R.id.change_mode_full_mode);
-                videoOnlyItem.setIcon(new IconDrawable(this, FontAwesomeIcons.fa_film)
-                        .colorRes(this, R.color.course_mode));
-                fullCourseItem.setIcon(new IconDrawable(this, FontAwesomeIcons.fa_list)
-                        .colorRes(this, R.color.course_mode));
-                // Setting checked states
-                // Only calling setChecked(true) in the selected menu item, to avoid a bug
-                // in the MenuItem implementation in the framework and appcompat library
-                // which causes setChecked(false) to be evaluated to setChecked(true) in
-                // the case where it is part of a group with checkable behavior set to
-                // 'single'. It's reported as part of another issue in
-                // http://b.android.com/178709
-                if (userPrefManager.isUserPrefVideoModel()) {
-                    videoOnlyItem.setChecked(true);
-                } else {
-                    fullCourseItem.setChecked(true);
-                }
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem popupMenuItem) {
-                        boolean currentVideoMode = userPrefManager.isUserPrefVideoModel();
-                        boolean selectedVideoMode = videoOnlyItem == popupMenuItem;
-                        if (currentVideoMode != selectedVideoMode) {
-                            userPrefManager.setUserPrefVideoModel(selectedVideoMode);
-                            popupMenuItem.setChecked(true);
-                            Icon filterIcon = selectedVideoMode ?
-                                    FontAwesomeIcons.fa_list : FontAwesomeIcons.fa_film;
-                            item.setIcon(
-                                    new IconDrawable(CourseBaseActivity.this, filterIcon)
-                                            .actionBarSize(CourseBaseActivity.this)
-                                            .colorRes(CourseBaseActivity.this, R.color.edx_white));
-                            modeChanged();
-                            environment.getSegment().trackCourseOutlineMode(selectedVideoMode);
-                        }
-                        return true;
-                    }
-                });
-                popup.show();
-                return true;
-            }
-        }
-        return false;
-    }
-
-    protected void modeChanged() {}
-
-    /**
-     * This function shows the offline mode message
-     */
-    private void showOfflineMessage(){
-        if(offlineBar!=null){
-            offlineBar.setVisibility(View.VISIBLE);
-        }
-    }
-
-    /**
-     * This function hides the offline mode message
-     */
-    private void hideOfflineMessage() {
-        if(offlineBar!=null){
-            offlineBar.setVisibility(View.GONE);
-        }
     }
 
     /**
@@ -335,6 +234,36 @@ public abstract  class CourseBaseActivity  extends BaseFragmentActivity implemen
 
     public void onMessage(@NonNull MessageType messageType, @NonNull String message){
         showErrorMessage("", message);
+    }
+
+    protected boolean isOnCourseOutline(){
+        if (courseComponentId == null) return true;
+        CourseComponent outlineComp = courseManager.getComponentById(
+                courseData.getCourse().getId(), courseComponentId);
+        BlockPath outlinePath = outlineComp.getPath();
+        int outlinePathSize = outlinePath.getPath().size();
+
+        return outlinePathSize <= 1;
+    }
+
+    @Override
+    public void onRefresh() {
+        errorNotification.hideError();
+        if (isOnCourseOutline()) {
+            if (getIntent() != null) {
+                restore(getIntent().getBundleExtra(Router.EXTRA_BUNDLE));
+            }
+        } else {
+            onLoadData();
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (NetworkUtil.isConnected(this)) {
+            snackbarErrorNotification.hideError();
+        }
     }
 }
 

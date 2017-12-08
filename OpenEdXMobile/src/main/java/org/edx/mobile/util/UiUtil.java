@@ -1,8 +1,14 @@
 package org.edx.mobile.util;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RawRes;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,35 +37,6 @@ public class UiUtil {
             ViewAnimationUtil.showMessageBar(downloadMessageTv);
         } else {
             logger.warn("view flying_message not found");
-        }
-    }
-
-    /**
-     * Call this method to inform user about going  offline
-     */
-    public static void showOfflineAccessMessage(View root) {
-        if (root == null) {
-            logger.warn("cannot show message, no views available");
-            return;
-        }
-        try {
-            ViewAnimationUtil.showMessageBar(root.findViewById(R.id.offline_access_panel));
-        } catch (Exception e) {
-            logger.error(e);
-        }
-    }
-
-    //Hide the offline access message
-    public static void hideOfflineAccessMessage(View root) {
-        if (root == null) {
-            logger.warn("cannot show message, no views available");
-            return;
-        }
-        View v = root.findViewById(R.id.offline_access_panel);
-        if (v != null) {
-            v.setVisibility(View.GONE);
-        } else {
-            logger.warn("cannot hide message, cannot find offline_access_panel");
         }
     }
 
@@ -101,5 +78,26 @@ public class UiUtil {
         params.leftMargin -= cardView.getPaddingLeft();
         params.rightMargin -= cardView.getPaddingRight();
         cardView.setLayoutParams(params);
+    }
+
+    @Nullable
+    @SuppressWarnings("deprecation")
+    public static Drawable getDrawable(@NonNull Context context, @DrawableRes int drawableId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            return context.getDrawable(drawableId);
+
+        //noinspection deprecation
+        return context.getResources().getDrawable(drawableId);
+    }
+
+    @DrawableRes
+    public static int getDrawable(@NonNull Context context, @NonNull String drawableName) {
+        return context.getResources().getIdentifier(drawableName, "drawable",
+                context.getPackageName());
+    }
+
+    @RawRes
+    public static int getRawFile(@NonNull Context context, @NonNull String fileName) {
+        return context.getResources().getIdentifier(fileName, "raw", context.getPackageName());
     }
 }

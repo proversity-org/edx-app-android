@@ -19,15 +19,17 @@ import com.google.inject.Inject;
 import org.edx.mobile.R;
 import org.edx.mobile.base.BaseFragment;
 import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.course.CourseAPI;
 import org.edx.mobile.interfaces.SectionItemInterface;
 import org.edx.mobile.logger.Logger;
+import org.edx.mobile.model.api.CourseEntry;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
 import org.edx.mobile.model.api.VideoResponseModel;
 import org.edx.mobile.model.db.DownloadEntry;
+import org.edx.mobile.module.analytics.Analytics;
 import org.edx.mobile.module.db.DataCallback;
 import org.edx.mobile.module.prefs.LoginPrefs;
 import org.edx.mobile.services.LastAccessManager;
-import org.edx.mobile.task.CircularProgressTask;
 import org.edx.mobile.util.AppConstants;
 import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.util.ResourceUtil;
@@ -35,7 +37,6 @@ import org.edx.mobile.view.Router;
 import org.edx.mobile.view.VideoListActivity;
 import org.edx.mobile.view.adapters.MyAllVideoAdapter;
 import org.edx.mobile.view.adapters.VideoBaseAdapter;
-import org.edx.mobile.view.custom.ProgressWheel;
 import org.edx.mobile.view.dialog.DeleteVideoDialogFragment;
 import org.edx.mobile.view.dialog.IDialogCallback;
 
@@ -45,8 +46,6 @@ import java.util.Map;
 
 public class VideoListFragment extends BaseFragment {
 
-    public static View offlineBar;
-    private boolean isLandscape = false;
     private VideoBaseAdapter<SectionItemInterface> adapter;
     private ListView videoListView;
     private boolean isActivityStarted;
@@ -69,6 +68,9 @@ public class VideoListFragment extends BaseFragment {
 
     @Inject
     protected IEdxEnvironment environment;
+
+    @Inject
+    private CourseAPI courseApi;
 
     private final Logger logger = new Logger(getClass().getName());
 
@@ -104,26 +106,10 @@ public class VideoListFragment extends BaseFragment {
         videoListView = (ListView) getView().findViewById(R.id.list_video);
 
         if (videoListView != null) {
-            isLandscape = false;
-
             videoListView.setEmptyView(getView().findViewById(
                     R.id.empty_list_view));
-            offlineBar = getView().findViewById(R.id.offline_bar);
-
-            if (!(NetworkUtil.isConnected(getActivity()))) {
-                if (offlineBar != null)
-                    offlineBar.setVisibility(View.VISIBLE);
-                showDeletePanel(getView());
-            } else {
-                if (offlineBar != null) {
-                    offlineBar.setVisibility(View.GONE);
-                }
-            }
-
             setAdaptertoVideoList();
-
         } else {
-            isLandscape = true;
             // probably the landscape player view, so hide action bar
             ActionBar bar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (bar != null) {
@@ -182,12 +168,13 @@ public class VideoListFragment extends BaseFragment {
             videoListView.setAdapter(adapter);
             videoListView.setOnItemClickListener(adapter);
 
-            setActivityTitle(enrollment.getCourse().getName());
-            environment.getSegment().trackScreenView("My Videos - All Videos - "
-                    + enrollment.getCourse().getName());
+            final CourseEntry course = enrollment.getCourse();
+            setActivityTitle(course.getName());
+            environment.getAnalyticsRegistry().trackScreenView(
+                    Analytics.Screens.MY_VIDEOS_COURSE_VIDEOS, course.getId(), null);
 
             ArrayList<SectionItemInterface> list = environment.getStorage()
-                    .getSortedOrganizedVideosByCourse(enrollment.getCourse().getId());
+                    .getSortedOrganizedVideosByCourse(course.getId());
             downloadAvailable = false;
             if (list == null || list.size() == 0) {
                 hideDeletePanel(getView());
@@ -222,7 +209,7 @@ public class VideoListFragment extends BaseFragment {
         if (model instanceof DownloadEntry) {
             DownloadEntry v = (DownloadEntry) model;
             try {
-                final VideoResponseModel vrm = environment.getServiceManager().getVideoById(v.eid, v.videoId);
+                final VideoResponseModel vrm = courseApi.getVideoById(v.eid, v.videoId);
                 lastAccessManager.setLastAccessed(v.eid, vrm.getSection().getId());
 
                 // capture chapter name
@@ -263,28 +250,12 @@ public class VideoListFragment extends BaseFragment {
         }
     }
 
-    public void onOffline() {
-        if (!isLandscape) {
-            if (offlineBar != null) {
-                offlineBar.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
     public void handleDeleteView() {
         if (isPlayerVisible()) {
             hideDeletePanel(getView());
         } else {
             if (downloadAvailable) {
                 showDeletePanel(getView());
-            }
-        }
-    }
-
-    public void onOnline() {
-        if (!isLandscape) {
-            if (offlineBar != null) {
-                offlineBar.setVisibility(View.GONE);
             }
         }
     }
@@ -569,68 +540,6 @@ public class VideoListFragment extends BaseFragment {
         } else if (selectedItemsNo < totalVideos) {
             ((VideoListActivity) getActivity()).setSelectAllChecked(false);
         }
-    }
-
-    public void startDownload(final DownloadEntry downloadEntry, final ProgressWheel progressWheel) {
-        try {
-            if (environment.getStorage() != null) {
-                boolean isVideoFilePresentByUrl = environment.getDatabase().isVideoFilePresentByUrl(
-                        downloadEntry.url, null);
-                boolean reloadListFlag = true;
-                if (isVideoFilePresentByUrl) {
-                    CircularProgressTask circularTask = new CircularProgressTask();
-                    circularTask.setProgressBar(progressWheel);
-                    circularTask.execute();
-                    reloadListFlag = false;
-                }
-
-                if (environment.getSegment() != null) {
-                    environment.getSegment().trackSingleVideoDownload(downloadEntry.videoId, downloadEntry.eid,
-                            downloadEntry.lmsUrl);
-                }
-
-                if (environment.getStorage().addDownload(downloadEntry) != -1) {
-                    ((VideoListActivity) getActivity())
-                            .showInfoMessage(getString(R.string.msg_started_one_video_download));
-                } else {
-                    ((VideoListActivity) getActivity())
-                            .showInfoMessage(getString(R.string.msg_video_not_downloaded));
-                }
-                ((VideoListActivity) getActivity()).updateProgress();
-
-                //If the video is already downloaded, dont reload the adapter
-                if (reloadListFlag) {
-                    adapter.notifyDataSetChanged();
-                }
-                transcriptManager.downloadTranscriptsForVideo(downloadEntry.transcript);
-            }
-        } catch (Exception e) {
-            logger.error(e);
-        }
-    }
-
-    protected void showStartDownloadDialog(final DownloadEntry de, final ProgressWheel progressWheel) {
-        Map<String, String> dialogMap = new HashMap<String, String>();
-        dialogMap.put("title", getString(R.string.download_exceed_title));
-        dialogMap.put("message_1", getString(R.string.download_exceed_message));
-        dialogMap.put("yes_button", getString(R.string.label_yes));
-        dialogMap.put("no_button", getString(R.string.label_no));
-        downloadSizeExceedDialog = DeleteVideoDialogFragment.newInstance(dialogMap,
-                new IDialogCallback() {
-                    @Override
-                    public void onPositiveClicked() {
-                        startDownload(de, progressWheel);
-                    }
-
-                    @Override
-                    public void onNegativeClicked() {
-                        notifyAdapter();
-                        downloadSizeExceedDialog.dismiss();
-                    }
-                });
-        downloadSizeExceedDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-        downloadSizeExceedDialog.show(getFragmentManager(), "dialog");
-        downloadSizeExceedDialog.setCancelable(false);
     }
 
     protected void showConfirmDeleteDialog(int itemCount) {

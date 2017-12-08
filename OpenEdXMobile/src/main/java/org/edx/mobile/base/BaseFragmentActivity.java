@@ -1,23 +1,20 @@
 package org.edx.mobile.base;
 
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.TypedValue;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +26,7 @@ import org.edx.mobile.event.LogoutEvent;
 import org.edx.mobile.event.NetworkConnectivityChangeEvent;
 import org.edx.mobile.interfaces.NetworkObserver;
 import org.edx.mobile.interfaces.NetworkSubject;
+import org.edx.mobile.interfaces.OnActivityResultListener;
 import org.edx.mobile.logger.Logger;
 import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.util.ViewAnimationUtil;
@@ -42,14 +40,14 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 public abstract class BaseFragmentActivity extends BaseAppActivity
-        implements NetworkSubject, ICommonUI {
+        implements NetworkSubject, ICommonUI, OnActivityResultListener {
+    private final Handler handler = new Handler();
+    protected final Logger logger = new Logger(getClass().getName());
 
-    private MenuItem offlineMenuItem;
-    protected ActionBarDrawerToggle mDrawerToggle;
-    //FIXME - we should not set a separate flag to indicate the status of UI component
-    private boolean isUiOnline = true;
     private boolean isConnectedToWifi = false;
     private boolean isActivityStarted = false;
+    protected ActionBarDrawerToggle mDrawerToggle;
+
     @Inject
     protected IEdxEnvironment environment;
     private List<NetworkObserver> networkObservers = new ArrayList<>();
@@ -80,23 +78,9 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
         }
     }
 
-    private final Handler handler = new Handler();
-    protected final Logger logger = new Logger(getClass().getName());
-
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        updateActionBarShadow();
-
-        logger.debug("created");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        isActivityStarted = true;
-
-        // enabling action bar app icon.
         ActionBar bar = getSupportActionBar();
         if (bar != null) {
             bar.setDisplayShowHomeEnabled(true);
@@ -106,49 +90,33 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        EventBus.getDefault().registerSticky(this);
-        try {
-            DrawerLayout mDrawerLayout = (DrawerLayout)
-                    findViewById(R.id.drawer_layout);
-            if (mDrawerLayout != null) {
-
-                Fragment frag = getSupportFragmentManager()
-                        .findFragmentByTag("NavigationFragment");
-                if (frag == null) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.slider_menu,
-                                    new NavigationFragment(), "NavigationFragment").commit();
-                }
-            }
-        } catch (Exception ex) {
-            logger.error(ex);
+    protected void onRestart() {
+        super.onRestart();
+        if (!NetworkUtil.isConnected(this)) {
+            // Currently we are sending this event again, so that offline SnackBar can appear
+            // when we return to a screen.
+            EventBus.getDefault().post(new NetworkConnectivityChangeEvent());
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isActivityStarted = true;
+    }
 
-    private void updateActionBarShadow() {
-        //Check for JellyBeans version
-        if (Build.VERSION.SDK_INT == 18) {
-            // Get the content view
-            View contentView = findViewById(android.R.id.content);
-
-            // Make sure it's a valid instance of a FrameLayout
-            if (contentView instanceof FrameLayout) {
-                TypedValue tv = new TypedValue();
-
-                // Get the windowContentOverlay value of the current theme
-                if (getTheme().resolveAttribute(
-                        android.R.attr.windowContentOverlay, tv, true)) {
-
-                    // If it's a valid resource, set it as the foreground drawable
-                    // for the content view
-                    if (tv.resourceId != 0) {
-                        ((FrameLayout) contentView).setForeground(
-                                getResources().getDrawable(tv.resourceId));
-                    }
-                }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.getDefault().registerSticky(this);
+        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (mDrawerLayout != null) {
+            Fragment frag = getSupportFragmentManager().findFragmentByTag("NavigationFragment");
+            if (frag == null) {
+                getSupportFragmentManager().beginTransaction().replace(
+                        R.id.slider_menu,
+                        new NavigationFragment(),
+                        "NavigationFragment").commit();
             }
         }
     }
@@ -248,40 +216,11 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
         }
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu) | createOptionsMenu(menu);
-    }
-
-    /**
-     * Initialize the options menu. This is called from
-     * {@link #onCreateOptionsMenu(Menu)}, so that subclasses can override
-     * the base menu implementation while still calling back to the system
-     * implementation. The selection handling for menu items defined here
-     * should be performed in {@link #handleOptionsItemSelected(MenuItem)},
-     * and any these methods should both be overriden together.
-     *
-     * @param menu The options menu.
-     * @return Return true if the menu should be displayed.
-     */
-    protected boolean createOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        offlineMenuItem = menu.findItem(R.id.offline);
-        offlineMenuItem.setVisible(!NetworkUtil.isConnected(this));
-        return true;
-    }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Toggle navigation drawer when the app icon or title on the action bar
         // is clicked
         if (mDrawerToggle != null && mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        if (handleOptionsItemSelected(item)) {
             return true;
         }
 
@@ -293,21 +232,6 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Handle options menu item selection. This is called from
-     * {@link #onOptionsItemSelected(MenuItem)} to provide a menu
-     * selection handler that can be overridden by subclass that override
-     * {@link #createOptionsMenu(Menu)}, and should only be used to handle
-     * selections of the menu items that are initialized from that method.
-     *
-     * @param item The menu item that was selected.
-     * @return boolean Return false to allow normal menu processing to
-     * proceed, true to consume it here.
-     */
-    protected boolean handleOptionsItemSelected(MenuItem item) {
-        return false;
     }
 
     public void setActionBarVisible(boolean visible) {
@@ -436,16 +360,12 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
 
         logger.debug("network state changed");
         if (NetworkUtil.isConnected(this)) {
-            if (!isUiOnline) {
-                // only notify if previous state was NOT same
-                isUiOnline = true;
-                handler.post(new Runnable() {
-                    public void run() {
-                        onOnline();
-                        notifyNetworkConnect();
-                    }
-                });
-            }
+            handler.post(new Runnable() {
+                public void run() {
+                    onOnline();
+                    notifyNetworkConnect();
+                }
+            });
 
             if (NetworkUtil.isConnectedWifi(this)) {
                 if (!isConnectedToWifi) {
@@ -469,15 +389,13 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
                 }
             }
         } else {
-            if (isUiOnline) {
-                isUiOnline = false;
-                handler.post(new Runnable() {
-                    public void run() {
-                        onOffline();
-                        notifyNetworkDisconnect();
-                    }
-                });
-            }
+            handler.post(new Runnable() {
+                public void run() {
+                    onOffline();
+                    notifyNetworkDisconnect();
+                }
+            });
+
         }
     }
 
@@ -510,9 +428,6 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
      * Sub-classes may override this method to handle connected state.
      */
     protected void onOnline() {
-        if (offlineMenuItem != null) {
-            offlineMenuItem.setVisible(false);
-        }
         logger.debug("You are now online");
     }
 
@@ -520,9 +435,6 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
      * Sub-classes may override this method to handle disconnected state.
      */
     protected void onOffline() {
-        if (offlineMenuItem != null) {
-            offlineMenuItem.setVisible(true);
-        }
         logger.debug("You are now offline");
     }
 
@@ -564,12 +476,25 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
-    public void showErrorDialog(@Nullable String title, @NonNull String message) {
-        showErrorDialog(title, message, null);
+    public void showAlertDialog(@Nullable String title, @NonNull String message) {
+        showAlertDialog(title, message, null);
     }
 
-    public void showErrorDialog(@Nullable String title, @NonNull String message, @Nullable DialogInterface.OnClickListener onPositiveClick) {
-        AlertDialogFragment.newInstance(title, message, onPositiveClick).show(getSupportFragmentManager(), null);
+    public void showAlertDialog(@Nullable String title, @NonNull String message, @Nullable DialogInterface.OnClickListener onPositiveClick) {
+        if (isInForeground) {
+            AlertDialogFragment.newInstance(title, message, onPositiveClick).show(getSupportFragmentManager(), null);
+        }
+    }
+
+    public void showAlertDialog(@Nullable String title, @NonNull String message,
+                                @NonNull String  positiveButtonText,
+                                @Nullable DialogInterface.OnClickListener onPositiveClick,
+                                @Nullable String  negativeButtonText,
+                                @Nullable DialogInterface.OnClickListener onNegativeClick) {
+        if (isInForeground) {
+            AlertDialogFragment.newInstance(title, message, positiveButtonText, onPositiveClick, negativeButtonText, onNegativeClick)
+                    .show(getSupportFragmentManager(), null);
+        }
     }
 
     @Override
@@ -577,4 +502,14 @@ public abstract class BaseFragmentActivity extends BaseAppActivity
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * <p>To conform with the {@link OnActivityResultListener} interface this function has been
+     * implemented emptily, making it publicly accessible.</p>
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

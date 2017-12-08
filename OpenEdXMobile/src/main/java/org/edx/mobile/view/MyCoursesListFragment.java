@@ -8,8 +8,13 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
 import org.edx.mobile.R;
 import org.edx.mobile.base.BaseFragment;
@@ -19,21 +24,23 @@ import org.edx.mobile.databinding.FragmentMyCoursesListBinding;
 import org.edx.mobile.databinding.PanelFindCourseBinding;
 import org.edx.mobile.event.EnrolledInCourseEvent;
 import org.edx.mobile.exception.AuthException;
-import org.edx.mobile.http.HttpResponseStatusException;
 import org.edx.mobile.http.HttpStatus;
+import org.edx.mobile.http.HttpStatusException;
+import org.edx.mobile.http.notifications.FullScreenErrorNotification;
+import org.edx.mobile.http.notifications.SnackbarErrorNotification;
 import org.edx.mobile.interfaces.NetworkObserver;
 import org.edx.mobile.interfaces.NetworkSubject;
+import org.edx.mobile.interfaces.RefreshListener;
 import org.edx.mobile.loader.AsyncTaskResult;
 import org.edx.mobile.loader.CoursesAsyncLoader;
 import org.edx.mobile.logger.Logger;
 import org.edx.mobile.model.api.CourseEntry;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
-import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.analytics.Analytics;
 import org.edx.mobile.module.prefs.LoginPrefs;
 import org.edx.mobile.task.RestoreVideosCacheDataTask;
 import org.edx.mobile.util.KonnekteerUtil;
 import org.edx.mobile.util.NetworkUtil;
-import org.edx.mobile.util.ViewAnimationUtil;
 import org.edx.mobile.view.adapters.MyCoursesAdapter;
 
 import java.util.ArrayList;
@@ -43,7 +50,9 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class MyCoursesListFragment extends BaseFragment implements NetworkObserver, LoaderManager.LoaderCallbacks<AsyncTaskResult<List<EnrolledCoursesResponse>>> {
+public class MyCoursesListFragment extends BaseFragment
+        implements NetworkObserver, RefreshListener,
+        LoaderManager.LoaderCallbacks<AsyncTaskResult<List<EnrolledCoursesResponse>>> {
 
     private static final int MY_COURSE_LOADER_ID = 0x905000;
 
@@ -58,9 +67,17 @@ public class MyCoursesListFragment extends BaseFragment implements NetworkObserv
     @Inject
     private LoginPrefs loginPrefs;
 
+    private FullScreenErrorNotification errorNotification;
+
+    private SnackbarErrorNotification snackbarErrorNotification;
+
+    // Reason of usage: Helps in deciding if we want to show a full screen error or a SnackBar.
+    private boolean isInitialServerCallDone = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         adapter = new MyCoursesAdapter(getActivity(), environment) {
             @Override
             public void onItemClicked(EnrolledCoursesResponse model) {
@@ -72,7 +89,7 @@ public class MyCoursesListFragment extends BaseFragment implements NetworkObserv
                 environment.getRouter().showCourseDashboardTabs(getActivity(), environment.getConfig(), model, true);
             }
         };
-        environment.getSegment().trackScreenView(ISegment.Screens.MY_COURSES);
+        environment.getAnalyticsRegistry().trackScreenView(Analytics.Screens.MY_COURSES);
         EventBus.getDefault().register(this);
 
         // Restore cache of the courses for which the user has downloaded any videos
@@ -83,12 +100,14 @@ public class MyCoursesListFragment extends BaseFragment implements NetworkObserv
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_courses_list, container, false);
+        errorNotification = new FullScreenErrorNotification(binding.myCourseList);
+        snackbarErrorNotification = new SnackbarErrorNotification(binding.getRoot());
         binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 // Hide the progress bar as swipe layout has its own progress indicator
                 binding.loadingIndicator.getRoot().setVisibility(View.GONE);
-                binding.noCourseTv.setVisibility(View.GONE);
+                errorNotification.hideError();
                 loadData(false);
             }
         });
@@ -104,11 +123,6 @@ public class MyCoursesListFragment extends BaseFragment implements NetworkObserv
         binding.myCourseList.addFooterView(new View(getContext()), null, false);
         binding.myCourseList.setAdapter(adapter);
         binding.myCourseList.setOnItemClickListener(adapter);
-        if (!(NetworkUtil.isConnected(getActivity()))) {
-            onOffline();
-        } else {
-            onOnline();
-        }
         return binding.getRoot();
     }
 
@@ -126,19 +140,34 @@ public class MyCoursesListFragment extends BaseFragment implements NetworkObserv
     @Override
     public void onLoadFinished(Loader<AsyncTaskResult<List<EnrolledCoursesResponse>>> asyncTaskResultLoader, AsyncTaskResult<List<EnrolledCoursesResponse>> result) {
         adapter.clear();
-        if (result.getEx() != null) {
-            if (result.getEx() instanceof AuthException) {
+        final Exception exception = result.getEx();
+        if (exception != null) {
+            if (exception instanceof AuthException) {
                 loginPrefs.clear();
                 getActivity().finish();
-            } else if (result.getEx() instanceof HttpResponseStatusException &&
-                    ((HttpResponseStatusException) result.getEx()).getStatusCode() == HttpStatus.UNAUTHORIZED) {
-                environment.getRouter().forceLogout(
-                        getContext(),
-                        environment.getSegment(),
-                        environment.getNotificationDelegate());
+            } else if (exception instanceof HttpStatusException) {
+                final HttpStatusException httpStatusException = (HttpStatusException) exception;
+                switch (httpStatusException.getStatusCode()) {
+                    case HttpStatus.UNAUTHORIZED:{
+                        environment.getRouter().forceLogout(getContext(),
+                                environment.getAnalyticsRegistry(),
+                                environment.getNotificationDelegate());
+                        break;
+                    }
+                }
             } else {
-                logger.error(result.getEx());
+                logger.error(exception);
             }
+
+            errorNotification.showError(getActivity(), exception, R.string.lbl_reload,
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (NetworkUtil.isConnected(getContext())) {
+                                onRefresh();
+                            }
+                        }
+                    });
         } else if (result.getResult() != null) {
             ArrayList<EnrolledCoursesResponse> newItems = new ArrayList<EnrolledCoursesResponse>(result.getResult());
             ((MyCoursesListActivity) getActivity()).updateDatabaseAfterDownload(newItems);
@@ -156,16 +185,27 @@ public class MyCoursesListFragment extends BaseFragment implements NetworkObserv
             if (result.getResult().size() > 0) {
                 adapter.setItems(newItems);
                 adapter.notifyDataSetChanged();
+            }else if(environment.getConfig().isJumpToFindCoursesEnabled()){
+                environment.getRouter().showFindCourses(getActivity());
+            }
+
+            if (adapter.isEmpty() && !environment.getConfig().getCourseDiscoveryConfig().isCourseDiscoveryEnabled()) {
+                errorNotification.showError(R.string.no_courses_to_display,
+                        FontAwesomeIcons.fa_exclamation_circle, 0, null);
+                binding.myCourseList.setVisibility(View.GONE);
+            } else {
+                binding.myCourseList.setVisibility(View.VISIBLE);
+                errorNotification.hideError();
             }
         }
         binding.swipeContainer.setRefreshing(false);
         binding.loadingIndicator.getRoot().setVisibility(View.GONE);
-        if (adapter.isEmpty() && !environment.getConfig().getCourseDiscoveryConfig().isCourseDiscoveryEnabled()) {
-            binding.myCourseList.setVisibility(View.GONE);
-            binding.noCourseTv.setVisibility(View.VISIBLE);
+
+        isInitialServerCallDone = true;
+        if (!(NetworkUtil.isConnected(getActivity()))) {
+            onOffline();
         } else {
-            binding.myCourseList.setVisibility(View.VISIBLE);
-            binding.noCourseTv.setVisibility(View.GONE);
+            onOnline();
         }
     }
 
@@ -184,12 +224,6 @@ public class MyCoursesListFragment extends BaseFragment implements NetworkObserv
             loadData(true);
             refreshOnResume = false;
         }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        hideOfflinePanel();
     }
 
     @Override
@@ -216,20 +250,19 @@ public class MyCoursesListFragment extends BaseFragment implements NetworkObserv
 
     @Override
     public void onOnline() {
-        if (binding.offlineBar != null && binding.swipeContainer != null) {
-            binding.offlineBar.setVisibility(View.GONE);
-            hideOfflinePanel();
+        if (binding.swipeContainer != null) {
             binding.swipeContainer.setEnabled(true);
         }
     }
 
     @Override
     public void onOffline() {
-        binding.offlineBar.setVisibility(View.VISIBLE);
-        showOfflinePanel();
         //Disable swipe functionality and hide the loading view
         binding.swipeContainer.setEnabled(false);
         binding.swipeContainer.setRefreshing(false);
+        if (isInitialServerCallDone && !errorNotification.isShowing()) {
+            snackbarErrorNotification.showOfflineError(this);
+        }
     }
 
     @SuppressWarnings("unused")
@@ -240,38 +273,54 @@ public class MyCoursesListFragment extends BaseFragment implements NetworkObserv
     protected void loadData(boolean showProgress) {
         if (showProgress) {
             binding.loadingIndicator.getRoot().setVisibility(View.VISIBLE);
-            binding.noCourseTv.setVisibility(View.GONE);
+            errorNotification.hideError();
         }
         getLoaderManager().restartLoader(MY_COURSE_LOADER_ID, null, this);
     }
 
-    private void showOfflinePanel() {
-        ViewAnimationUtil.showMessageBar(binding.offlinePanel);
-    }
-
-    private void hideOfflinePanel() {
-        ViewAnimationUtil.stopAnimation(binding.offlinePanel);
-        if (binding.offlinePanel.getVisibility() == View.VISIBLE) {
-            binding.offlinePanel.setVisibility(View.GONE);
-        }
-    }
-
     private void addFindCoursesFooter() {
-        final PanelFindCourseBinding footer = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), R.layout.panel_find_course, binding.myCourseList, false);
+        final PanelFindCourseBinding footer = DataBindingUtil.inflate(LayoutInflater.from(getActivity()),
+                R.layout.panel_find_course, binding.myCourseList, false);
         binding.myCourseList.addFooterView(footer.getRoot(), null, false);
         footer.courseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                environment.getSegment().trackUserFindsCourses();
+                environment.getAnalyticsRegistry().trackUserFindsCourses();
                 environment.getRouter().showFindCourses(getActivity());
-            }
-        });
-        footer.courseNotListedTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                environment.getRouter().showWebViewDialog((getActivity()), getString(R.string.course_not_listed_file_name), null);
             }
         });
     }
 
+    @Override
+    public void onRefresh() {
+        loadData(true);
+    }
+
+    @Override
+    protected void onRevisit() {
+        if (NetworkUtil.isConnected(getActivity())) {
+            onOnline();
+            snackbarErrorNotification.hideError();
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.my_courses, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_search: {
+                environment.getAnalyticsRegistry().trackUserFindsCourses();
+                environment.getRouter().showFindCourses(getContext());
+                return true;
+            }
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
+    }
 }

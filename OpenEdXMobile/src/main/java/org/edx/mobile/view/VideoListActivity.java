@@ -12,8 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.google.inject.Inject;
+
 import org.edx.mobile.R;
 import org.edx.mobile.base.BaseVideosDownloadStateActivity;
+import org.edx.mobile.course.CourseAPI;
 import org.edx.mobile.model.api.TranscriptModel;
 import org.edx.mobile.model.db.DownloadEntry;
 import org.edx.mobile.player.IPlayerEventCallback;
@@ -30,11 +33,13 @@ public class VideoListActivity extends BaseVideosDownloadStateActivity
         implements VideoListCallback, IPlayerEventCallback {
 
     private MenuItem selectAllMenuItem;
-    private View offlineBar;
     private PlayerFragment playerFragment;
     private VideoListFragment listFragment;
     private final Handler playHandler = new Handler();
     private Runnable playPending;
+
+    @Inject
+    private CourseAPI courseApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +62,6 @@ public class VideoListActivity extends BaseVideosDownloadStateActivity
                 logger.error(ex);
             }
         }
-
-        offlineBar = findViewById(R.id.offline_bar);
 
         listFragment = (VideoListFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.list_fragment);
@@ -187,7 +190,7 @@ public class VideoListActivity extends BaseVideosDownloadStateActivity
             TranscriptModel transcript = null;
             try {
                 if (video.videoId != null) {
-                    transcript = environment.getServiceManager().getTranscriptsOfVideo(video.eid, video.videoId);
+                    transcript = courseApi.getTranscriptsOfVideo(video.eid, video.videoId);
                 }
 
             } catch (Exception e) {
@@ -262,15 +265,8 @@ public class VideoListActivity extends BaseVideosDownloadStateActivity
     @Override
     protected void onOffline() {
         super.onOffline();
-        if (offlineBar != null) {
-            offlineBar.setVisibility(View.VISIBLE);
-        }
         if (playerFragment != null) {
             playerFragment.onOffline();
-        }
-
-        if (listFragment != null) {
-            listFragment.onOffline();
         }
 
         if (playerFragment != null && listFragment != null) {
@@ -296,14 +292,10 @@ public class VideoListActivity extends BaseVideosDownloadStateActivity
     @Override
     protected void onOnline() {
         super.onOnline();
-        if (offlineBar != null) {
-            offlineBar.setVisibility(View.GONE);
-        }
         AppConstants.videoListDeleteMode = false;
         if (playerFragment != null) {
             playerFragment.onOnline();
         }
-        listFragment.onOnline();
         if (playerFragment != null && listFragment != null) {
             playerFragment.setNextPreviousListeners(listFragment.getNextListener(),
                     listFragment.getPreviousListener());

@@ -3,18 +3,15 @@ package org.edx.mobile.view;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
-import android.support.v7.widget.SearchView;
 
 import org.edx.mobile.R;
-import org.edx.mobile.base.FindCoursesBaseActivity;
+import org.edx.mobile.base.BaseWebViewFindCoursesActivity;
 import org.edx.mobile.logger.Logger;
-import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.analytics.Analytics;
 import org.edx.mobile.util.Config;
 
 import java.io.UnsupportedEncodingException;
@@ -23,9 +20,7 @@ import java.net.URLEncoder;
 import roboguice.inject.ContentView;
 
 @ContentView(R.layout.activity_find_courses)
-public class WebViewFindCoursesActivity extends FindCoursesBaseActivity {
-
-    private WebView webView;
+public class WebViewFindCoursesActivity extends BaseWebViewFindCoursesActivity {
     private SearchView searchView;
 
     @Override
@@ -36,9 +31,14 @@ public class WebViewFindCoursesActivity extends FindCoursesBaseActivity {
         } else {
             blockDrawerFromOpening();
         }
-        environment.getSegment().trackScreenView(ISegment.Screens.FIND_COURSES);
-        webView = (WebView) findViewById(R.id.webview);
-        webView.loadUrl(getInitialUrl());
+        environment.getAnalyticsRegistry().trackScreenView(Analytics.Screens.FIND_COURSES);
+        loadUrl(getInitialUrl());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        AuthPanelUtils.configureAuthPanel(findViewById(R.id.auth_panel), environment);
     }
 
     @NonNull
@@ -70,7 +70,7 @@ public class WebViewFindCoursesActivity extends FindCoursesBaseActivity {
                 String baseUrl = environment.getConfig().getCourseDiscoveryConfig().getCourseSearchUrl();
                 String searchUrl = buildQuery(baseUrl, query, logger);
                 searchView.onActionViewCollapsed();
-                webView.loadUrl(searchUrl);
+                loadUrl(searchUrl);
                 return true;
             }
 
@@ -107,14 +107,6 @@ public class WebViewFindCoursesActivity extends FindCoursesBaseActivity {
             return true;
         } else {
             return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    protected void onOnline() {
-        super.onOnline();
-        if (!isWebViewLoaded()) {
-            webView.reload();
         }
     }
 

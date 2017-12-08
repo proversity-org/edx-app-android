@@ -9,15 +9,21 @@ import android.support.v4.app.Fragment;
 
 import com.google.inject.Inject;
 
+import org.edx.mobile.BuildConfig;
 import org.edx.mobile.R;
 import org.edx.mobile.base.BaseSingleFragmentActivity;
 import org.edx.mobile.event.NewVersionAvailableEvent;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.module.analytics.Analytics;
 import org.edx.mobile.module.db.DataCallback;
 import org.edx.mobile.module.notification.NotificationDelegate;
-import org.edx.mobile.util.AppUpdateUtils;
+import org.edx.mobile.module.prefs.PrefManager;
+import org.edx.mobile.util.AppConstants;
+import org.edx.mobile.util.AppStoreUtils;
 import org.edx.mobile.util.IntentFactory;
+import org.edx.mobile.util.Version;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
@@ -26,7 +32,7 @@ import roboguice.inject.InjectView;
 public class MyCoursesListActivity extends BaseSingleFragmentActivity {
 
     @NonNull
-    @InjectView(R.id.coorinator_layout)
+    @InjectView(R.id.coordinator_layout)
     private CoordinatorLayout coordinatorLayout;
 
     @Inject
@@ -42,9 +48,37 @@ public class MyCoursesListActivity extends BaseSingleFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        initWhatsNew();
         configureDrawer();
         setTitle(getString(R.string.label_my_courses));
-        environment.getSegment().trackScreenView(getString(R.string.label_my_courses));
+        environment.getAnalyticsRegistry().trackScreenView(Analytics.Screens.MY_COURSES);
+    }
+
+    private void initWhatsNew() {
+        if (environment.getConfig().isWhatsNewEnabled()) {
+            boolean shouldShowWhatsNew = false;
+            final PrefManager.AppInfoPrefManager appPrefs = new PrefManager.AppInfoPrefManager(this);
+            final String lastWhatsNewShownVersion = appPrefs.getWhatsNewShownVersion();
+            if (lastWhatsNewShownVersion == null) {
+                shouldShowWhatsNew = true;
+            } else {
+                try {
+                    final Version oldVersion = new Version(lastWhatsNewShownVersion);
+                    final Version newVersion = new Version(BuildConfig.VERSION_NAME);
+                    if (oldVersion.isNMinorVersionsDiff(newVersion,
+                            AppConstants.MINOR_VERSIONS_DIFF_REQUIRED_FOR_WHATS_NEW)) {
+                        shouldShowWhatsNew = true;
+                    }
+                } catch (ParseException e) {
+                    shouldShowWhatsNew = false;
+                    logger.error(e);
+                }
+            }
+            if (shouldShowWhatsNew) {
+                environment.getRouter().showWhatsNewActivity(this);
+            }
+        }
     }
 
     @Override
@@ -122,16 +156,16 @@ public class MyCoursesListActivity extends BaseSingleFragmentActivity {
             final Snackbar snackbar = Snackbar.make(coordinatorLayout,
                     newVersionAvailableEvent.getNotificationString(this),
                     Snackbar.LENGTH_INDEFINITE);
-            if (AppUpdateUtils.canUpdate(this)) {
-                snackbar.setAction(R.string.app_version_update_button,
-                        AppUpdateUtils.OPEN_APP_IN_APP_STORE_CLICK_LISTENER);
+            if (AppStoreUtils.canUpdate(this)) {
+                snackbar.setAction(R.string.label_update,
+                        AppStoreUtils.OPEN_APP_IN_APP_STORE_CLICK_LISTENER);
             }
             snackbar.setCallback(new Snackbar.Callback() {
-                        @Override
-                        public void onDismissed(Snackbar snackbar, int event) {
-                            newVersionAvailableEvent.markAsConsumed();
-                        }
-                    });
+                @Override
+                public void onDismissed(Snackbar snackbar, int event) {
+                    newVersionAvailableEvent.markAsConsumed();
+                }
+            });
             snackbar.show();
         }
     }

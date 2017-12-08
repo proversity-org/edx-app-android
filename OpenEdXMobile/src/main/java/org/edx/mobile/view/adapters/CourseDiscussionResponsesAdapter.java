@@ -3,8 +3,10 @@ package org.edx.mobile.view.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
 import org.edx.mobile.R;
+import org.edx.mobile.base.BaseFragment;
 import org.edx.mobile.discussion.DiscussionComment;
 import org.edx.mobile.discussion.DiscussionService;
 import org.edx.mobile.discussion.DiscussionService.FlagBody;
@@ -25,12 +28,13 @@ import org.edx.mobile.discussion.DiscussionService.VoteBody;
 import org.edx.mobile.discussion.DiscussionTextUtils;
 import org.edx.mobile.discussion.DiscussionThread;
 import org.edx.mobile.discussion.DiscussionThreadUpdatedEvent;
-import org.edx.mobile.http.CallTrigger;
-import org.edx.mobile.http.ErrorHandlingCallback;
+import org.edx.mobile.http.callback.ErrorHandlingCallback;
+import org.edx.mobile.http.notifications.DialogErrorNotification;
+import org.edx.mobile.model.api.EnrolledCoursesResponse;
+import org.edx.mobile.module.prefs.LoginPrefs;
 import org.edx.mobile.util.Config;
 import org.edx.mobile.util.ResourceUtil;
 import org.edx.mobile.util.UiUtil;
-import org.edx.mobile.view.common.TaskProgressCallback;
 import org.edx.mobile.view.view_holders.AuthorLayoutViewHolder;
 import org.edx.mobile.view.view_holders.DiscussionSocialLayoutViewHolder;
 import org.edx.mobile.view.view_holders.NumberResponsesViewHolder;
@@ -58,14 +62,23 @@ public class CourseDiscussionResponsesAdapter extends RecyclerView.Adapter imple
     @Inject
     private DiscussionService discussionService;
 
+    @Inject
+    private LoginPrefs loginPrefs;
+
     @NonNull
     private final Context context;
+
+    @NonNull
+    private final BaseFragment baseFragment;
 
     @NonNull
     private final Listener listener;
 
     @NonNull
     private DiscussionThread discussionThread;
+
+    @NonNull
+    private EnrolledCoursesResponse courseData;
 
     private final List<DiscussionComment> discussionResponses = new ArrayList<>();
 
@@ -79,10 +92,16 @@ public class CourseDiscussionResponsesAdapter extends RecyclerView.Adapter imple
         static final int PROGRESS = 2;
     }
 
-    public CourseDiscussionResponsesAdapter(@NonNull Context context, @NonNull Listener listener, @NonNull DiscussionThread discussionThread) {
+    public CourseDiscussionResponsesAdapter(@NonNull Context context,
+                                            @NonNull BaseFragment baseFragment,
+                                            @NonNull Listener listener,
+                                            @NonNull DiscussionThread discussionThread,
+                                            @NonNull EnrolledCoursesResponse courseData) {
         this.context = context;
+        this.baseFragment = baseFragment;
         this.discussionThread = discussionThread;
         this.listener = listener;
+        this.courseData = courseData;
         RoboGuice.getInjector(context).injectMembers(this);
     }
 
@@ -164,29 +183,32 @@ public class CourseDiscussionResponsesAdapter extends RecyclerView.Adapter imple
                     "cohort", groupName));
         }
 
-        bindSocialView(holder.socialLayoutViewHolder, discussionThread);
-
         bindNumberResponsesView(holder.numberResponsesViewHolder);
 
-        holder.discussionReportViewHolder.reportLayout.setOnClickListener(new View.OnClickListener() {
-            public void onClick(final View v) {
-                discussionService.setThreadFlagged(discussionThread.getIdentifier(),
-                        new FlagBody(!discussionThread.isAbuseFlagged()))
-                        .enqueue(new ErrorHandlingCallback<DiscussionThread>(
-                                context,
-                                CallTrigger.USER_ACTION,
-                                (TaskProgressCallback) null) {
-                            @Override
-                            protected void onResponse(@NonNull final DiscussionThread topicThread) {
-                                discussionThread = discussionThread.patchObject(topicThread);
-                                notifyItemChanged(0);
-                                EventBus.getDefault().post(new DiscussionThreadUpdatedEvent(discussionThread));
-                            }
-                        });
-            }
-        });
+        if (TextUtils.equals(loginPrefs.getUsername(), discussionThread.getAuthor())) {
+            holder.actionsBar.setVisibility(View.GONE);
+        } else {
+            holder.actionsBar.setVisibility(View.VISIBLE);
 
-        holder.discussionReportViewHolder.setReported(discussionThread.isAbuseFlagged());
+            bindSocialView(holder.socialLayoutViewHolder, discussionThread);
+            holder.discussionReportViewHolder.reportLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(final View v) {
+                    discussionService.setThreadFlagged(discussionThread.getIdentifier(),
+                            new FlagBody(!discussionThread.isAbuseFlagged()))
+                            .enqueue(new ErrorHandlingCallback<DiscussionThread>(
+                                    context, null, new DialogErrorNotification(baseFragment)) {
+                                @Override
+                                protected void onResponse(@NonNull final DiscussionThread topicThread) {
+                                    discussionThread = discussionThread.patchObject(topicThread);
+                                    notifyItemChanged(0);
+                                    EventBus.getDefault().post(new DiscussionThreadUpdatedEvent(discussionThread));
+                                }
+                            });
+                }
+            });
+
+            holder.discussionReportViewHolder.setReported(discussionThread.isAbuseFlagged());
+        }
     }
 
     private void bindSocialView(DiscussionSocialLayoutViewHolder holder, DiscussionThread thread) {
@@ -198,9 +220,7 @@ public class CourseDiscussionResponsesAdapter extends RecyclerView.Adapter imple
                 discussionService.setThreadVoted(discussionThread.getIdentifier(),
                         new VoteBody(!discussionThread.isVoted()))
                         .enqueue(new ErrorHandlingCallback<DiscussionThread>(
-                                context,
-                                CallTrigger.USER_ACTION,
-                                (TaskProgressCallback) null) {
+                                context, null, new DialogErrorNotification(baseFragment)) {
                             @Override
                             protected void onResponse(@NonNull final DiscussionThread updatedDiscussionThread) {
                                 discussionThread = discussionThread.patchObject(updatedDiscussionThread);
@@ -218,9 +238,7 @@ public class CourseDiscussionResponsesAdapter extends RecyclerView.Adapter imple
                 discussionService.setThreadFollowed(discussionThread.getIdentifier(),
                         new FollowBody(!discussionThread.isFollowing()))
                         .enqueue(new ErrorHandlingCallback<DiscussionThread>(
-                                context,
-                                CallTrigger.USER_ACTION,
-                                (TaskProgressCallback) null) {
+                                context, null, new DialogErrorNotification(baseFragment)) {
                             @Override
                             protected void onResponse(@NonNull final DiscussionThread updatedDiscussionThread) {
                                 discussionThread = discussionThread.patchObject(updatedDiscussionThread);
@@ -295,6 +313,8 @@ public class CourseDiscussionResponsesAdapter extends RecyclerView.Adapter imple
 
         if (discussionThread.isClosed() && comment.getChildCount() == 0) {
             holder.addCommentLayout.setEnabled(false);
+        } else if (courseData.isDiscussionBlackedOut() && comment.getChildCount() == 0) {
+            holder.addCommentLayout.setEnabled(false);
         } else {
             holder.addCommentLayout.setEnabled(true);
             holder.addCommentLayout.setOnClickListener(new View.OnClickListener() {
@@ -310,29 +330,32 @@ public class CourseDiscussionResponsesAdapter extends RecyclerView.Adapter imple
         }
 
         bindNumberCommentsView(holder.numberResponsesViewHolder, comment);
-        bindSocialView(holder.socialLayoutViewHolder, position, comment);
 
-        holder.discussionReportViewHolder.reportLayout.setOnClickListener(new View.OnClickListener() {
-            public void onClick(final View v) {
-                discussionService.setCommentFlagged(comment.getIdentifier(),
-                        new FlagBody(!comment.isAbuseFlagged()))
-                        .enqueue(new ErrorHandlingCallback<DiscussionComment>(
-                                context,
-                                CallTrigger.USER_ACTION,
-                                (TaskProgressCallback) null) {
-                            @Override
-                            protected void onResponse(@NonNull final DiscussionComment comment) {
-                                discussionResponses.get(position - 1).patchObject(comment);
-                                discussionResponses.set(position - 1, comment);
-                                notifyItemChanged(position);
-                            }
-                        });
-            }
-        });
+        if (TextUtils.equals(loginPrefs.getUsername(), comment.getAuthor())) {
+            holder.actionsBar.setVisibility(View.GONE);
+        } else {
+            holder.actionsBar.setVisibility(View.VISIBLE);
 
-        holder.discussionReportViewHolder.setReported(comment.isAbuseFlagged());
+            bindSocialView(holder.socialLayoutViewHolder, position, comment);
+            holder.discussionReportViewHolder.reportLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(final View v) {
+                    discussionService.setCommentFlagged(comment.getIdentifier(),
+                            new FlagBody(!comment.isAbuseFlagged()))
+                            .enqueue(new ErrorHandlingCallback<DiscussionComment>(
+                                    context, null, new DialogErrorNotification(baseFragment)) {
+                                @Override
+                                protected void onResponse(@NonNull final DiscussionComment comment) {
+                                    discussionResponses.get(position - 1).patchObject(comment);
+                                    discussionResponses.set(position - 1, comment);
+                                    notifyItemChanged(position);
+                                }
+                            });
+                }
+            });
 
-        holder.socialLayoutViewHolder.threadFollowContainer.setVisibility(View.INVISIBLE);
+            holder.discussionReportViewHolder.setReported(comment.isAbuseFlagged());
+            holder.socialLayoutViewHolder.threadFollowContainer.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void bindSocialView(DiscussionSocialLayoutViewHolder holder, final int position, final DiscussionComment response) {
@@ -345,9 +368,7 @@ public class CourseDiscussionResponsesAdapter extends RecyclerView.Adapter imple
                 discussionService.setCommentVoted(response.getIdentifier(),
                         new VoteBody(!response.isVoted()))
                         .enqueue(new ErrorHandlingCallback<DiscussionComment>(
-                                context,
-                                CallTrigger.USER_ACTION,
-                                (TaskProgressCallback) null) {
+                                context, null, new DialogErrorNotification(baseFragment)) {
                             @Override
                             protected void onResponse(@NonNull final DiscussionComment comment) {
                                 discussionResponses.get(position - 1).patchObject(comment);
@@ -366,7 +387,7 @@ public class CourseDiscussionResponsesAdapter extends RecyclerView.Adapter imple
         int numChildren = response == null ? 0 : response.getChildCount();
 
         if (response.getChildCount() == 0) {
-            if (discussionThread.isClosed()) {
+            if (discussionThread.isClosed() || courseData.isDiscussionBlackedOut()) {
                 text = context.getString(R.string.discussion_add_comment_disabled_title);
                 icon = FontAwesomeIcons.fa_lock;
             } else {
@@ -459,6 +480,7 @@ public class CourseDiscussionResponsesAdapter extends RecyclerView.Adapter imple
     }
 
     public static class DiscussionThreadViewHolder extends RecyclerView.ViewHolder {
+        View actionsBar;
         TextView threadTitleTextView;
         TextView threadBodyTextView;
         TextView threadVisibilityTextView;
@@ -471,6 +493,7 @@ public class CourseDiscussionResponsesAdapter extends RecyclerView.Adapter imple
         public DiscussionThreadViewHolder(View itemView) {
             super(itemView);
 
+            actionsBar = itemView.findViewById(R.id.discussion_actions_bar);
             threadTitleTextView = (TextView) itemView.
                     findViewById(R.id.discussion_responses_thread_row_title_text_view);
             threadBodyTextView = (TextView) itemView.
@@ -486,6 +509,7 @@ public class CourseDiscussionResponsesAdapter extends RecyclerView.Adapter imple
     }
 
     public static class DiscussionResponseViewHolder extends RecyclerView.ViewHolder {
+        View actionsBar;
         RelativeLayout addCommentLayout;
         TextView responseCommentBodyTextView;
         TextView responseAnswerAuthorTextView;
@@ -498,9 +522,11 @@ public class CourseDiscussionResponsesAdapter extends RecyclerView.Adapter imple
         public DiscussionResponseViewHolder(View itemView) {
             super(itemView);
 
+            actionsBar = itemView.findViewById(R.id.discussion_actions_bar);
             addCommentLayout = (RelativeLayout) itemView.findViewById(R.id.discussion_responses_comment_relative_layout);
             responseCommentBodyTextView = (TextView) itemView.findViewById(R.id.discussion_responses_comment_body_text_view);
             responseAnswerAuthorTextView = (TextView) itemView.findViewById(R.id.discussion_responses_answer_author_text_view);
+
             authorLayoutViewHolder = new AuthorLayoutViewHolder(itemView.findViewById(R.id.discussion_user_profile_row));
             numberResponsesViewHolder = new NumberResponsesViewHolder(itemView);
             socialLayoutViewHolder = new DiscussionSocialLayoutViewHolder(itemView);

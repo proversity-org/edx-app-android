@@ -12,6 +12,9 @@ public class BlockModel implements Serializable {
     @SerializedName("id")
     public String id;
 
+    @SerializedName("block_id")
+    public String blockId;
+
     @SerializedName("type")
     public BlockType type;
 
@@ -35,6 +38,9 @@ public class BlockModel implements Serializable {
 
     @SerializedName("format")
     public String format;
+
+    @SerializedName("due")
+    public String dueDate;
 
     // descendants: (list) A list of IDs of the children of the block if the block's depth in the
     // course hierarchy is less than the navigation_depth.  Otherwise, a list of IDs of the aggregate descendants

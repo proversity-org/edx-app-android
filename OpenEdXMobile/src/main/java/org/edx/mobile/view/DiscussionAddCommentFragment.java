@@ -16,15 +16,17 @@ import com.google.inject.Inject;
 
 import org.edx.mobile.R;
 import org.edx.mobile.base.BaseFragment;
+import org.edx.mobile.discussion.CommentBody;
 import org.edx.mobile.discussion.DiscussionComment;
 import org.edx.mobile.discussion.DiscussionCommentPostedEvent;
 import org.edx.mobile.discussion.DiscussionService;
 import org.edx.mobile.discussion.DiscussionTextUtils;
 import org.edx.mobile.discussion.DiscussionThread;
-import org.edx.mobile.http.CallTrigger;
-import org.edx.mobile.http.ErrorHandlingCallback;
+import org.edx.mobile.http.callback.ErrorHandlingCallback;
+import org.edx.mobile.http.notifications.DialogErrorNotification;
 import org.edx.mobile.logger.Logger;
-import org.edx.mobile.module.analytics.ISegment;
+import org.edx.mobile.module.analytics.Analytics;
+import org.edx.mobile.module.analytics.AnalyticsRegistry;
 import org.edx.mobile.util.Config;
 import org.edx.mobile.util.SoftKeyboardUtil;
 import org.edx.mobile.view.common.TaskProgressCallback.ProgressViewController;
@@ -72,7 +74,7 @@ public class DiscussionAddCommentFragment extends BaseFragment {
     private Router router;
 
     @Inject
-    private ISegment segIO;
+    private AnalyticsRegistry analyticsRegistry;
 
     @Inject
     private Config config;
@@ -84,10 +86,13 @@ public class DiscussionAddCommentFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
 
         Map<String, String> values = new HashMap<>();
-        values.put(ISegment.Keys.TOPIC_ID, discussionThread.getTopicId());
-        values.put(ISegment.Keys.THREAD_ID, discussionThread.getIdentifier());
-        values.put(ISegment.Keys.RESPONSE_ID, discussionResponse.getIdentifier());
-        segIO.trackScreenView(ISegment.Screens.FORUM_ADD_RESPONSE_COMMENT,
+        values.put(Analytics.Keys.TOPIC_ID, discussionThread.getTopicId());
+        values.put(Analytics.Keys.THREAD_ID, discussionThread.getIdentifier());
+        values.put(Analytics.Keys.RESPONSE_ID, discussionResponse.getIdentifier());
+        if (!discussionResponse.isAuthorAnonymous()) {
+            values.put(Analytics.Keys.AUTHOR, discussionResponse.getAuthor());
+        }
+        analyticsRegistry.trackScreenView(Analytics.Screens.FORUM_ADD_RESPONSE_COMMENT,
                 discussionThread.getCourseId(), discussionThread.getTitle(), values);
     }
 
@@ -147,12 +152,13 @@ public class DiscussionAddCommentFragment extends BaseFragment {
             createCommentCall.cancel();
         }
 
-        createCommentCall = discussionService.createComment(discussionResponse.getThreadId(),
-                editTextNewComment.getText().toString(), discussionResponse.getIdentifier());
+        createCommentCall = discussionService.createComment(new CommentBody(
+                discussionResponse.getThreadId(), editTextNewComment.getText().toString(),
+                discussionResponse.getIdentifier()));
         createCommentCall.enqueue(new ErrorHandlingCallback<DiscussionComment>(
                 getActivity(),
-                CallTrigger.USER_ACTION,
-                new ProgressViewController(createCommentProgressBar)) {
+                new ProgressViewController(createCommentProgressBar),
+                new DialogErrorNotification(this)) {
             @Override
             protected void onResponse(@NonNull final DiscussionComment thread) {
                 logger.debug(thread.toString());

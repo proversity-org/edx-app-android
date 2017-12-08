@@ -6,6 +6,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import com.google.inject.Inject;
 
 import org.edx.mobile.core.IEdxEnvironment;
+import org.edx.mobile.course.CourseAPI;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
 import org.edx.mobile.model.api.ProfileModel;
 import org.edx.mobile.module.prefs.LoginPrefs;
@@ -17,6 +18,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import roboguice.RoboGuice;
+
+import static org.edx.mobile.http.util.CallUtil.executeStrict;
 
 public class CoursesAsyncLoader extends AsyncTaskLoader<AsyncTaskResult<List<EnrolledCoursesResponse>>> {
     private AsyncTaskResult<List<EnrolledCoursesResponse>> mData;
@@ -50,7 +53,7 @@ public class CoursesAsyncLoader extends AsyncTaskLoader<AsyncTaskResult<List<Enr
 
         try {
             if (profile != null) {
-                enrolledCoursesResponse = api.getUserEnrolledCourses(profile.username, config.getOrganizationCode(), false);
+                enrolledCoursesResponse = api.getUserEnrolledCourses(profile.username, config.getOrganizationCode());
                 environment.getNotificationDelegate().syncWithServerForFailure();
                 environment.getNotificationDelegate().checkCourseEnrollment(enrolledCoursesResponse);
             }

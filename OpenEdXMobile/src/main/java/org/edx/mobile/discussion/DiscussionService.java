@@ -18,15 +18,13 @@ package org.edx.mobile.discussion;
 
 import com.google.inject.Inject;
 
+import org.edx.mobile.http.provider.RetrofitProvider;
 import org.edx.mobile.model.Page;
 
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Retrofit;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
@@ -34,7 +32,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-import static org.edx.mobile.http.ApiConstants.PARAM_PAGE_SIZE;
+import static org.edx.mobile.http.constants.ApiConstants.PARAM_PAGE_SIZE;
 
 public interface DiscussionService {
     /**
@@ -42,11 +40,11 @@ public interface DiscussionService {
      */
     class Provider implements com.google.inject.Provider<DiscussionService> {
         @Inject
-        private Retrofit retrofit;
+        private RetrofitProvider retrofitProvider;
 
         @Override
         public DiscussionService get() {
-            return retrofit.create(DiscussionService.class);
+            return retrofitProvider.getWithOfflineCache().create(DiscussionService.class);
         }
     }
 
@@ -54,20 +52,18 @@ public interface DiscussionService {
     @GET("/api/discussion/v1/courses/{course_id}/")
     Call<CourseDiscussionInfo> getCourseDiscussionInfo(@Path("course_id") String courseId);
 
-
     @GET("/api/discussion/v1/courses/{course_id}/")
     Call<CourseDiscussionInfo> getCourseDiscussionInfoWithCacheEnabled(@Path("course_id") String courseId);
-
 
     @GET("/api/discussion/v1/course_topics/{course_id}")
     Call<CourseTopics> getCourseTopics(@Path("course_id") String courseId);
 
-
+    @Headers("Cache-Control: no-cache")
     @GET("/api/discussion/v1/course_topics/{course_id}")
     Call<CourseTopics> getSpecificCourseTopics(@Path("course_id") String courseId,
                                                @Query("topic_id") List<String> topicIds);
 
-
+    @Headers("Cache-Control: no-cache")
     @GET("/api/discussion/v1/threads?" + PARAM_PAGE_SIZE)
     Call<Page<DiscussionThread>> getThreadList(@Query("course_id") String courseId,
                                                @Query("topic_id") List<String> topicIds,
@@ -76,7 +72,7 @@ public interface DiscussionService {
                                                @Query("page") int page,
                                                @Query("requested_fields") List<String> requestedFields);
 
-
+    @Headers("Cache-Control: no-cache")
     @GET("/api/discussion/v1/threads?following=true&" + PARAM_PAGE_SIZE)
     Call<Page<DiscussionThread>> getFollowingThreadList(@Query("course_id") String courseId,
                                                         @Query("view") String view,
@@ -85,23 +81,24 @@ public interface DiscussionService {
                                                         @Query("requested_fields")
                                                         List<String> requestedFields);
 
+    @Headers("Cache-Control: no-cache")
     @GET("/api/discussion/v1/threads?" + PARAM_PAGE_SIZE)
     Call<Page<DiscussionThread>> searchThreadList(@Query("course_id") String courseId,
                                                   @Query("text_search") String text,
                                                   @Query("page") int page,
                                                   @Query("requested_fields") List<String> requestedFields);
 
-
+    @Headers("Cache-Control: no-cache")
     @GET("/api/discussion/v1/threads/{thread_id}/")
     Call<DiscussionThread> getThread(@Path("thread_id") String threadId);
 
-
+    @Headers("Cache-Control: no-cache")
     @GET("/api/discussion/v1/comments?" + PARAM_PAGE_SIZE)
     Call<Page<DiscussionComment>> getResponsesList(@Query("thread_id") String threadId,
                                                    @Query("page") int page,
                                                    @Query("requested_fields") List<String> requestedFields);
 
-
+    @Headers("Cache-Control: no-cache")
     @GET("/api/discussion/v1/comments?" + PARAM_PAGE_SIZE)
     Call<Page<DiscussionComment>> getResponsesListForQuestion(@Query("thread_id") String threadId,
                                                               @Query("page") int page,
@@ -109,52 +106,49 @@ public interface DiscussionService {
                                                               @Query("requested_fields")
                                                               List<String> requestedFields);
 
-
+    @Headers("Cache-Control: no-cache")
     @GET("/api/discussion/v1/comments/{comment_id}?" + PARAM_PAGE_SIZE)
     Call<Page<DiscussionComment>> getCommentsList(@Path("comment_id") String responseId,
                                                   @Query("page") int page,
                                                   @Query("requested_fields") List<String> requestedFields);
 
-
+    @Headers("Cache-Control: no-cache")
     @PATCH("/api/discussion/v1/threads/{thread_id}/")
     Call<DiscussionThread> setThreadFlagged(@Path("thread_id") String threadId,
                                             @Body FlagBody flagBody);
 
-
+    @Headers("Cache-Control: no-cache")
     @PATCH("/api/discussion/v1/comments/{comment_id}/")
     Call<DiscussionComment> setCommentFlagged(@Path("comment_id") String commentId,
                                               @Body FlagBody flagBody);
 
-
+    @Headers("Cache-Control: no-cache")
     @PATCH("/api/discussion/v1/threads/{thread_id}/")
     Call<DiscussionThread> setThreadVoted(@Path("thread_id") String threadId,
                                           @Body VoteBody voteBody);
 
-
+    @Headers("Cache-Control: no-cache")
     @PATCH("/api/discussion/v1/comments/{comment_id}/")
     Call<DiscussionComment> setCommentVoted(@Path("comment_id") String commentId,
                                             @Body VoteBody voteBody);
 
-
+    @Headers("Cache-Control: no-cache")
     @PATCH("/api/discussion/v1/threads/{thread_id}/")
     Call<DiscussionThread> setThreadFollowed(@Path("thread_id") String threadId,
                                              @Body FollowBody followBody);
 
-
+    @Headers("Cache-Control: no-cache")
     @PATCH("/api/discussion/v1/threads/{thread_id}/")
     Call<DiscussionThread> setThreadRead(@Path("thread_id") String threadId,
                                          @Body ReadBody readBody);
 
-
+    @Headers("Cache-Control: no-cache")
     @POST("/api/discussion/v1/threads/")
     Call<DiscussionThread> createThread(@Body ThreadBody threadBody);
 
-
-    @FormUrlEncoded
+    @Headers("Cache-Control: no-cache")
     @POST("/api/discussion/v1/comments/")
-    Call<DiscussionComment> createComment(@Field("thread_id") String threadId,
-                                          @Field("raw_body") String rawBody,
-                                          @Field("parent_id") String parentId);
+    Call<DiscussionComment> createComment(@Body CommentBody commentBody);
 
     final class FlagBody {
         private boolean abuseFlagged;

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">@string/platform_name</string>
     <string name="app_shortcut_name" translatable="false">@string/shortcut_name</string>
     <string name="phonetic_app_name" translatable="false">@string/phonetic_platform_name</string>
+    <string name="eula_file_link">file:///android_asset/EULA.htm</string>
 
     <!-- Certificates -->
 
@@ -38,8 +39,6 @@
 
     <!-- Description of button that will open the share course menu -->
     <string name="share_course_button">Share your course</string>
-    <!-- Share menu title -->
-    <string name="share_course_popup_header">Share this course via&#8230;</string>
     <!-- Share course -->
     <string name="share_course_message">I’m taking a course on {platform_name}! Check it out:</string>
 
@@ -56,8 +55,6 @@
     <string name="share_certificate_message">I just earned a Certificate on {platform_name}! Check it out: {certificate_url}</string>
     <!-- Tab of tab for certicate for finished course -->
     <string name="tab_label_certificate">Certificate</string>
-    <!-- Header for popup list of share targets -->
-    <string name="share_certificate_popup_header">Share your certificate via…</string>
 
     <!-- Data Usage Dialog -->
     <!-- Alert dialog error message shown when using a feature with a required Internet connection -->
@@ -96,7 +93,7 @@
 
     <!-- Navigation Drawer Labels -->
     <!-- The accessibility description for the navigation header -->
-    <string name="navigation_header">Currently signed in as {username}, {email}</string>
+    <string name="navigation_header">Currently signed in as {username}</string>
     <!-- Button to open drawer -->
     <string name="label_open_navigation_menu">Open Navigation Menu</string>
     <!-- Button to open drawer -->
@@ -107,10 +104,14 @@
     <string name="open_profile_button">Open your profile</string>
     <!-- Title of user's course list screen -->
     <string name="label_my_courses">My Courses</string>
+    <!-- Title of important course dates screen -->
+    <string name="label_course_dates" tools:ignore="MissingTranslation">Course Dates and Deadlines</string>
     <!-- Title of user's downloaded videos list screen -->
     <string name="label_my_videos">My Videos</string>
-    <!-- Title of Find Courses screen -->
+    <!-- Title of native Find Courses Screen -->
     <string name="label_find_courses">Find Courses</string>
+    <!-- Title of webview based Find Courses Screen -->
+    <string name="label_discover" tools:ignore="MissingTranslation">Discover</string>
     <!-- Button allowing users to send an email for feedback -->
     <string name="label_submit_feedback">Submit Feedback</string>
     <!-- Toggle switch on state label -->
@@ -124,7 +125,9 @@
     <!-- Settings screen version -->
     <string name="label_version">App Version</string>
     <!-- Button text to show user Settings screen -->
-    <string name="label_settings">My Settings</string>
+    <string name="label_settings">Settings</string>
+    <!-- Title of Account screen -->
+    <string name="title_account" tools:ignore="MissingTranslation">Account</string>
 
     <!-- Help Dialog Place Holder messages -->
     <!-- Reset password alert dialog title -->
@@ -148,21 +151,28 @@
         <item quantity="one">Are you sure you want to delete this video?</item>
         <item quantity="other">Are you sure you want to delete these videos?</item>
     </plurals>
+    <!-- Info message text for to let use know how many videos were deleted -->
+    <plurals name="delete_video_snackbar_msg">
+        <item quantity="one">%s video deleted</item>
+        <item quantity="other">%s videos deleted</item>
+    </plurals>
     <!-- Alert dialog title for users with zero rated data -->
     <string name="leaving_app_data_title">Leaving the {platform_name} App</string>
     <!-- Alert dialog content for users with zero rated data -->
     <string name="leaving_app_data_message">If you leave the app, you will no longer be viewing free {platform_name} content. Data charges may apply.</string>
-    <!-- Reset Dialog Fragment Place Holder messages -->
-    <string name="reset_dialog_title">Reset Title</string>
     <!-- Title of agreement users must accept to use the app -->
     <string name="end_user_title">End User License Agreement</string>
 
     <!-- My Courses -->
     <!-- Row of course on dashboard screen -->
-    <string name="courseware_title">Courseware</string>
+    <string name="courseware_title">Course</string>
     <!-- Row of course on dashboard screen -->
     <!-- NOTE: TODO - not final one -->
     <string name="courseware_subtitle">Access videos and assignments</string>
+    <!-- Row title of videos on dashboard screen -->
+    <string name="videos_title" tools:ignore="MissingTranslation">Videos</string>
+    <!-- Row subtitle of videos on dashboard screen -->
+    <string name="videos_subtitle" tools:ignore="MissingTranslation">Watch course videos</string>
     <!-- Row of Discussion on dashboard screen -->
     <string name="discussion_title">Discussion</string>
     <!-- Row of Discussion on dashboard screen -->
@@ -175,9 +185,13 @@
     <string name="handouts_subtitle">Find important course information</string>
     <!-- Row of announcement on dashboard screen -->
     <string name="announcement_title">Announcements</string>
+    <!-- Title text for the important dates section on the course dashboard  -->
+    <string name="course_dates_title" tools:ignore="MissingTranslation">Important Dates</string>
     <!-- Row of announcement on dashboard screen -->
     <!-- NOTE: TODO - not final one -->
     <string name="announcement_subtitle">Keep up with the latest news</string>
+    <!-- Subtitle text describing the important dates section on the course dashboard -->
+    <string name="course_dates_subtitle" tools:ignore="MissingTranslation">Keep track of deadlines and stay on track</string>
     <!-- Accessible content description of school code label a course -->
     <string name="school_code">School Code</string>
     <!-- Accessible content description of course name label field -->
@@ -190,16 +204,6 @@
     <string name="label_ended">Ended - {date}</string>
     <!-- Label for date when course is ending -->
     <string name="label_ending">Ending - {date}</string>
-    <!-- Title for the course filter menu popup -->
-    <string name="course_view_modes">Course View Options</string>
-    <!-- Label for the course filter menu popup option for filtering by videos only -->
-    <string name="course_view_mode_videos_only">Videos Only</string>
-    <!-- Label for the course filter menu popup option for displaying the full course -->
-    <string name="course_view_mode_full_course">Full Course</string>
-    <!-- Label for the menu popup for viewing the course on the web -->
-    <string name="course_view_on_web">View on Web</string>
-    <!-- Label for the menu popup for changing mode to Videos Only/Full Course -->
-    <string name="course_change_mode">Course viewing options</string>
 
     <!-- Course Details -->
     <!-- Accessible content description of label for course content -->
@@ -209,13 +213,23 @@
     <!-- Button for last accessed course section. Will be followed by course name -->
     <string name="last_accessed">Last Accessed</string>
     <!-- Label shown when no courseware content is available -->
-    <string name="no_chapter_text">No courseware is currently available.</string>
+    <string name="no_chapter_text">No course content is currently available.</string>
+    <!-- Label shown when no mobile-friendly videos are available in a course -->
+    <string name="no_videos_text" tools:ignore="MissingTranslation">This course does not include any videos.</string>
     <!-- Label shown when user is enrolled in no courses -->
     <string name="no_courses_to_display">It looks like you are not enrolled in any courses yet.</string>
     <!-- Label shown when no announcements are available for a course -->
     <string name="no_announcements_to_display">There are currently no announcements for this course.</string>
     <!-- Label shown when no handouts are available for a course -->
     <string name="no_handouts_to_display">There are currently no handouts for this course.</string>
+    <!-- Label shown when no important dates are available for a course -->
+    <string name="no_course_dates_to_display" tools:ignore="MissingTranslation">Course dates are not currently available.</string>
+    <!-- Title of the screen where user can delete videos -->
+    <string name="delete_videos_title" tools:ignore="MissingTranslation">Delete Videos</string>
+    <!-- Label for a course item's due date for same day -->
+    <string name="due_date_today" tools:ignore="MissingTranslation">due today at {due_date}</string>
+    <!-- Label for a course item's due date -->
+    <string name="due_date_past_future" tools:ignore="MissingTranslation">due {due_date}</string>
 
     <!-- Discussion Topics -->
     <!-- Label for the discussion topics page -->
@@ -231,7 +245,7 @@
     <!--Label for creating a new post-->
     <string name="discussion_post_create_new_post">Create a new post</string>
     <!--Label for creating a new comment-->
-    <string name="discussion_post_create_new_comment" translatable="false">@string/discussion_add_comment_title</string>
+    <string name="discussion_post_create_new_comment" tools:ignore="MissingTranslation">@string/discussion_add_comment_title</string>
     <!--Discussion posts filter options-->
     <!--Discussion posts filter for all posts-->
     <string name="discussion_posts_filter_all_posts">All Posts</string>
@@ -269,7 +283,7 @@
     <!--Label for question type discussions that are unanswered-->
     <string name="course_discussion_unanswered_title">Unanswered Question</string>
     <!--Label for adding a discussion response-->
-    <string name="discussion_responses_add_response_button" translatable="false">@string/discussion_add_response_title</string>
+    <string name="discussion_responses_add_response_button" tools:ignore="MissingTranslation">@string/discussion_add_response_title</string>
     <!--Label for number of discussion responses-->
     <plurals name="number_responses_or_comments_responses_label">
         <item quantity="one">%s response</item>
@@ -281,7 +295,7 @@
         <item quantity="other">%s comments</item>
     </plurals>
     <!--Label for adding a new comment-->
-    <string name="number_responses_or_comments_add_comment_label" translatable="false">@string/discussion_add_comment_title</string>
+    <string name="number_responses_or_comments_add_comment_label" tools:ignore="MissingTranslation">@string/discussion_add_comment_title</string>
     <!--Label for indicating that a response is an answer-->
     <string name="discussion_responses_answer">Answer</string>
     <!--Label for indicating that a response is endorsed-->
@@ -315,7 +329,7 @@
     <!-- Add comment button description for accessibility in adding a new comment -->
     <string name="discussion_add_comment_button_description">Add comment button</string>
     <!-- Add your comment placeholder in adding a new comment -->
-    <string name="discussion_add_comment_hint" translatable="false">@string/discussion_add_comment_title</string>
+    <string name="discussion_add_comment_hint" tools:ignore="MissingTranslation">@string/discussion_add_comment_title</string>
 
     <!-- Title in adding a new response -->
     <string name="discussion_add_response_title">Add a response</string>
@@ -326,7 +340,7 @@
     <!-- Add response button description for accessibility in adding a new response -->
     <string name="discussion_add_response_button_description">Add response button</string>
     <!-- Add your response placeholder in adding a new response -->
-    <string name="discussion_add_response_hint" translatable="false">@string/discussion_add_response_title</string>
+    <string name="discussion_add_response_hint" tools:ignore="MissingTranslation">@string/discussion_add_response_title</string>
 
     <!-- Title placeholder in adding a new post -->
     <string name="discussion_post_title">Title</string>
@@ -341,9 +355,9 @@
     <!-- Add post button content description for accessibility in adding a new post -->
     <string name="discussion_add_question_button_description">Post question button</string>
     <!-- Add your post placeholder in adding a new post -->
-    <string name="discussion_body_hint_discussion" translatable="false">@string/discussion_title</string>
+    <string name="discussion_body_hint_discussion" tools:ignore="MissingTranslation">@string/discussion_title</string>
     <!-- Add your post placeholder in adding a new post -->
-    <string name="discussion_body_hint_question" translatable="false">@string/discussion_question</string>
+    <string name="discussion_body_hint_question" tools:ignore="MissingTranslation">@string/discussion_question</string>
     <!-- Question text in adding a new post -->
     <string name="discussion_question">Question</string>
 
@@ -352,8 +366,6 @@
     <string name="assessment_next">Next</string>
     <!-- Label showing previous unit in a sub-section on assessment navigation bar-->
     <string name="assessment_previous">Previous</string>
-    <!-- Label for empty video in video only mode-->
-    <string name="assessment_empty_video_info">There are no videos in this section. To view other section content, select {mode_switcher} above and switch to full course mode.</string>
     <!-- Label showing assessment only available on website-->
     <string name="assessment_not_available">This interactive component isn’t yet available on mobile.</string>
     <!-- Label showing assessment only available on website-->
@@ -383,7 +395,7 @@
     <!-- Title of recent videos section -->
     <string name="my_recent_videos">Recent Videos</string>
     <!-- Label indicating user has no Internet connection -->
-    <string name="offline_text">Offline Mode</string>
+    <string name="offline_text">Offline</string>
     <!-- Label shown in videos section when user has no videos downloaded -->
     <string name="no_videos_to_display">You haven’t downloaded any videos.</string>
     <!-- Cancel video download -->
@@ -448,21 +460,13 @@
     <!-- Button label to bring up course finder -->
     <string name="find_course_text">Looking for a new challenge?</string>
     <!-- Button label to bring up course finder -->
-    <string name="find_course_btn_text">Find a mobile-friendly course</string>
+    <string name="find_course_btn_text">Find a Course</string>
     <!-- Message between sign in button and social login buttons -->
     <string name="or_sign_in_with">Or sign in with</string>
     <!-- Facebook login method -->
     <string name="facebook_text">Facebook</string>
     <!-- Google login method -->
     <string name="google_text">Google</string>
-    <!-- Message on course list -->
-    <string name="course_not_listed_text">Can’t find one of your courses?</string>
-    <!-- Accessible content description of course not listed button on Course list screen -->
-    <string name="course_not_listed_btn">Can’t find one of your courses button</string>
-    <!-- Title of find course screen -->
-    <string name="find_courses_title">Find Courses</string>
-    <!-- Message shown when attempting to find courses with no Internet connection -->
-    <string name="find_courses_offline_text">You are in offline mode.\nTo find courses, connect to the Internet.</string>
     <!-- Prompt allowing user to choose email program -->
     <string name="email_chooser_header">Send email using...</string>
     <!-- Error shown when user attempts to send email, but has no email app -->
@@ -501,7 +505,7 @@
     <!-- Text shown while waiting for registration request -->
     <string name="creating_account_text">Creating account...</string>
     <!-- Registration screen title -->
-    <string name="register_title">Sign up for {platform_name}</string>
+    <string name="register_title">Register</string>
     <!-- Text for successful registration with social token  -->
     <string name="sign_up_with_facebook_ok">You’ve successfully signed in with Facebook.</string>
     <string name="sign_up_with_google_ok">You’ve successfully signed in with Google.</string>
@@ -526,6 +530,8 @@
 
     <!--  Email subject line when user attempts to submit feedback about the app -->
     <string name="email_subject">Customer Feedback</string>
+    <!--  Email subject line when a user attempts to submit a review using the app review workflow -->
+    <string name="review_email_subject">Customer Review</string>
     <!--  Submit Feedback app version text -->
     <string name="app_version">App Version: </string>
     <!--  Submit Feedback android version text -->
@@ -536,8 +542,7 @@
     <string name="insert_feedback">Feedback: </string>
 
     <!-- Message indicating num of video deleted. {video_count} is a number of videos deleted, like "3".  -->
-    <plurals
-        name="deleted_video">
+    <plurals name="deleted_video">
         <item quantity="one">{video_count} video deleted </item>
         <item quantity="other">{video_count} videos deleted</item>
     </plurals>
@@ -623,6 +628,20 @@
     <string name="share_accomplishment_button">Share your accomplishment</string>
     <!-- Text that pre-populates your post/email/SMS when sharing certificate -->
     <string name="share_accomplishment_message">I just earned a badge on {platform_name}! Check it out: {badge_url}</string>
-    <string name="lbl_cc">CC</string>
-
+    <!-- Question on the app rating dialog -->
+    <string name="rating_dialog_message">How would you rate the app?</string>
+    <!-- Dialog title for positive app review -->
+    <string name="rate_app_dialog_title">Rate the app</string>
+    <!-- Dialog message for positive app review -->
+    <string name="rate_app_dialog_message">Tell others what you think of the {platform_name} app by writing a quick review</string>
+    <!-- Dialog title for negative app review -->
+    <string name="feedback_dialog_title">Send Feedback?</string>
+    <!-- Dialog message for negative app review -->
+    <string name="feedback_dialog_message">Help us improve!</string>
+    <!-- accessibility label for rating bar -->
+    <string name="rating_bar">Rating control</string>
+    <!-- accessibility label for rating selection on rating bar -->
+    <string name="rating_bar_selection">{rating} out of {num_of_stars}</string>
+    <!-- Title of the Whats New screen e.g. Version 2.8.1 New Features -->
+    <string name="whats_new_title">Version {version_number} New Features</string>
 </resources>

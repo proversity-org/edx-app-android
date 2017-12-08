@@ -23,6 +23,7 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
 import org.edx.mobile.R;
+import org.edx.mobile.discussion.CourseDiscussionInfo;
 import org.edx.mobile.discussion.CourseTopics;
 import org.edx.mobile.discussion.DiscussionCommentPostedEvent;
 import org.edx.mobile.discussion.DiscussionPostsFilter;
@@ -33,16 +34,20 @@ import org.edx.mobile.discussion.DiscussionThread;
 import org.edx.mobile.discussion.DiscussionThreadPostedEvent;
 import org.edx.mobile.discussion.DiscussionThreadUpdatedEvent;
 import org.edx.mobile.discussion.DiscussionTopic;
-import org.edx.mobile.http.CallTrigger;
-import org.edx.mobile.http.ErrorHandlingCallback;
+import org.edx.mobile.discussion.TimePeriod;
+import org.edx.mobile.http.callback.CallTrigger;
+import org.edx.mobile.http.callback.ErrorHandlingCallback;
 import org.edx.mobile.model.Page;
 import org.edx.mobile.view.adapters.DiscussionPostsSpinnerAdapter;
 import org.edx.mobile.view.adapters.InfiniteScrollUtils;
+import org.edx.mobile.view.common.TaskMessageCallback;
+import org.edx.mobile.view.common.TaskProgressCallback;
 import org.edx.mobile.view.common.TaskProgressCallback.ProgressViewController;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -126,9 +131,9 @@ public class CourseDiscussionPostsThreadFragment extends CourseDiscussionPostsBa
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        checkIfDiscussionsBlackedOut();
+
         if (discussionTopic == null) {
-            // Hide the button for adding new posts until the topic is loaded.
-            createNewPostLayout.setVisibility(View.GONE);
             // Either we are coming from a deep link or courseware's inline discussion
             fetchDiscussionTopic();
         } else {
@@ -219,15 +224,15 @@ public class CourseDiscussionPostsThreadFragment extends CourseDiscussionPostsBa
 
     private void fetchDiscussionTopic() {
         String topicId = getArguments().getString(Router.EXTRA_DISCUSSION_TOPIC_ID);
+        final Activity activity = getActivity();
+        final TaskMessageCallback mCallback = activity instanceof TaskMessageCallback ? (TaskMessageCallback) activity : null;
         discussionService.getSpecificCourseTopics(courseData.getCourse().getId(),
                 Collections.singletonList(topicId))
-                .enqueue(new ErrorHandlingCallback<CourseTopics>(getContext(),
-                        CallTrigger.LOADING_UNCACHED,
-                        new ProgressViewController(loadingIndicator)) {
+                .enqueue(new ErrorHandlingCallback<CourseTopics>(activity,
+                        new ProgressViewController(loadingIndicator), mCallback, CallTrigger.LOADING_UNCACHED) {
                     @Override
                     protected void onResponse(@NonNull final CourseTopics courseTopics) {
                         discussionTopic = courseTopics.getCoursewareTopics().get(0).getChildren().get(0);
-                        Activity activity = getActivity();
                         if (activity != null &&
                                 !getArguments().getBoolean(ARG_DISCUSSION_HAS_TOPIC_NAME)) {
                             // We only need to set the title here when coming from a deep link
@@ -344,12 +349,15 @@ public class CourseDiscussionPostsThreadFragment extends CourseDiscussionPostsBa
                     courseData.getCourse().getId(), postsFilter.getQueryParamValue(),
                     postsSort.getQueryParamValue(), nextPage, requestedFields);
         }
-        getThreadListCall.enqueue(new ErrorHandlingCallback<Page<DiscussionThread>>(getActivity(),
-                CallTrigger.LOADING_UNCACHED,
+
+        final Activity activity = getActivity();
+        final TaskMessageCallback mCallback = activity instanceof TaskMessageCallback ? (TaskMessageCallback) activity : null;
+        final boolean isRefreshingSilently = callback.isRefreshingSilently();
+        getThreadListCall.enqueue(new ErrorHandlingCallback<Page<DiscussionThread>>(activity,
                 // Initially we need to show the spinner at the center of the screen. After that,
                 // the ListView will start showing a footer-based loading indicator.
-                nextPage > 1 || callback.isRefreshingSilently() ? null :
-                        new ProgressViewController(loadingIndicator)) {
+                nextPage > 1 || isRefreshingSilently ? null :
+                        new ProgressViewController(loadingIndicator),mCallback, CallTrigger.LOADING_UNCACHED) {
             @Override
             protected void onResponse(@NonNull final Page<DiscussionThread> threadsPage) {
                 if (getView() == null) return;
@@ -439,5 +447,40 @@ public class CourseDiscussionPostsThreadFragment extends CourseDiscussionPostsBa
         for (DiscussionTopic child : dTopic.getChildren()) {
             appendTopicIds(child, ids);
         }
+    }
+
+    /**
+     * Query server to check if discussions on this course are blacked out.
+     */
+    private void checkIfDiscussionsBlackedOut() {
+        createNewPostLayout.setVisibility(View.GONE);
+
+        discussionService.getCourseDiscussionInfo(courseData.getCourse().getId())
+                .enqueue(new ErrorHandlingCallback<CourseDiscussionInfo>(getContext(), (TaskProgressCallback) null) {
+                    @Override
+                    public void onFailure(@NonNull Call<CourseDiscussionInfo> call, @NonNull Throwable t) {
+                        markAsBlackedOut(false);
+                    }
+
+                    @Override
+                    protected void onResponse(@NonNull CourseDiscussionInfo discussionInfo) {
+                        final Date today = new Date();
+                        final List<TimePeriod> blackoutTimesList = discussionInfo.getBlackoutList();
+                        for (TimePeriod timePeriod : blackoutTimesList) {
+                            if (today.after(timePeriod.getStart()) &&
+                                    today.before(timePeriod.getEnd())) {
+                                markAsBlackedOut(true);
+                                return;
+                            }
+                        }
+                        markAsBlackedOut(false);
+                    }
+
+                    private void markAsBlackedOut(boolean isBlackedOut) {
+                        courseData.setDiscussionBlackedOut(isBlackedOut);
+                        createNewPostLayout.setEnabled(!isBlackedOut);
+                        createNewPostLayout.setVisibility(View.VISIBLE);
+                    }
+                });
     }
 }

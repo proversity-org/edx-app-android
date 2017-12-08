@@ -48,7 +48,8 @@ public class URLInterceptorWebViewClient extends WebViewClient {
     @Inject
     Config config;
     /*
-    To help a few views (like Announcements) to treat every link as external link and open outside the view.
+    To help a few views (like Announcements) to treat every link as external link and open in
+    external web browser.
      */
     private boolean isAllLinksExternal = false;
 
@@ -124,7 +125,17 @@ public class URLInterceptorWebViewClient extends WebViewClient {
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
         super.onReceivedError(view, errorCode, description, failingUrl);
         if (pageStatusListener != null) {
-            pageStatusListener.onPageLoadError();
+            pageStatusListener.onPageLoadError(view, errorCode, description, failingUrl);
+        }
+    }
+
+    @Override
+    @TargetApi(Build.VERSION_CODES.M)
+    public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+        super.onReceivedHttpError(view, request, errorResponse);
+        if (pageStatusListener != null) {
+            pageStatusListener.onPageLoadError(view, request, errorResponse,
+                    request.getUrl().toString().equals(view.getUrl()));
         }
     }
 
@@ -177,17 +188,6 @@ public class URLInterceptorWebViewClient extends WebViewClient {
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
         return shouldInterceptRequest(view, request.getUrl().toString());
     }
-
-    /**
-     * Checks if the URL pattern matches with that of COURSE_INFO URL.
-     * Extracts path_id from the URL and gives a callback to the registered
-     * action listener with path_id parameter.
-     * Returns true if pattern matches with COURSE_INFO URL pattern and callback succeeds with
-     * extracted parameter, false otherwise.
-     *
-     * @param strUrl
-     * @return
-     */
 
     /**
      * Checks if {@param strUrl} is valid course info link and, if so,
@@ -268,7 +268,7 @@ public class URLInterceptorWebViewClient extends WebViewClient {
     /**
      * Page state callbacks.
      */
-    public static interface IPageStatusListener {
+    public interface IPageStatusListener {
         /**
          * Callback that indicates page loading has started.
          */
@@ -282,12 +282,17 @@ public class URLInterceptorWebViewClient extends WebViewClient {
         /**
          * Callback that indicates error during page load.
          */
-        void onPageLoadError();
+        void onPageLoadError(WebView view, int errorCode, String description, String failingUrl);
+
+        /**
+         * Callback that indicates error during page load.
+         */
+        void onPageLoadError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse,
+                             boolean isMainRequestFailure);
 
         /**
          * Callback that indicates that the page is 50 percent loaded.
          */
         void onPagePartiallyLoaded();
     }
-
 }
