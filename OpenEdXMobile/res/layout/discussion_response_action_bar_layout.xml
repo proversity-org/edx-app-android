@@ -7,7 +7,7 @@
     android:layout_height="@dimen/discussion_responses_secondary_actions_bar_height"
     tools:showIn="@layout/row_discussion_responses_response">
 
-    <LinearLayout
+    <android.support.v7.widget.ButtonBarLayout
         android:id="@+id/discussion_responses_action_bar_vote_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -27,7 +27,7 @@
             style="@style/discussion_responses_small_text"
             tools:text="2 votes" />
 
-    </LinearLayout>
+    </android.support.v7.widget.ButtonBarLayout>
 
     <LinearLayout
         android:id="@+id/discussion_responses_action_bar_follow_container"
