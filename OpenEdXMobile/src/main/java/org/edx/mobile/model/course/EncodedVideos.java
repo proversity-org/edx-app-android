@@ -6,9 +6,15 @@ import android.webkit.URLUtil;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.edx.mobile.base.MainApplication;
+import org.edx.mobile.util.AppConstants;
+import org.edx.mobile.util.Config;
+import org.edx.mobile.util.VideoUtil;
+
 import java.io.Serializable;
 
 public class EncodedVideos implements Serializable {
+
     @SerializedName("mobile_high")
     public VideoInfo mobileHigh;
 
@@ -26,14 +32,28 @@ public class EncodedVideos implements Serializable {
 
     @Nullable
     public VideoInfo getPreferredVideoInfo() {
-        if (mobileLow != null && URLUtil.isNetworkUrl(mobileLow.url))
+        if (isPreferredVideoInfo(mobileLow)) {
             return mobileLow;
-        if (mobileHigh != null && URLUtil.isNetworkUrl(mobileHigh.url))
+        }
+        if (isPreferredVideoInfo(mobileHigh)) {
             return mobileHigh;
-        if (hls != null && URLUtil.isNetworkUrl(hls.url))
+        }
+        if (hls != null && URLUtil.isNetworkUrl(hls.url)) {
             return hls;
-        if (fallback != null && URLUtil.isNetworkUrl(fallback.url))
+        }
+        if (fallback != null && URLUtil.isNetworkUrl(fallback.url)) {
             return fallback;
+        }
+        if (new Config(MainApplication.instance()).isUsingVideoPipeline()) {
+            if (fallback != null && URLUtil.isNetworkUrl(fallback.url) &&
+                    VideoUtil.isSupportedVideoFormat(fallback.url, AppConstants.VIDEO_FORMAT_M3U8)) {
+                return fallback;
+            }
+        } else {
+            if (isPreferredVideoInfo(fallback)) {
+                return fallback;
+            }
+        }
         return null;
     }
 
@@ -46,6 +66,12 @@ public class EncodedVideos implements Serializable {
         if (fallback != null && URLUtil.isNetworkUrl(fallback.url))
             return fallback;
         return null;
+    }
+
+    private boolean isPreferredVideoInfo(@Nullable VideoInfo videoInfo) {
+        return videoInfo != null &&
+                URLUtil.isNetworkUrl(videoInfo.url) &&
+                VideoUtil.isValidVideoUrl(videoInfo.url);
     }
 
     @Nullable
@@ -62,6 +88,8 @@ public class EncodedVideos implements Serializable {
 
         EncodedVideos that = (EncodedVideos) o;
 
+        if (fallback != null ? !fallback.equals(that.fallback) : that.fallback != null)
+            return false;
         if (mobileHigh != null ? !mobileHigh.equals(that.mobileHigh) : that.mobileHigh != null)
             return false;
         if (mobileLow != null ? !mobileLow.equals(that.mobileLow) : that.mobileLow != null)
