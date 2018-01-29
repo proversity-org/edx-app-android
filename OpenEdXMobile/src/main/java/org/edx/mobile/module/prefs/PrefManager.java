@@ -215,6 +215,10 @@ public class PrefManager {
             super.put(Key.LAST_RATED_VERSION, versionName);
         }
 
+        public void setLanguage(String language) {
+            super.put(Key.USER_LANGUAGE, language);
+        }
+
         @Nullable
         public String getWhatsNewShownVersion() {
             return getString(Key.WHATS_NEW_SHOWN_FOR_VERSION);

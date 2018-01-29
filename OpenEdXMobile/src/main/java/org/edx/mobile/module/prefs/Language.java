@@ -28,34 +28,28 @@ public class Language {
   LoginPrefs loginPrefs;
 
   @NonNull
-  private final PrefManager pref;
+  private final PrefManager.AppInfoPrefManager pref;
 
   @javax.inject.Inject
-  public Language(@NonNull Context context) {
-    pref = new PrefManager(context, PrefManager.Pref.USER_PREF);
+  public Language() {
+    pref = new PrefManager.AppInfoPrefManager(MainApplication.instance());
   }
-
+  //must put fixes in if app is english and phone is not
 
   private String language;
 
   public void setLanguage() {
-    String phoneLanguage = Locale.getDefault().getDisplayLanguage();
-    if (phoneLanguage.equals("English")) {
-      getAppLanguageFromLocalStorage();
-      getAppLanguageByApi();
-    }
+    getAppLanguageFromLocalStorage();
+    getAppLanguageByApi();
   }
 
   public void setLanguage(String language){
-    String phoneLanguage =  Locale.getDefault().getDisplayLanguage();
-    if(phoneLanguage.equals("English")) {
-      pref.put(PrefManager.Key.USER_LANGUAGE, language);
-      Locale locale = new Locale(language);
-      Locale.setDefault(locale);
-      Configuration config = new Configuration();
-      config.locale = locale;
-      MainApplication.instance().getResources().updateConfiguration(config, MainApplication.instance().getResources().getDisplayMetrics());
-    }
+    pref.setLanguage(language);
+    Locale locale = new Locale(language);
+    Locale.setDefault(locale);
+    Configuration config = new Configuration();
+    config.locale = locale;
+    MainApplication.instance().getResources().updateConfiguration(config, MainApplication.instance().getResources().getDisplayMetrics());
   }
 
   private void getAppLanguageByApi(){
@@ -75,8 +69,7 @@ public class Language {
   }
 
   private void getAppLanguageFromLocalStorage(){
-    PrefManager.AppInfoPrefManager pmanager = new PrefManager.AppInfoPrefManager(MainApplication.instance());
-    language = pmanager.getUserLanguages();
+    language = pref.getUserLanguages();
     if(language!=null) {
       setLanguage(language);
     }
