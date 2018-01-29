@@ -17,7 +17,6 @@ public class SplashActivity extends Activity {
         finish();
 
         /*
-        //
         Recommended solution to avoid opening of multiple tasks of our app's launcher activity.
         For more info:
         - https://issuetracker.google.com/issues/36907463
