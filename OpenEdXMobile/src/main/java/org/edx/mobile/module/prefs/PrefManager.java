@@ -187,6 +187,10 @@ public class PrefManager {
             super.put(Key.AppSettingNeedSyncWithParse, enabled);
         }
 
+        public String getUserLanguages() {
+            return getString(Key.USER_LANGUAGE);
+        }
+
         public String getPrevNotificationHashKey() {
             return getString(Key.AppNotificationPushHash);
         }
@@ -283,6 +287,8 @@ public class PrefManager {
         public static final String AppNotificationPushHash = "AppNotificationPushHash";
         public static final String AppUpgradeNeedSyncWithParse = "AppUpgradeNeedSyncWithParse";
         public static final String AppSettingNeedSyncWithParse = "AppSettingNeedSyncWithParse";
+        public static final String USER_LANGUAGE = "pref_language";
+
         /**
          * For downloaded videos to appear in order on the My Videos screen, we need
          * to have the videos' courses data cached. This is the key to a persistent

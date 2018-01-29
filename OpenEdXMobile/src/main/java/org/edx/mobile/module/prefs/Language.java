@@ -27,33 +27,38 @@ public class Language {
   @Inject
   LoginPrefs loginPrefs;
 
-  private boolean isLanguageSet = false;
+  @NonNull
+  private final PrefManager pref;
+
+  @javax.inject.Inject
+  public Language(@NonNull Context context) {
+    pref = new PrefManager(context, PrefManager.Pref.USER_PREF);
+  }
 
 
+  private String language;
 
   public void setLanguage() {
-    if (!isLanguageSet) {
-      String phoneLanguage = Locale.getDefault().getDisplayLanguage();
-      if (phoneLanguage.equals("English")) {
-        getAppLanguage();
-      }
-      isLanguageSet = true;
+    String phoneLanguage = Locale.getDefault().getDisplayLanguage();
+    if (phoneLanguage.equals("English")) {
+      getAppLanguageFromLocalStorage();
+      getAppLanguageByApi();
     }
   }
 
   public void setLanguage(String language){
     String phoneLanguage =  Locale.getDefault().getDisplayLanguage();
     if(phoneLanguage.equals("English")) {
+      pref.put(PrefManager.Key.USER_LANGUAGE, language);
       Locale locale = new Locale(language);
       Locale.setDefault(locale);
       Configuration config = new Configuration();
       config.locale = locale;
       MainApplication.instance().getResources().updateConfiguration(config, MainApplication.instance().getResources().getDisplayMetrics());
     }
-    isLanguageSet = true;
   }
 
-  private void getAppLanguage(){
+  private void getAppLanguageByApi(){
     final Injector injector = RoboGuice.getInjector(MainApplication.instance());
     UserService userService = injector.getInstance(UserService.class);
     userService.getPreferences(loginPrefs.getUsername()).enqueue(new Callback<Preferences>() {
@@ -67,6 +72,14 @@ public class Language {
 
       }
     });
+  }
+
+  private void getAppLanguageFromLocalStorage(){
+    PrefManager.AppInfoPrefManager pmanager = new PrefManager.AppInfoPrefManager(MainApplication.instance());
+    language = pmanager.getUserLanguages();
+    if(language!=null) {
+      setLanguage(language);
+    }
   }
 
 
