@@ -79,7 +79,7 @@
   <string name="login_title">Mewngofnodi</string>
   <string name="close">Cau</string>
   <string name="dropdown_list_prefix">Cwymplen.</string>
-  <string name="navigation_header">Wedi mewngofnodi ar hyn o bryd fel {username}, {email}</string>
+  <string name="navigation_header">Wedi mewngofnodi ar hyn o bryd fel {username}</string>
   <string name="label_open_navigation_menu">Agor y ddewislen lywio</string>
   <string name="label_close_navigation_menu">Cau\'r ddewislen lywio</string>
   <string name="action_settings">Gosodiadau</string>
