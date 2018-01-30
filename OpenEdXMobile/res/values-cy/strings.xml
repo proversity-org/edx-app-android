@@ -145,7 +145,7 @@
   <string name="discussion_post_endorsed">Cymeradwywyd</string>
   <string name="discussion_post_author_label_attribution">({testun})</string>
   <string name="discussion_post_total_replies">cyfanswm {total_replies}</string>
-  <string name="discussion_post_last_interaction_date">Postiad diwethaf: {dyddiad}</string>
+  <string name="discussion_post_last_interaction_date">Postiad diwethaf: {date}</string>
   <string name="course_discussion_answered_title">Cwestiwn wedi\'i ateb</string>
   <string name="course_discussion_unanswered_title">Cwestiwn heb ei ateb</string>
   <string name="discussion_responses_add_response_button">@string/discussion_add_response_title</string>
@@ -169,7 +169,7 @@
   <string name="discussion_add_response_button_description">Botwm ychwanegu ymateb</string>
   <string name="discussion_add_response_hint">@string/discussion_add_response_title</string>
   <string name="discussion_post_title">Teitl</string>
-  <string name="discussion_add_post_topic_selection">Pwnc: {pwnc}</string>
+  <string name="discussion_add_post_topic_selection">Pwnc: {topic}</string>
   <string name="discussion_add_post_button_label">Postio trafodaeth</string>
   <string name="discussion_add_post_button_description">Botwm postio trafodaeth</string>
   <string name="discussion_add_question_button_label">Postio cwestiwn</string>
@@ -270,10 +270,10 @@
   <string name="forum_follow">Dilyn</string>
   <string name="forum_unfollow">Gorffen dilyn</string>
   <string name="profile_title">Proffil</string>
-  <string name="profile_username_description">Enw defnyddiwr: {enw defnyddiwr}</string>
-  <string name="profile_language_description">Iaith: {iaith}</string>
-  <string name="profile_location_description">Lleoliad: {lleoliad}</string>
-  <string name="profile_about_me_description">Amdanaf i: {amdanaf i}</string>
+  <string name="profile_username_description">Enw defnyddiwr: {username}</string>
+  <string name="profile_language_description">Iaith: {language}</string>
+  <string name="profile_location_description">Lleoliad: {location}</string>
+  <string name="profile_about_me_description">Amdanaf i: {about_me}</string>
   <string name="profile_toolbar_edit_button">Golygu</string>
   <string name="profile_sharing_limited_by_you">Rydych yn rhannu proffil cyfyngedig ar hyn o bryd</string>
   <string name="profile_sharing_limited_by_other_user">Mae\'r person hwn yn rhannu proffil cyfyngedig ar hyn o bryd</string>

@@ -2,7 +2,9 @@ package org.edx.mobile.module.prefs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -11,6 +13,9 @@ import org.edx.mobile.http.callback.Callback;
 import org.edx.mobile.user.Account;
 import org.edx.mobile.user.Preferences;
 import org.edx.mobile.user.UserService;
+import org.edx.mobile.view.MyCoursesListActivity;
+import org.edx.mobile.view.Router;
+import org.edx.mobile.view.SplashActivity;
 import roboguice.RoboGuice;
 
 import javax.inject.Singleton;
@@ -34,9 +39,6 @@ public class Language {
   public Language() {
     pref = new PrefManager.AppInfoPrefManager(MainApplication.instance());
   }
-  //must put fixes in if app is english and phone is not
-
-  private String language;
 
   public void setLanguage() {
     getAppLanguageFromLocalStorage();
@@ -44,12 +46,28 @@ public class Language {
   }
 
   public void setLanguage(String language){
+      saveLanguage(language);
+      changeLanguage(language);
+    }
+
+  private void saveLanguage(String language){
     pref.setLanguage(language);
-    Locale locale = new Locale(language);
-    Locale.setDefault(locale);
-    Configuration config = new Configuration();
-    config.locale = locale;
-    MainApplication.instance().getResources().updateConfiguration(config, MainApplication.instance().getResources().getDisplayMetrics());
+  }
+
+  private void changeLanguage(String language){
+    String phoneLanguage = Resources.getSystem().getConfiguration().locale.getLanguage();
+    String displayLanguage = Locale.getDefault().getDisplayLanguage().substring(0,2).toLowerCase();
+    if (!displayLanguage.toLowerCase().equals(language) && phoneLanguage.equals("en")) {
+      Locale locale = new Locale(language);
+      Locale.setDefault(locale);
+      Configuration config = new Configuration();
+      config.locale = locale;
+      MainApplication.instance().getResources().updateConfiguration(config, MainApplication.instance().getResources().getDisplayMetrics());
+      Intent myIntent = new Intent(MainApplication.instance(), MyCoursesListActivity.class);
+      myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
+        .FLAG_ACTIVITY_CLEAR_TOP);
+      MainApplication.instance().startActivity(myIntent);
+    }
   }
 
   private void getAppLanguageByApi(){
@@ -58,7 +76,10 @@ public class Language {
     userService.getPreferences(loginPrefs.getUsername()).enqueue(new Callback<Preferences>() {
       @Override
       protected void onResponse(@NonNull Preferences preferences) {
-        setLanguage(preferences.getPrefLang());
+        String displayLanguage = Locale.getDefault().getDisplayLanguage().substring(0,2);
+        if (!displayLanguage.toLowerCase().equals(preferences.getPrefLang())) {
+          setLanguage(preferences.getPrefLang());
+        }
       }
 
       @Override
@@ -69,9 +90,9 @@ public class Language {
   }
 
   private void getAppLanguageFromLocalStorage(){
-    language = pref.getUserLanguages();
+    String language = pref.getUserLanguages();
     if(language!=null) {
-      setLanguage(language);
+      changeLanguage(language);
     }
   }
 

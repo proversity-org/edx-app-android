@@ -40,6 +40,7 @@ public interface UserService {
     @GET("/api/user/v1/accounts/{username}")
     Call<Account> getAccount(@Path("username") String username);
 
+    @Headers("Cache-Control: no-cache")
     @GET("/api/user/v1/preferences/{username}")
     Call<Preferences> getPreferences(@Path("username") String username);
 

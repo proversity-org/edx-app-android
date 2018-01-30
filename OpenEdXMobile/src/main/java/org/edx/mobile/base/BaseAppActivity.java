@@ -23,7 +23,12 @@ public abstract class BaseAppActivity extends RoboAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        language.setLanguage();
         EventBus.getDefault().post(new NewRelicEvent(getClass().getSimpleName()));
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        language.setLanguage();
     }
 }
