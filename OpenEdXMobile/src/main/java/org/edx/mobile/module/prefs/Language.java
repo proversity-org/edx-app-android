@@ -1,13 +1,16 @@
 package org.edx.mobile.module.prefs;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import org.edx.mobile.R;
 import org.edx.mobile.base.MainApplication;
 import org.edx.mobile.http.callback.Callback;
 import org.edx.mobile.user.Account;
@@ -40,21 +43,21 @@ public class Language {
     pref = new PrefManager.AppInfoPrefManager(MainApplication.instance());
   }
 
-  public void setLanguage() {
-    getAppLanguageFromLocalStorage();
-    getAppLanguageByApi();
+  public void setLanguage(Activity activity) {
+    getAppLanguageFromLocalStorage(activity);
+    getAppLanguageByApi(activity);
   }
 
-  public void setLanguage(String language){
+  public void setLanguage(String language, Activity activity){
       saveLanguage(language);
-      changeLanguage(language);
+      changeLanguage(language, activity);
     }
 
   private void saveLanguage(String language){
     pref.setLanguage(language);
   }
 
-  private void changeLanguage(String language){
+  private void changeLanguage(String language, Activity activity){
     String phoneLanguage = Resources.getSystem().getConfiguration().locale.getLanguage();
     String displayLanguage = Locale.getDefault().getDisplayLanguage().substring(0,2).toLowerCase();
     if (!displayLanguage.toLowerCase().equals(language) && phoneLanguage.equals("en")) {
@@ -63,14 +66,12 @@ public class Language {
       Configuration config = new Configuration();
       config.locale = locale;
       MainApplication.instance().getResources().updateConfiguration(config, MainApplication.instance().getResources().getDisplayMetrics());
-      Intent myIntent = new Intent(MainApplication.instance(), MyCoursesListActivity.class);
-      myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
-        .FLAG_ACTIVITY_CLEAR_TOP);
-      MainApplication.instance().startActivity(myIntent);
+      makeAlert(activity);
+      //restartApp();
     }
   }
 
-  private void getAppLanguageByApi(){
+  private void getAppLanguageByApi(final Activity activity){
     final Injector injector = RoboGuice.getInjector(MainApplication.instance());
     UserService userService = injector.getInstance(UserService.class);
     userService.getPreferences(loginPrefs.getUsername()).enqueue(new Callback<Preferences>() {
@@ -78,7 +79,7 @@ public class Language {
       protected void onResponse(@NonNull Preferences preferences) {
         String displayLanguage = Locale.getDefault().getDisplayLanguage().substring(0,2);
         if (!displayLanguage.toLowerCase().equals(preferences.getPrefLang())) {
-          setLanguage(preferences.getPrefLang());
+          setLanguage(preferences.getPrefLang(), activity);
         }
       }
 
@@ -89,12 +90,32 @@ public class Language {
     });
   }
 
-  private void getAppLanguageFromLocalStorage(){
+  private void getAppLanguageFromLocalStorage(Activity activity){
     String language = pref.getUserLanguages();
     if(language!=null) {
-      changeLanguage(language);
+      changeLanguage(language, activity);
     }
   }
+
+  private void makeAlert(Activity activity){
+    new AlertDialog.Builder(activity)
+      .setTitle(activity.getResources().getString(R.string.language_changed_title))
+      .setMessage(activity.getResources().getString(R.string.language_changed_message))
+      .setPositiveButton(activity.getResources().getString(R.string.Okay), new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+          restartApp();
+        }
+      }).show();
+  }
+
+  private void restartApp(){
+    Intent myIntent = new Intent(MainApplication.instance(), MyCoursesListActivity.class);
+    myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
+      .FLAG_ACTIVITY_CLEAR_TOP);
+    MainApplication.instance().startActivity(myIntent);
+  }
+
 
 
 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_unknown">Unknown error. Please try again later.</string>
+  <string name="network_not_connected">You are not connected to the Internet.</string>
+  <string name="network_not_connected_short">Network not reachable</string>
+  <string name="reset_no_network_title">Connection Error</string>
+  <string name="reset_no_network_message">You are not connected to the Internet. Please check your Internet connection.</string>
+  <string name="network_connected_error">Connection error. Please check your Internet connection.</string>
+  <string name="network_error_header">Problem loading video</string>
+  <string name="network_error_message">Please check your Internet Connection.</string>
+  <string name="network_service_unavailable">Service is unavailable. Please try again later.</string>
+  <string name="error_enter_email">Please enter your user name or e-mail address and try again.</string>
+  <string name="error_invalid_email">Please make sure your e-mail address is formatted correctly and try again.</string>
+  <string name="error_enter_password">Please enter your password and try again.</string>
+  <string name="error_account_not_linked_title_fb">Facebook account not associated with {platform_name} account</string>
+  <string name="error_account_not_linked_desc_fb">Make sure your Facebook account is associated with your {platform_name} account on {platform_destination}</string>
+  <string name="error_account_not_linked_title_google">Google account not associated with {platform_name} account</string>
+  <string name="error_account_not_linked_desc_google">Make sure your Google account is associated with your {platform_name} account on {platform_destination}</string>
+  <string name="error_download_failed">Download failed</string>
+  <string name="file_size_exceeded">The size of the download exceeds the remaining device storage space.</string>
+  <string name="download_exceed_message">The videos you’ve selected are larger than 1 GB.         Do you want to download these videos?</string>
+  <string name="wifi_off_message">Your current download settings only allow downloads over Wi-Fi.
+ Please connect to a Wi-Fi network or change your download settings.</string>
+  <string name="video_offline_header">This video is not available offline.</string>
+  <string name="video_offline_message">Please select a video that you’ve downloaded onto your device.</string>
+  <string name="app_version_unsupported">Your version of the app is no longer supported.</string>
+  <string name="app_version_outdated">A new version of the app is available.</string>
+  <string name="app_version_upgrade_app_store_unavailable">No supported app store found on device.</string>
+  <string name="error_enter_field">Please enter your %1$s.</string>
+  <string name="error_select_field">Please select your %1$s.</string>
+  <string name="error_min_length">%1$s must have at least %2$d characters.</string>
+  <string name="error_max_length">%1$s cannot have more than %2$d characters.</string>
+  <string name="course_not_started">This course hasn’t started yet.</string>
+  <string name="action_not_completed">Your action could not be completed.</string>
+</resources>

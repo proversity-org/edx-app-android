@@ -29,6 +29,6 @@ public abstract class BaseAppActivity extends RoboAppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        language.setLanguage();
+        language.setLanguage(this);
     }
 }
