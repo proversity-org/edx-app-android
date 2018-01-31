@@ -127,7 +127,7 @@
     <!-- Button text to show user Settings screen -->
     <string name="label_settings">Settings</string>
     <!-- Title of Account screen -->
-    <string name="title_account" tools:ignore="MissingTranslation">Account</string>
+    <string name="title_account">Account</string>
 
     <!-- Help Dialog Place Holder messages -->
     <!-- Reset password alert dialog title -->

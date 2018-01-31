@@ -196,6 +196,7 @@
   <string name="email_client_not_present">Nid oes cleient e-bost wedi\'i osod</string>
   <string name="search_for_courses">Dwi am ddysgu am...</string>
   <string name="already_have_an_account">Gennych gyfrif eisoes? Mewngofnodi</string>
+  <string name="title_account">Cyfrif</string>
   <string name="sign_up_and_learn">Ymuno a dechrau dysgu</string>
   <string name="register_with">Cofrestru gyda</string>
   <string name="or_register_with_email">neu gofrestru gydag e-bost</string>
