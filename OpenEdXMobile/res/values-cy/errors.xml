@@ -32,4 +32,9 @@
   <string name="error_max_length">%1$s cannot have more than %2$d characters.</string>
   <string name="course_not_started">This course hasn’t started yet.</string>
   <string name="action_not_completed">Your action could not be completed.</string>
+
+  <!-- Google translate -->
+  <string name="app_version_unsupported_register_msg">Nid yw eich fersiwn o\'r app bellach yn cael ei gefnogi. Diweddariad i\'r fersiwn ddiweddaraf i gofrestru.</string>
+  <string name="app_version_unsupported_login_msg">Nid yw eich fersiwn o\'r app bellach yn cael ei gefnogi. Diweddariad i\'r fersiwn ddiweddaraf i logio i mewn.</string>
+
 </resources>

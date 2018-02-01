@@ -22,6 +22,7 @@ import org.edx.mobile.view.SplashActivity;
 import roboguice.RoboGuice;
 
 import javax.inject.Singleton;
+import java.io.File;
 import java.util.Locale;
 
 /**
@@ -43,31 +44,38 @@ public class Language {
     pref = new PrefManager.AppInfoPrefManager(MainApplication.instance());
   }
 
-  public void setLanguage(Activity activity) {
+  public void configureLanguage(Activity activity) {
     getAppLanguageFromLocalStorage(activity);
     getAppLanguageByApi(activity);
   }
 
-  public void setLanguage(String language, Activity activity){
-      saveLanguage(language);
-      changeLanguage(language, activity);
-    }
+  public void configureLanguage(String language, Activity activity){
+    saveLanguage(language);
+    changeLanguage(language, activity);
+  }
 
   private void saveLanguage(String language){
     pref.setLanguage(language);
   }
 
+  private void setLanguage(String language, Activity activity){
+    Locale locale = new Locale(language);
+    Locale.setDefault(locale);
+    Configuration config = new Configuration();
+    config.locale = locale;
+    MainApplication.instance().getResources().updateConfiguration(config, MainApplication.instance().getResources().getDisplayMetrics());
+    makeAlert(activity);
+  }
+
   private void changeLanguage(String language, Activity activity){
     String phoneLanguage = Resources.getSystem().getConfiguration().locale.getLanguage();
     String displayLanguage = Locale.getDefault().getDisplayLanguage().substring(0,2).toLowerCase();
-    if (!displayLanguage.toLowerCase().equals(language) && phoneLanguage.equals("en")) {
-      Locale locale = new Locale(language);
-      Locale.setDefault(locale);
-      Configuration config = new Configuration();
-      config.locale = locale;
-      MainApplication.instance().getResources().updateConfiguration(config, MainApplication.instance().getResources().getDisplayMetrics());
-      makeAlert(activity);
-      //restartApp();
+
+    if (!language.equals("en") && !displayLanguage.equals(language)){
+      setLanguage(language, activity);
+    }
+    else if (language.equals("en")  && !displayLanguage.equals(phoneLanguage)){
+      setLanguage(phoneLanguage, activity);
     }
   }
 
@@ -79,7 +87,7 @@ public class Language {
       protected void onResponse(@NonNull Preferences preferences) {
         String displayLanguage = Locale.getDefault().getDisplayLanguage().substring(0,2);
         if (!displayLanguage.toLowerCase().equals(preferences.getPrefLang())) {
-          setLanguage(preferences.getPrefLang(), activity);
+          configureLanguage(preferences.getPrefLang(), activity);
         }
       }
 
@@ -97,7 +105,7 @@ public class Language {
     }
   }
 
-  private void makeAlert(Activity activity){
+  private void makeAlert(final Activity activity){
     new AlertDialog.Builder(activity)
       .setTitle(activity.getResources().getString(R.string.language_changed_title))
       .setMessage(activity.getResources().getString(R.string.language_changed_message))
@@ -115,8 +123,5 @@ public class Language {
       .FLAG_ACTIVITY_CLEAR_TOP);
     MainApplication.instance().startActivity(myIntent);
   }
-
-
-
 
 }

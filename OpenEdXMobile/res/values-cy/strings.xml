@@ -1,18 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="lbl_slash">/</string>
-  <string name="lbl_view_on_web">GWELD AR Y WE</string>
-  <string name="lbl_showing_only_videos">Dangos fideos yn unig</string>
-  <string name="label_cancel">Canslo</string>
-  <string name="label_no">Na</string>
-  <string name="label_download">Lawrlwytho</string>
-  <string name="label_yes">Ie</string>
-  <string name="label_delete">Dileu</string>
-  <string name="label_edit">Golygu</string>
-  <string name="label_ok">OK</string>
-  <string name="label_close">Cau</string>
-  <string name="label_continue">Parhau</string>
-
   <string name="course_details_congratulations">Llongyfarchiadau!</string>
   <string name="course_details_earned_cert">Rydych wedi pasio\'r prawf.</string>
   <string name="course_details_view_cert_button">Gweld y dystysgrif</string>
@@ -268,7 +255,22 @@
   <string name="profile_tab_accomplishment">Cyflawniadau</string>
   <string name="share_accomplishment_button">Rhannu eich cyflawniad</string>
   <string name="share_accomplishment_message">Dwi newydd ennill bathodyn ar {platform_name}! Cymerwch gip: {badge_url}</string>
+
+  <!-- Google translate -->
   <string name="language_changed_title">Mae\'r iaith wedi newid</string>
   <string name="language_changed_message">Bydd yn rhaid i\'r app ailgychwyn</string>
   <string name="Okay">iawn</string>
+  <string name="whats_new_title">Fersiwn {version_number} Nodweddion Newydd</string>
+  <string name="rating_bar_selection">{rating} allan o {num_of_stars}</string>
+  <string name="rating_bar">Rheolaeth ardrethu</string>
+  <string name="feedback_dialog_message">Helpwch ni i wella!</string>
+  <string name="feedback_dialog_title">Anfon Adborth?</string>
+  <string name="rate_app_dialog_message">Dywedwch wrth eraill beth ydych chi\'n ei feddwl am y {platform_name} app trwy ysgrifennu adolygiad cyflym</string>
+  <string name="rate_app_dialog_title">Cyfraddwch yr app</string>
+  <string name="rating_dialog_message">Sut fyddech chi\'n graddio\'r app?</string>
+  <string name="review_email_subject">Adolygiad Cwsmer</string>
+  <string name="not_old_enough_button_text">Nid ydych chi\'n ddigon hen i gofrestru</string>
+  <string name="invitation_only_button_text">Gwahoddiad yn unig</string>
+
+
 </resources>
