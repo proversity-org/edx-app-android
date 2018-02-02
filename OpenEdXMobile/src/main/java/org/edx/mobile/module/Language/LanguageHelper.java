@@ -53,24 +53,23 @@ public class LanguageHelper {
     pref.setLanguage(language);
   }
 
-  private void setLanguage(String language, Activity activity){
-    Locale locale = new Locale(language);
-    Locale.setDefault(locale);
+  private void setLanguage(Locale newLocale, Activity activity){
+    Locale.setDefault(newLocale);
     Configuration config = new Configuration();
-    config.locale = locale;
+    config.locale = newLocale;
     MainApplication.instance().getResources().updateConfiguration(config, MainApplication.instance().getResources().getDisplayMetrics());
     makeAlert(activity);
   }
 
   private void changeLanguage(String language, Activity activity){
-    String phoneLanguage = Resources.getSystem().getConfiguration().locale.getLanguage();
-    String displayLanguage = Locale.getDefault().getDisplayLanguage().substring(0,2).toLowerCase();
-
-    if (!language.equals("en") && !displayLanguage.equals(language)){
-      setLanguage(language, activity);
+    Locale phoneLocale = Resources.getSystem().getConfiguration().locale;
+    Locale displayLocale = Locale.getDefault();
+    Locale newLocale = new Locale(language);
+    if (!language.equals("en") && !displayLocale.equals(newLocale)){
+      setLanguage(newLocale, activity);
     }
-    else if (language.equals("en")  && !displayLanguage.equals(phoneLanguage)){
-      setLanguage(phoneLanguage, activity);
+    else if (language.equals("en")  && !displayLocale.equals(phoneLocale)){
+      setLanguage(phoneLocale, activity);
     }
   }
 
