@@ -71,9 +71,6 @@ public class Language {
     Locale phoneLocale = Resources.getSystem().getConfiguration().locale;
     Locale displayLocale = Locale.getDefault();
     Locale newLocale = new Locale(language);
-    //String phoneLanguage = Resources.getSystem().getConfiguration().locale.getLanguage();
-    //String displayLanguage = Locale.getDefault().getLanguage();
-    //Locale[] availableLocales = Locale.getAvailableLocales();
     if (!language.equals("en") && !displayLocale.equals(newLocale)){
       setLanguage(newLocale, activity);
     }
