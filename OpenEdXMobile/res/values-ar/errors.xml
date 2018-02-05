@@ -76,5 +76,6 @@
 
   <!--No translation-->
   <string name="video_offline_message">Please select a video that you’ve downloaded onto your device.</string>
+  <string name="video_offline_header">This video is not available offline.</string>
 
 </resources>
