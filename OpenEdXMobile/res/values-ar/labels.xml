@@ -41,4 +41,9 @@
   <!--Undo button label-->
   <string name="label_undo">رجوع</string>
   <!--Label denoting an error-->
+
+  <!--No translation-->
+
+  <string name="label_edit">Edit</string>
+
 </resources>
