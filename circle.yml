@@ -1,45 +1,12 @@
-<<<<<<< 79036c54071e0ec8054df5a54780360b35685251
 general:
-<<<<<<< 8400db39c3a1bb51fd43e86b33c574852235e877
   branches:
     only:
-      - proversity/pro
+      - proversity/tea
 
 machine:
     environment:
-<<<<<<< 3c0b8902f513483a0e35da79d4e125bd09283a77
         GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
         RELEASE_PK12_FILE: "../config/release.p12"
-=======
-        GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx3072m -XX:+HeapDumpOnOutOfMemoryError"'
->>>>>>> SuppressLint ValidFragment, more memory for gradle on deploy
-=======
-    branches:
-        only:
-<<<<<<< 1faa579ea64e01553c2725998d05c0c6753c4f10
-<<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
-<<<<<<< 9461d676a225850ec77bcb5aabfa2f97eeafa5f6
-            - proversity/production
-=======
-            - proversity/staging
->>>>>>> update staging
-=======
-            - proversity/lfm
->>>>>>> build lfm, try with screenshots
-=======
-            - proversity/lfm
->>>>>>> updated versionCode, new circle build paths
-
-=======
->>>>>>> push notifications
-machine:
-    environment:
-        GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx3584m -XX:+HeapDumpOnOutOfMemoryError"'
-        RELEASE_PK12_FILE: "../config/release.p12"
-<<<<<<< 1faa579ea64e01553c2725998d05c0c6753c4f10
->>>>>>> deploy v2.6.0 to production, code version 5
-=======
->>>>>>> updated versionCode, new circle build paths
 
 dependencies:
     pre:
@@ -56,144 +23,28 @@ dependencies:
     override:
         - ./gradlew dependencies --stacktrace --info
     post:
-<<<<<<< 229c94db66795bf51155f6a496db12f1a739a0a9
-<<<<<<< 1faa579ea64e01553c2725998d05c0c6753c4f10
-<<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
-<<<<<<< c646412934fcd2cb0360fc8a7f17586a4b3c1f2a
-<<<<<<< 8400db39c3a1bb51fd43e86b33c574852235e877
-        - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/pro ./config
-=======
-        - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/lfm ./config
->>>>>>> updated versionCode, new circle build paths
-=======
         - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/tea ./config
->>>>>>> Correct circle deployment config
         - cp -r config/gradle.properties OpenEdXMobile/gradle.properties
         - cp -r config/google-services.json OpenEdXMobile/google-services.json
         - echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
         - cp -r config/config.yaml $CIRCLE_ARTIFACTS
-=======
-        - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/production ./config
-        - cp -r config/pro/gradle.properties VideoLocker/gradle.properties
-        - echo "edx.dir = '../config/pro'" > VideoLocker/edx.properties
-        - cp -r config/pro/config.yaml $CIRCLE_ARTIFACTS
->>>>>>> deploy v2.6.0 to production, code version 5
-=======
-        - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/staging ./config
-=======
-        - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch proversity/lfm ./config
->>>>>>> build lfm, try with screenshots
-        - cp -r config/gradle.properties VideoLocker/gradle.properties
-        - echo "edx.dir = '../config'" > VideoLocker/edx.properties
-        - cp -r config/config.yaml $CIRCLE_ARTIFACTS
->>>>>>> correct config/asset paths
 
 test:
     pre:
-<<<<<<< 1a99141bba144b6a8ebdfa040c603181bd57f936
         - ./gradlew assembleProdRelease
-=======
-        - ./gradlew testProdReleaseUnitTestCoverage -PdisablePreDex
-        - ./gradlew assembleProdRelease -PdisablePreDex
->>>>>>> testProdReleaseUnitTestCoverage on deploy, app_name untranslatable
     override:
-<<<<<<< 1faa579ea64e01553c2725998d05c0c6753c4f10
-<<<<<<< 998e870e5cc66b97d83cad2d808d21a915faf97f
-<<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
-<<<<<<< 8400db39c3a1bb51fd43e86b33c574852235e877
         - ./gradlew testProdReleaseUnitTestCoverage
-=======
-        - sleep 10
->>>>>>> deploy v2.6.0 to production, code version 5
-=======
-        - emulator -avd circleci-android22 -no-audio -no-window:
-            background: true
-            parallel: true
-        - circle-android wait-for-boot
-        - adb shell input keyevent 82 # unlock
-        - adb install VideoLocker/build/outputs/apk/VideoLocker-prod-debug.apk
-        - sleep 30
-        - adb shell am start -W -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -n io.proversity.edx/io.proversity.edx.view.SplashActivity
-        - adb shell screencap /data/local/SplashActivity.png
-        - adb pull /data/local/SplashActivity.png VideoLocker/build/outputs/SplashActivity.png
-        - adb shell am start -W -n io.proversity.edx/io.proversity.edx.view.LoginActivity
-        - adb shell screencap /data/local/LoginActivity.png
-        - adb pull /data/local/LoginActivity.png VideoLocker/build/outputs/LoginActivity.png
-        - sleep 10
-        - adb shell am start -W -n io.proversity.edx/io.proversity.edx.view.MyCoursesListActivity
-        - adb shell screencap /data/local/MyCoursesListActivity.png
-        - adb pull /data/local/MyCoursesListActivity.png VideoLocker/build/outputs/MyCoursesListActivity.png
-        - adb shell input tap 720 620 # find courses
-        - adb shell screencap /data/local/NativeFindCoursesActivity.png
-        - adb pull /data/local/NativeFindCoursesActivity.png VideoLocker/build/outputs/NativeFindCoursesActivity.png
->>>>>>> build lfm, try with screenshots
-=======
-        - sleep 10
->>>>>>> org filter, deploy to playstore
-=======
-        - sleep 10
->>>>>>> updated versionCode, new circle build paths
     post:
-<<<<<<< 1a99141bba144b6a8ebdfa040c603181bd57f936
         - cp -r OpenEdXMobile/build/reports $CIRCLE_ARTIFACTS
         - cp -r OpenEdXMobile/build/outputs $CIRCLE_ARTIFACTS
-=======
-        - cp -r VideoLocker/build/reports $CIRCLE_ARTIFACTS
-        - cp -r VideoLocker/build/outputs $CIRCLE_ARTIFACTS
->>>>>>> testProdReleaseUnitTestCoverage on deploy, app_name untranslatable
 
 # https://github.com/Triple-T/gradle-play-publisher
-<<<<<<< 1faa579ea64e01553c2725998d05c0c6753c4f10
-<<<<<<< 998e870e5cc66b97d83cad2d808d21a915faf97f
-<<<<<<< 525e111a8cdf3a79fc53deb6ef27d8b9a8de6bd4
-<<<<<<< 315c1105cd00c3de18c41fa0b31a74e47f4a1072
 deployment:
   beta:
-<<<<<<< 229c94db66795bf51155f6a496db12f1a739a0a9
-<<<<<<< 8400db39c3a1bb51fd43e86b33c574852235e877
-    branch: proversity/pro
-=======
     branch: proversity/tea
->>>>>>> Correct circle deployment config
     commands:
       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 
 notify:
   webhooks:
     - url: https://consola-api.proversity.org/organizations/PRO/circleci/webhook?action=save_last_apk&repo=edx-app-android&authorization=e6005c3173671458fee3b322a73178ca2c900ab8b433c302dbd560ec0ed71570
-=======
-    branch: proversity/production
-    commands:
-      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
->>>>>>> deploy v2.6.0 to production, code version 5
-=======
-# deployment:
-#   beta:
-#     branch: proversity/staging
-#     commands:
-#       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
-  # production:
-  #   branch: proversity/production
-  #   commands:
-  #     - ./gradlew publishApkRelease -Dorg.gradle.project.track=production
->>>>>>> fixed git path for edx-app-gradle-plugin, don't publish
-=======
-# deployment:
-#   beta:
-#     branch: proversity/lfm
-#     commands:
-#       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
->>>>>>> build lfm, try with screenshots
-=======
-=======
->>>>>>> updated versionCode, new circle build paths
-deployment:
-  beta:
-    branch: proversity/lfm
-    commands:
-<<<<<<< 1faa579ea64e01553c2725998d05c0c6753c4f10
-      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
->>>>>>> org filter, deploy to playstore
-=======
-      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
->>>>>>> updated versionCode, new circle build paths
