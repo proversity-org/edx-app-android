@@ -603,5 +603,4 @@ Si no lo recibe en algunos minutos, asegúrese de revisar su carpeta de spam.</s
 
   <!-- Positive response button for alert dialogue when language changes -->
   <string name="Okay">bueno</string>
-  <string name="title_account">Cuenta</string>
 </resources>
