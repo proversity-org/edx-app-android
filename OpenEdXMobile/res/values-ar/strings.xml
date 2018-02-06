@@ -588,13 +588,6 @@
   <string name="language_changed_message">The app will have to restart</string>
   <string name="language_changed_title">The language has changed</string>
   <string name="search_for_courses">I want to learn about...</string>
-  <string name="no_videos_to_display">You haven’t downloaded any videos.</string>
-  <string name="my_recent_videos">Recent Videos</string>
-  <string name="my_all_videos">All Videos</string>
-  <string name="started_downloading">Downloading</string>
-  <string name="school_code">School Code</string>
-  <string name="delete_dialog_title_help">Confirm Delete</string>
-  <string name="label_my_videos">My Videos</string>
   <string name="label_my_courses">My Courses</string>
   <string name="not_old_enough_button_text">You are not old enough to enroll</string>
   <string name="eula_file_link">file:///android_asset/EULA.htm</string>
