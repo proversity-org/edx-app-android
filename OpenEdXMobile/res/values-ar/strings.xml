@@ -591,6 +591,10 @@
   <string name="label_my_courses">My Courses</string>
   <string name="not_old_enough_button_text">You are not old enough to enroll</string>
   <string name="eula_file_link">file:///android_asset/EULA.htm</string>
+  <string name="label_current_downloads">View current downloads</string>
+  <string name="course_dates_title">Important Dates</string>
+  <string name="resources_title">Resources</string>
+
 
 
 </resources>
