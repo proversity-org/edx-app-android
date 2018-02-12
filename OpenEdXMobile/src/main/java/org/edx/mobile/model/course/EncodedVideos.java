@@ -43,6 +43,9 @@ public class EncodedVideos implements Serializable {
             return mobileLow;
         if (mobileHigh != null && URLUtil.isNetworkUrl(mobileHigh.url))
             return mobileHigh;
+        if (hls!=null){
+            return hls;
+        }
         if (fallback != null && URLUtil.isNetworkUrl(fallback.url))
             return fallback;
         return null;
