@@ -33,7 +33,7 @@ public abstract class BaseAppActivity extends RoboAppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        languageHelper.configureLanguage(this);
+       // languageHelper.configureLanguage(this);
     }
 
     private void resetTitle() {
