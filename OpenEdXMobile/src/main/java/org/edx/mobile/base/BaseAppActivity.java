@@ -25,7 +25,7 @@ public abstract class BaseAppActivity extends RoboAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().post(new NewRelicEvent(getClass().getSimpleName()));
-        resetTitle();
+        //resetTitle();
         // this is needed for when the language changes during runtime
         // the title's get cached in the previous language
     }
