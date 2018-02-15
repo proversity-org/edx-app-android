@@ -64,7 +64,6 @@ public class EncodedVideos implements Serializable {
         }
         if (fallback != null && URLUtil.isNetworkUrl(fallback.url))
             return fallback;
->>>>>>> 360a314... fix for hls streaming vs fallback download url [ci skip]
         return null;
     }
 
