@@ -291,10 +291,7 @@ android {
         multiDexEnabled true
 
 
-        manifestPlaceholders = [supportsRtl    : "false",
-
         manifestPlaceholders = [supportsRtl    : "true",
->>>>>>> 67763e1... upgrade gradle, enable rtl support
                                 firebaseEnabled: config.get('FIREBASE_ENABLED') ?: false]
 
         def platformName = config.get('PLATFORM_NAME')
