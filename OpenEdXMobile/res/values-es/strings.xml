@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="eula_file_link">file:///android_asset/EULA.htm</string>
   <!--Certificates-->
   <!--Label congratulation user on finishing course-->
   <string name="course_details_congratulations">¡Felicidades!</string>
