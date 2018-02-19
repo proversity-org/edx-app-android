@@ -68,13 +68,13 @@ public class CourseDashboardActivityTest extends BaseVideosDownloadStateActivity
         Intent intent = getIntent();
         Bundle data = intent.getBundleExtra(Router.EXTRA_BUNDLE);
         EnrolledCoursesResponse courseData = (EnrolledCoursesResponse)
-                data.getSerializable(Router.EXTRA_COURSE_DATA);
+          data.getSerializable(Router.EXTRA_COURSE_DATA);
         ActivityController<? extends CourseDashboardActivity> controller =
-                Robolectric.buildActivity(getActivityClass()).withIntent(intent);
+          Robolectric.buildActivity(getActivityClass()).withIntent(intent);
         CourseDashboardActivity activity = controller.get();
         controller.create(null).postCreate(null);
         Fragment fragment = activity.getSupportFragmentManager()
-                .findFragmentById(android.R.id.content);
+          .findFragmentById(R.id.fragment_container);
         assertNotNull(fragment);
         assertThat(fragment).isInstanceOf(CourseDashboardFragment.class);
         assertTrue(fragment.getRetainInstance());
@@ -97,23 +97,24 @@ public class CourseDashboardActivityTest extends BaseVideosDownloadStateActivity
         int rowNum = 0;
         View coursewareRowView = rowsContainerGroup.getChildAt(rowNum++);
         assertRow(coursewareRowView, FontAwesomeIcons.fa_list_alt,
-                R.string.courseware_title, R.string.courseware_subtitle);
+          R.string.courseware_title, R.string.courseware_subtitle);
 
+        if (config.isCourseVideosEnabled()) {
+            View videoRowView = rowsContainerGroup.getChildAt(rowNum++);
+            assertRow(videoRowView, FontAwesomeIcons.fa_film,
+              R.string.videos_title, R.string.videos_subtitle);
+        }
         if (config.isDiscussionsEnabled()) {
             View discussionRowView = rowsContainerGroup.getChildAt(rowNum++);
             assertRow(discussionRowView, FontAwesomeIcons.fa_comments_o,
-                    R.string.discussion_title, R.string.discussion_subtitle);
+              R.string.discussion_title, R.string.discussion_subtitle);
         }
-
         View handoutsRowView = rowsContainerGroup.getChildAt(rowNum++);
         assertRow(handoutsRowView, FontAwesomeIcons.fa_file_text_o,
-                R.string.handouts_title, R.string.handouts_subtitle);
-
-        if (config.isAnnoucementsEnabled()) {
-            View announcementRowView = rowsContainerGroup.getChildAt(rowNum++);
-            assertRow(announcementRowView, FontAwesomeIcons.fa_bullhorn,
-                    R.string.announcement_title, R.string.announcement_subtitle);
-        }
+          R.string.handouts_title, R.string.handouts_subtitle);
+        View announcementRowView = rowsContainerGroup.getChildAt(rowNum++);
+        assertRow(announcementRowView, FontAwesomeIcons.fa_bullhorn,
+          R.string.announcement_title, R.string.announcement_subtitle);
 
         assertTrue(coursewareRowView.performClick());
         Intent newIntent = assertNextStartedActivity(activity, CourseOutlineActivity.class);
@@ -135,7 +136,7 @@ public class CourseDashboardActivityTest extends BaseVideosDownloadStateActivity
      * @param subtitleRes The string resource id for the row subtitle
      */
     private void assertRow(View rowView, FontAwesomeIcons icon,
-            int titleRes, int subtitleRes) {
+                           int titleRes, int subtitleRes) {
         assertNotNull(rowView);
         assertThat(rowView).isInstanceOf(ViewGroup.class);
 
