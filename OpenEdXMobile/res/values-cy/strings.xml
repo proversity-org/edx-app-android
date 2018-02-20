@@ -39,7 +39,6 @@
   <string name="action_settings">Gosodiadau</string>
   <string name="open_profile_button">Agor eich proffil</string>
   <string name="label_my_courses">Fy nhgyrsiau</string>
-  <string name="label_my_videos">Fy fideos</string>
   <string name="label_find_courses">Canfod cyrsiau</string>
   <string name="label_submit_feedback">Cyflwyno adborth</string>
   <string name="toggle_turn_on">Ymlaen</string>
@@ -55,7 +54,6 @@
   <string name="success_dialog_message_help">Rydym wedi anfon neges gyda chyfarwyddiadau ar sut i ailosod eich cyfrinair i\'ch cyfeiriad e-bost. Os na allwch ei weld yn yr ychydig funudau nesaf, edrychwch yn eich ffolder sbam.</string>
   <string name="confirm_dialog_message_help">Rhowch gyfeiriad e-bost eich cyfrif a byddwn yn anfon cyfarwyddiadau atoch er mwyn ailosod eich cyfrinair.</string>
   <string name="wifi_dialog_message_help">Caniatewch i\'ch dyfais lawrlwytho fideos dros gysylltiad cellog pan nad oes wi-fi ar gael. Gall fod cost am y data.</string>
-  <string name="delete_dialog_title_help">Cadarnhau dileu</string>
   <string name="leaving_app_data_title">Gadael App {platform_name}</string>
   <string name="leaving_app_data_message">Os byddwch yn gadael yr app, ni fyddwch mwyach yn gwylio cynnwys {platform_name} am ddim. Gall fod cost am y data.</string>
   <string name="end_user_title">Cytundeb Trwyddedu Defnyddiwr</string>
@@ -67,7 +65,6 @@
   <string name="handouts_subtitle">Dod o hyd i wybodaeth bwysig am y cwrs</string>
   <string name="announcement_title">Cyhoeddiadau</string>
   <string name="announcement_subtitle">Gweld y newyddion diweddaraf</string>
-  <string name="school_code">Côd yr ysgol</string>
   <string name="course_name">Enw\'r cwrs</string>
   <string name="new_course_content">Cynnwys cwrs newydd</string>
   <string name="label_starting">Dechrau - {date}</string>
@@ -85,7 +82,6 @@
   <string name="discussion_posts_search_title">Canlyniadau\'r chwiliad</string>
   <string name="discussion_posts_refine">Mireinio:</string>
   <string name="discussion_post_create_new_post">Creu postiad newydd</string>
-  <string name="discussion_post_create_new_comment">@string/discussion_add_comment_title</string>
   <string name="discussion_posts_filter_all_posts">Pob postiad</string>
   <string name="discussion_posts_filter_unread_posts">Heb eu darllen</string>
   <string name="discussion_posts_filter_unanswered_posts">Heb eu hateb</string>
@@ -102,8 +98,6 @@
   <string name="discussion_post_last_interaction_date">Postiad diwethaf: {date}</string>
   <string name="course_discussion_answered_title">Cwestiwn wedi\'i ateb</string>
   <string name="course_discussion_unanswered_title">Cwestiwn heb ei ateb</string>
-  <string name="discussion_responses_add_response_button">@string/discussion_add_response_title</string>
-  <string name="number_responses_or_comments_add_comment_label">@string/discussion_add_comment_title</string>
   <string name="discussion_responses_answer">Ateb</string>
   <string name="discussion_responses_endorsed">Cymeradwywyd</string>
   <string name="just_now">Munud yma</string>
@@ -116,20 +110,16 @@
   <string name="discussion_comments">Sylwadau</string>
   <string name="discussion_add_comment_button_label">Ychwanegu sylw</string>
   <string name="discussion_add_comment_button_description">Botwm ychwanegu sylw</string>
-  <string name="discussion_add_comment_hint">@string/discussion_add_comment_title</string>
   <string name="discussion_add_response_title">Ychwanegu ymateb</string>
   <string name="discussion_add_response_disabled_title">Ni cheir ymateb i\'r postiad hwn mwyach</string>
   <string name="discussion_add_response_button_label">Ychwanegu ymateb</string>
   <string name="discussion_add_response_button_description">Botwm ychwanegu ymateb</string>
-  <string name="discussion_add_response_hint">@string/discussion_add_response_title</string>
   <string name="discussion_post_title">Teitl</string>
   <string name="discussion_add_post_topic_selection">Pwnc: {topic}</string>
   <string name="discussion_add_post_button_label">Postio trafodaeth</string>
   <string name="discussion_add_post_button_description">Botwm postio trafodaeth</string>
   <string name="discussion_add_question_button_label">Postio cwestiwn</string>
   <string name="discussion_add_question_button_description">Botwm postio cwestiwn</string>
-  <string name="discussion_body_hint_discussion">@string/discussion_title</string>
-  <string name="discussion_body_hint_question">@string/discussion_question</string>
   <string name="discussion_question">Cwestiwn</string>
   <string name="assessment_next">Nesaf</string>
   <string name="assessment_previous">Blaenorol</string>
@@ -141,12 +131,8 @@
   <string name="assessment_rotate_for_fullscreen">Trowch eich dyfais i weld y fideo hwn ar sgrîn lawn.</string>
   <string name="assessment_only_on_youtube">Gellir ond chwarae\'r fideo hwn ar YouTube.</string>
   <string name="assessment_open_on_youtube">Gweld y fideo ar YouTube</string>
-  <string name="started_downloading">Yn lawrlwytho</string>
   <string name="title_download">Lawrlwythiadau</string>
-  <string name="my_all_videos">Pob fideo</string>
-  <string name="my_recent_videos">Fideos diweddar</string>
   <string name="offline_text">All-lein</string>
-  <string name="no_videos_to_display">Nid ydych wedi lawrlwytho unrhyw fideos.</string>
   <string name="cancel_download">Canslo\'r lawrlwytho</string>
   <string name="view_button_text">Gwylio</string>
   <string name="download_failed_text">Lawrlwytho wedi methu</string>
@@ -271,6 +257,21 @@
   <string name="review_email_subject">Adolygiad Cwsmer</string>
   <string name="not_old_enough_button_text">Nid ydych chi\'n ddigon hen i gofrestru</string>
   <string name="invitation_only_button_text">Gwahoddiad yn unig</string>
+  <string name="label_current_downloads">View current downloads</string>
+  <string name="label_course_dates">Course Dates and Deadlines</string>
+  <string name="label_discover">Discover</string>
+  <string name="videos_title">Videos</string>
+  <string name="videos_subtitle">Watch course videos</string>
+  <string name="course_dates_title">Important Dates</string>
+  <string name="resources_title">Resources</string>
+  <string name="course_dates_subtitle">Keep track of deadlines and stay on track</string>
+  <string name="no_videos_text">This course does not include any videos.</string>
+  <string name="no_course_dates_to_display">Course dates are not currently available.</string>
+  <string name="delete_videos_title">Delete Videos</string>
+  <string name="due_date_today">due today at {due_date}</string>
+  <string name="due_date_past_future">due {due_date}</string>
+  <string name="video_offline_header">This video is not available offline.</string>
+  <string name="video_offline_message">Please select a video that you’ve downloaded onto your device.</string>
 
 
 </resources>
