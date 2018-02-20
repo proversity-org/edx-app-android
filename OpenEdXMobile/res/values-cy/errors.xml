@@ -21,8 +21,6 @@
   <string name="download_exceed_message">The videos you’ve selected are larger than 1 GB.         Do you want to download these videos?</string>
   <string name="wifi_off_message">Your current download settings only allow downloads over Wi-Fi.
  Please connect to a Wi-Fi network or change your download settings.</string>
-  <string name="video_offline_header">This video is not available offline.</string>
-  <string name="video_offline_message">Please select a video that you’ve downloaded onto your device.</string>
   <string name="app_version_unsupported">Your version of the app is no longer supported.</string>
   <string name="app_version_outdated">A new version of the app is available.</string>
   <string name="app_version_upgrade_app_store_unavailable">No supported app store found on device.</string>
