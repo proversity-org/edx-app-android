@@ -584,15 +584,15 @@
   <string name="whats_new_title">الإصدار {version_number} الميزات الجديدة</string>
 
   <!--No translation-->
-  <string name="Okay">Ok</string>
-  <string name="language_changed_message">The app will have to restart</string>
-  <string name="language_changed_title">The language has changed</string>
-  <string name="search_for_courses">I want to learn about...</string>
-  <string name="label_my_courses">My Courses</string>
-  <string name="not_old_enough_button_text">You are not old enough to enroll</string>
-  <string name="label_current_downloads">View current downloads</string>
-  <string name="course_dates_title">Important Dates</string>
-  <string name="resources_title">Resources</string>
+  <string name="Okay">تم</string>
+  <string name="language_changed_message">التطبيق بحاجة لإعادة تشغيل</string>
+  <string name="language_changed_title">تم تغيير اللغة</string>
+  <string name="search_for_courses">أريد أن أتعلم...</string>
+  <string name="label_my_courses">مساقاتي</string>
+  <string name="not_old_enough_button_text">عمرك أقل من العمر المسموح للتسجيل</string>
+  <string name="label_current_downloads">عرض الملفات المنزلة</string>
+  <string name="course_dates_title">تواريخ مهمة</string>
+  <string name="resources_title">المصادر</string>
 
 
 
