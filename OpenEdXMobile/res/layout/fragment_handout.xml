@@ -7,6 +7,7 @@
     android:fillViewport="true"
     tools:context="org.edx.mobile.view.CourseHandoutActivity">
 
+
     <RelativeLayout
         android:id="@+id/content_error_root"
         android:layout_width="match_parent"
