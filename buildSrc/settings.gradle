@@ -3,7 +3,7 @@ import org.ajoberstar.grgit.exception.*
 
 buildscript {
     dependencies {
-        classpath 'org.ajoberstar:grgit:1.7.0'
+        classpath 'org.ajoberstar:grgit:2.1.1'
     }
     repositories {
         mavenCentral()
