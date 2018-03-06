@@ -23,7 +23,7 @@ dependencies:
     override:
         - ./gradlew dependencies --stacktrace --info
     post:
-        - git clone git@github.com:proversity-org/edx-deployment-mobile.git --branch no-branch ./config
+        - git clone git@github.com:proversity-org/edx-app-android-config.git --branch no-branch ./config
         - cp -r config/gradle.properties OpenEdXMobile/gradle.properties
         - cp -r config/google-services.json OpenEdXMobile/google-services.json
         - echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
