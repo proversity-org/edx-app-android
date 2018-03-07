@@ -1,7 +1,7 @@
 general:
   branches:
     only:
-      - no-branch
+      - proversity/master
 
 machine:
     environment:
@@ -23,7 +23,7 @@ dependencies:
     override:
         - ./gradlew dependencies --stacktrace --info
     post:
-        - git clone git@github.com:proversity-org/edx-app-android-config.git --branch no-branch ./config
+        - git clone git@github.com:proversity-org/edx-app-android-config.git --branch proversity/wsl ./config
         - cp -r config/gradle.properties OpenEdXMobile/gradle.properties
         - cp -r config/google-services.json OpenEdXMobile/google-services.json
         - echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
@@ -41,10 +41,10 @@ test:
 # https://github.com/Triple-T/gradle-play-publisher
 deployment:
   beta:
-    branch: no-branch
+    branch: proversity/master
     commands:
       - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 
 notify:
   webhooks:
-    - url: https://consola-api.proversity.org/organizations/no-branch/circleci/webhook?action=save_last_apk&repo=edx-app-android&authorization=e6005c3173671458fee3b322a73178ca2c900ab8b433c302dbd560ec0ed71570
+    - url: https://consola-api.proversity.org/organizations/WSL/circleci/webhook?action=save_last_apk&repo=edx-app-android&authorization=e6005c3173671458fee3b322a73178ca2c900ab8b433c302dbd560ec0ed71570
