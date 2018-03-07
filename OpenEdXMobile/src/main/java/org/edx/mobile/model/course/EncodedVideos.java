@@ -73,16 +73,6 @@ public class EncodedVideos implements Serializable {
         return null;
     }
 
-    @Nullable
-    public VideoInfo getDownloadableVideoInfo() {
-        if (mobileLow != null && URLUtil.isNetworkUrl(mobileLow.url))
-            return mobileLow;
-        if (mobileHigh != null && URLUtil.isNetworkUrl(mobileHigh.url))
-            return mobileHigh;
-        if (fallback != null && URLUtil.isNetworkUrl(fallback.url))
-            return fallback;
-        return null;
-    }
 
     private boolean isPreferredVideoInfo(@Nullable VideoInfo videoInfo) {
         return videoInfo != null &&
