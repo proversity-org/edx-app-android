@@ -38,9 +38,15 @@ public class EncodedVideos implements Serializable {
         if (isPreferredVideoInfo(mobileHigh)) {
             return mobileHigh;
         }
+        if (hls != null && URLUtil.isNetworkUrl(hls.url)) {
+            return hls;
+        }
+        if (fallback != null && URLUtil.isNetworkUrl(fallback.url)) {
+            return fallback;
+        }
         if (new Config(MainApplication.instance()).isUsingVideoPipeline()) {
             if (fallback != null && URLUtil.isNetworkUrl(fallback.url) &&
-                    VideoUtil.isSupportedVideoFormat(fallback.url, AppConstants.VIDEO_FORMAT_M3U8)) {
+                    VideoUtil.videoHasFormat(fallback.url, AppConstants.VIDEO_FORMAT_M3U8)) {
                 return fallback;
             }
         } else {
@@ -62,6 +68,17 @@ public class EncodedVideos implements Serializable {
         if (hls!=null){
             return hls;
         }
+        if (fallback != null && URLUtil.isNetworkUrl(fallback.url))
+            return fallback;
+        return null;
+    }
+
+    @Nullable
+    public VideoInfo getDownloadableVideoInfo() {
+        if (mobileLow != null && URLUtil.isNetworkUrl(mobileLow.url))
+            return mobileLow;
+        if (mobileHigh != null && URLUtil.isNetworkUrl(mobileHigh.url))
+            return mobileHigh;
         if (fallback != null && URLUtil.isNetworkUrl(fallback.url))
             return fallback;
         return null;
