@@ -4,6 +4,8 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.inject.Inject;
 
@@ -12,6 +14,7 @@ import org.edx.mobile.base.BaseFragmentActivity;
 import org.edx.mobile.databinding.ActivityLaunchBinding;
 import org.edx.mobile.module.analytics.Analytics;
 import org.edx.mobile.module.prefs.LoginPrefs;
+import org.edx.mobile.util.Config;
 
 public class LaunchActivity extends BaseFragmentActivity {
 
@@ -35,6 +38,9 @@ public class LaunchActivity extends BaseFragmentActivity {
                 startActivity(environment.getRouter().getRegisterIntent());
             }
         });
+        if (environment.getConfig().isColourInverted()){
+            binding.signInTv.setTextColor(getResources().getColor(R.color.white));
+        }
         environment.getAnalyticsRegistry().trackScreenView(Analytics.Screens.LAUNCH_ACTIVITY);
     }
 
