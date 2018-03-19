@@ -2,6 +2,7 @@ package org.edx.mobile.util;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.BoolRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -78,6 +79,8 @@ public class Config {
     private static final String ANNOUNCEMENTS_ENABLED = "ANNOUNCEMENTS_ENABLED";
     private static final String JUMP_TO_LAST_ACCESSED_MODULE_ENABLED = "JUMP_TO_LAST_ACCESSED_MODULE_ENABLED";
     private static final String JUMP_TO_FIND_COURSES_ENABLED = "JUMP_TO_FIND_COURSES_ENABLED";
+    private static final String INVERT_COLOR_LOGIN_SPLASH_VIEW_SIGN_IN_BTN = "INVERT_COLOR_LOGIN_SPLASH_VIEW_SIGN_IN_BTN";
+
 
     public static class ZeroRatingConfig {
         @SerializedName("ENABLED")
@@ -583,6 +586,10 @@ public class Config {
 
     public boolean isRegistrationEnabled() {
         return getBoolean(REGISTRATION_ENABLED, true);
+    }
+
+    public boolean isColourInverted(){
+        return getBoolean(INVERT_COLOR_LOGIN_SPLASH_VIEW_SIGN_IN_BTN, false);
     }
 
     /**
