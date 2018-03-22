@@ -73,4 +73,9 @@
   <string name="app_version_unsupported_login_msg">النسخة التي لديك من التطبيق لم تعُد مدعومة. أحصل على أحدث نسخة لتسجل الدخول.</string>
   <!--Error dialog message shown when the user try to register in app with un-supported version-->
   <string name="app_version_unsupported_register_msg">النسخة التي لديك من التطبيق لم تعُد مدعومة. أحصل على أحدث نسخة للتسجيل.</string>
+
+  <!--Need translations-->
+  <!-- Error message to be displayed when no courses are found -->
+  <string name="no_available_courses">No available courses</string>
+
 </resources>

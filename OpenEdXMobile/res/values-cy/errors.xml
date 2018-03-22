@@ -35,4 +35,7 @@
   <string name="app_version_unsupported_register_msg">Nid yw eich fersiwn o\'r app bellach yn cael ei gefnogi. Diweddariad i\'r fersiwn ddiweddaraf i gofrestru.</string>
   <string name="app_version_unsupported_login_msg">Nid yw eich fersiwn o\'r app bellach yn cael ei gefnogi. Diweddariad i\'r fersiwn ddiweddaraf i logio i mewn.</string>
 
+    <!--Need translations-->
+    <!-- Error message to be displayed when no courses are found -->
+    <string name="no_available_courses">No available courses</string>
 </resources>
