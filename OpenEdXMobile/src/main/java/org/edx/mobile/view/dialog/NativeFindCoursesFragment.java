@@ -85,7 +85,7 @@ public class NativeFindCoursesFragment extends BaseFragment {
                                 viewHolder.no_courses.setVisibility(View.VISIBLE);
                                 viewHolder.listView.setVisibility(View.GONE);;
                             }else {
-                                viewHolder.listView.setVisibility(View.VISIBLE);
+                                viewHolder.no_courses.setVisibility(View.GONE);
                                 viewHolder.listView.setVisibility(View.VISIBLE);
                             }
                             viewHolder.loadingIndicator.setVisibility(View.GONE);
