@@ -33,10 +33,12 @@ import org.edx.mobile.core.IEdxEnvironment;
 import org.edx.mobile.course.CourseAPI;
 import org.edx.mobile.event.CourseDashboardRefreshEvent;
 import org.edx.mobile.event.NetworkConnectivityChangeEvent;
+import org.edx.mobile.exception.CourseContentNotValidException;
 import org.edx.mobile.http.notifications.FullScreenErrorNotification;
 import org.edx.mobile.interfaces.RefreshListener;
 import org.edx.mobile.loader.AsyncTaskResult;
 import org.edx.mobile.loader.CourseOutlineAsyncLoader;
+import org.edx.mobile.logger.Logger;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
 import org.edx.mobile.model.course.BlockPath;
 import org.edx.mobile.model.course.CourseComponent;
@@ -60,10 +62,14 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 import retrofit2.Call;
 
+/**
+ * TODO: Rename class name to 'CourseOutlineFragment' once old/deprecated  {@link CourseOutlineFragment} is deleted.
+ */
 public class NewCourseOutlineFragment extends OfflineSupportBaseFragment
         implements LastAccessManager.LastAccessManagerCallback, RefreshListener,
         VideoDownloadHelper.DownloadManagerCallback,
-        LoaderManager.LoaderCallbacks<AsyncTaskResult<CourseComponent>>{
+        LoaderManager.LoaderCallbacks<AsyncTaskResult<CourseComponent>> {
+    private final Logger logger = new Logger(getClass().getName());
     private static final int REQUEST_SHOW_COURSE_UNIT_DETAIL = 0;
     private static final int AUTOSCROLL_DELAY_MS = 500;
     private static final int SNACKBAR_SHOWTIME_MS = 5000;
@@ -124,13 +130,28 @@ public class NewCourseOutlineFragment extends OfflineSupportBaseFragment
                 bundle = getArguments();
             }
         }
-        restore(bundle);
 
         final View view = inflater.inflate(R.layout.fragment_course_outline_new, container, false);
-        initListView(view);
+        listView = (ListView) view.findViewById(R.id.outline_list);
         errorNotification = new FullScreenErrorNotification(listView);
         loadingIndicator = view.findViewById(R.id.loading_indicator);
-        fetchCourseComponent();
+
+        try {
+            restore(bundle);
+            initListView(view);
+            fetchCourseComponent();
+        } catch (Exception e) {
+            final StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("CourseId: "+courseData.getCourse().getId())
+                    .append(", CourseName: "+courseData.getCourse().getName())
+                    .append(", CourseComponentId: "+courseComponentId)
+                    .append(", isVideoMode: "+isVideoMode)
+                    .append("\n Exception: "+e.getMessage());
+            final CourseContentNotValidException ex = new CourseContentNotValidException(stringBuilder.toString(), e);
+            errorNotification.showError(getContext(), ex);
+            logger.error(ex, true);
+        }
+
         return view;
     }
 
@@ -205,9 +226,17 @@ public class NewCourseOutlineFragment extends OfflineSupportBaseFragment
                 progressCallback, errorNotification, null, this) {
             @Override
             protected void onResponse(@NonNull final CourseComponent courseComponent) {
-                courseComponentId = courseComponent.getId();
                 courseManager.addCourseDataInAppLevelCache(courseId, courseComponent);
                 loadData(courseComponent);
+            }
+
+            @Override
+            protected void onFailure(@NonNull Throwable error) {
+                super.onFailure(error);
+                if (error instanceof CourseContentNotValidException) {
+                    errorNotification.showError(getContext(), error);
+                    logger.error(error, true);
+                }
             }
 
             @Override
@@ -220,7 +249,6 @@ public class NewCourseOutlineFragment extends OfflineSupportBaseFragment
     }
 
     private void initListView(@NonNull View view) {
-        listView = (ListView) view.findViewById(R.id.outline_list);
         initAdapter();
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -257,22 +285,16 @@ public class NewCourseOutlineFragment extends OfflineSupportBaseFragment
     private void initAdapter() {
         if (adapter == null) {
             // creating adapter just once
-            adapter = new NewCourseOutlineAdapter(getActivity(), courseData, environment,
+            adapter = new NewCourseOutlineAdapter(getActivity(), this, courseData, environment,
                     new NewCourseOutlineAdapter.DownloadListener() {
                         @Override
                         public void download(List<? extends HasDownloadEntry> models) {
-                            final BaseFragmentActivity activity = (BaseFragmentActivity) getActivity();
-                            if (NetworkUtil.verifyDownloadPossible(activity)) {
-                                downloadManager.downloadVideos(models, activity, NewCourseOutlineFragment.this);
-                            }
+                            downloadManager.downloadVideos(models, getActivity(), NewCourseOutlineFragment.this);
                         }
 
                         @Override
                         public void download(DownloadEntry videoData) {
-                            final BaseFragmentActivity activity = (BaseFragmentActivity) getActivity();
-                            if (NetworkUtil.verifyDownloadPossible(activity)) {
-                                downloadManager.downloadVideo(videoData, activity, NewCourseOutlineFragment.this);
-                            }
+                            downloadManager.downloadVideo(videoData, getActivity(), NewCourseOutlineFragment.this);
                         }
 
                         @Override
@@ -397,6 +419,7 @@ public class NewCourseOutlineFragment extends OfflineSupportBaseFragment
      * Load data to the adapter
      */
     private void loadData(@NonNull CourseComponent courseComponent) {
+        courseComponentId = courseComponent.getId();
         if (courseData == null)
             return;
         if (!EventBus.getDefault().isRegistered(this)) {
@@ -526,7 +549,7 @@ public class NewCourseOutlineFragment extends OfflineSupportBaseFragment
     }
 
     @SuppressWarnings("unused")
-    public void onEvent(DownloadedVideoDeletedEvent e) {
+    public void onEventMainThread(DownloadedVideoDeletedEvent e) {
         adapter.notifyDataSetChanged();
     }
 
@@ -631,6 +654,14 @@ public class NewCourseOutlineFragment extends OfflineSupportBaseFragment
     @Override
     protected boolean isShowingFullScreenError() {
         return errorNotification != null && errorNotification.isShowing();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

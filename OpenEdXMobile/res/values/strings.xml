@@ -104,7 +104,7 @@
     <!-- Content description for edit profile button -->
     <string name="open_profile_button">Open your profile</string>
     <!-- Title of user's course list screen -->
-    <string name="label_my_courses" tools:ignore="MissingTranslation">Courses</string>
+    <string name="label_my_courses">Courses</string>
     <!-- Title of important course dates screen -->
     <string name="label_course_dates">Course Dates and Deadlines</string>
     <!-- Title of native Find Courses Screen -->
@@ -112,7 +112,7 @@
     <!-- Title of webview based Find Courses Screen -->
     <string name="label_discover">Discover</string>
     <!-- Title of Find Courses tab on Main Dashboard screen -->
-    <string name="label_discovery" tools:ignore="MissingTranslation">Discovery</string>
+    <string name="label_discovery">Discovery</string>
     <!-- Button allowing users to send an email for feedback -->
     <string name="label_submit_feedback">Submit Feedback</string>
     <!-- Toggle switch on state label -->
@@ -194,11 +194,11 @@
     <!-- Label indicating new course content has been downloaded -->
     <string name="new_course_content">New Course Content</string>
     <!-- Label for date when course starts -->
-    <string name="label_starting">Starting - {date}</string>
+    <string name="label_starting" tools:ignore="MissingTranslation">Starting {date}</string>
     <!-- Label for course that has ended -->
-    <string name="label_ended">Ended - {date}</string>
+    <string name="label_ended" tools:ignore="MissingTranslation">Ended {date}</string>
     <!-- Label for date when course is ending -->
-    <string name="label_ending">Ending - {date}</string>
+    <string name="label_ending" tools:ignore="MissingTranslation">Ending {date}</string>
 
     <!-- Course Details -->
     <!-- Accessible content description of label for course content -->
@@ -410,6 +410,33 @@
     <string name="login_error">Sign-in Error</string>
     <!-- Alert dialog title when login fails due to lack of Internet -->
     <string name="no_connectivity">Connection Error</string>
+
+    <!-- Bulk Videos Download -->
+    <!-- Accessibility label of bulk download switch -->
+    <string name="bulk_download_switch" tools:ignore="MissingTranslation">Bulk videos download switch.</string>
+    <!-- Title for bulk videos download view when in new or partial videos' download state -->
+    <string name="download_to_device" tools:ignore="MissingTranslation">Download to Device</string>
+    <!-- Subtitle for bulk videos download view when in new or partial videos' download state -->
+    <plurals name="download_total" tools:ignore="MissingTranslation">
+        <item quantity="one">{total_videos_count} Video, {total_videos_size} total</item>
+        <item quantity="other">{total_videos_count} Videos, {total_videos_size} total</item>
+    </plurals>
+    <!-- Title for bulk videos download view when download is starting -->
+    <string name="download_starting" tools:ignore="MissingTranslation">Starting Download…</string>
+    <!-- Title for bulk videos download view when in downloading state -->
+    <string name="downloading_videos" tools:ignore="MissingTranslation">Downloading Videos…</string>
+    <!-- Subtitle for bulk videos download view when in downloading state -->
+    <string name="download_remaining" tools:ignore="MissingTranslation">{remaining_videos_count} Remaining, {remaining_videos_size} total</string>
+    <!-- Title for bulk videos download view when in downloaded state -->
+    <string name="download_complete" tools:ignore="MissingTranslation">All Videos Downloaded</string>
+    <!-- Accessibility label of bulk download switch, when its state is OFF and no download is happening -->
+    <string name="switch_off_no_downloading" tools:ignore="MissingTranslation">Toggling the switch on, will download all videos of this course.</string>
+    <!-- Accessibility label of bulk download switch, when its state is ON and all videos are downloading -->
+    <string name="switch_on_all_downloading" tools:ignore="MissingTranslation">Toggling the switch off, will cancel downloading of all videos and will delete all downloaded videos of this course.</string>
+    <!-- Accessibility label of bulk download switch, when its state is ON and all videos have been downloaded -->
+    <string name="switch_on_all_downloaded" tools:ignore="MissingTranslation">Toggling the switch off, will delete all downloaded videos of this course.</string>
+    <!-- Accessibility label of full bulk download view when videos are being downloaded -->
+    <string name="view_downloads" tools:ignore="MissingTranslation">Double tap to view current downloads.</string>
 
     <!-- Wifi New Message -->
     <!-- Toggle to allow downloads using cellular data -->
