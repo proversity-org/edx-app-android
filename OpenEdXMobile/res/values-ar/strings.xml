@@ -92,6 +92,7 @@
   <string name="label_find_courses">استكشف المساقات</string>
   <!--Title of webview based Find Courses Screen-->
   <string name="label_discover">إستكشف</string>
+  <string name="label_discovery">Discovery</string>
   <!--Title of Find Courses tab on Main Dashboard screen-->
   <!--Button allowing users to send an email for feedback-->
   <string name="label_submit_feedback">أرسل ملاحظاتك</string>
