@@ -260,7 +260,8 @@
   <string name="label_current_downloads">View current downloads</string>
   <string name="label_course_dates">Course Dates and Deadlines</string>
   <string name="label_discover">Discover</string>
-  <string name="videos_title">Videos</string>
+    <string name="label_discovery">Discovery</string>
+    <string name="videos_title">Videos</string>
   <string name="videos_subtitle">Watch course videos</string>
   <string name="course_dates_title">Important Dates</string>
   <string name="resources_title">Resources</string>
