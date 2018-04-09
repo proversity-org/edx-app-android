@@ -439,10 +439,6 @@
   <!--New Logistration Launch screen text-->
   <!--Button leading user to create account screen-->
   <string name="launch_register">تسجيل الاشتراك</string>
-  <!--Button leading user to Find Courses screen from the launch screen-->
-  <string name="launch_discover_courses">استكشف المساقات</string>
-  <!--Button leading user to Find Courses screen from the launch screen-->
-  <string name="launch_explore_subjects">استكشاف المواضيع</string>
   <!--Registration Screen-->
   <!--Create account agreement. Followed by list of agreement names like "End User License Agreement"-->
   <string name="by_creating_account">بإنشائك حساباً، فأنت توافق على</string>
