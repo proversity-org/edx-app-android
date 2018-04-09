@@ -12,7 +12,7 @@ jobs:
        - run:
           name: Install pre dependencies
           command: |
-             git clone git@github.com:proversity-org/edx-app-android-config.git --branch proversity/master ./config
+             git clone git@github.com:proversity-org/edx-app-android-config.git --branch proversity/pro ./config
              cp -r config/gradle.properties OpenEdXMobile/gradle.properties
              cp -r config/google-services.json OpenEdXMobile/google-services.json
              echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
@@ -23,7 +23,7 @@ jobs:
        - run:
           name: Install post dependencies
           command: |
-             git clone git@github.com:proversity-org/edx-app-android-config.git --branch proversity/master ./config
+             git clone git@github.com:proversity-org/edx-app-android-config.git --branch proversity/pro ./config
              cp -r config/gradle.properties OpenEdXMobile/gradle.properties
              cp -r config/google-services.json OpenEdXMobile/google-services.json
              echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
