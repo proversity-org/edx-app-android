@@ -43,8 +43,7 @@ jobs:
        - deploy:
           beta:
           branch: proversity/master
-          commands:
-            - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
+          commands: ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
 notify:
   webhooks:
     - url: https://consola-api.proversity.org/organizations/no-branch/circleci/webhook?action=save_last_apk&repo=edx-app-android&authorization=e6005c3173671458fee3b322a73178ca2c900ab8b433c302dbd560ec0ed71570
