@@ -32,8 +32,8 @@ jobs:
              cp -r config/gradle.properties OpenEdXMobile/gradle.properties
              cp -r config/google-services.json OpenEdXMobile/google-services.json
              echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
-             mkdir /tmp/artifacts
-             cp -r config/config.yaml /tmp/artifact    
+             mkdir /tmp/artifacts-1
+             cp -r config/config.yaml /tmp/artifacts-1    
        - run:
           name: Install pre tests
           command: ./gradlew assembleProdRelease
@@ -43,8 +43,10 @@ jobs:
        - run:
           name: Install post tests
           command: |
-             cp -r OpenEdXMobile/build/reports /tmp/artifact
-             cp -r OpenEdXMobile/build/outputs /tmp/artifact
+             mkdir /tmp/artifacts-2
+             mkdir /tmp/artifacts-3
+             cp -r OpenEdXMobile/build/reports /tmp/artifacts-2
+             cp -r OpenEdXMobile/build/outputs /tmp/artifacts-3
        # https://github.com/Triple-T/gradle-play-publisher
        - deploy:
           command: |
