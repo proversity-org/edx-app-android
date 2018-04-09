@@ -39,11 +39,13 @@ jobs:
           command: ./gradlew assembleProdRelease
        - run:
           name: Install override tests
-          command: ./gradlew testProdReleaseUnitTestCoverage
+          command: |
+            ./gradlew testProdReleaseUnitTestCoverage
+            cp -r OpenEdXMobile/build/reports /tmp/core_dumps
+            cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
        - run:
           name: Install post tests
           command: |
-             mkdir -p /tmp/core_dumps
              cp -r OpenEdXMobile/build/reports /tmp/core_dumps
              cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
        # https://github.com/Triple-T/gradle-play-publisher
