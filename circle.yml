@@ -1,0 +1,55 @@
+general:
+  branches:
+    only:
+      - no-branch
+
+machine:
+    environment:
+        GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
+        RELEASE_PK12_FILE: "../config/release.p12"
+
+dependencies:
+    pre:
+        - echo "y" | android update sdk --no-ui --all --filter tools
+        - echo "y" | android update sdk --no-ui --all --filter tool
+        - echo "y" | android update sdk --no-ui --all --filter build-tools-25.0.3
+        - echo "y" | android update sdk --no-ui --all --filter addon-google_apis-google-25
+        - echo "y" | android update sdk --no-ui --all --filter sys-img-armeabi-v7a-addon-google_apis-google-25
+        - echo "y" | android update sdk --no-ui --all --filter extra-android-m2repository
+        - echo "y" | android update sdk --no-ui --all --filter extra-android-support
+        - echo "y" | android update sdk --no-ui --all --filter extra-android-m2repository
+        - echo "y" | android update sdk --no-ui --all --filter extra-google-m2repository
+        - echo "y" | android update sdk --no-ui --all --filter extra-google-google_play_services
+        - echo "y" | android update sdk --no-ui --all --filter extra-google-analytics_sdk_v2
+        - echo "y" | $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
+
+
+
+    override:
+        - ./gradlew dependencies --stacktrace --info
+    post:
+        - git clone git@github.com:proversity-org/edx-app-android-config.git --branch no-branch ./config
+        - cp -r config/gradle.properties OpenEdXMobile/gradle.properties
+        - cp -r config/google-services.json OpenEdXMobile/google-services.json
+        - echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
+        - cp -r config/config.yaml $CIRCLE_ARTIFACTS
+
+test:
+    pre:
+        - ./gradlew assembleProdRelease
+    override:
+        - ./gradlew testProdReleaseUnitTestCoverage
+    post:
+        - cp -r OpenEdXMobile/build/reports $CIRCLE_ARTIFACTS
+        - cp -r OpenEdXMobile/build/outputs $CIRCLE_ARTIFACTS
+
+# https://github.com/Triple-T/gradle-play-publisher
+deployment:
+  beta:
+    branch: proversity/master
+    commands:
+      - ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
+
+notify:
+  webhooks:
+    - url: https://consola-api.proversity.org/organizations/no-branch/circleci/webhook?action=save_last_apk&repo=edx-app-android&authorization=e6005c3173671458fee3b322a73178ca2c900ab8b433c302dbd560ec0ed71570
