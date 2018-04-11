@@ -117,7 +117,12 @@ public class CourseDashboardActivityTest extends BaseVideosDownloadStateActivity
           R.string.announcement_title, R.string.announcement_subtitle);
 
         assertTrue(coursewareRowView.performClick());
-        Intent newIntent = assertNextStartedActivity(activity, CourseOutlineActivity.class);
+        Intent newIntent;
+        if(environment.getConfig().isTabsLayoutEnabled()){
+            newIntent = assertNextStartedActivity(activity, NewCourseOutlineActivity.class);
+        }else{
+            newIntent = assertNextStartedActivity(activity, CourseOutlineActivity.class);
+        }
         Bundle newData = newIntent.getBundleExtra(Router.EXTRA_BUNDLE);
         assertNotNull(newData);
         assertEquals(courseData, newData.getSerializable(Router.EXTRA_COURSE_DATA));
