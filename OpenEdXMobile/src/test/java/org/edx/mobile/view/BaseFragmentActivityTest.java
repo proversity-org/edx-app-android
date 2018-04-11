@@ -129,7 +129,6 @@ public abstract class BaseFragmentActivityTest extends UiTest {
             // NavigationFragment initialization
             FragmentManager fragmentManager = activity.getSupportFragmentManager();
             fragmentManager.executePendingTransactions();
-            assert fragmentManager.findFragmentByTag("NavigationFragment") != null;
 
             if (hasDrawer) {
                 CharSequence contentDescription = activity.findViewById(
