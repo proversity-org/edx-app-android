@@ -133,13 +133,6 @@ public class Config {
             return getCourseDiscoveryType() != null;
         }
 
-        public boolean isExploreSubjectsEnabled() {
-            // Explore Subjects is only supported for web course discovery, and requires a URL
-            return isWebviewCourseDiscoveryEnabled()
-                    && null != getWebViewConfig().getExploreSubjectsUrl()
-                    && !getWebViewConfig().getExploreSubjectsUrl().isEmpty();
-        }
-
         public boolean isWebviewCourseDiscoveryEnabled() {
             return getCourseDiscoveryType() == CourseDiscoveryType.WEBVIEW;
         }
@@ -165,9 +158,6 @@ public class Config {
         @SerializedName("COURSE_SEARCH_URL")
         private String mSearchUrl;
 
-        @SerializedName("EXPLORE_SUBJECTS_URL")
-        private String mExploreSubjectsUrl;
-
         @SerializedName("COURSE_INFO_URL_TEMPLATE")
         private String mCourseInfoUrlTemplate;
 
@@ -176,10 +166,6 @@ public class Config {
 
         public String getCourseSearchUrl() {
             return mSearchUrl;
-        }
-
-        public String getExploreSubjectsUrl() {
-            return mExploreSubjectsUrl;
         }
 
         public String getCourseInfoUrlTemplate() {
