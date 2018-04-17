@@ -32,8 +32,8 @@ jobs:
       - run:
           name: Build app
           command: |
-            ./gradlew assembleProdRelease
-            ./gradlew testProdReleaseUnitTestCoverage
+            ./gradlew assembleProdRelease --stacktrace --info
+            ./gradlew testProdReleaseUnitTestCoverage --stacktrace --info
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
       # - deploy:
