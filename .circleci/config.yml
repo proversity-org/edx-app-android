@@ -35,11 +35,11 @@ jobs:
             ./gradlew testProdReleaseUnitTestCoverage
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
-       - deploy:
+      - deploy:
           command: |
-                if [ "${CIRCLE_BRANCH}" == "proversity/master" ]; then
-                   ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
-                fi
+            if [ "${CIRCLE_BRANCH}" == "proversity/master" ]; then
+              ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
+            fi
       - store_artifacts:
           path: /tmp/core_dumps
 
