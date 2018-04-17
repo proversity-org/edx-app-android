@@ -14,17 +14,11 @@ jobs:
 
     steps:
       - checkout
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Download Dependencies
           command: |
             ./gradlew androidDependencies
             ./gradlew dependencies --stacktrace --info
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Setup project
           command: |
@@ -41,11 +35,11 @@ jobs:
             ./gradlew testProdReleaseUnitTestCoverage
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
-       # - deploy:
-       #    command: |
-       #          if [ "${CIRCLE_BRANCH}" == "proversity/master" ]; then
-       #             ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
-       #          fi
+       - deploy:
+          command: |
+                if [ "${CIRCLE_BRANCH}" == "proversity/master" ]; then
+                   ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
+                fi
       - store_artifacts:
           path: /tmp/core_dumps
 
