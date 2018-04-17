@@ -1,15 +1,17 @@
 version: 2
+
 jobs:
   build:
+
     docker:
       - image: circleci/android:api-25-alpha
+    working_directory: ~/edx-app-android
     environment:
       TERM: dumb
       GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
       RELEASE_PK12_FILE: "../config/release.p12"
       JAVA_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
 
-    working_directory: ~/edx-app-android
     steps:
       - checkout
       - restore_cache:
