@@ -4,7 +4,7 @@ jobs:
   build:
 
     docker:
-      - image: circleci/android:api-25-alpha
+      - image: circleci/android:api-26-alpha
     working_directory: ~/edx-app-android
     environment:
       TERM: dumb
