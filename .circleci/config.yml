@@ -4,7 +4,7 @@ jobs:
   build:
 
     docker:
-      - image: circleci/android:api-26-alpha
+      - image: circleci/android:api-25-alpha
     working_directory: ~/edx-app-android
     environment:
       TERM: dumb
@@ -14,22 +14,17 @@ jobs:
 
     steps:
       - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Install gradle dependencies
+          name: Download Dependencies
           command: |
-            echo "y" | android update sdk --no-ui --all --filter tools
-            echo "y" | android update sdk --no-ui --all --filter tool
-            echo "y" | android update sdk --no-ui --all --filter build-tools-25.0.3
-            echo "y" | android update sdk --no-ui --all --filter addon-google_apis-google-25
-            echo "y" | android update sdk --no-ui --all --filter sys-img-armeabi-v7a-addon-google_apis-google-25
-            echo "y" | android update sdk --no-ui --all --filter extra-android-m2repository
-            echo "y" | android update sdk --no-ui --all --filter extra-android-support
-            echo "y" | android update sdk --no-ui --all --filter extra-android-m2repository
-            echo "y" | android update sdk --no-ui --all --filter extra-google-m2repository
-            echo "y" | android update sdk --no-ui --all --filter extra-google-google_play_services
-            echo "y" | android update sdk --no-ui --all --filter extra-google-analytics_sdk_v2
-            echo "y" | $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
+            ./gradlew androidDependencies
             ./gradlew dependencies --stacktrace --info
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Setup project
           command: |
