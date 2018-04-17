@@ -14,10 +14,8 @@ jobs:
 
     steps:
       - checkout
-      - restore_cache:
-          key: v0.0.1-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
        - run:
-          name: Update Android SDK
+          name: Install gradle dependencies
           command: |
             echo "y" | android update sdk --no-ui --all --filter tools
             echo "y" | android update sdk --no-ui --all --filter tool
@@ -48,10 +46,6 @@ jobs:
             ./gradlew testProdReleaseUnitTestCoverage
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
-       - save_cache:
-          paths:
-            - ~/.gradle
-          key: v0.0.1-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
        # - deploy:
        #    command: |
        #          if [ "${CIRCLE_BRANCH}" == "proversity/master" ]; then
