@@ -25,7 +25,7 @@ jobs:
             git clone git@github.com:proversity-org/houston-android-config.git --branch no-branch ./config
             cp -r config/gradle.properties OpenEdXMobile/gradle.properties
             cp -r config/google-services.json OpenEdXMobile/google-services.json
-            cp -r config/settings.gradle buildSrc/settings.gradle
+            cp -r config/settings.gradle buildSrc
             echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
             mkdir -p /tmp/core_dumps
             cp -r config/config.yaml /tmp/core_dumps    
