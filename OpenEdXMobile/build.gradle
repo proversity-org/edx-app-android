@@ -69,14 +69,10 @@ def getVersionName = { ->
 
         def hasSemanticVersion = { s ->
             // This branch/tag contains a semantic version (e.g. "rc/2.6.0" or "release/2.5")
-            println("hasSemanticVersion")
-            println String.format('%s', s)
-            println(s.indexOf("rc/"))
             return s.indexOf("rc/") >= 0 || s.indexOf("release/") >= 0
         }
         if (hasSemanticVersion(branch)) {
             description = branch;
-            println String.format('%s', description)
         } else {
             def stdout = new ByteArrayOutputStream()
             exec {
@@ -84,7 +80,6 @@ def getVersionName = { ->
                 standardOutput = stdout
             }
             def describe = stdout.toString().trim()
-            println String.format('%s', describe)
             if (hasSemanticVersion(describe)) {
                 description = describe;
             }
@@ -93,6 +88,7 @@ def getVersionName = { ->
     catch (e) {
         logger.error("Could not determine version name", e)
     }
+    println String.format('%s', description.substring(description.indexOf("/") + 1))
     return description.substring(description.indexOf("/") + 1).split("-")[0].trim()
 }
 
