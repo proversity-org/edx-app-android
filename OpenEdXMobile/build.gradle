@@ -71,6 +71,7 @@ def getVersionName = { ->
             // This branch/tag contains a semantic version (e.g. "rc/2.6.0" or "release/2.5")
             println("hasSemanticVersion")
             println String.format('%s', s)
+            println(s.indexOf("rc/"))
             return s.indexOf("rc/") >= 0 || s.indexOf("release/") >= 0
         }
         if (hasSemanticVersion(branch)) {
