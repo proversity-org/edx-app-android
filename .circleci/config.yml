@@ -54,11 +54,11 @@ jobs:
             - ~/.gradle
           key:
             - jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-       - deploy:
-          command: |
-                if [ "${CIRCLE_BRANCH}" == "proversity/master" ]; then
-                   ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
-                fi
+       # - deploy:
+       #    command: |
+       #          if [ "${CIRCLE_BRANCH}" == "proversity/master" ]; then
+       #             ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
+       #          fi
        - store_artifacts:
           path: /tmp/core_dumps
 
