@@ -24,6 +24,11 @@
             android:layout_height="wrap_content"
             android:scrollbars="none" />
 
+        <TextView
+            android:id="@+id/weblink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <include layout="@layout/loading_indicator" />
 
         <include layout="@layout/content_error" />
