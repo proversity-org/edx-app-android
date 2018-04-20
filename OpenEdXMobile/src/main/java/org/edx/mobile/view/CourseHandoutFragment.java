@@ -3,12 +3,16 @@ package org.edx.mobile.view;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.util.Xml.Encoding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 import com.google.inject.Inject;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
@@ -31,6 +35,8 @@ import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.util.WebViewUtil;
 import org.edx.mobile.view.custom.URLInterceptorWebViewClient;
 
+import java.util.regex.Pattern;
+
 import de.greenrobot.event.EventBus;
 import okhttp3.Request;
 import roboguice.inject.InjectExtra;
@@ -51,8 +57,8 @@ public class CourseHandoutFragment extends BaseFragment implements RefreshListen
     @Inject
     private OkHttpClientProvider okHttpClientProvider;
 
-    @InjectView(R.id.webview)
-    private WebView webview;
+    @InjectView(R.id.weblink)
+    private TextView weblink;
 
     private FullScreenErrorNotification errorNotification;
 
@@ -74,9 +80,7 @@ public class CourseHandoutFragment extends BaseFragment implements RefreshListen
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        errorNotification = new FullScreenErrorNotification(webview);
-        snackbarErrorNotification = new SnackbarErrorNotification(webview);
-        new URLInterceptorWebViewClient(getActivity(), webview).setAllLinksAsExternal(true);
+        weblink.setMovementMethod(LinkMovementMethod.getInstance());
         loadData();
     }
 
@@ -120,26 +124,11 @@ public class CourseHandoutFragment extends BaseFragment implements RefreshListen
     }
 
     private void populateHandouts(HandoutModel handout) {
-        hideErrorMessage();
-
+        String address = environment.getConfig().getApiHostURL() + handout.handouts_html.substring(handout.handouts_html.indexOf("\"")+1, handout.handouts_html.lastIndexOf("\""));
+        weblink.setText(Html.fromHtml("<p><a href=" + address + ">Quick User Guide</a></p>"));
         StringBuilder buff = WebViewUtil.getIntialWebviewBuffer(getActivity(), logger);
-
-        buff.append("<body>");
-        buff.append("<div class=\"header\">");
-        buff.append(handout.handouts_html);
-        buff.append("</div>");
-        buff.append("</body>");
-
-        webview.clearCache(true);
-        webview.loadDataWithBaseURL(environment.getConfig().getApiHostURL(), buff.toString(),
-                "text/html", Encoding.UTF_8.toString(), null);
-
     }
 
-    private void hideErrorMessage() {
-        webview.setVisibility(View.VISIBLE);
-        errorNotification.hideError();
-    }
 
     @SuppressWarnings("unused")
     public void onEventMainThread(NetworkConnectivityChangeEvent event) {
