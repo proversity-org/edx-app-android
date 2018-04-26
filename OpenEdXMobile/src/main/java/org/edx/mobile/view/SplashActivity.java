@@ -7,6 +7,7 @@ import android.os.Bundle;
 import org.edx.mobile.base.MainApplication;
 import org.edx.mobile.core.IEdxEnvironment;
 import org.edx.mobile.logger.Logger;
+import org.edx.mobile.module.Language.NewLanguageHelper;
 import org.edx.mobile.util.Config;
 import org.json.JSONObject;
 
@@ -41,6 +42,8 @@ public class SplashActivity extends Activity {
 
         final IEdxEnvironment environment = MainApplication.getEnvironment(this);
         if (environment.getUserPrefs().getProfile() != null) {
+            NewLanguageHelper languageHelper = new NewLanguageHelper();
+            languageHelper.configureLanguageFromStorage(this);
             environment.getRouter().showMyCourses(SplashActivity.this);
         } else if (!environment.getConfig().isRegistrationEnabled()) {
             startActivity(environment.getRouter().getLogInIntent());
