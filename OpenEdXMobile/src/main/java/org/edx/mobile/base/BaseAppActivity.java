@@ -9,12 +9,14 @@ import org.edx.mobile.event.NewRelicEvent;
 
 import de.greenrobot.event.EventBus;
 import org.edx.mobile.module.Language.LanguageHelper;
+import org.edx.mobile.module.Language.NewLanguageHelper;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseAppActivity extends RoboAppCompatActivity {
 
     @Inject
-    LanguageHelper languageHelper;
+    NewLanguageHelper languageHelper;
 
     @Override
     protected void attachBaseContext(Context newBase) {
