@@ -84,6 +84,7 @@ public class CourseHandoutFragment extends BaseFragment implements RefreshListen
     }
 
     private void loadData() {
+        if (courseData.getCourse().getCourse_handouts()!=null)
         okHttpClientProvider.getWithOfflineCache().newCall(new Request.Builder()
                 .url(courseData.getCourse().getCourse_handouts())
                 .get()
