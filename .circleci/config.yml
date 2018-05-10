@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Build app
           command: |
-            ./gradlew clean build
+            ./gradlew cleanBuildCache
             ./gradlew build -PpreDexEnable=false -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs="-Xms512m -Xmx512m" -Dorg.gradle.daemon=false
             ./gradlew assembleProdRelease
             ./gradlew testProdReleaseUnitTestCoverage
