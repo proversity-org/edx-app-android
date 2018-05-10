@@ -119,6 +119,7 @@ task(version) << {
 
 
 dependencies {
+    testCompile 'junit:junit:4.12'
     compile project (':android-iconify')
     // Note that we have the Font Awesome TTF file
     // in the local assets as well, to enable the
@@ -138,11 +139,12 @@ dependencies {
     compile 'com.squareup.phrase:phrase:1.1.0'
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
-    /* Exclude dependencies defined statically at the top-
-     * level, to prevent them from being resolved to the
-     * latest version as a result of dynamic version
-     * definitions in the transitive dependencies.
-     */
+
+  /* Exclude dependencies defined statically at the top-
+   * level, to prevent them from being resolved to the
+   * latest version as a result of dynamic version
+   * definitions in the transitive dependencies.
+   */
     compile ('com.squareup.retrofit2:retrofit:2.1.0') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
@@ -191,7 +193,6 @@ dependencies {
     compile 'com.android.support:support-annotations:25.3.1'
 
     // test project configuration
-    testCompile 'junit:junit:4.12'
     testCompile ("org.mockito:mockito-core:1.10.19"){
         exclude group: 'org.hamcrest'
     }
