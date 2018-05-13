@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Build app
           command: |
-            ./gradlew clean build
+            ./gradlew cleanBuildCache
             ./gradlew assembleProdRelease
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
