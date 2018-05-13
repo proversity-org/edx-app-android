@@ -32,9 +32,7 @@ jobs:
           name: Build app
           command: |
             ./gradlew clean build
-            ./gradlew build -PpreDexEnable=false -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs="-Xms512m -Xmx512m" -Dorg.gradle.daemon=false
             ./gradlew assembleProdRelease
-            ./gradlew testProdReleaseUnitTestCoverage
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
       - deploy:
@@ -56,4 +54,4 @@ workflows:
       - build:
           filters:
             branches:
-              only: rc/2.13.2
+              only: rc/2.13.1
