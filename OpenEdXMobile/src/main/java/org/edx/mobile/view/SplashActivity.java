@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import org.edx.mobile.base.MainApplication;
 import org.edx.mobile.core.IEdxEnvironment;
 import org.edx.mobile.logger.Logger;
@@ -21,6 +22,8 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseMessaging.getInstance().subscribeToTopic("05353740-3674-11e8-947e-6784d62f81d");
+
         if (!Config.FabricBranchConfig.isBranchEnabled(config.getFabricConfig())) {
             finish();
         }
