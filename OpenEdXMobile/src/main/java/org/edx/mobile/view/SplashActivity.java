@@ -22,7 +22,7 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseMessaging.getInstance().subscribeToTopic("05353740-3674-11e8-947e-6784d62f81d");
+        FirebaseMessaging.getInstance().subscribeToTopic("05353740-3674-11e8-947e-6784d62f81d9");
 
         if (!Config.FabricBranchConfig.isBranchEnabled(config.getFabricConfig())) {
             finish();
