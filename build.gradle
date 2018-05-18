@@ -10,6 +10,13 @@ buildscript {
     }
 }
 
+allprojects {
+  repositories {
+    jcenter()
+    maven { url 'https://maven.google.com' }
+  }
+}
+
 project.ext {
     BUILD_TOOLS_VERSION = "25.0.3"
     COMPILE_SDK_VERSION = 25

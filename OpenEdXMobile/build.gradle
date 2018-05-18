@@ -146,7 +146,9 @@ dependencies {
     compile ('com.squareup.retrofit2:retrofit:2.1.0') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
-    compile ('com.squareup.retrofit2:converter-gson:2.1.0') {
+  compile 'com.android.volley:volley:1.1.0'
+
+  compile ('com.squareup.retrofit2:converter-gson:2.1.0') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
         exclude group: 'com.google.code.gson', module: 'gson'
     }
@@ -154,7 +156,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:multidex:1.0.1'
+
+  compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'de.hdodenhof:circleimageview:2.0.0'
@@ -235,7 +238,7 @@ configurations {
 def config = new TaskHelper().loadConfig(project)
 
 // https://developers.google.com/android/guides/google-services-plugin
-if (config.get('FIREBASE_ENABLED')?: false) {
+if (config.get('PUSH_NOTIFICATIONS_FLAG')?: false) {
     apply plugin: 'com.google.gms.google-services'
 }
 
