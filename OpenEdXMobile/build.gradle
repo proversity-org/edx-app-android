@@ -147,6 +147,8 @@ dependencies {
     compile ('com.squareup.retrofit2:retrofit:2.1.0') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
+
+    compile 'com.android.volley:volley:1.1.0'
     compile ('com.squareup.retrofit2:converter-gson:2.1.0') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
         exclude group: 'com.google.code.gson', module: 'gson'
@@ -238,7 +240,7 @@ configurations {
 def config = new TaskHelper().loadConfig(project)
 
 // https://developers.google.com/android/guides/google-services-plugin
-if (config.get('FIREBASE_ENABLED')?: false) {
+if (config.get('PUSH_NOTIFICATIONS')?: false) {
     apply plugin: 'com.google.gms.google-services'
 }
 
