@@ -54,7 +54,7 @@ public class Config {
     private static final String FABRIC = "FABRIC";
     private static final String NEW_RELIC = "NEW_RELIC";
     private static final String SEGMENT_IO = "SEGMENT_IO";
-    private static final String PUSH_NOTIFICATIONS_FLAG = "PUSH_NOTIFICATIONS";
+    private static final String PUSH_NOTIFICATIONS = "PUSH_NOTIFICATIONS";
     private static final String WHITE_LIST_OF_DOMAINS = "WHITE_LIST_OF_DOMAINS";
 
     // Features
@@ -548,7 +548,7 @@ public class Config {
 
 
     public boolean isNotificationEnabled() {
-        return getBoolean(PUSH_NOTIFICATIONS_FLAG, false);
+        return getBoolean(PUSH_NOTIFICATIONS, false);
     }
 
     public boolean isNewLogistrationEnabled() {

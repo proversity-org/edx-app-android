@@ -238,7 +238,7 @@ configurations {
 def config = new TaskHelper().loadConfig(project)
 
 // https://developers.google.com/android/guides/google-services-plugin
-if (config.get('PUSH_NOTIFICATIONS_FLAG')?: false) {
+if (config.get('PUSH_NOTIFICATIONS')?: false) {
     apply plugin: 'com.google.gms.google-services'
 }
 

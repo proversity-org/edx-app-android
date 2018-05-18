@@ -300,6 +300,9 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
 
     private void createTopicsAndSubscribe(String [] coursesIds){
       Config config = new Config(MainApplication.instance());
+      if (!config.isNotificationEnabled()){
+        return;
+      }
       FirebaseMessaging.getInstance().subscribeToTopic(config.getKonnekteerMainTopic());
 
       for(int i =0; i<coursesIds.length; i++){
