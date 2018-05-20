@@ -5,6 +5,7 @@ buildscript {
         jcenter()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+      maven { url 'https://maven.fabric.io/public' }
 
     }
 
@@ -16,7 +17,18 @@ buildscript {
 
         classpath 'com.facebook.testing.screenshot:plugin:0.4.2'
 
+      classpath 'io.fabric.tools:gradle:1.+'
+
+
     }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+  jcenter()
+  maven { url 'https://maven.fabric.io/public' }
 }
 
 
@@ -235,7 +247,7 @@ configurations {
 def config = new TaskHelper().loadConfig(project)
 
 // https://developers.google.com/android/guides/google-services-plugin
-if (config.get('FIREBASE_ENABLED')?: false) {
+if (true) {
     apply plugin: 'com.google.gms.google-services'
 }
 
@@ -394,10 +406,11 @@ android {
             minSdkVersion 21 // Disables multidex to drastically speed up build: https://developer.android.com/tools/building/multidex.html#dev-build
         }
     }
+  ext.enableCrashlytics = false
 
     buildTypes {
         debug {
-            testCoverageEnabled true
+          testCoverageEnabled true
             pseudoLocalesEnabled true // Set device language to "en_XA" to test glyphs, or "ar_XB" to test RTL support
             manifestPlaceholders = [ supportsRtl:"true"]
         }
