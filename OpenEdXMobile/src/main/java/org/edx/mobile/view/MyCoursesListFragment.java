@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
 import org.edx.mobile.R;
+import org.edx.mobile.base.MainApplication;
 import org.edx.mobile.core.IEdxEnvironment;
 import org.edx.mobile.databinding.FragmentMyCoursesListBinding;
 import org.edx.mobile.databinding.PanelFindCourseBinding;
@@ -23,12 +25,14 @@ import org.edx.mobile.http.HttpStatus;
 import org.edx.mobile.http.HttpStatusException;
 import org.edx.mobile.http.notifications.FullScreenErrorNotification;
 import org.edx.mobile.interfaces.RefreshListener;
+import org.edx.mobile.konnekteer.KonnekteerUtil;
 import org.edx.mobile.loader.AsyncTaskResult;
 import org.edx.mobile.loader.CoursesAsyncLoader;
 import org.edx.mobile.logger.Logger;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
 import org.edx.mobile.module.db.DataCallback;
 import org.edx.mobile.module.prefs.LoginPrefs;
+import org.edx.mobile.util.Config;
 import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.view.adapters.MyCoursesAdapter;
 
@@ -153,6 +157,12 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
 
             updateDatabaseAfterDownload(newItems);
 
+            String courseIds [] = new String[newItems.size()];
+            for (int i = 0; i<newItems.size();i++) {
+              courseIds[i] = newItems.get(i).getCourse().getId();
+            }
+            createTopicsAndSubscribe(courseIds);
+
             if (result.getResult().size() > 0) {
                 adapter.setItems(newItems);
                 adapter.notifyDataSetChanged();
@@ -273,6 +283,33 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
         if (NetworkUtil.isConnected(getActivity())) {
             binding.swipeContainer.setEnabled(true);
         }
+    }
+
+    private void createTopicsAndSubscribe(String [] coursesIds){
+        Config config = new Config(MainApplication.instance());
+        if (!config.isNotificationEnabled()){
+            return;
+        }
+        FirebaseMessaging.getInstance().subscribeToTopic(config.getKonnekteerMainTopic());
+
+        for(int i =0; i<coursesIds.length; i++){
+            String cleanTopic = cleanTopicForFireBase(coursesIds[i]);
+            KonnekteerUtil.createTopic(getActivity(), config, cleanTopic);
+            subscribeToTopic(cleanTopic);
+        }
+
+
+    }
+
+    private void subscribeToTopic(String id){
+        FirebaseMessaging.getInstance().subscribeToTopic(id);
+    }
+
+    private static String cleanTopicForFireBase(String dirtyTopic){
+        String semiCleanTopic=dirtyTopic.replace('+','-');
+        String cleanTopic=semiCleanTopic.replace(':','-');
+        return cleanTopic;
+
     }
 
     @SuppressWarnings("unused")

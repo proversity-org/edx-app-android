@@ -252,6 +252,12 @@
             </intent-filter>
         </receiver>
 
+      <service android:name="org.edx.mobile.services.MyFirebaseMessagingService" >
+        <intent-filter>
+          <action android:name="com.google.firebase.MESSAGING_EVENT" />
+        </intent-filter>
+      </service>
+
         <!-- Setup for Code Coverage -->
         <instrumentation
             android:name="org.edx.mobile.instrumentation.EdxInstrumentation"
