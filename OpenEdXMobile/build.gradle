@@ -332,6 +332,8 @@ android {
                 resValue "string", "io.fabric.ApiKey", fabric_key
                 resValue "bool", "com.crashlytics.RequireBuildId", "false"
             }
+        }else{
+          ext.enableCrashlytics = false
         }
         def branchKey = ""
         if (fabric != null) {
@@ -412,7 +414,6 @@ android {
             minSdkVersion 21 // Disables multidex to drastically speed up build: https://developer.android.com/tools/building/multidex.html#dev-build
         }
     }
-  ext.enableCrashlytics = false
 
     buildTypes {
         debug {
