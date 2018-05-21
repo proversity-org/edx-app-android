@@ -21,7 +21,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-      String messageText = remoteMessage.getData().get("default");
+        String messageText = remoteMessage.getNotification().getBody();
 
       Notification.Builder mBuilder =
         new Notification.Builder(this)
