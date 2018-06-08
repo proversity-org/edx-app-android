@@ -29,12 +29,12 @@ public class KonnekteerUtil {
 
   public static void createTopic(final Context context, final Config config, final String topic){
     StringRequest request = new StringRequest(Request.Method.POST, KONNEKTEER_END_POINT,
-      new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
+            new Response.Listener<String>() {
+              @Override
+              public void onResponse(String response) {
 
-        }
-      }, new Response.ErrorListener() {
+              }
+            }, new Response.ErrorListener() {
       @Override
       public void onErrorResponse(VolleyError error) {
 

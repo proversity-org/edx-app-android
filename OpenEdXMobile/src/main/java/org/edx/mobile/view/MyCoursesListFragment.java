@@ -71,12 +71,12 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
         adapter = new MyCoursesAdapter(getActivity(), environment) {
             @Override
             public void onItemClicked(EnrolledCoursesResponse model) {
-                environment.getRouter().showCourseDashboardTabs(getActivity(), model, false);
+                environment.getRouter().showCourseDashboardTabs(getActivity(), environment.getConfig(), model, false);
             }
 
             @Override
             public void onAnnouncementClicked(EnrolledCoursesResponse model) {
-                environment.getRouter().showCourseDashboardTabs(getActivity(), model, true);
+                environment.getRouter().showCourseDashboardTabs(getActivity(), environment.getConfig(), model, true);
             }
         };
     }
@@ -159,10 +159,9 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
 
             String courseIds [] = new String[newItems.size()];
             for (int i = 0; i<newItems.size();i++) {
-              courseIds[i] = newItems.get(i).getCourse().getId();
+                courseIds[i] = newItems.get(i).getCourse().getId();
             }
             createTopicsAndSubscribe(courseIds);
-
             if (result.getResult().size() > 0) {
                 adapter.setItems(newItems);
                 adapter.notifyDataSetChanged();
@@ -285,6 +284,20 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
         }
     }
 
+    @SuppressWarnings("unused")
+    public void onEvent(NetworkConnectivityChangeEvent event) {
+        if (getActivity() != null) {
+            if (NetworkUtil.isConnected(getContext())) {
+                binding.swipeContainer.setEnabled(true);
+            } else {
+                //Disable swipe functionality and hide the loading view
+                binding.swipeContainer.setEnabled(false);
+                binding.swipeContainer.setRefreshing(false);
+            }
+            onNetworkConnectivityChangeEvent(event);
+        }
+    }
+
     private void createTopicsAndSubscribe(String [] coursesIds){
         Config config = new Config(MainApplication.instance());
         if (!config.isNotificationEnabled()){
@@ -301,10 +314,6 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
 
     }
 
-    private void subscribeToTopic(String id){
-        FirebaseMessaging.getInstance().subscribeToTopic(id);
-    }
-
     private static String cleanTopicForFireBase(String dirtyTopic){
         String semiCleanTopic=dirtyTopic.replace('+','-');
         String cleanTopic=semiCleanTopic.replace(':','-');
@@ -312,18 +321,8 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
 
     }
 
-    @SuppressWarnings("unused")
-    public void onEvent(NetworkConnectivityChangeEvent event) {
-        if (getActivity() != null) {
-            if (NetworkUtil.isConnected(getContext())) {
-                binding.swipeContainer.setEnabled(true);
-            } else {
-                //Disable swipe functionality and hide the loading view
-                binding.swipeContainer.setEnabled(false);
-                binding.swipeContainer.setRefreshing(false);
-            }
-            onNetworkConnectivityChangeEvent(event);
-        }
+    private void subscribeToTopic(String id){
+        FirebaseMessaging.getInstance().subscribeToTopic(id);
     }
 
     @Override

@@ -24,24 +24,24 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     String messageText = remoteMessage.getNotification().getBody();
 
     Notification.Builder mBuilder =
-      new Notification.Builder(this)
-        .setSmallIcon(R.mipmap.small_icon)
-        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
-        .setContentTitle(getString(R.string.platform_name))
-        .setContentText(messageText)
-        .setStyle(new Notification.BigTextStyle().bigText(messageText));
+            new Notification.Builder(this)
+                    .setSmallIcon(R.mipmap.small_icon)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+                    .setContentTitle(getString(R.string.platform_name))
+                    .setContentText(messageText)
+                    .setStyle(new Notification.BigTextStyle().bigText(messageText));
 
     Intent resultIntent = new Intent(this, SplashActivity.class);
     TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
     stackBuilder.addParentStack(SplashActivity.class);
     stackBuilder.addNextIntent(resultIntent);
     PendingIntent resultPendingIntent =
-      stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
     mBuilder.setContentIntent(resultPendingIntent)
-      .setDefaults(Notification.DEFAULT_ALL)
-      .setPriority(Notification.PRIORITY_HIGH)
-      .setAutoCancel(true);
+            .setDefaults(Notification.DEFAULT_ALL)
+            .setPriority(Notification.PRIORITY_HIGH)
+            .setAutoCancel(true);
 
     NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     mNotificationManager.notify(0, mBuilder.build());
