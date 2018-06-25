@@ -1,7 +1,6 @@
 package org.edx.mobile.model.course;
 
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.webkit.URLUtil;
 
 import com.google.gson.annotations.SerializedName;
@@ -13,7 +12,15 @@ import org.edx.mobile.util.VideoUtil;
 
 import java.io.Serializable;
 
+import static org.edx.mobile.util.AppConstants.VIDEO_FORMAT_M3U8;
+
 public class EncodedVideos implements Serializable {
+
+    @SerializedName("hls")
+    public VideoInfo hls;
+
+    @SerializedName("fallback")
+    public VideoInfo fallback;
 
     @SerializedName("mobile_high")
     public VideoInfo mobileHigh;
@@ -24,25 +31,16 @@ public class EncodedVideos implements Serializable {
     @SerializedName("youtube")
     public VideoInfo youtube;
 
-    @SerializedName("hls")
-    public VideoInfo hls;
-
-    @SerializedName("fallback")
-    public VideoInfo fallback;
-
     @Nullable
     public VideoInfo getPreferredVideoInfo() {
+        if (isPreferredVideoInfo(hls)) {
+            return hls;
+        }
         if (isPreferredVideoInfo(mobileLow)) {
             return mobileLow;
         }
         if (isPreferredVideoInfo(mobileHigh)) {
             return mobileHigh;
-        }
-        if (hls != null && URLUtil.isNetworkUrl(hls.url)) {
-            return hls;
-        }
-        if (fallback != null && URLUtil.isNetworkUrl(fallback.url)) {
-            return fallback;
         }
         if (new Config(MainApplication.instance()).isUsingVideoPipeline()) {
             if (fallback != null && URLUtil.isNetworkUrl(fallback.url) &&
@@ -54,25 +52,24 @@ public class EncodedVideos implements Serializable {
                 return fallback;
             }
         }
-        if (hls != null && URLUtil.isNetworkUrl(hls.url))
-            return hls;
         return null;
     }
 
     @Nullable
-    public VideoInfo getDownloadableVideoInfo() {
-        if (mobileLow != null && URLUtil.isNetworkUrl(mobileLow.url))
+    public VideoInfo getPreferredVideoInfoForDownloading() {
+        if (isPreferredVideoInfo(mobileLow)) {
             return mobileLow;
-        if (mobileHigh != null && URLUtil.isNetworkUrl(mobileHigh.url))
-            return mobileHigh;
-        if (hls!=null){
-            return hls;
         }
-        if (fallback != null && URLUtil.isNetworkUrl(fallback.url))
+        if (isPreferredVideoInfo(mobileHigh)) {
+            return mobileHigh;
+        }
+        if (!new Config(MainApplication.instance()).isUsingVideoPipeline() &&
+                isPreferredVideoInfo(fallback) &&
+                !VideoUtil.videoHasFormat(fallback.url, VIDEO_FORMAT_M3U8)) {
             return fallback;
+        }
         return null;
     }
-
 
     private boolean isPreferredVideoInfo(@Nullable VideoInfo videoInfo) {
         return videoInfo != null &&
@@ -99,10 +96,6 @@ public class EncodedVideos implements Serializable {
         if (mobileHigh != null ? !mobileHigh.equals(that.mobileHigh) : that.mobileHigh != null)
             return false;
         if (mobileLow != null ? !mobileLow.equals(that.mobileLow) : that.mobileLow != null)
-            return false;
-        if (hls != null ? !hls.equals(that.hls) : that.hls != null)
-            return false;
-        if (fallback != null ? !fallback.equals(that.fallback) : that.fallback != null)
             return false;
         return youtube != null ? youtube.equals(that.youtube) : that.youtube == null;
 

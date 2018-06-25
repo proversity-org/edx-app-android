@@ -18,7 +18,6 @@ import org.edx.mobile.module.prefs.PrefManager;
 import org.edx.mobile.user.Preferences;
 import org.edx.mobile.user.UserService;
 import org.edx.mobile.view.MainDashboardActivity;
-import org.edx.mobile.view.MyCoursesListActivity;
 
 import java.util.Locale;
 

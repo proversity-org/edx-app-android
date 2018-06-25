@@ -75,6 +75,11 @@ public class Config {
     private static final String COURSE_DATES_ENABLED = "COURSE_DATES_ENABLED";
     private static final String WHATS_NEW_ENABLED = "WHATS_NEW_ENABLED";
     private static final String COURSE_VIDEOS_ENABLED = "COURSE_VIDEOS_ENABLED";
+    private static final String ANNOUNCEMENTS_ENABLED = "ANNOUNCEMENTS_ENABLED";
+    private static final String JUMP_TO_LAST_ACCESSED_MODULE_ENABLED = "JUMP_TO_LAST_ACCESSED_MODULE_ENABLED";
+    private static final String JUMP_TO_FIND_COURSES_ENABLED = "JUMP_TO_FIND_COURSES_ENABLED";
+    private static final String INVERT_COLOR_LOGIN_SPLASH_VIEW_SIGN_IN_BTN = "INVERT_COLOR_LOGIN_SPLASH_VIEW_SIGN_IN_BTN";
+
 
     public static class ZeroRatingConfig {
         @SerializedName("ENABLED")
@@ -664,6 +669,19 @@ public class Config {
     public NewRelicConfig getNewRelicConfig() {
         return getObjectOrNewInstance(NEW_RELIC, NewRelicConfig.class);
     }
+
+    public boolean isJumpToFindCoursesEnabled() {
+        return getBoolean(JUMP_TO_FIND_COURSES_ENABLED, false);
+    }
+
+    public boolean isAnnoucementsEnabled() {
+        return getBoolean(ANNOUNCEMENTS_ENABLED, false);
+    }
+
+    public boolean isJumpToLastAccessedModuleEnabled() {
+        return getBoolean(JUMP_TO_LAST_ACCESSED_MODULE_ENABLED, false);
+    }
+
 
     @NonNull
     public SegmentConfig getSegmentConfig() {
