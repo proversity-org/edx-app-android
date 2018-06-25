@@ -8,7 +8,6 @@ import com.google.inject.Inject;
 import org.edx.mobile.event.NewRelicEvent;
 
 import de.greenrobot.event.EventBus;
-import org.edx.mobile.module.Language.LanguageHelper;
 import org.edx.mobile.module.Language.NewLanguageHelper;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;

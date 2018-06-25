@@ -75,7 +75,6 @@ public class Config {
     private static final String COURSE_DATES_ENABLED = "COURSE_DATES_ENABLED";
     private static final String WHATS_NEW_ENABLED = "WHATS_NEW_ENABLED";
     private static final String COURSE_VIDEOS_ENABLED = "COURSE_VIDEOS_ENABLED";
-    private static final String TAB_LAYOUTS_ENABLED = "TAB_LAYOUTS_ENABLED";
     private static final String ANNOUNCEMENTS_ENABLED = "ANNOUNCEMENTS_ENABLED";
     private static final String JUMP_TO_LAST_ACCESSED_MODULE_ENABLED = "JUMP_TO_LAST_ACCESSED_MODULE_ENABLED";
     private static final String JUMP_TO_FIND_COURSES_ENABLED = "JUMP_TO_FIND_COURSES_ENABLED";
@@ -129,13 +128,6 @@ public class Config {
             return getCourseDiscoveryType() != null;
         }
 
-        public boolean isExploreSubjectsEnabled() {
-            // Explore Subjects is only supported for web course discovery, and requires a URL
-            return isWebviewCourseDiscoveryEnabled()
-                    && null != getWebViewConfig().getExploreSubjectsUrl()
-                    && !getWebViewConfig().getExploreSubjectsUrl().isEmpty();
-        }
-
         public boolean isWebviewCourseDiscoveryEnabled() {
             return getCourseDiscoveryType() == CourseDiscoveryType.WEBVIEW;
         }
@@ -161,9 +153,6 @@ public class Config {
         @SerializedName("COURSE_SEARCH_URL")
         private String mSearchUrl;
 
-        @SerializedName("EXPLORE_SUBJECTS_URL")
-        private String mExploreSubjectsUrl;
-
         @SerializedName("COURSE_INFO_URL_TEMPLATE")
         private String mCourseInfoUrlTemplate;
 
@@ -172,10 +161,6 @@ public class Config {
 
         public String getCourseSearchUrl() {
             return mSearchUrl;
-        }
-
-        public String getExploreSubjectsUrl() {
-            return mExploreSubjectsUrl;
         }
 
         public String getCourseInfoUrlTemplate() {
@@ -650,22 +635,6 @@ public class Config {
         return getBoolean(COURSE_VIDEOS_ENABLED, true);
     }
 
-    public boolean isTabsLayoutEnabled() {
-        return getBoolean(TAB_LAYOUTS_ENABLED, false);
-    }
-
-    public boolean isAnnoucementsEnabled() {
-        return getBoolean(ANNOUNCEMENTS_ENABLED, false);
-    }
-
-    public boolean isJumpToLastAccessedModuleEnabled() {
-        return getBoolean(JUMP_TO_LAST_ACCESSED_MODULE_ENABLED, false);
-    }
-
-    public boolean isJumpToFindCoursesEnabled() {
-        return getBoolean(JUMP_TO_FIND_COURSES_ENABLED, false);
-    }
-
     @NonNull
     public EnrollmentConfig getCourseDiscoveryConfig() {
         return getObjectOrNewInstance(COURSE_ENROLLMENT, EnrollmentConfig.class);
@@ -700,6 +669,19 @@ public class Config {
     public NewRelicConfig getNewRelicConfig() {
         return getObjectOrNewInstance(NEW_RELIC, NewRelicConfig.class);
     }
+
+    public boolean isJumpToFindCoursesEnabled() {
+        return getBoolean(JUMP_TO_FIND_COURSES_ENABLED, false);
+    }
+
+    public boolean isAnnoucementsEnabled() {
+        return getBoolean(ANNOUNCEMENTS_ENABLED, false);
+    }
+
+    public boolean isJumpToLastAccessedModuleEnabled() {
+        return getBoolean(JUMP_TO_LAST_ACCESSED_MODULE_ENABLED, false);
+    }
+
 
     @NonNull
     public SegmentConfig getSegmentConfig() {
