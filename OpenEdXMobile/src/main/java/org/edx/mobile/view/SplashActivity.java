@@ -45,6 +45,7 @@ public class SplashActivity extends Activity {
             NewLanguageHelper languageHelper = new NewLanguageHelper();
             languageHelper.configureLanguageFromStorage(this);
             environment.getRouter().showMyCourses(SplashActivity.this);
+            environment.getRouter().showMainDashboard(SplashActivity.this);
         } else if (!environment.getConfig().isRegistrationEnabled()) {
             startActivity(environment.getRouter().getLogInIntent());
         } else {

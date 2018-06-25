@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
@@ -38,7 +39,7 @@ import org.edx.mobile.util.DownloadUtil;
 import org.edx.mobile.util.MemoryUtil;
 import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.util.ResourceUtil;
-import org.edx.mobile.view.adapters.NewCourseOutlineAdapter;
+import org.edx.mobile.view.adapters.CourseOutlineAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,8 +47,6 @@ import java.util.List;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
-
-import static org.edx.mobile.util.DownloadUtil.isDownloadSizeWithinLimit;
 
 public class BulkDownloadFragment extends BaseFragment {
     protected final Logger logger = new Logger(getClass().getName());
@@ -75,11 +74,10 @@ public class BulkDownloadFragment extends BaseFragment {
     private static final int DOWNLOAD_PROGRESS_DELAY_MS = 2000;
 
     private RowBulkDownloadBinding binding;
-    private NewCourseOutlineAdapter.DownloadListener downloadListener;
+    private CourseOutlineAdapter.DownloadListener downloadListener;
     private IEdxEnvironment environment;
     private VideoPrefs prefManager;
     private SwitchState switchState = SwitchState.DEFAULT;
-    private CourseComponent courseComponent;
     private boolean isDeleteScheduled = false;
     private Handler bgThreadHandler;
 
@@ -88,11 +86,15 @@ public class BulkDownloadFragment extends BaseFragment {
      */
     private CourseVideosStatus videosStatus = new CourseVideosStatus();
     /**
-     * List of videos that can be downloaded.
+     * List of videos that need to be downloaded.
+     */
+    private List<CourseComponent> totalDownloadableVideos;
+    /**
+     * List of videos that are remaining for download.
      */
     private List<HasDownloadEntry> remainingVideos = new ArrayList<>();
     /**
-     * List of videos that are currently being downloaded or haven been downloaded.
+     * List of videos that are currently being downloaded or have been downloaded.
      */
     private List<VideoModel> removableVideos = new ArrayList<>();
 
@@ -100,7 +102,7 @@ public class BulkDownloadFragment extends BaseFragment {
     }
 
     @SuppressLint("ValidFragment")
-    public BulkDownloadFragment(@NonNull NewCourseOutlineAdapter.DownloadListener downloadListener,
+    public BulkDownloadFragment(@NonNull CourseOutlineAdapter.DownloadListener downloadListener,
                                 @NonNull IEdxEnvironment environment) {
         this.downloadListener = downloadListener;
         this.environment = environment;
@@ -129,29 +131,28 @@ public class BulkDownloadFragment extends BaseFragment {
         ViewCompat.setImportantForAccessibility(binding.pbDownload, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO);
         ViewCompat.setImportantForAccessibility(binding.swDownload, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
         initDownloadSwitch();
-        if (courseComponent != null) {
-            populateViewHolder(courseComponent);
+        if (totalDownloadableVideos != null && videosStatus.courseComponentId != null) {
+            populateViewHolder(videosStatus.courseComponentId, totalDownloadableVideos);
         }
     }
 
-    public void populateViewHolder(@NonNull CourseComponent courseComponent) {
-        this.courseComponent = courseComponent;
-        if (binding == null) return;
+    public void populateViewHolder(@NonNull String componentId,
+                                   @Nullable List<CourseComponent> downloadableVideos) {
+        videosStatus.reset();
+        this.totalDownloadableVideos = downloadableVideos;
+        videosStatus.courseComponentId = componentId;
+        if (binding == null || totalDownloadableVideos == null) return;
         remainingVideos.clear();
         removableVideos.clear();
-        videosStatus.reset();
-        videosStatus.courseId = courseComponent.getCourseId();
 
-        // Get all the videos of this course
-        final List<CourseComponent> allVideosInCourse = courseComponent.getVideos(true);
-        videosStatus.total = allVideosInCourse.size();
+        videosStatus.total = totalDownloadableVideos.size();
 
         // Get all the videos of this course from DB that we have downloaded or are downloading
-        environment.getDatabase().getAllVideosByCourse(courseComponent.getCourseId(),
+        environment.getDatabase().getVideosByVideoIds(totalDownloadableVideos, null,
                 new DataCallback<List<VideoModel>>() {
                     @Override
                     public void onResult(final List<VideoModel> result) {
-                        for (CourseComponent video : allVideosInCourse) {
+                        for (CourseComponent video : totalDownloadableVideos) {
                             boolean foundInDb = false;
                             for (VideoModel dbVideo : result) {
                                 if (video.getId().contentEquals(dbVideo.getVideoId())) {
@@ -193,6 +194,13 @@ public class BulkDownloadFragment extends BaseFragment {
                             }
                         }
 
+                        if (prefManager.getBulkDownloadSwitchState(videosStatus.courseComponentId)
+                                == SwitchState.USER_TURNED_ON && remainingVideos.size() > 0) {
+                            // It means that the switch was turned on by user but either a video was
+                            // deleted by user or a video download was cancelled.
+                            prefManager.setBulkDownloadSwitchState(SwitchState.DEFAULT, videosStatus.courseComponentId);
+                        }
+
                         binding.getRoot().post(new Runnable() {
                             @Override
                             public void run() {
@@ -216,7 +224,7 @@ public class BulkDownloadFragment extends BaseFragment {
     }
 
     private void updateUI() {
-        switchState = prefManager.getBulkDownloadSwitchState(videosStatus.courseId);
+        switchState = prefManager.getBulkDownloadSwitchState(videosStatus.courseComponentId);
 
         if (videosStatus.allVideosDownloaded()) {
             bgThreadHandler.removeCallbacks(PROGRESS_RUNNABLE);
@@ -231,15 +239,10 @@ public class BulkDownloadFragment extends BaseFragment {
             ViewCompat.setImportantForAccessibility(binding.getRoot(), ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO);
             setSwitchAccessibility(R.string.switch_on_all_downloaded);
         } else if (videosStatus.allVideosDownloading()) {
-            // This means that all the videos have been put to downloading without the use of Bulk Download switch
-            if (switchState == SwitchState.USER_TURNED_OFF && !isDeleteScheduled) {
-                switchState = SwitchState.USER_TURNED_ON;
-                prefManager.setBulkDownloadSwitchState(switchState, videosStatus.courseId);
-            }
-
             initDownloadProgressView();
 
-            setViewState(FontAwesomeIcons.fa_spinner, Animation.PULSE, R.string.downloading_videos,
+            // TODO: Animation.PULSE causes lag when a spinner stays on screen for a while. Fix in LEARNER-5053
+            setViewState(FontAwesomeIcons.fa_spinner, Animation.SPIN, R.string.downloading_videos,
                     binding.tvSubtitle.getResources().getString(R.string.download_remaining),
                     "remaining_videos_count", videosStatus.remaining + "", "remaining_videos_size",
                     MemoryUtil.format(getContext(), videosStatus.remainingVideosSize));
@@ -253,7 +256,8 @@ public class BulkDownloadFragment extends BaseFragment {
             ViewCompat.setImportantForAccessibility(binding.getRoot(), ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
             setSwitchAccessibility(R.string.switch_on_all_downloading);
         } else if (switchState == SwitchState.IN_PROCESS) {
-            setViewState(FontAwesomeIcons.fa_spinner, Animation.PULSE, R.string.download_starting,
+            // TODO: Animation.PULSE causes lag when a spinner stays on screen for a while. Fix in LEARNER-5053
+            setViewState(FontAwesomeIcons.fa_spinner, Animation.SPIN, R.string.download_starting,
                     binding.tvSubtitle.getResources().getString(R.string.download_remaining),
                     "remaining_videos_count", videosStatus.remaining + "", "remaining_videos_size",
                     MemoryUtil.format(getContext(), videosStatus.remainingVideosSize));
@@ -315,13 +319,21 @@ public class BulkDownloadFragment extends BaseFragment {
                 if (videosStatus.allVideosDownloading()) {
                     // Now that all videos have been enqueued to Download manager, enable the Switch and update its state
                     switchState = SwitchState.USER_TURNED_ON;
-                    prefManager.setBulkDownloadSwitchState(switchState, videosStatus.courseId);
+                    prefManager.setBulkDownloadSwitchState(switchState, videosStatus.courseComponentId);
                     setSwitchState();
                 }
                 break;
             case USER_TURNED_OFF:
                 binding.swDownload.setChecked(false);
                 binding.swDownload.setEnabled(true);
+                if ((videosStatus.allVideosDownloading() || videosStatus.allVideosDownloaded())
+                        && !isDeleteScheduled) {
+                    // This means that all the videos have been downloaded or they are currently
+                    // downloading without the use of Bulk Download switch
+                    switchState = SwitchState.USER_TURNED_ON;
+                    prefManager.setBulkDownloadSwitchState(switchState, videosStatus.courseComponentId);
+                    setSwitchState();
+                }
                 break;
             case DEFAULT:
                 binding.swDownload.setChecked(videosStatus.allVideosDownloaded() || videosStatus.allVideosDownloading());
@@ -331,8 +343,7 @@ public class BulkDownloadFragment extends BaseFragment {
     }
 
     private void setSwitchAccessibility(@StringRes int accessibilitySuffixStringRes) {
-        @StringRes
-        final int prefixStringRes = R.string.bulk_download_switch;
+        @StringRes final int prefixStringRes = R.string.bulk_download_switch;
         final Resources resources = binding.swDownload.getResources();
         binding.swDownload.setContentDescription(
                 resources.getString(prefixStringRes) + " " +
@@ -352,29 +363,24 @@ public class BulkDownloadFragment extends BaseFragment {
                     isDeleteScheduled = false;
 
                     switchState = SwitchState.IN_PROCESS;
-                    prefManager.setBulkDownloadSwitchState(switchState, videosStatus.courseId);
+                    prefManager.setBulkDownloadSwitchState(switchState, videosStatus.courseComponentId);
                     setSwitchState();
 
                     // Download all videos
                     downloadListener.download(remainingVideos);
-                    // Video download process on bulk download view needs to be delayed when the
-                    // confirmation dialog for videos' size above 1 GB is shown.
-                    if (isDownloadSizeWithinLimit(videosStatus.remainingVideosSize, MemoryUtil.GB)) {
-                        onEvent((BulkVideosDownloadStartedEvent) null);
-                    }
 
                     environment.getAnalyticsRegistry().trackBulkDownloadSwitchOn(
-                            videosStatus.courseId, videosStatus.total, videosStatus.remaining);
+                            videosStatus.courseComponentId, videosStatus.total, videosStatus.remaining);
                 } else {
                     switchState = SwitchState.USER_TURNED_OFF;
-                    prefManager.setBulkDownloadSwitchState(switchState, videosStatus.courseId);
+                    prefManager.setBulkDownloadSwitchState(switchState, videosStatus.courseComponentId);
                     // Delete all videos after a delay
                     startVideosDeletion();
                     bgThreadHandler.removeCallbacks(PROGRESS_RUNNABLE);
                     updateUI();
 
                     environment.getAnalyticsRegistry().trackBulkDownloadSwitchOff(
-                            videosStatus.courseId, videosStatus.total);
+                            videosStatus.courseComponentId, videosStatus.total);
                 }
             }
         });
@@ -390,6 +396,8 @@ public class BulkDownloadFragment extends BaseFragment {
     final Runnable DELETION_RUNNABLE = new Runnable() {
         @Override
         public void run() {
+            // Before starting deletion stop showing progress of downloads first
+            bgThreadHandler.removeCallbacks(PROGRESS_RUNNABLE);
             final int deleted = environment.getStorage().removeDownloads(removableVideos);
             isDeleteScheduled = false;
             logger.debug("TOTAL_VIDEOS: " + removableVideos.size() + " - DELETE_VIDEOS: " + deleted);
@@ -419,7 +427,7 @@ public class BulkDownloadFragment extends BaseFragment {
                     }
                 });
             } else {
-                environment.getStorage().getDownloadProgressOfCourseVideos(videosStatus.courseId,
+                environment.getStorage().getDownloadProgressOfVideos(totalDownloadableVideos,
                         new DataCallback<NativeDownloadModel>() {
                             @Override
                             public void onResult(final NativeDownloadModel downloadModel) {
@@ -436,7 +444,7 @@ public class BulkDownloadFragment extends BaseFragment {
                                     final int percentageDownloaded = DownloadUtil.getPercentDownloaded(
                                             videosStatus.totalVideosSize, videosStatus.totalVideosSize - remainingSizeToDownload);
 
-                                    if (videosStatus.allVideosDownloading()) {
+                                    if (videosStatus.allVideosDownloading() && remainingSizeToDownload > 0) {
                                         binding.pbDownload.post(new Runnable() {
                                             @Override
                                             public void run() {
@@ -464,7 +472,10 @@ public class BulkDownloadFragment extends BaseFragment {
     };
 
     /**
-     * @return
+     * Tells if this fragment is attached to an activity that's in foreground and all its class
+     * variables are non-null.
+     *
+     * @return <code>true</code> if the fragment is in a valid state, <code>false</code> otherwise.
      */
     private boolean isValidState() {
         return getActivity() != null && environment != null && downloadListener != null;
@@ -473,7 +484,6 @@ public class BulkDownloadFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        updateUI();
         EventBus.getDefault().register(this);
     }
 
@@ -484,10 +494,17 @@ public class BulkDownloadFragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void onRevisit() {
+        if (totalDownloadableVideos != null && videosStatus.courseComponentId != null) {
+            populateViewHolder(videosStatus.courseComponentId, totalDownloadableVideos);
+        }
+    }
+
     public void onEvent(BulkVideosDownloadCancelledEvent event) {
         binding.swDownload.setChecked(false);
         switchState = SwitchState.DEFAULT;
-        prefManager.setBulkDownloadSwitchState(switchState, videosStatus.courseId);
+        prefManager.setBulkDownloadSwitchState(switchState, videosStatus.courseComponentId);
         updateUI();
     }
 
@@ -497,7 +514,11 @@ public class BulkDownloadFragment extends BaseFragment {
     }
 
     private class CourseVideosStatus {
-        String courseId;
+        /**
+         * This might be the ID of the course itself or an ID of a component within the course
+         * e.g. a section, subsection, unit or a component.
+         */
+        String courseComponentId;
         int total;
         int downloaded;
         int downloading;
@@ -516,7 +537,7 @@ public class BulkDownloadFragment extends BaseFragment {
         void reset() {
             total = downloaded = downloading = remaining = 0;
             totalVideosSize = remainingVideosSize = 0;
-            courseId = null;
+            courseComponentId = null;
         }
 
         @SuppressLint("DefaultLocale")
