@@ -68,6 +68,9 @@ public class EncodedVideos implements Serializable {
                 !VideoUtil.videoHasFormat(fallback.url, VIDEO_FORMAT_M3U8)) {
             return fallback;
         }
+        if (hls!=null){
+            return hls;
+        }
         return null;
     }
 
