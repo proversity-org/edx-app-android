@@ -66,7 +66,6 @@
   <string name="error_heading">حدث هذا الخطأ عندما تمت محاولة تسجيل دخولك</string>
   <!--Error during log in.-->
   <string name="login_failed">رجاء تأكد من أنك تستخدم البريد الإلكتروني أو اسم المستخدم وكلمة السر الصحيحين، وحاول مرة أخرى.</string>
-  <string name="by_signing_up">تسجيل دخولك إلى هذا التطبيق يعني أنك موافق على</string>
   <string name="licensing_agreement">{platform_name} شروط الاستخدام ورمز الشرف</string>
   <string name="login_title">تسجيل الدخول</string>
   <!--Accessible content description of close button on Sign in and Sign up screen-->
@@ -75,19 +74,14 @@
   <string name="dropdown_list_prefix">قائمة منسدلة</string>
   <!--Navigation Drawer Labels-->
   <!--The accessibility description for the navigation header-->
-  <string name="navigation_header">الدخول مسجّل حاليا بإسم {username}</string>
   <!--Button to open drawer-->
-  <string name="label_open_navigation_menu">افتح قائمة التصفح</string>
   <!--Button to open drawer-->
-  <string name="label_close_navigation_menu">أغلق قائمة التصفح</string>
   <!--Button text to show user Settings screen-->
-  <string name="action_settings">الإعدادات</string>
   <!--Button text to show user current downloads screen-->
   <!--Content description for edit profile button-->
   <string name="open_profile_button">الدخول إلى صفحتك الشخصية</string>
   <!--Title of user's course list screen-->
   <!--Title of important course dates screen-->
-  <string name="label_course_dates">مواعيد المساق والمواعيد النهائية</string>
   <!--Title of native Find Courses Screen-->
   <string name="label_find_courses">استكشف المساقات</string>
   <!--Title of webview based Find Courses Screen-->
@@ -579,8 +573,6 @@
   <string name="rating_bar_selection">{rating} من {num_of_stars}</string>
   <!--Title of the Whats New screen e.g. Version 2.8.1 New Features-->
   <string name="whats_new_title">الإصدار {version_number} الميزات الجديدة</string>
-
-  <!--No translation-->
   <string name="Okay">تم</string>
   <string name="language_changed_message">التطبيق بحاجة لإعادة تشغيل</string>
   <string name="language_changed_title">تم تغيير اللغة</string>
@@ -592,5 +584,13 @@
   <string name="resources_title">المصادر</string>
 
 
+  <string name="download_to_device">تنزيل إلى الجهاز</string>
+  <string name="download_starting">بدأ التنزيل…</string>
+  <string name="downloading_videos">جارٍ تنزيل مقاطع الفيديو ...</string>
+  <string name="download_complete">جميع مقاطع الفيديو التي تم تنزيلها</string>
+  <string name="view_downloads">انقر نقرًا مزدوجًا لعرض التنزيلات الحالية.</string>
+  <string name="launch_login">تسجيل الدخول</string>
+  <string name="launch_text">دورات مجانية من أفضل الجامعات في العالم في جيبك.</string>
+  <string name="launch_search_courses">البحث في الدورات</string>
 
 </resources>
