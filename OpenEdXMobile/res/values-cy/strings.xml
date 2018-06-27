@@ -28,15 +28,10 @@
   <string name="error_message">Neges gwall</string>
   <string name="error_heading">Cafwyd y gwall yma wrth fewngofnodi</string>
   <string name="login_failed">Gwnewch yn siŵr bod eich enw defnyddiwr neu gyfeiriad e-bost a chyfrinair yn gywir a rhowch gynnig arall arni.</string>
-  <string name="by_signing_up">Trwy fewngofnodi yn yr app hwn, rydych yn cytuno i</string>
   <string name="licensing_agreement">Delerau Gwasanaeth a Chôd Anrhydedd {platform_name}</string>
   <string name="login_title">Mewngofnodi</string>
   <string name="close">Cau</string>
   <string name="dropdown_list_prefix">Cwymplen.</string>
-  <string name="navigation_header">Wedi mewngofnodi ar hyn o bryd fel {username}</string>
-  <string name="label_open_navigation_menu">Agor y ddewislen lywio</string>
-  <string name="label_close_navigation_menu">Cau\'r ddewislen lywio</string>
-  <string name="action_settings">Gosodiadau</string>
   <string name="open_profile_button">Agor eich proffil</string>
   <string name="label_my_courses">Fy nhgyrsiau</string>
   <string name="label_find_courses">Canfod cyrsiau</string>
@@ -239,7 +234,6 @@
   <string name="profile_tab_accomplishment">Cyflawniadau</string>
   <string name="share_accomplishment_button">Rhannu eich cyflawniad</string>
   <string name="share_accomplishment_message">Dwi newydd ennill bathodyn ar {platform_name}! Cymerwch gip: {badge_url}</string>
-
   <string name="language_changed_title">Mae\'r iaith wedi newid</string>
   <string name="language_changed_message">Bydd yn rhaid i\'r ap ailgychwyn</string>
   <string name="Okay">Iawn</string>
@@ -255,7 +249,6 @@
   <string name="not_old_enough_button_text">Nid ydych yn ddigon hen i gofrestru</string>
   <string name="invitation_only_button_text">Gwahoddiad yn unig</string>
   <string name="label_current_downloads">Gweld lawrlwythiadau cyfredol</string>
-  <string name="label_course_dates">Dyddiadau a Therfynau Amser y Cwrs</string>
   <string name="label_discover">Darganfod</string>
     <string name="label_discovery">Darganfyddiad</string>
     <string name="videos_title">Fideos</string>
@@ -267,5 +260,16 @@
   <string name="no_course_dates_to_display">Nid yw dyddiadau’r cwrs ar gael ar hyn o bryd.</string>
   <string name="delete_videos_title">Delete Videos</string>
   <string name="due_date_today">I’w gyflwyno heddiw am {due_date}</string>
-  <string name="due_date_past_future">due {due_date}</string>
+    <string name="due_date_past_future">due {due_date}</string>
+
+    <string name="download_to_device">Lawrlwytho i\'r Dyfais</string>
+    <string name="download_starting">Dechrau Llwytho i lawr ...</string>
+    <string name="downloading_videos">Lawrlwytho Fideos ...</string>
+    <string name="download_complete">Pob Fideos Lawrlwythwyd</string>
+    <string name="view_downloads">Tap dwbl i weld y llwythiadau diweddaraf.</string>
+    <string name="launch_login">Mewngofnodi</string>
+    <string name="launch_text">Cyrsiau am ddim o brifysgolion gorau\'r byd yn eich poced.</string>
+    <string name="launch_search_courses">Cyrsiau Chwilio</string>
+
+
 </resources>
