@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Setup project
           command: |
-            git clone git@github.com:proversity-org/houston-android-config.git --branch no-branch ./config
+            git clone git@github.com:proversity-org/houston-android-config.git --branch c54fc9a2-3cda-11e8-b467-0ed5f89f718b --single-branch --depth=1 ./config
             cp -r config/gradle.properties OpenEdXMobile/gradle.properties
             cp -r config/google-services.json OpenEdXMobile/google-services.json
             echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
@@ -44,7 +44,7 @@ jobs:
 
 notify:
   webhooks:
-    - url: https://consola-api.proversity.org/organizations/CIT/circleci/webhook?action=save_last_apk&repo=edx-app-android&authorization=e6005c3173671458fee3b322a73178ca2c900ab8b433c302dbd560ec0ed71570
+    - url: https://hd0don3meg.execute-api.us-east-1.amazonaws.com/prod/consola/sendApk?organisationId=dd0abc00-3672-11e8-835e-511823f5c61c&projectId=05353740-3674-11e8-947e-6784d62f81d9&repo=edx-app-android
 
 workflows:
   version: 2
@@ -53,4 +53,4 @@ workflows:
       - build:
           filters:
             branches:
-              only: no-branch
+              only: houston/c54fc9a2-3cda-11e8-b467-0ed5f89f718b
