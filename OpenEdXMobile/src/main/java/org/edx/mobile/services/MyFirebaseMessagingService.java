@@ -25,7 +25,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Notification.Builder mBuilder =
                 new Notification.Builder(this)
-                        .setSmallIcon(R.mipmap.small_icon)
+                        .setSmallIcon(R.mipmap.ic_launcher)
                         .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                         .setContentTitle(getString(R.string.platform_name))
                         .setContentText(messageText)
