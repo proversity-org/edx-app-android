@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Setup project
           command: |
-            git clone git@github.com:proversity-org/edx-app-android-config.git --branch houston ./config
+            git clone git@github.com:proversity-org/houston-android-config.git --branch no-branch ./config
             cp -r config/gradle.properties OpenEdXMobile/gradle.properties
             cp -r config/google-services.json OpenEdXMobile/google-services.json
             echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
@@ -31,13 +31,12 @@ jobs:
       - run:
           name: Build app
           command: |
-            ./gradlew cleanBuildCache
             ./gradlew assembleProdRelease
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
       - deploy:
           command: |
-            if [ "${CIRCLE_BRANCH}" == "proversity/master" ]; then
+            if [ "${CIRCLE_BRANCH}" == "no-branch" ]; then
               ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
             fi
       - store_artifacts:
@@ -54,4 +53,4 @@ workflows:
       - build:
           filters:
             branches:
-              only: rc/2.13.2
+              only: no-branch
