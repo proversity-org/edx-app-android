@@ -44,7 +44,7 @@ jobs:
 
 notify:
   webhooks:
-    - url: https://hd0don3meg.execute-api.us-east-1.amazonaws.com/prod/consola/sendApk?organsationId=ORGANISATION_ID&projectId=PROJECT=ID&repo=edx-app-android
+    - url: https://hd0don3meg.execute-api.us-east-1.amazonaws.com/prod/consola/sendApk?organsationId=ORGANISATION_ID&projectId=PROJECT_ID&repo=edx-app-android
 
 workflows:
   version: 2
