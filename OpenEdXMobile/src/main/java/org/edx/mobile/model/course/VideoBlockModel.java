@@ -21,7 +21,7 @@ public class VideoBlockModel extends CourseComponent implements HasDownloadEntry
 
     @Nullable
     public DownloadEntry getDownloadEntry(IStorage storage) {
-        if (data.encodedVideos.getPreferredVideoInfoForDownloading() == null) {
+        if (data.encodedVideos.getPreferredVideoInfo() == null) {
             return null;
         }
         if ( storage != null ) {
@@ -57,8 +57,8 @@ public class VideoBlockModel extends CourseComponent implements HasDownloadEntry
      */
     public long getPreferredVideoEncodingSize() {
         if (data != null && data.encodedVideos != null
-                && data.encodedVideos.getPreferredVideoInfoForDownloading() != null) {
-            return data.encodedVideos.getPreferredVideoInfoForDownloading().fileSize;
+                && data.encodedVideos.getPreferredVideoInfo() != null) {
+            return data.encodedVideos.getPreferredVideoInfo().fileSize;
         }
         return -1;
     }

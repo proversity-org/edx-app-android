@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.edx.mobile.BuildConfig;
 import org.edx.mobile.R;
 import org.edx.mobile.databinding.FragmentWebviewCourseDiscoveryBinding;
 import org.edx.mobile.event.MainDashboardRefreshEvent;
@@ -59,8 +58,6 @@ public class WebViewDiscoverCoursesFragment extends BaseWebViewDiscoverFragment 
                 String searchUrl = buildQuery(baseUrl, query, logger);
                 searchView.onActionViewCollapsed();
                 loadUrl(searchUrl);
-                final boolean isLoggedIn = environment.getLoginPrefs().getUsername() != null;
-                environment.getAnalyticsRegistry().trackCoursesSearch(query, isLoggedIn, BuildConfig.VERSION_NAME);
                 return true;
             }
 

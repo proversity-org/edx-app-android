@@ -27,8 +27,6 @@ public interface VideoModel {
 
     String getVideoUrl();
 
-    String getHLSVideoUrl();
-
     String getHighQualityVideoUrl();
 
     String getLowQualityVideoUrl();
