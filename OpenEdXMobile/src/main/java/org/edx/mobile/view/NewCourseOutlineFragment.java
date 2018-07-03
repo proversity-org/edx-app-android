@@ -130,28 +130,13 @@ public class NewCourseOutlineFragment extends OfflineSupportBaseFragment
                 bundle = getArguments();
             }
         }
+        restore(bundle);
 
         final View view = inflater.inflate(R.layout.fragment_course_outline_new, container, false);
-        listView = (ListView) view.findViewById(R.id.outline_list);
+        initListView(view);
         errorNotification = new FullScreenErrorNotification(listView);
         loadingIndicator = view.findViewById(R.id.loading_indicator);
-
-        try {
-            restore(bundle);
-            initListView(view);
-            fetchCourseComponent();
-        } catch (Exception e) {
-            final StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("CourseId: "+courseData.getCourse().getId())
-                    .append(", CourseName: "+courseData.getCourse().getName())
-                    .append(", CourseComponentId: "+courseComponentId)
-                    .append(", isVideoMode: "+isVideoMode)
-                    .append("\n Exception: "+e.getMessage());
-            final CourseContentNotValidException ex = new CourseContentNotValidException(stringBuilder.toString(), e);
-            errorNotification.showError(getContext(), ex);
-            logger.error(ex, true);
-        }
-
+        fetchCourseComponent();
         return view;
     }
 
@@ -249,6 +234,7 @@ public class NewCourseOutlineFragment extends OfflineSupportBaseFragment
     }
 
     private void initListView(@NonNull View view) {
+        listView = (ListView) view.findViewById(R.id.outline_list);
         initAdapter();
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
