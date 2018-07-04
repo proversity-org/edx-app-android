@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.firebase.messaging.FirebaseMessaging;
 import org.edx.mobile.base.MainApplication;
 import org.edx.mobile.core.IEdxEnvironment;
 import org.edx.mobile.logger.Logger;
@@ -22,7 +21,6 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (!Config.FabricBranchConfig.isBranchEnabled(config.getFabricConfig())) {
             finish();
         }
@@ -43,7 +41,7 @@ public class SplashActivity extends Activity {
 
         final IEdxEnvironment environment = MainApplication.getEnvironment(this);
         if (environment.getUserPrefs().getProfile() != null) {
-            environment.getRouter().showMyCourses(SplashActivity.this);
+            environment.getRouter().showMainDashboard(SplashActivity.this);
         } else if (!environment.getConfig().isRegistrationEnabled()) {
             startActivity(environment.getRouter().getLogInIntent());
         } else {

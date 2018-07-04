@@ -10,6 +10,7 @@ import com.google.inject.Singleton;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.edx.mobile.model.VideoModel;
+import org.edx.mobile.model.course.CourseComponent;
 import org.edx.mobile.model.db.DownloadEntry.DownloadedState;
 import org.edx.mobile.model.db.DownloadEntry.WatchedState;
 import org.edx.mobile.module.db.DataCallback;
@@ -17,8 +18,10 @@ import org.edx.mobile.module.db.DbStructure;
 import org.edx.mobile.module.db.IDatabase;
 import org.edx.mobile.module.prefs.LoginPrefs;
 import org.edx.mobile.util.Sha1Util;
+import org.edx.mobile.util.TextUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Singleton
@@ -373,6 +376,7 @@ public class IDatabaseImpl extends IDatabaseBaseImpl implements IDatabase {
             values.put(DbStructure.Column.DURATION, de.getDuration());
             values.put(DbStructure.Column.FILEPATH, de.getFilePath());
             values.put(DbStructure.Column.URL, de.getVideoUrl());
+            values.put(DbStructure.Column.URL_HLS, de.getHLSVideoUrl());
             values.put(DbStructure.Column.URL_HIGH_QUALITY, de.getHighQualityVideoUrl());
             values.put(DbStructure.Column.URL_LOW_QUALITY, de.getLowQualityVideoUrl());
             values.put(DbStructure.Column.URL_YOUTUBE, de.getYoutubeVideoUrl());
@@ -504,7 +508,7 @@ public class IDatabaseImpl extends IDatabaseBaseImpl implements IDatabase {
 
     @Override
     public List<VideoModel> getListOfOngoingDownloadsByCourseId(@Nullable String courseId,
-                                        DataCallback<List<VideoModel>> callback) {
+                                                                DataCallback<List<VideoModel>> callback) {
         final StringBuilder whereClause = new StringBuilder();
         final List<String> whereArgs = new ArrayList<>();
         whereClause.append(DbStructure.Column.DOWNLOADED).append("=? AND ");
@@ -562,6 +566,7 @@ public class IDatabaseImpl extends IDatabaseBaseImpl implements IDatabase {
         values.put(DbStructure.Column.DURATION, model.getDuration());
         values.put(DbStructure.Column.FILEPATH, model.getFilePath());
         values.put(DbStructure.Column.URL, model.getVideoUrl());
+        values.put(DbStructure.Column.URL_HLS, model.getHLSVideoUrl());
         values.put(DbStructure.Column.URL_HIGH_QUALITY, model.getHighQualityVideoUrl());
         values.put(DbStructure.Column.URL_LOW_QUALITY, model.getLowQualityVideoUrl());
         values.put(DbStructure.Column.URL_YOUTUBE, model.getYoutubeVideoUrl());
@@ -591,6 +596,31 @@ public class IDatabaseImpl extends IDatabaseBaseImpl implements IDatabase {
         DbOperationGetVideos op = new DbOperationGetVideos(false, DbStructure.Table.DOWNLOADS, null,
                 DbStructure.Column.EID + "=? AND " + DbStructure.Column.USERNAME + "=?",
                 new String[]{courseId, username()}, null);
+        op.setCallback(callback);
+        return enqueue(op);
+    }
+
+    @Override
+    public List<VideoModel> getVideosByVideoIds(@NonNull List<CourseComponent> videoComponents,
+                                                @Nullable DownloadedState downloadedState,
+                                                @Nullable DataCallback<List<VideoModel>> callback) {
+        final List<String> whereArgs = new ArrayList<>();
+        whereArgs.add(username());
+        for (CourseComponent component : videoComponents) {
+            whereArgs.add(component.getId());
+        }
+        if (downloadedState != null) {
+            whereArgs.add(String.valueOf(downloadedState.ordinal()));
+        }
+
+        final CharSequence placeholders = TextUtils.join(",",
+                Collections.<CharSequence>nCopies(videoComponents.size(), "?"));
+
+        DbOperationGetVideos op = new DbOperationGetVideos(false, DbStructure.Table.DOWNLOADS, null,
+                DbStructure.Column.USERNAME + "=? AND " +
+                        DbStructure.Column.VIDEO_ID + " IN (" + placeholders + ")" +
+                        (downloadedState == null ? "" : " AND " + DbStructure.Column.DOWNLOADED + "=?"),
+                whereArgs.toArray(new String[0]), null);
         op.setCallback(callback);
         return enqueue(op);
     }

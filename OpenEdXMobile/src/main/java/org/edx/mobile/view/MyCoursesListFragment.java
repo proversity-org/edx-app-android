@@ -71,12 +71,12 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
         adapter = new MyCoursesAdapter(getActivity(), environment) {
             @Override
             public void onItemClicked(EnrolledCoursesResponse model) {
-                environment.getRouter().showCourseDashboardTabs(getActivity(), environment.getConfig(), model, false);
+                environment.getRouter().showCourseDashboardTabs(getActivity(), model, false);
             }
 
             @Override
             public void onAnnouncementClicked(EnrolledCoursesResponse model) {
-                environment.getRouter().showCourseDashboardTabs(getActivity(), environment.getConfig(), model, true);
+                environment.getRouter().showCourseDashboardTabs(getActivity(), model, true);
             }
         };
     }
@@ -157,11 +157,12 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
 
             updateDatabaseAfterDownload(newItems);
 
-          String courseIds [] = new String[newItems.size()];
-          for (int i = 0; i<newItems.size();i++) {
-            courseIds[i] = newItems.get(i).getCourse().getId();
-          }
-          createTopicsAndSubscribe(courseIds);
+            String courseIds [] = new String[newItems.size()];
+            for (int i = 0; i<newItems.size();i++) {
+                courseIds[i] = newItems.get(i).getCourse().getId();
+            }
+            createTopicsAndSubscribe(courseIds);
+
             if (result.getResult().size() > 0) {
                 adapter.setItems(newItems);
                 adapter.notifyDataSetChanged();
@@ -266,6 +267,33 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
         });
     }
 
+    private void createTopicsAndSubscribe(String [] coursesIds){
+        Config config = new Config(MainApplication.instance());
+        if (!config.isNotificationEnabled()){
+            return;
+        }
+        FirebaseMessaging.getInstance().subscribeToTopic(config.getKonnekteerMainTopic());
+
+        for(int i =0; i<coursesIds.length; i++){
+            String cleanTopic = cleanTopicForFireBase(coursesIds[i]);
+            KonnekteerUtil.createTopic(getActivity(), config, cleanTopic);
+            subscribeToTopic(cleanTopic);
+        }
+
+
+    }
+
+    private void subscribeToTopic(String id){
+        FirebaseMessaging.getInstance().subscribeToTopic(id);
+    }
+
+    private static String cleanTopicForFireBase(String dirtyTopic){
+        String semiCleanTopic=dirtyTopic.replace('+','-');
+        String cleanTopic=semiCleanTopic.replace(':','-');
+        return cleanTopic;
+
+    }
+
     @Override
     public void onRefresh() {
         EventBus.getDefault().post(new MainDashboardRefreshEvent());
@@ -296,33 +324,6 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
             }
             onNetworkConnectivityChangeEvent(event);
         }
-    }
-
-    private void createTopicsAndSubscribe(String [] coursesIds){
-      Config config = new Config(MainApplication.instance());
-      if (!config.isNotificationEnabled()){
-        return;
-      }
-      FirebaseMessaging.getInstance().subscribeToTopic(config.getKonnekteerMainTopic());
-
-      for(int i =0; i<coursesIds.length; i++){
-        String cleanTopic = cleanTopicForFireBase(coursesIds[i]);
-        KonnekteerUtil.createTopic(getActivity(), config, cleanTopic);
-        subscribeToTopic(cleanTopic);
-      }
-
-
-    }
-
-  private static String cleanTopicForFireBase(String dirtyTopic){
-    String semiCleanTopic=dirtyTopic.replace('+','-');
-    String cleanTopic=semiCleanTopic.replace(':','-');
-    return cleanTopic;
-
-  }
-
-    private void subscribeToTopic(String id){
-      FirebaseMessaging.getInstance().subscribeToTopic(id);
     }
 
     @Override

@@ -529,7 +529,6 @@ public class Config {
         return getString(ORGANIZATION_CODE);
     }
 
-
     public String getKonnekteerMainTopic(){
         return getString(KONNEKTEER_MAIN_TOPIC);
     }
@@ -545,7 +544,6 @@ public class Config {
     public String getKonnekteerApiKey(){
         return getString(KONNEKTEER_API_KEY);
     }
-
 
     public boolean isNotificationEnabled() {
         return getBoolean(PUSH_NOTIFICATIONS, false);
