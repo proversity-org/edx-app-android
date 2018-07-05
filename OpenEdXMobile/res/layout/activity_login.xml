@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/cl_root"
         android:layout_width="match_parent"
@@ -148,11 +149,28 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/end_user_agreement_tv"
-                        style="@style/agreement_text_style"
+                        android:id="@+id/by_signing_up_tv"
+                        style="@style/regular_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/by_signing_in" />
+                        android:layout_marginTop="7dp"
+                        android:gravity="center"
+                        android:text="@string/by_signing_up"
+                        android:textColor="@color/grey_text"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/end_user_agreement_tv"
+                        style="@style/regular_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/selectable_box_overlay"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:textColor="@color/edx_brand_primary_base"
+                        android:textSize="11sp"
+                        tools:text="@string/licensing_agreement" />
 
                     <TextView
                         android:id="@+id/version_env_tv"

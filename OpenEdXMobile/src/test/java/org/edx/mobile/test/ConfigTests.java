@@ -112,6 +112,7 @@ public class ConfigTests extends BaseTestCase {
         JsonObject configBase = new JsonObject();
         Config config = new Config(configBase);
         assertFalse(config.getCourseDiscoveryConfig().isCourseDiscoveryEnabled());
+        assertFalse(config.getCourseDiscoveryConfig().isExploreSubjectsEnabled());
         assertFalse(config.getCourseDiscoveryConfig().isWebviewCourseDiscoveryEnabled());
         assertNull(config.getCourseDiscoveryConfig().getCourseSearchUrl());
         assertNull(config.getCourseDiscoveryConfig().getCourseInfoUrlTemplate());
@@ -125,6 +126,7 @@ public class ConfigTests extends BaseTestCase {
 
         Config config = new Config(configBase);
         assertFalse(config.getCourseDiscoveryConfig().isCourseDiscoveryEnabled());
+        assertFalse(config.getCourseDiscoveryConfig().isExploreSubjectsEnabled());
         assertFalse(config.getCourseDiscoveryConfig().isWebviewCourseDiscoveryEnabled());
         assertNull(config.getCourseDiscoveryConfig().getCourseSearchUrl());
         assertNull(config.getCourseDiscoveryConfig().getCourseInfoUrlTemplate());
@@ -175,6 +177,7 @@ public class ConfigTests extends BaseTestCase {
 
             Config config = new Config(configBase);
             assertTrue(config.getCourseDiscoveryConfig().isCourseDiscoveryEnabled());
+            assertFalse(config.getCourseDiscoveryConfig().isExploreSubjectsEnabled());
             assertEquals(config.getCourseDiscoveryConfig().isWebviewCourseDiscoveryEnabled(), expected);
             assertEquals(config.getCourseDiscoveryConfig().getCourseSearchUrl(), "fake-url");
             assertEquals(config.getCourseDiscoveryConfig().getCourseInfoUrlTemplate(), "fake-url-template");
@@ -195,6 +198,7 @@ public class ConfigTests extends BaseTestCase {
 
         Config config = new Config(configBase);
         assertTrue(config.getCourseDiscoveryConfig().isCourseDiscoveryEnabled());
+        assertTrue(config.getCourseDiscoveryConfig().isExploreSubjectsEnabled());
         assertTrue(config.getCourseDiscoveryConfig().isWebviewCourseDiscoveryEnabled());
         assertEquals(config.getCourseDiscoveryConfig().getCourseSearchUrl(), "fake-url");
         assertEquals(config.getCourseDiscoveryConfig().getCourseInfoUrlTemplate(), "fake-url-template");

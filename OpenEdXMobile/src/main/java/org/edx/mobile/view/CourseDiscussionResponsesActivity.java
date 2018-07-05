@@ -22,6 +22,8 @@ public class CourseDiscussionResponsesActivity extends BaseSingleFragmentActivit
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        blockDrawerFromOpening();
+
         switch (discussionThread.getType()) {
             case DISCUSSION:
                 setTitle(R.string.discussion_title);

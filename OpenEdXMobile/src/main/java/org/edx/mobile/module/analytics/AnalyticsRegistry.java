@@ -227,9 +227,16 @@ public class AnalyticsRegistry implements Analytics {
     }
 
     @Override
-    public void trackCoursesSearch(String searchQuery, boolean isLoggedIn, String versionName) {
+    public void trackDiscoverCoursesClicked() {
         for (Analytics service : services) {
-            service.trackCoursesSearch(searchQuery, isLoggedIn, versionName);
+            service.trackDiscoverCoursesClicked();
+        }
+    }
+
+    @Override
+    public void trackExploreSubjectsClicked() {
+        for (Analytics service : services) {
+            service.trackExploreSubjectsClicked();
         }
     }
 
