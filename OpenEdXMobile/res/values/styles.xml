@@ -18,7 +18,6 @@
         <item name="android:windowBackground">@color/edx_brand_gray_x_back</item>
         <item name="android:listPopupWindowStyle">@style/edX.Widget.ListPopupWindow</item>
         <item name="popupSpinnerStyle">@style/edX.Widget.Spinner.Popup</item>
-        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="disableableButtonTextColor">@color/disableable_button_text</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/view_selector</item>
         <item name="listChoiceBackgroundIndicator">@drawable/view_selector</item>
@@ -91,11 +90,6 @@
         <item name="colorPrimary">@color/edx_brand_primary_base</item>
         <item name="colorPrimaryDark">@color/edx_brand_primary_dark</item>
         <item name="colorAccent">@color/dialog_button_selector</item>
-    </style>
-
-    <!-- we need to change the color of the drawer arrow toggle -->
-    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">@color/toolbar_controls_color</item>
     </style>
 
     <!-- ActionBar buttons -->
@@ -266,6 +260,24 @@
         <item name="android:iconifiedByDefault">false</item>
     </style>
 
+    <style name="launch_search_bar">
+        <item name="android:layout_height">@dimen/search_layout_height</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="queryHint">@string/launch_search_courses</item>
+        <item name="iconifiedByDefault">false</item>
+        <item name="android:background">@drawable/edx_bordered_button</item>
+    </style>
+
+    <style name="search_view_theme" parent="Theme.AppCompat.Light">
+        <!-- Following is the cursor color -->
+        <item name="colorAccent">@color/edx_brand_primary_base</item>
+        <!-- Following is the icons' color -->
+        <item name="colorControlNormal">@color/edx_brand_primary_base</item>
+        <item name="editTextColor">@color/edx_brand_primary_base</item>
+        <item name="android:editTextColor">@color/edx_brand_primary_base</item>
+        <item name="android:textColorHint">@color/edx_brand_primary_base</item>
+    </style>
+
     <style name="footer_action_button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
@@ -305,6 +317,13 @@
         <item name="civ_border_color">@color/edx_brand_primary_base</item>
         <item name="android:scaleType">centerCrop</item>
         <item name="android:background">@drawable/white_circle</item>
+    </style>
+
+    <style name="agreement_text_style">
+        <item name="android:color">@color/edx_brand_gray_base</item>
+        <item name="android:layout_marginTop">@dimen/widget_margin</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/edx_xx_small</item>
     </style>
 
     <!-- Styles from the edX style guide will be nested under "edX" -->
