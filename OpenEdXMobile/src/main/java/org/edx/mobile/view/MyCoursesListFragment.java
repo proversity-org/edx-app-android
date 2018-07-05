@@ -159,7 +159,7 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
 
             String courseIds [] = new String[newItems.size()];
             for (int i = 0; i<newItems.size();i++) {
-                courseIds[i] = newItems.get(i).getCourse().getId();
+              courseIds[i] = newItems.get(i).getCourse().getId();
             }
             createTopicsAndSubscribe(courseIds);
 
@@ -267,6 +267,24 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
         });
     }
 
+    @Override
+    public void onRefresh() {
+        EventBus.getDefault().post(new MainDashboardRefreshEvent());
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(MainDashboardRefreshEvent event) {
+        loadData(true);
+    }
+
+    @Override
+    protected void onRevisit() {
+        super.onRevisit();
+        if (NetworkUtil.isConnected(getActivity())) {
+            binding.swipeContainer.setEnabled(true);
+        }
+    }
+
     private void createTopicsAndSubscribe(String [] coursesIds){
         Config config = new Config(MainApplication.instance());
         if (!config.isNotificationEnabled()){
@@ -292,24 +310,6 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
         String cleanTopic=semiCleanTopic.replace(':','-');
         return cleanTopic;
 
-    }
-
-    @Override
-    public void onRefresh() {
-        EventBus.getDefault().post(new MainDashboardRefreshEvent());
-    }
-
-    @SuppressWarnings("unused")
-    public void onEvent(MainDashboardRefreshEvent event) {
-        loadData(true);
-    }
-
-    @Override
-    protected void onRevisit() {
-        super.onRevisit();
-        if (NetworkUtil.isConnected(getActivity())) {
-            binding.swipeContainer.setEnabled(true);
-        }
     }
 
     @SuppressWarnings("unused")

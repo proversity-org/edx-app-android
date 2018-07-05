@@ -25,61 +25,61 @@ import java.util.Map;
 
 public class KonnekteerUtil {
 
-    private static final String KONNEKTEER_END_POINT = "https://viz8n9p0ci.execute-api.us-east-1.amazonaws.com/prod/konnekteer/saveTopicSubscription";
+  private static final String KONNEKTEER_END_POINT = "https://viz8n9p0ci.execute-api.us-east-1.amazonaws.com/prod/konnekteer/saveTopicSubscription";
 
-    public static void createTopic(final Context context, final Config config, final String topic){
-        StringRequest request = new StringRequest(Request.Method.POST, KONNEKTEER_END_POINT,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+  public static void createTopic(final Context context, final Config config, final String topic){
+    StringRequest request = new StringRequest(Request.Method.POST, KONNEKTEER_END_POINT,
+      new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
 
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
         }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/json");
-                params.put("Authorization", config.getKonnekteerApiKey());
-                return params;
-            }
+      }, new Response.ErrorListener() {
+      @Override
+      public void onErrorResponse(VolleyError error) {
 
-            @Override
-            public byte[] getBody()
-            {
-
-                JSONObject jsonObject = new JSONObject();
-                String body = null;
-                try
-                {
-                    jsonObject.put("projectId", config.getKonnekteerProjectId());
-                    jsonObject.put("organisationId", config.getKonnekteerOrganizationId());
-                    jsonObject.put("topic", topic);
-                    body = jsonObject.toString();
-                } catch (JSONException e)
-                {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                try
-                {
-                    return body.toString().getBytes("utf-8");
-                } catch (UnsupportedEncodingException e)
-                {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        };
-
-        RequestQueue queue = Volley.newRequestQueue(context);
-        queue.add(request);
+      }
     }
+    ){
+      @Override
+      public Map<String, String> getHeaders() throws AuthFailureError {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("Content-Type", "application/json");
+        params.put("Authorization", config.getKonnekteerApiKey());
+        return params;
+      }
+
+      @Override
+      public byte[] getBody()
+      {
+
+        JSONObject jsonObject = new JSONObject();
+        String body = null;
+        try
+        {
+          jsonObject.put("projectId", config.getKonnekteerProjectId());
+          jsonObject.put("organisationId", config.getKonnekteerOrganizationId());
+          jsonObject.put("topic", topic);
+          body = jsonObject.toString();
+        } catch (JSONException e)
+        {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+
+        try
+        {
+          return body.toString().getBytes("utf-8");
+        } catch (UnsupportedEncodingException e)
+        {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+        return null;
+      }
+    };
+
+    RequestQueue queue = Volley.newRequestQueue(context);
+    queue.add(request);
+  }
 }
