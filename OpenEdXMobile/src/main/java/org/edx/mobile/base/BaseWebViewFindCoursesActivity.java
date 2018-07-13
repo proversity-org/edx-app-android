@@ -166,6 +166,9 @@ public abstract class BaseWebViewFindCoursesActivity extends BaseFragmentActivit
     }
 
     @Override
+    public  void downloadResource(String strUrl) { }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LOG_IN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {

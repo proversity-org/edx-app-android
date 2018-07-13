@@ -1,14 +1,17 @@
 package org.edx.mobile.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.ValueCallback;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -59,6 +62,28 @@ public class CourseUnitNavigationActivity extends CourseBaseActivity implements 
 
     @Inject
     LastAccessManager lastAccessManager;
+
+    private ValueCallback<Uri[]> uploadMessage;
+    public final static int FILECHOOSER_RESULTCODE = 1;
+
+    public void setUploadMessage(ValueCallback<Uri[]>  uploadMessage){
+        this.uploadMessage = uploadMessage;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == FILECHOOSER_RESULTCODE && uploadMessage != null) {
+
+            if (data == null || resultCode != Activity.RESULT_OK) {
+                Uri[] result = new Uri[]{Uri.parse(data.getDataString())};
+            } else {
+                Uri[] result = null;
+            }
+            uploadMessage.onReceiveValue(result);
+            uploadMessage = null;
+        }
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -2,11 +2,14 @@ package org.edx.mobile.view.custom;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -23,6 +26,7 @@ import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.util.StandardCharsets;
 import org.edx.mobile.util.links.EdxCourseInfoLink;
 import org.edx.mobile.util.links.EdxEnrollLink;
+import org.edx.mobile.view.CourseUnitNavigationActivity;
 
 import roboguice.RoboGuice;
 
@@ -118,6 +122,29 @@ public class URLInterceptorWebViewClient extends WebViewClient {
                     }
                 }
             }
+
+            @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+            public boolean onShowFileChooser(
+                    WebView webView, ValueCallback<Uri[]> filePathCallback,
+                    FileChooserParams fileChooserParams) {
+
+                Intent contentSelectionIntent =
+                    new Intent(Intent.ACTION_GET_CONTENT);
+                contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                contentSelectionIntent.setType("*/*");
+
+                Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
+                chooserIntent.putExtra(Intent.EXTRA_INTENT,
+                    contentSelectionIntent);
+                chooserIntent.putExtra(Intent.EXTRA_TITLE, "File Chooser");
+
+                ((CourseUnitNavigationActivity) activity).setUploadMessage(
+                    filePathCallback);
+
+                activity.startActivityForResult(chooserIntent,
+                    ((CourseUnitNavigationActivity) activity).FILECHOOSER_RESULTCODE);
+                return true;
+            }
         });
     }
 
@@ -188,6 +215,8 @@ public class URLInterceptorWebViewClient extends WebViewClient {
             return true;
         } else if (parseEnrollLinkAndCallActionListener(url)) {
             // we handled this URL
+            return true;
+        } else if (resourceDownloadActionListener(url)) {
             return true;
         } else if (redirect && loadingInitialUrl) {
             // Server has redirected the initial url to other hosting url, in this case no need to
@@ -275,6 +304,7 @@ public class URLInterceptorWebViewClient extends WebViewClient {
      * @return true if an action listener is set and URL was a valid enroll link, false otherwise
      */
     private boolean parseEnrollLinkAndCallActionListener(@Nullable String strUrl) {
+
         if (null == actionListener) {
             return false;
         }
@@ -284,6 +314,16 @@ public class URLInterceptorWebViewClient extends WebViewClient {
         }
         actionListener.onClickEnroll(link.courseId, link.emailOptIn);
         logger.debug("found enroll URL: " + strUrl);
+        return true;
+    }
+
+    private boolean resourceDownloadActionListener(@Nullable String strUrl) {
+        if (null == actionListener) {
+            return false;
+        }
+
+        actionListener.downloadResource(strUrl);
+        logger.debug("Download URL: " + strUrl);
         return true;
     }
 
@@ -311,6 +351,8 @@ public class URLInterceptorWebViewClient extends WebViewClient {
          * @param emailOptIn
          */
         void onClickEnroll(String courseId, boolean emailOptIn);
+
+        void downloadResource(String strUrl);
     }
 
     /**
