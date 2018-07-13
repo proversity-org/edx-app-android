@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import com.google.inject.Inject;
 
 import org.edx.mobile.R;
+import org.edx.mobile.base.BaseFragment;
 import org.edx.mobile.core.IEdxEnvironment;
 import org.edx.mobile.course.CourseAPI;
 import org.edx.mobile.course.CourseService;
@@ -59,6 +60,7 @@ public abstract class BaseWebViewDiscoverFragment extends OfflineSupportBaseFrag
 
         webView = (EdxWebView) view.findViewById(R.id.webview);
         progressWheel = (ProgressBar) view.findViewById(R.id.loading_indicator);
+        errorNotification = new FullScreenErrorNotification(webView);
 
         initWebView();
     }
@@ -145,15 +147,14 @@ public abstract class BaseWebViewDiscoverFragment extends OfflineSupportBaseFrag
      *
      * @return
      */
+
     protected boolean isAllLinksExternal() {
         return false;
     }
 
-    /**
-     * See description of: {@link org.edx.mobile.view.custom.URLInterceptorWebViewClient.IPageStatusListener#onPageLoadProgressChanged(WebView, int)
-     * IPageStatusListener#onPageLoadProgressChanged}.
-     */
-    protected void onWebViewLoadProgressChanged(int progress) {
+    @Override
+    public void downloadResource(String strUrl) {
+        //**Allows to download a file froma link*/
     }
 
     /*
@@ -210,8 +211,7 @@ public abstract class BaseWebViewDiscoverFragment extends OfflineSupportBaseFrag
         }
 
         @Override
-        public void onPageLoadProgressChanged(WebView view, int progress) {
-            onWebViewLoadProgressChanged(progress);
+        public void onPagePartiallyLoaded() {
         }
     };
 }

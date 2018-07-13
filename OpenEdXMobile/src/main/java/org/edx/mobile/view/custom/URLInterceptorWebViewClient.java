@@ -2,11 +2,14 @@ package org.edx.mobile.view.custom;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -23,6 +26,7 @@ import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.util.StandardCharsets;
 import org.edx.mobile.util.links.EdxCourseInfoLink;
 import org.edx.mobile.util.links.EdxEnrollLink;
+import org.edx.mobile.view.CourseUnitNavigationActivity;
 
 import roboguice.RoboGuice;
 
@@ -44,6 +48,21 @@ public class URLInterceptorWebViewClient extends WebViewClient {
     private IActionListener actionListener;
     private IPageStatusListener pageStatusListener;
     private String hostForThisPage = null;
+
+    /**
+     * Tells if the page loading has been finished or not.
+     */
+    private boolean loadingFinished = true;
+    /**
+     * Url will be considered as redirected if it will not be the initial page url requested to load.
+     * For example, in case the server redirects us to another URL or the user clicks a link
+     * on the web-page, it will be considered as a redirect.
+     */
+    private boolean redirect = false;
+    /**
+     * Tells if the currently loading url is the initial page url requested to load.
+     */
+    private boolean loadingInitialUrl = true;
 
     @Inject
     Config config;
@@ -89,11 +108,42 @@ public class URLInterceptorWebViewClient extends WebViewClient {
         //We need to hide the loading progress if the Page starts rendering.
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
+                if (progress > 25) {
+                    /*
+                     * 'loadingInitialUrl is marked to false on 25% progress of initial page load
+                     * to avoid any problematic scenarios e.g. user presses some link available on
+                     * a web page before 'onPageFinished' has been called.
+                     */
+                    loadingInitialUrl = false;
+                }
                 if (progress > 50) {
                     if (pageStatusListener != null) {
                         pageStatusListener.onPagePartiallyLoaded();
                     }
                 }
+            }
+
+            @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+            public boolean onShowFileChooser(
+                    WebView webView, ValueCallback<Uri[]> filePathCallback,
+                    FileChooserParams fileChooserParams) {
+
+                Intent contentSelectionIntent =
+                    new Intent(Intent.ACTION_GET_CONTENT);
+                contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                contentSelectionIntent.setType("*/*");
+
+                Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
+                chooserIntent.putExtra(Intent.EXTRA_INTENT,
+                    contentSelectionIntent);
+                chooserIntent.putExtra(Intent.EXTRA_TITLE, "File Chooser");
+
+                ((CourseUnitNavigationActivity) activity).setUploadMessage(
+                    filePathCallback);
+
+                activity.startActivityForResult(chooserIntent,
+                    ((CourseUnitNavigationActivity) activity).FILECHOOSER_RESULTCODE);
+                return true;
             }
         });
     }
@@ -101,6 +151,8 @@ public class URLInterceptorWebViewClient extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
+
+        loadingFinished = false;
 
         // hold on the host of this page, just once
         if (this.hostForThisPage == null && url != null) {
@@ -116,6 +168,13 @@ public class URLInterceptorWebViewClient extends WebViewClient {
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
 
+        loadingInitialUrl = false;
+        if (!redirect) {
+            loadingFinished = true;
+        }
+        redirect = false;
+
+        // Page loading has finished.
         if (pageStatusListener != null) {
             pageStatusListener.onPageFinished();
         }
@@ -141,6 +200,11 @@ public class URLInterceptorWebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        if (!loadingFinished) {
+            redirect = true;
+        }
+        loadingFinished = false;
+
         if (actionListener == null) {
             logger.warn("you have not set IActionLister to this WebViewClient, " +
                     "you might miss some event");
@@ -152,7 +216,16 @@ public class URLInterceptorWebViewClient extends WebViewClient {
         } else if (parseEnrollLinkAndCallActionListener(url)) {
             // we handled this URL
             return true;
-        } else if (isExternalLink(url)) {
+        } else if (resourceDownloadActionListener(url)) {
+            return true;
+        } else if (redirect && loadingInitialUrl) {
+            // Server has redirected the initial url to other hosting url, in this case no need to
+            // redirect the user to external browser.
+            // Inspiration of this solution has been taken from: https://stackoverflow.com/questions/3149216/how-to-listen-for-a-webview-finishing-loading-a-url/5172952#5172952
+            loadingInitialUrl = false;
+            // Return false means the current WebView handles the url.
+            return false;
+        } else if (isAllLinksExternal || isExternalLink(url)) {
             // open URL in external web browser
             // return true means the host application handles the url
             // this should open the URL in the browser with user's confirmation
@@ -166,6 +239,10 @@ public class URLInterceptorWebViewClient extends WebViewClient {
 
     public void setAllLinksAsExternal(boolean isAllLinksExternal) {
         this.isAllLinksExternal = isAllLinksExternal;
+    }
+
+    public void setLoadingInitialUrl(boolean isLoadingInitialUrl) {
+        this.loadingInitialUrl = isLoadingInitialUrl;
     }
 
     @Override
@@ -227,6 +304,7 @@ public class URLInterceptorWebViewClient extends WebViewClient {
      * @return true if an action listener is set and URL was a valid enroll link, false otherwise
      */
     private boolean parseEnrollLinkAndCallActionListener(@Nullable String strUrl) {
+
         if (null == actionListener) {
             return false;
         }
@@ -236,6 +314,16 @@ public class URLInterceptorWebViewClient extends WebViewClient {
         }
         actionListener.onClickEnroll(link.courseId, link.emailOptIn);
         logger.debug("found enroll URL: " + strUrl);
+        return true;
+    }
+
+    private boolean resourceDownloadActionListener(@Nullable String strUrl) {
+        if (null == actionListener) {
+            return false;
+        }
+
+        actionListener.downloadResource(strUrl);
+        logger.debug("Download URL: " + strUrl);
         return true;
     }
 
@@ -263,6 +351,8 @@ public class URLInterceptorWebViewClient extends WebViewClient {
          * @param emailOptIn
          */
         void onClickEnroll(String courseId, boolean emailOptIn);
+
+        void downloadResource(String strUrl);
     }
 
     /**
