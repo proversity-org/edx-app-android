@@ -55,12 +55,6 @@ public class Config {
     private static final String NEW_RELIC = "NEW_RELIC";
     private static final String SEGMENT_IO = "SEGMENT_IO";
     private static final String PUSH_NOTIFICATIONS = "PUSH_NOTIFICATIONS";
-    private static final String KONNEKTEER_MAIN_TOPIC = "MAIN_TOPIC";
-    private static final String KONNEKTEER_ORGANIZATION_ID = "ORGANIZATION_ID";
-    private static final String KONNEKTEER_PROJECT_ID = "PROJECT_ID";
-    private static final String KONNEKTEER_API_KEY = "KONNEKTEER_API_KEY";
-
-    private static final String TAB_LAYOUTS_ENABLED = "TAB_LAYOUTS_ENABLED";
     private static final String WHITE_LIST_OF_DOMAINS = "WHITE_LIST_OF_DOMAINS";
 
     // Features
@@ -80,6 +74,17 @@ public class Config {
     private static final String COURSE_DATES_ENABLED = "COURSE_DATES_ENABLED";
     private static final String WHATS_NEW_ENABLED = "WHATS_NEW_ENABLED";
     private static final String COURSE_VIDEOS_ENABLED = "COURSE_VIDEOS_ENABLED";
+    private static final String KONNEKTEER_MAIN_TOPIC = "MAIN_TOPIC";
+    private static final String KONNEKTEER_ORGANIZATION_ID = "ORGANIZATION_ID";
+    private static final String KONNEKTEER_PROJECT_ID = "PROJECT_ID";
+    private static final String KONNEKTEER_API_KEY = "KONNEKTEER_API_KEY";
+    /**
+     * At the time when deprecated activities {@link org.edx.mobile.view.MyCoursesListActivity},
+     * {@link org.edx.mobile.view.CourseDashboardActivity} and {@link org.edx.mobile.view.CourseOutlineActivity}
+     * will be removed, this flag will no longer be of any use.
+     *
+     */
+    private static final String TAB_LAYOUTS_ENABLED = "TAB_LAYOUTS_ENABLED";
 
     public static class ZeroRatingConfig {
         @SerializedName("ENABLED")
@@ -139,7 +144,6 @@ public class Config {
             return getCourseDiscoveryType() == CourseDiscoveryType.WEBVIEW;
         }
 
-
         public WebViewConfig getWebViewConfig() {
             return mWebViewConfig;
         }
@@ -147,10 +151,6 @@ public class Config {
         public String getCourseSearchUrl() {
             return null == mWebViewConfig ? null : mWebViewConfig.getCourseSearchUrl();
         }
-
-        @SerializedName("EXPLORE_SUBJECTS_URL")
-        private String mExploreSubjectsUrl;
-
 
         public String getCourseInfoUrlTemplate() {
             return null == mWebViewConfig ? null : mWebViewConfig.getCourseInfoUrlTemplate();
@@ -169,14 +169,14 @@ public class Config {
         @SerializedName("COURSE_SEARCH_URL")
         private String mSearchUrl;
 
+        @SerializedName("EXPLORE_SUBJECTS_URL")
+        private String mExploreSubjectsUrl;
+
         @SerializedName("COURSE_INFO_URL_TEMPLATE")
         private String mCourseInfoUrlTemplate;
 
         @SerializedName("SEARCH_BAR_ENABLED")
         private boolean mSearchBarEnabled;
-
-        @SerializedName("EXPLORE_SUBJECTS_URL")
-        private String mExploreSubjectsUrl;
 
         @SerializedName("SUBJECT_DISCOVERY_ENABLED")
         private boolean subjectDiscovery;
@@ -554,6 +554,7 @@ public class Config {
     public String getKonnekteerApiKey(){
         return getString(KONNEKTEER_API_KEY);
     }
+
 
     public boolean isNotificationEnabled() {
         return getBoolean(PUSH_NOTIFICATIONS, false);
