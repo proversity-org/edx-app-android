@@ -145,15 +145,22 @@ public abstract class BaseWebViewDiscoverFragment extends OfflineSupportBaseFrag
      *
      * @return
      */
+
     protected boolean isAllLinksExternal() {
         return false;
     }
 
+    @Override
+    public void downloadResource(String strUrl) {
+        //**Allows to download a file froma link*/
+    }
+    
     /**
      * See description of: {@link org.edx.mobile.view.custom.URLInterceptorWebViewClient.IPageStatusListener#onPageLoadProgressChanged(WebView, int)
      * IPageStatusListener#onPageLoadProgressChanged}.
      */
     protected void onWebViewLoadProgressChanged(int progress) {
+
     }
 
     /*
