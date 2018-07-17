@@ -3,6 +3,7 @@ package org.edx.mobile.view;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,13 @@ import org.edx.mobile.R;
 import org.edx.mobile.logger.Logger;
 import org.edx.mobile.model.course.CourseComponent;
 import org.edx.mobile.model.course.HtmlBlockModel;
+import org.edx.mobile.module.download.IDownloadManagerImpl;
 import org.edx.mobile.services.ViewPagerDownloadManager;
 import org.edx.mobile.view.custom.AuthenticatedWebView;
 import org.edx.mobile.view.custom.URLInterceptorWebViewClient;
 
 import roboguice.inject.InjectView;
+
 
 public class CourseUnitWebViewFragment extends CourseUnitFragment {
     protected final Logger logger = new Logger(getClass().getName());
@@ -45,6 +48,25 @@ public class CourseUnitWebViewFragment extends CourseUnitFragment {
         super.onActivityCreated(savedInstanceState);
 
         authWebView.initWebView(getActivity(), true, false);
+        authWebView.getWebViewClient().setActionListener(new URLInterceptorWebViewClient.IActionListener() {
+            @Override
+            public void onClickCourseInfo(String pathId) {
+
+            }
+
+            @Override
+            public void onClickEnroll(String courseId, boolean emailOptIn) {
+
+            }
+
+            @Override
+            public void downloadResource(String strUrl) {
+                IDownloadManagerImpl manager =
+                    new IDownloadManagerImpl(getContext());
+                manager.addDownload(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOWNLOADS), strUrl, true, "SGA-Download");
+            }
+        });
         authWebView.getWebViewClient().setPageStatusListener(new URLInterceptorWebViewClient.IPageStatusListener() {
             @Override
             public void onPageStarted() {
