@@ -74,11 +74,11 @@ public class CourseUnitNavigationActivity extends CourseBaseActivity implements 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == FILECHOOSER_RESULTCODE && uploadMessage != null) {
-
+            Uri[] result;
             if (data == null || resultCode != Activity.RESULT_OK) {
-                Uri[] result = new Uri[]{Uri.parse(data.getDataString())};
+                result = new Uri[]{Uri.parse(data.getDataString())};
             } else {
-                Uri[] result = null;
+                result = null;
             }
             uploadMessage.onReceiveValue(result);
             uploadMessage = null;
