@@ -24,12 +24,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     String messageText = remoteMessage.getNotification().getBody();
 
     Notification.Builder mBuilder =
+<<<<<<< HEAD
             new Notification.Builder(this)
                     .setSmallIcon(R.mipmap.small_icon)
                     .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                     .setContentTitle(getString(R.string.platform_name))
                     .setContentText(messageText)
                     .setStyle(new Notification.BigTextStyle().bigText(messageText));
+=======
+      new Notification.Builder(this)
+        .setSmallIcon(R.mipmap.ic_launcher)
+        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+        .setContentTitle(getString(R.string.platform_name))
+        .setContentText(messageText)
+        .setStyle(new Notification.BigTextStyle().bigText(messageText));
+>>>>>>> f4998e087c12375f588ea32ba0792ef9a1614b69
 
     Intent resultIntent = new Intent(this, SplashActivity.class);
     TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
