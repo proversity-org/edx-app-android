@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
     <!--An error occurred but we don't know why-->
     <string name="error_unknown">שגיאה. נא לנסות שוב.</string>
     <!--Course related error messages-->
