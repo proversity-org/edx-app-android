@@ -17,46 +17,37 @@ import org.edx.mobile.view.SplashActivity;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-  private static final String TAG = "MyFirebaseMsgService";
+    private static final String TAG = "MyFirebaseMsgService";
 
-  @Override
-  public void onMessageReceived(RemoteMessage remoteMessage) {
-    String messageText = remoteMessage.getNotification().getBody();
+    @Override
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+        String messageText = remoteMessage.getNotification().getBody();
 
-    Notification.Builder mBuilder =
-<<<<<<< HEAD
-            new Notification.Builder(this)
-                    .setSmallIcon(R.mipmap.small_icon)
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
-                    .setContentTitle(getString(R.string.platform_name))
-                    .setContentText(messageText)
-                    .setStyle(new Notification.BigTextStyle().bigText(messageText));
-=======
-      new Notification.Builder(this)
-        .setSmallIcon(R.mipmap.ic_launcher)
-        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
-        .setContentTitle(getString(R.string.platform_name))
-        .setContentText(messageText)
-        .setStyle(new Notification.BigTextStyle().bigText(messageText));
->>>>>>> f4998e087c12375f588ea32ba0792ef9a1614b69
+        Notification.Builder mBuilder =
+                new Notification.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+                        .setContentTitle(getString(R.string.platform_name))
+                        .setContentText(messageText)
+                        .setStyle(new Notification.BigTextStyle().bigText(messageText));
 
-    Intent resultIntent = new Intent(this, SplashActivity.class);
-    TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-    stackBuilder.addParentStack(SplashActivity.class);
-    stackBuilder.addNextIntent(resultIntent);
-    PendingIntent resultPendingIntent =
-            stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent resultIntent = new Intent(this, SplashActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(SplashActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-    mBuilder.setContentIntent(resultPendingIntent)
-            .setDefaults(Notification.DEFAULT_ALL)
-            .setPriority(Notification.PRIORITY_HIGH)
-            .setAutoCancel(true);
+        mBuilder.setContentIntent(resultPendingIntent)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .setAutoCancel(true);
 
-    NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-    mNotificationManager.notify(0, mBuilder.build());
-  }
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(0, mBuilder.build());
+    }
 
-  private void handleNow() {
-    Log.d(TAG, "Short lived task is done.");
-  }
+    private void handleNow() {
+        Log.d(TAG, "Short lived task is done.");
+    }
 }
