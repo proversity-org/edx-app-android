@@ -79,6 +79,7 @@ public class Config {
     private static final String JUMP_TO_LAST_ACCESSED_MODULE_ENABLED = "JUMP_TO_LAST_ACCESSED_MODULE_ENABLED";
     private static final String JUMP_TO_FIND_COURSES_ENABLED = "JUMP_TO_FIND_COURSES_ENABLED";
     private static final String INVERT_COLOR_LOGIN_SPLASH_VIEW_SIGN_IN_BTN = "INVERT_COLOR_LOGIN_SPLASH_VIEW_SIGN_IN_BTN";
+    private static final String USE_LOGO_SUB = "USE_LOGO_SUB";
 
 
     public static class ZeroRatingConfig {
@@ -575,6 +576,11 @@ public class Config {
     public boolean isNewLogistrationEnabled() {
         return getBoolean(NEW_LOGISTRATION_ENABLED, false);
     }
+
+    public boolean isUseSubLogoEnabled() {
+        return getBoolean(USE_LOGO_SUB, false);
+    }
+
 
     public boolean isDiscussionProfilePicturesEnabled() {
         return getBoolean(DISCUSSIONS_ENABLE_PROFILE_PICTURE_PARAM, false);
