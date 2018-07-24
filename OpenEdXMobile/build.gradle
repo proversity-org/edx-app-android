@@ -388,6 +388,7 @@ android {
         showAll true
         warning 'TypographyQuotes', 'InvalidPackage'
         error 'StopShip', 'ContentDescription'
+        disable 'MissingTranslation'
         /**
          * This is a bug that is fixed in the up-coming Android Studio 2.4 release.
          * Link to issue: https://issuetracker.google.com/issues/37630182
