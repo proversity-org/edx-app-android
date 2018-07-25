@@ -42,6 +42,14 @@ apply plugin: 'newrelic'
 apply plugin: 'com.facebook.testing.screenshot'
 apply from: 'jacoco.gradle'
 
+apply plugin: 'com.github.triplet.play'
+
+play {
+  track = 'beta'
+  serviceAccountEmail = "$System.env.SERVICE_ACCOUNT_EMAIL"
+  pk12File = file("$System.env.RELEASE_PK12_FILE")
+}
+
 repositories {
     mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
@@ -406,6 +414,10 @@ android {
         prod {
             if (project.hasProperty('APPLICATION_ID')) {
                 applicationId APPLICATION_ID
+            }
+            if (project.hasProperty('VERSION_CODE')) {
+              versionCode VERSION_CODE.toInteger()
+              versionName VERSION_NAME
             }
         }
         dev {
