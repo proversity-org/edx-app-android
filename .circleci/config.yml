@@ -15,7 +15,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install fastlane
+          name: Install Fastlane
           command: |
             sudo apt-get install ruby-full
             sudo gem install fastlane -NV
@@ -42,6 +42,7 @@ jobs:
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
       - deploy:
+          name: Deploy app
           command: |
             if [ "${CIRCLE_BRANCH}" == "no-branch" ]; then
               fastlane supply init
