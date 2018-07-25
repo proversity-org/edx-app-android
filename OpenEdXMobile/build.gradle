@@ -410,6 +410,10 @@ android {
             if (project.hasProperty('APPLICATION_ID')) {
                 applicationId APPLICATION_ID
             }
+            if (project.hasProperty('VERSION_CODE')) {
+                versionCode VERSION_CODE.toInteger()
+                versionName VERSION_NAME
+            }
         }
         dev {
             minSdkVersion 21 // Disables multidex to drastically speed up build: https://developer.android.com/tools/building/multidex.html#dev-build
