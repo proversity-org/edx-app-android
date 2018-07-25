@@ -34,7 +34,7 @@ jobs:
             cp -r config/google-services.json OpenEdXMobile/google-services.json
             echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
             mkdir -p /tmp/core_dumps
-            cp -r config/config.yaml /tmp/core_dumps    
+            cp -r config/config.yaml /tmp/core_dumps
       - run:
           name: Build app
           command: |
