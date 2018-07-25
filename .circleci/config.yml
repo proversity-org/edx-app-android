@@ -15,12 +15,14 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install fastlane
+          command: |
+            sudo gem install fastlane -NV
+      - run:
           name: Download Dependencies
           command: |
             ./gradlew androidDependencies
             ./gradlew dependencies --stacktrace --info
-            sudo apt-get install ruby-full
-            sudo gem install fastlane
       - run:
           name: Setup project
           command: |
