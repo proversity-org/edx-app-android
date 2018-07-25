@@ -17,6 +17,7 @@ jobs:
       - run:
           name: Install fastlane
           command: |
+            sudo apt-get install ruby-full
             sudo gem install fastlane -NV
       - run:
           name: Download Dependencies
