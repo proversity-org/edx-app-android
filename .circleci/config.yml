@@ -15,6 +15,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install fastlane
+          command: |
+            sudo apt-get install ruby-full
+            sudo gem install fastlane -NV
+      - run:
           name: Download Dependencies
           command: |
             ./gradlew androidDependencies
@@ -23,6 +28,8 @@ jobs:
           name: Setup project
           command: |
             git clone git@github.com:proversity-org/houston-android-config.git --branch no-branch --single-branch --depth=1 ./config
+            cp -R config/fastlane fastlane
+            cp -R config/metadata.py metadata.py
             cp -r config/gradle.properties OpenEdXMobile/gradle.properties
             cp -r config/google-services.json OpenEdXMobile/google-services.json
             echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
@@ -37,6 +44,9 @@ jobs:
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "no-branch" ]; then
+              fastlane supply init
+              python metadata.py
+              fastlane metadata
               ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
             fi
       - store_artifacts:
