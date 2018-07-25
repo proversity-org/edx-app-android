@@ -46,6 +46,7 @@ repositories {
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
+apply plugin: 'com.github.triplet.play'
 
 class AndroidHelper {
 
