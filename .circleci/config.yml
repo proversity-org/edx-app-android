@@ -15,6 +15,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install Fastlane
+          command: |
+            sudo apt-get install ruby-full
+            sudo gem install fastlane -NV
+      - run:
           name: Download Dependencies
           command: |
             ./gradlew androidDependencies
@@ -22,12 +27,14 @@ jobs:
       - run:
           name: Setup project
           command: |
-            git clone git@github.com:proversity-org/edx-app-android-config.git --branch houston ./config
+            git clone git@github.com:proversity-org/houston-android-config.git --branch no-branch --single-branch --depth=1 ./config
+            cp -R config/fastlane fastlane
+            cp -R config/metadata.py metadata.py
             cp -r config/gradle.properties OpenEdXMobile/gradle.properties
             cp -r config/google-services.json OpenEdXMobile/google-services.json
             echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
             mkdir -p /tmp/core_dumps
-            cp -r config/config.yaml /tmp/core_dumps    
+            cp -r config/config.yaml /tmp/core_dumps
       - run:
           name: Build app
           command: |
@@ -35,8 +42,12 @@ jobs:
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
       - deploy:
+          name: Deploy app
           command: |
-            if [ "${CIRCLE_BRANCH}" == "proversity/master" ]; then
+            if [ "${CIRCLE_BRANCH}" == "no-branch" ]; then
+              fastlane supply init
+              python metadata.py
+              fastlane metadata
               ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
             fi
       - store_artifacts:
@@ -44,7 +55,7 @@ jobs:
 
 notify:
   webhooks:
-    - url: https://consola-api.proversity.org/organizations/CIT/circleci/webhook?action=save_last_apk&repo=edx-app-android&authorization=e6005c3173671458fee3b322a73178ca2c900ab8b433c302dbd560ec0ed71570
+    - url: https://hd0don3meg.execute-api.us-east-1.amazonaws.com/prod/consola/sendApk?organisationId=ORGANISATION_ID&projectId=PROJECT_ID&repo=edx-app-android
 
 workflows:
   version: 2
@@ -53,4 +64,4 @@ workflows:
       - build:
           filters:
             branches:
-              only: rc/2.14.0
+              only: no-branch
