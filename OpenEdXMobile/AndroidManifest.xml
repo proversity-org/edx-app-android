@@ -22,15 +22,17 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
-    <!-- Required by app for TelephonyManager to determine mobile network carrier ID -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <!-- Sticky broadcast passing a message from one screen and display on another -->
     <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
 
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <uses-permission android:name="org.edx.mobile.permission.C2D_MESSAGE" />
+
+    <!-- Setup for Code Coverage -->
+    <instrumentation
+        android:name="org.edx.mobile.instrumentation.EdxInstrumentation"
+        android:targetPackage="org.edx.mobile" />
 
     <application
         android:name=".base.RuntimeApplication"
@@ -254,11 +256,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-
-        <!-- Setup for Code Coverage -->
-        <instrumentation
-            android:name="org.edx.mobile.instrumentation.EdxInstrumentation"
-            android:targetPackage="org.edx.mobile" />
 
         <!-- adb shell am broadcast -a org.edx.mobile.END_EMMA -->
         <receiver android:name="org.edx.mobile.instrumentation.EndEmmaBroadcast">
