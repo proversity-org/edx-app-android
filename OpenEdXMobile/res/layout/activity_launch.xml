@@ -18,7 +18,7 @@
             android:contentDescription="@string/phonetic_app_name"
             android:src="@drawable/launch_screen_logo" />
 
-        <ImageView
+        <!-- <ImageView
             android:id="@+id/edx_sub_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             android:layout_below="@id/edx_logo"
             android:contentDescription="@string/phonetic_app_name"
             android:src="@drawable/launch_screen_logo_sub"
-            android:visibility="gone"/>
+            android:visibility="gone"/> -->
 
         <LinearLayout
             android:id="@+id/bottom_layout"
@@ -65,7 +65,7 @@
                 android:focusable="true"
                 android:gravity="center"
                 android:text="@string/already_have_an_account"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="15sp" />
         </LinearLayout>
 
