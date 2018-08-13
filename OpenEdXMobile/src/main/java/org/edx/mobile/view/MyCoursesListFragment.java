@@ -162,7 +162,6 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
                 courseIds[i] = newItems.get(i).getCourse().getId();
             }
             createTopicsAndSubscribe(courseIds);
-
             if (result.getResult().size() > 0) {
                 adapter.setItems(newItems);
                 adapter.notifyDataSetChanged();
@@ -267,33 +266,6 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
         });
     }
 
-    private void createTopicsAndSubscribe(String [] coursesIds){
-        Config config = new Config(MainApplication.instance());
-        if (!config.isNotificationEnabled()){
-            return;
-        }
-        FirebaseMessaging.getInstance().subscribeToTopic(config.getKonnekteerMainTopic());
-
-        for(int i =0; i<coursesIds.length; i++){
-            String cleanTopic = cleanTopicForFireBase(coursesIds[i]);
-            KonnekteerUtil.createTopic(getActivity(), config, cleanTopic);
-            subscribeToTopic(cleanTopic);
-        }
-
-
-    }
-
-    private void subscribeToTopic(String id){
-        FirebaseMessaging.getInstance().subscribeToTopic(id);
-    }
-
-    private static String cleanTopicForFireBase(String dirtyTopic){
-        String semiCleanTopic=dirtyTopic.replace('+','-');
-        String cleanTopic=semiCleanTopic.replace(':','-');
-        return cleanTopic;
-
-    }
-
     @Override
     public void onRefresh() {
         EventBus.getDefault().post(new MainDashboardRefreshEvent());
@@ -324,6 +296,33 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
             }
             onNetworkConnectivityChangeEvent(event);
         }
+    }
+
+    private void createTopicsAndSubscribe(String [] coursesIds){
+        Config config = new Config(MainApplication.instance());
+        if (!config.isNotificationEnabled()){
+            return;
+        }
+        FirebaseMessaging.getInstance().subscribeToTopic(config.getKonnekteerMainTopic());
+
+        for(int i =0; i<coursesIds.length; i++){
+            String cleanTopic = cleanTopicForFireBase(coursesIds[i]);
+            KonnekteerUtil.createTopic(getActivity(), config, cleanTopic);
+            subscribeToTopic(cleanTopic);
+        }
+
+
+    }
+
+    private static String cleanTopicForFireBase(String dirtyTopic){
+        String semiCleanTopic=dirtyTopic.replace('+','-');
+        String cleanTopic=semiCleanTopic.replace(':','-');
+        return cleanTopic;
+
+    }
+
+    private void subscribeToTopic(String id){
+        FirebaseMessaging.getInstance().subscribeToTopic(id);
     }
 
     @Override

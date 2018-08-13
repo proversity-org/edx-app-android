@@ -3,21 +3,25 @@ buildscript {
     repositories {
         jcenter()       // This is the default repo
         mavenCentral()  //  This is the Maven Central repo
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.0'
         classpath 'com.google.gms:google-services:3.2.0'
+        classpath 'com.github.triplet.gradle:play-publisher:1.2.0'
     }
 }
 
 allprojects {
-    repositories {
-        jcenter()
-        maven {
-            url "https://maven.google.com" // Google's Maven repository
-        }
+  repositories {
+    jcenter()
+    maven {
+      url "https://maven.google.com" // Google's Maven repository
     }
+  }
 }
+
+
 
 project.ext {
     BUILD_TOOLS_VERSION = "25.0.3"
