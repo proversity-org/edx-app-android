@@ -98,13 +98,8 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
         binding.swipeContainer.setColorSchemeResources(R.color.edx_brand_primary_accent,
                 R.color.edx_brand_gray_x_back, R.color.edx_brand_gray_x_back,
                 R.color.edx_brand_gray_x_back);
-        if (environment.getConfig().getCourseDiscoveryConfig().isCourseDiscoveryEnabled()) {
-            // As per docs, the footer needs to be added before adapter is set to the ListView
-            addFindCoursesFooter();
-        }
-        // Add empty views to cause dividers to render at the top and bottom of the list
+        // Add empty view to cause divider to render at the top of the list.
         binding.myCourseList.addHeaderView(new View(getContext()), null, false);
-        binding.myCourseList.addFooterView(new View(getContext()), null, false);
         binding.myCourseList.setAdapter(adapter);
         binding.myCourseList.setOnItemClickListener(adapter);
         return binding.getRoot();
@@ -162,10 +157,13 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
                 courseIds[i] = newItems.get(i).getCourse().getId();
             }
             createTopicsAndSubscribe(courseIds);
+
+
             if (result.getResult().size() > 0) {
                 adapter.setItems(newItems);
-                adapter.notifyDataSetChanged();
             }
+            addFindCoursesFooter();
+            adapter.notifyDataSetChanged();
 
             if (adapter.isEmpty() && !environment.getConfig().getCourseDiscoveryConfig().isCourseDiscoveryEnabled()) {
                 errorNotification.showError(R.string.no_courses_to_display,
@@ -254,16 +252,52 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
     }
 
     private void addFindCoursesFooter() {
-        final PanelFindCourseBinding footer = DataBindingUtil.inflate(LayoutInflater.from(getActivity()),
-                R.layout.panel_find_course, binding.myCourseList, false);
-        binding.myCourseList.addFooterView(footer.getRoot(), null, false);
-        footer.courseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                environment.getAnalyticsRegistry().trackUserFindsCourses();
-                environment.getRouter().showFindCourses(getActivity());
-            }
-        });
+        // Validate footer is not already added.
+        if (binding.myCourseList.getFooterViewsCount() > 0) {
+            return;
+        }
+        if (environment.getConfig().getCourseDiscoveryConfig().isCourseDiscoveryEnabled()) {
+            // Add 'Find a Course' list item as a footer.
+            final PanelFindCourseBinding footer = DataBindingUtil.inflate(LayoutInflater.from(getActivity()),
+                    R.layout.panel_find_course, binding.myCourseList, false);
+            binding.myCourseList.addFooterView(footer.getRoot(), null, false);
+            footer.courseBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    environment.getAnalyticsRegistry().trackUserFindsCourses();
+                    environment.getRouter().showFindCourses(getActivity());
+                }
+            });
+        }
+        // Add empty view to cause divider to render at the bottom of the list.
+        binding.myCourseList.addFooterView(new View(getContext()), null, false);
+    }
+
+    private void createTopicsAndSubscribe(String [] coursesIds){
+        Config config = new Config(MainApplication.instance());
+        if (!config.isNotificationEnabled()){
+            return;
+        }
+        FirebaseMessaging.getInstance().subscribeToTopic(config.getKonnekteerMainTopic());
+
+        for(int i =0; i<coursesIds.length; i++){
+            String cleanTopic = cleanTopicForFireBase(coursesIds[i]);
+            KonnekteerUtil.createTopic(getActivity(), config, cleanTopic);
+            subscribeToTopic(cleanTopic);
+        }
+
+
+    }
+
+    private void subscribeToTopic(String id){
+        FirebaseMessaging.getInstance().subscribeToTopic(id);
+    }
+
+    private static String cleanTopicForFireBase(String dirtyTopic){
+        String semiCleanTopic=dirtyTopic.replace('+','-');
+        String cleanTopic=semiCleanTopic.replace(':','-');
+        return cleanTopic;
+
     }
 
     @Override
@@ -296,33 +330,6 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
             }
             onNetworkConnectivityChangeEvent(event);
         }
-    }
-
-    private void createTopicsAndSubscribe(String [] coursesIds){
-        Config config = new Config(MainApplication.instance());
-        if (!config.isNotificationEnabled()){
-            return;
-        }
-        FirebaseMessaging.getInstance().subscribeToTopic(config.getKonnekteerMainTopic());
-
-        for(int i =0; i<coursesIds.length; i++){
-            String cleanTopic = cleanTopicForFireBase(coursesIds[i]);
-            KonnekteerUtil.createTopic(getActivity(), config, cleanTopic);
-            subscribeToTopic(cleanTopic);
-        }
-
-
-    }
-
-    private static String cleanTopicForFireBase(String dirtyTopic){
-        String semiCleanTopic=dirtyTopic.replace('+','-');
-        String cleanTopic=semiCleanTopic.replace(':','-');
-        return cleanTopic;
-
-    }
-
-    private void subscribeToTopic(String id){
-        FirebaseMessaging.getInstance().subscribeToTopic(id);
     }
 
     @Override
