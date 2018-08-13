@@ -55,7 +55,6 @@ import org.edx.mobile.util.BrowserUtil;
 import org.edx.mobile.util.DeviceSettingUtil;
 import org.edx.mobile.util.NetworkUtil;
 import org.edx.mobile.util.OrientationDetector;
-import org.edx.mobile.util.TextUtils;
 import org.edx.mobile.util.UiUtil;
 import org.edx.mobile.util.Version;
 import org.edx.mobile.view.dialog.CCLanguageDialogFragment;
@@ -1286,7 +1285,7 @@ public class PlayerFragment extends BaseFragment implements IPlayerListener, Ser
                     if(temp.length()==0){
                         subTitlesTv.setVisibility(View.GONE);
                     }else{
-                        subTitlesTv.setText(TextUtils.formatHtml(temp));
+                        subTitlesTv.setText(temp);
                         subTitlesTv.setVisibility(View.VISIBLE);
                     }
                 }else{

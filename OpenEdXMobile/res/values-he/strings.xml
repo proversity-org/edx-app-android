@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
     <!--Certificates-->
     <!--Label congratulation user on finishing course-->
     <string name="course_details_congratulations">מזל טוב!</string>
@@ -23,13 +24,7 @@
     <string name="you_are_now_enrolled">כעת אתם רשומים בקורס זה.</string>
     <!--Error message shown when dashboard cannot be shown from course detail view-->
     <string name="cannot_show_dashboard">לא ניתן להציג את לוח הבקרה.</string>
-    <!--Subjects Discovery-->
-    <!--Label for browsing courses by a subject-->
-    <string name="browse_by_subject" tools:ignore="MissingTranslation">עיון לפי נושא</string>
-    <!--Button's Label for viewing all subjects-->
-    <string name="view_all_subjects" tools:ignore="MissingTranslation">צפו בכל הנושאים</string>
-    <!--Label for searching subjects-->
-    <string name="search_subjects" tools:ignore="MissingTranslation">חפשו נושאר</string>
+
     <!--Course Sharing-->
     <!--Description of button that will open the share course menu-->
     <string name="share_course_button">שתפו את הקורסים שלכם</string>
