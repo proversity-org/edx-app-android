@@ -38,6 +38,7 @@ jobs:
       - run:
           name: Build app
           command: |
+            unset ANDROID_NDK_HOME
             ./gradlew assembleProdRelease
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
@@ -50,6 +51,7 @@ jobs:
               cp -R config/google-play-store-assets/featureGraphic.png fastlane/metadata/android/en-US/images/featureGraphic.png
               python metadata.py
               fastlane metadata
+              unset ANDROID_NDK_HOME
               ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
             fi
       - store_artifacts:
