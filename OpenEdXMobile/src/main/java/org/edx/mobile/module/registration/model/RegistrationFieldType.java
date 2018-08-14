@@ -18,8 +18,6 @@ public enum RegistrationFieldType {
     @SerializedName("textarea")
     TEXTAREA,
 
-    @SerializedName("plaintext")
-    PLAINTEXT,
-
-    UNKNOWN
+    @SerializedName("checkbox")
+    CHECKBOX
 }

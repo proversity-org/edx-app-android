@@ -221,30 +221,44 @@ public class RegisterActivity extends BaseFragmentActivity
     }
 
     private void setupRegistrationForm(RegistrationDescription form) {
-        LayoutInflater inflater = getLayoutInflater();
+        try {
+            LayoutInflater inflater = getLayoutInflater();
 
-        for (RegistrationFormField field : form.getFields()) {
-            IRegistrationFieldView fieldView = IRegistrationFieldView.Factory.getInstance(inflater, field);
-            if (fieldView != null) mFieldViews.add(fieldView);
-            // Add item selected listener for spinner views
-            if (field.getFieldType().equals(RegistrationFieldType.MULTI)) {
-                RegistrationSelectView selectView = (RegistrationSelectView) fieldView;
-                selectView.setOnSpinnerItemSelectedListener(this);
-                selectView.setOnSpinnerFocusedListener(this);
+            List<RegistrationFormField> agreements = new ArrayList<>();
+
+            for (RegistrationFormField field : form.getFields()) {
+                if (field.getFieldType().equals(RegistrationFieldType.CHECKBOX)
+                        && field.getSupplementalLink() != null) {
+                    // this is agreement field
+                    // this must be added at the end of the form
+                    // hold on it
+                    agreements.add(field);
+                } else {
+                    IRegistrationFieldView fieldView = IRegistrationFieldView.Factory.getInstance(inflater, field);
+                    if (fieldView != null) mFieldViews.add(fieldView);
+                    // Add item selected listener for spinner views
+                    if (field.getFieldType().equals(RegistrationFieldType.MULTI)) {
+                        RegistrationSelectView selectView = (RegistrationSelectView) fieldView;
+                        selectView.setOnSpinnerItemSelectedListener(this);
+                        selectView.setOnSpinnerFocusedListener(this);
+                    }
+                }
             }
-        }
 
-        // add required and optional fields to the window
-        for (IRegistrationFieldView v : mFieldViews) {
-            if (v.getField().isRequired()) {
-                requiredFieldsLayout.addView(v.getView());
-            } else {
-                optionalFieldsLayout.addView(v.getView());
+            // add required and optional fields to the window
+            for (IRegistrationFieldView v : mFieldViews) {
+                if (v.getField().isRequired()) {
+                    requiredFieldsLayout.addView(v.getView());
+                } else {
+                    optionalFieldsLayout.addView(v.getView());
+                }
             }
-        }
 
-        // enable all the views
-        tryToSetUIInteraction(true);
+            // enable all the views
+            tryToSetUIInteraction(true);
+        } catch (Exception ex) {
+            logger.error(ex);
+        }
     }
 
     private void createAccount() {
