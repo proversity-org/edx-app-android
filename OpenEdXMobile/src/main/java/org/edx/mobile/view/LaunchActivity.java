@@ -46,7 +46,7 @@ public class LaunchActivity extends BaseFragmentActivity {
         }
 
         if (config.isUseSubLogoEnabled()){
-             binding.edxSubLogo.setVisibility(View.VISIBLE);
+            // binding.edxSubLogo.setVisibility(View.VISIBLE);
         }
         environment.getAnalyticsRegistry().trackScreenView(Analytics.Screens.LAUNCH_ACTIVITY);
     }
