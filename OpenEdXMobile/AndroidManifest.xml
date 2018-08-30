@@ -306,11 +306,6 @@
         <!-- Branch -->
         <meta-data android:name="io.branch.sdk.BranchKey" android:value="${branchKey}" />
 
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="2af9df51c42be7df6d55e027896d0906ada2e9a5"
-            />
-
         <receiver android:name="io.branch.referral.InstallListener" android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
@@ -331,6 +326,9 @@
             </intent-filter>
         </service>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="2af9df51c42be7df6d55e027896d0906ada2e9a5" />
     </application>
 
 </manifest>
