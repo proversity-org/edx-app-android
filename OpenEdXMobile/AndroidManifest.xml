@@ -24,7 +24,8 @@
 
     <!-- Required by app for TelephonyManager to determine mobile network carrier ID -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="org.edx.mobile.permission.C2D_MESSAGE" />
     <!-- Sticky broadcast passing a message from one screen and display on another -->
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
 
@@ -80,7 +81,6 @@
 
         <activity
             android:name="org.edx.mobile.view.MainDashboardActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
@@ -92,7 +92,6 @@
         <activity
             android:name="org.edx.mobile.view.CourseOutlineActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
@@ -147,13 +146,17 @@
         <activity
             android:name="org.edx.mobile.view.DownloadListActivity"
             android:label="@string/title_download"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
             android:name=".view.WebViewFindCoursesActivity"
             android:label="@string/label_discover"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
+
+        <activity
+            android:name=".view.ViewSubjectsActivity"
+            android:label="@string/browse_by_subject"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
@@ -171,7 +174,6 @@
         <activity
             android:name="org.edx.mobile.view.CourseHandoutActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
@@ -183,7 +185,6 @@
         <activity
             android:name=".view.CourseAnnouncementsActivity"
             android:label="@string/announcement_title"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <activity
@@ -230,7 +231,6 @@
         <activity
             android:name=".view.CourseTabsDashboardActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"/>
 
         <activity
@@ -251,19 +251,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-
-      <service android:name="org.edx.mobile.services.MyFirebaseMessagingService" >
-        <intent-filter>
-          <action android:name="com.google.firebase.MESSAGING_EVENT" />
-        </intent-filter>
-      </service>
-
-        <service
-            android:name="org.edx.mobile.services.MyFirebaseInstanceIDService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
 
         <!-- Setup for Code Coverage -->
         <instrumentation
@@ -298,6 +285,11 @@
         </receiver>
 
         <service android:name="org.edx.mobile.services.DownloadSpeedService" />
+        <service android:name="org.edx.mobile.services.MyFirebaseMessagingService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
