@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Setup project
           command: |
-            git clone git@github.com:proversity-org/edx-app-android-config.git --branch no-branch --single-branch --depth=1 ./config
+            git clone git@github.com:proversity-org/edx-app-android-config.git --branch proversity/cel --single-branch --depth=1 ./config
             cp -r config/gradle.properties OpenEdXMobile/gradle.properties
             cp -r config/google-services.json OpenEdXMobile/google-services.json
             echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
@@ -46,7 +46,7 @@ jobs:
 
 notify:
   webhooks:
-    - url: https://consola-api.proversity.org/organizations/no-branch/circleci/webhook?action=save_last_apk&repo=edx-app-android&authorization=e6005c3173671458fee3b322a73178ca2c900ab8b433c302dbd560ec0ed71570
+    - url: https://consola-api.proversity.org/organizations/CEL/circleci/webhook?action=save_last_apk&repo=edx-app-android&authorization=e6005c3173671458fee3b322a73178ca2c900ab8b433c302dbd560ec0ed71570
 
 workflows:
   version: 2
@@ -55,4 +55,4 @@ workflows:
       - build:
           filters:
             branches:
-              only: no-branch
+              only: proversity/master
