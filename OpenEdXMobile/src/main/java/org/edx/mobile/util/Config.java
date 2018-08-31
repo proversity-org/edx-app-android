@@ -54,7 +54,7 @@ public class Config {
     private static final String FABRIC = "FABRIC";
     private static final String NEW_RELIC = "NEW_RELIC";
     private static final String SEGMENT_IO = "SEGMENT_IO";
-    private static final String PUSH_NOTIFICATIONS_FLAG = "PUSH_NOTIFICATIONS";
+    private static final String PUSH_NOTIFICATIONS = "PUSH_NOTIFICATIONS";
     private static final String WHITE_LIST_OF_DOMAINS = "WHITE_LIST_OF_DOMAINS";
 
     // Features
@@ -74,6 +74,18 @@ public class Config {
     private static final String COURSE_DATES_ENABLED = "COURSE_DATES_ENABLED";
     private static final String WHATS_NEW_ENABLED = "WHATS_NEW_ENABLED";
     private static final String COURSE_VIDEOS_ENABLED = "COURSE_VIDEOS_ENABLED";
+
+    private static final String KONNEKTEER_MAIN_TOPIC = "MAIN_TOPIC";
+    private static final String KONNEKTEER_ORGANIZATION_ID = "ORGANIZATION_ID";
+    private static final String KONNEKTEER_PROJECT_ID = "PROJECT_ID";
+    private static final String KONNEKTEER_API_KEY = "KONNEKTEER_API_KEY";
+    /**
+     * At the time when deprecated activities {@link org.edx.mobile.view.MyCoursesListActivity},
+     * {@link org.edx.mobile.view.CourseDashboardActivity} and {@link org.edx.mobile.view.CourseOutlineActivity}
+     * will be removed, this flag will no longer be of any use.
+     *
+     */
+    private static final String TAB_LAYOUTS_ENABLED = "TAB_LAYOUTS_ENABLED";
 
     public static class ZeroRatingConfig {
         @SerializedName("ENABLED")
@@ -118,6 +130,14 @@ public class Config {
             return CourseDiscoveryType.valueOf(mCourseEnrollmentType.toUpperCase(Locale.US));
         }
 
+        public boolean isExploreSubjectsEnabled() {
+            // Explore Subjects is only supported for web course discovery, and requires a URL
+            return isWebviewCourseDiscoveryEnabled()
+                    && null != getWebViewConfig().getExploreSubjectsUrl()
+                    && !getWebViewConfig().getExploreSubjectsUrl().isEmpty();
+        }
+
+
         public boolean isCourseDiscoveryEnabled() {
             return getCourseDiscoveryType() != null;
         }
@@ -151,6 +171,9 @@ public class Config {
         @SerializedName("COURSE_SEARCH_URL")
         private String mSearchUrl;
 
+        @SerializedName("EXPLORE_SUBJECTS_URL")
+        private String mExploreSubjectsUrl;
+
         @SerializedName("COURSE_INFO_URL_TEMPLATE")
         private String mCourseInfoUrlTemplate;
 
@@ -170,6 +193,10 @@ public class Config {
 
         public boolean isWebCourseSearchEnabled() {
             return mSearchBarEnabled;
+        }
+
+        public String getExploreSubjectsUrl() {
+            return mExploreSubjectsUrl;
         }
 
         public boolean isSubjectDiscoveryEnabled() {
@@ -514,10 +541,25 @@ public class Config {
         return getString(ORGANIZATION_CODE);
     }
 
-    public boolean isNotificationEnabled() {
-        return getBoolean(PUSH_NOTIFICATIONS_FLAG, false);
+    public String getKonnekteerMainTopic(){
+        return getString(KONNEKTEER_MAIN_TOPIC);
     }
 
+    public String getKonnekteerOrganizationId(){
+        return getString(KONNEKTEER_ORGANIZATION_ID);
+    }
+
+    public String getKonnekteerProjectId(){
+        return getString(KONNEKTEER_PROJECT_ID);
+    }
+
+    public String getKonnekteerApiKey(){
+        return getString(KONNEKTEER_API_KEY);
+    }
+
+    public boolean isNotificationEnabled() {
+        return getBoolean(PUSH_NOTIFICATIONS, false);
+    }
     public boolean isNewLogistrationEnabled() {
         return getBoolean(NEW_LOGISTRATION_ENABLED, false);
     }
@@ -586,6 +628,10 @@ public class Config {
 
     public boolean isCourseVideosEnabled() {
         return getBoolean(COURSE_VIDEOS_ENABLED, true);
+    }
+
+    public boolean isTabsLayoutEnabled() {
+        return getBoolean(TAB_LAYOUTS_ENABLED, false);
     }
 
     @NonNull
