@@ -158,7 +158,6 @@ public class MyCoursesListFragment extends OfflineSupportBaseFragment
             }
             createTopicsAndSubscribe(courseIds);
 
-
             if (result.getResult().size() > 0) {
                 adapter.setItems(newItems);
             }
