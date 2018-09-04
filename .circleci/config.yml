@@ -28,11 +28,6 @@ jobs:
             sudo apt-get install ruby-full
             sudo gem install fastlane -NV
       - run:
-          name: Download Dependencies
-          command: |
-            ./gradlew androidDependencies  --stacktrace --info
-            ./gradlew dependencies --stacktrace --info
-      - run:
           name: Setup project
           command: |
             git clone git@github.com:proversity-org/houston-android-config.git --branch no-branch --single-branch --depth=1 ./config
@@ -44,6 +39,11 @@ jobs:
             echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
             mkdir -p /tmp/core_dumps
             cp -r config/config.yaml /tmp/core_dumps
+      - run:
+          name: Download Dependencies
+          command: |
+            ./gradlew androidDependencies  --stacktrace --info
+            ./gradlew dependencies --stacktrace --info
       - run:
           name: Build app
           command: |
