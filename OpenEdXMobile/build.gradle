@@ -455,9 +455,9 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
     testOptions {
-        unitTests.all {
-            maxHeapSize '1g'
-        }
+         unitTests.all {
+             maxHeapSize '1g'
+         }
     }
 }
 

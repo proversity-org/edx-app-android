@@ -54,7 +54,8 @@ public class SplashActivity extends Activity {
     public void onStart() {
         super.onStart();
         if (Config.FabricBranchConfig.isBranchEnabled(config.getFabricConfig())) {
-            Branch.getInstance().initSession(new Branch.BranchReferralInitListener() {
+            final Branch branch = Branch.getInstance(getApplicationContext());
+            branch.initSession(new Branch.BranchReferralInitListener() {
                 @Override
                 public void onInitFinished(JSONObject referringParams, BranchError error) {
                     if (error == null) {
@@ -71,6 +72,14 @@ public class SplashActivity extends Activity {
             }, this.getIntent().getData(), this);
 
             finish();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (Config.FabricBranchConfig.isBranchEnabled(config.getFabricConfig())) {
+            Branch.getInstance().closeSession();
         }
     }
 
