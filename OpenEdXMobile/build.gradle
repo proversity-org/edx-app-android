@@ -408,7 +408,7 @@ android {
         disable 'GradleCompatible'
     }
 
-    flavorDimensions "api", "mode"
+    flavorDimensions "mode"
 
     productFlavors {
         demo {
