@@ -379,11 +379,11 @@ android {
         release.setRoot('build-types/release')
 
         if (project.hasProperty('RES_DIR')) {
-            full.res.srcDirs = [RES_DIR]
+            prod.res.srcDirs = [RES_DIR]
         }
 
         if (project.hasProperty('ASSETS')) {
-            full.assets.srcDirs = [ASSETS]
+            prod.assets.srcDirs = [ASSETS]
         }
 
         String sharedTestDir = 'src/sharedTest/java'
@@ -411,11 +411,11 @@ android {
     flavorDimensions "mode"
 
     productFlavors {
-        demo {
+        prod {
             minSdkVersion 21 // Disables multidex to drastically speed up build: https://developer.android.com/tools/building/multidex.html#dev-build\
             dimension "mode"
         }
-        full {
+        dev {
             dimension "mode"
             if (project.hasProperty('APPLICATION_ID')) {
                 applicationId APPLICATION_ID
