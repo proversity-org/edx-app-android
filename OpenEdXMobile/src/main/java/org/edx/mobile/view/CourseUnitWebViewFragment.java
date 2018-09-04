@@ -72,7 +72,7 @@ public class CourseUnitWebViewFragment extends CourseUnitFragment {
             }
 
             @Override
-            public void onPageLoadProgressChanged(WebView view, int progress) {
+            public void onPagePartiallyLoaded() {
             }
         });
 

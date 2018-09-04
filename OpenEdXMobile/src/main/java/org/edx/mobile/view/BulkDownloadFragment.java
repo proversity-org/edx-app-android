@@ -7,8 +7,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -51,8 +49,6 @@ import java.util.Map;
 import de.greenrobot.event.EventBus;
 
 public class BulkDownloadFragment extends BaseFragment {
-    private final String EXTRA_COURSE_VIDEOS_STATUS = "extra_course_videos_status";
-
     protected final Logger logger = new Logger(getClass().getName());
 
     public enum SwitchState {
@@ -84,16 +80,6 @@ public class BulkDownloadFragment extends BaseFragment {
     private SwitchState switchState = SwitchState.DEFAULT;
     private boolean isDeleteScheduled = false;
     private Handler bgThreadHandler;
-    /**
-     * Flag to cache if the {@link BulkVideosDownloadCancelledEvent} was fired before the creation
-     * of fragment's view i.e. before {@link BulkDownloadFragment#onViewCreated(View, Bundle)} callback.
-     */
-    private boolean bulkDownloadWasCancelled = false;
-    /**
-     * Flag to cache if the {@link BulkVideosDownloadStartedEvent} was fired before the creation
-     * of fragment's view i.e. before {@link BulkDownloadFragment#onViewCreated(View, Bundle)} callback.
-     */
-    private boolean bulkDownloadWasStarted = false;
 
     /**
      * Summarises the download status of all the videos within a course.
@@ -123,21 +109,6 @@ public class BulkDownloadFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            videosStatus = savedInstanceState.getParcelable(EXTRA_COURSE_VIDEOS_STATUS);
-        }
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable(EXTRA_COURSE_VIDEOS_STATUS, videosStatus);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.row_bulk_download, container, false);
@@ -162,14 +133,6 @@ public class BulkDownloadFragment extends BaseFragment {
         initDownloadSwitch();
         if (totalDownloadableVideos != null && videosStatus.courseComponentId != null) {
             populateViewHolder(videosStatus.courseComponentId, totalDownloadableVideos);
-        }
-        if (bulkDownloadWasCancelled) {
-            onEvent(new BulkVideosDownloadCancelledEvent());
-            bulkDownloadWasCancelled = false;
-        }
-        if (bulkDownloadWasStarted) {
-            onEvent(new BulkVideosDownloadStartedEvent());
-            bulkDownloadWasStarted = false;
         }
     }
 
@@ -275,7 +238,7 @@ public class BulkDownloadFragment extends BaseFragment {
             binding.getRoot().setOnClickListener(null);
             ViewCompat.setImportantForAccessibility(binding.getRoot(), ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO);
             setSwitchAccessibility(R.string.switch_on_all_downloaded);
-        } else if (videosStatus.allVideosDownloading(switchState)) {
+        } else if (videosStatus.allVideosDownloading()) {
             initDownloadProgressView();
 
             // TODO: Animation.PULSE causes lag when a spinner stays on screen for a while. Fix in LEARNER-5053
@@ -353,7 +316,7 @@ public class BulkDownloadFragment extends BaseFragment {
             case IN_PROCESS:
                 binding.swDownload.setChecked(true);
                 binding.swDownload.setEnabled(false);
-                if (videosStatus.allVideosDownloading(switchState)) {
+                if (videosStatus.allVideosDownloading()) {
                     // Now that all videos have been enqueued to Download manager, enable the Switch and update its state
                     switchState = SwitchState.USER_TURNED_ON;
                     prefManager.setBulkDownloadSwitchState(switchState, videosStatus.courseComponentId);
@@ -363,7 +326,7 @@ public class BulkDownloadFragment extends BaseFragment {
             case USER_TURNED_OFF:
                 binding.swDownload.setChecked(false);
                 binding.swDownload.setEnabled(true);
-                if ((videosStatus.allVideosDownloading(switchState) || videosStatus.allVideosDownloaded())
+                if ((videosStatus.allVideosDownloading() || videosStatus.allVideosDownloaded())
                         && !isDeleteScheduled) {
                     // This means that all the videos have been downloaded or they are currently
                     // downloading without the use of Bulk Download switch
@@ -373,7 +336,7 @@ public class BulkDownloadFragment extends BaseFragment {
                 }
                 break;
             case DEFAULT:
-                binding.swDownload.setChecked(videosStatus.allVideosDownloaded() || videosStatus.allVideosDownloading(switchState));
+                binding.swDownload.setChecked(videosStatus.allVideosDownloaded() || videosStatus.allVideosDownloading());
                 binding.swDownload.setEnabled(true);
                 break;
         }
@@ -455,7 +418,7 @@ public class BulkDownloadFragment extends BaseFragment {
                 return;
             }
 
-            if (!videosStatus.allVideosDownloading(switchState)) {
+            if (!videosStatus.allVideosDownloading()) {
                 binding.pbDownload.post(new Runnable() {
                     @Override
                     public void run() {
@@ -481,7 +444,7 @@ public class BulkDownloadFragment extends BaseFragment {
                                     final int percentageDownloaded = DownloadUtil.getPercentDownloaded(
                                             videosStatus.totalVideosSize, videosStatus.totalVideosSize - remainingSizeToDownload);
 
-                                    if (videosStatus.allVideosDownloading(switchState) && remainingSizeToDownload > 0) {
+                                    if (videosStatus.allVideosDownloading() && remainingSizeToDownload > 0) {
                                         binding.pbDownload.post(new Runnable() {
                                             @Override
                                             public void run() {
@@ -521,9 +484,7 @@ public class BulkDownloadFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -541,11 +502,6 @@ public class BulkDownloadFragment extends BaseFragment {
     }
 
     public void onEvent(BulkVideosDownloadCancelledEvent event) {
-        if (getView() == null) {
-            // If fragment view is not created yet, mark the event and fire it once the view is created.
-            bulkDownloadWasCancelled = true;
-            return;
-        }
         binding.swDownload.setChecked(false);
         switchState = SwitchState.DEFAULT;
         prefManager.setBulkDownloadSwitchState(switchState, videosStatus.courseComponentId);
@@ -553,16 +509,11 @@ public class BulkDownloadFragment extends BaseFragment {
     }
 
     public void onEvent(BulkVideosDownloadStartedEvent event) {
-        if (getView() == null) {
-            // If fragment view is not created yet, mark the event and fire it once the view is created.
-            bulkDownloadWasStarted = true;
-            return;
-        }
         remainingVideos.clear();
         updateUI();
     }
 
-    private static class CourseVideosStatus implements Parcelable {
+    private class CourseVideosStatus {
         /**
          * This might be the ID of the course itself or an ID of a component within the course
          * e.g. a section, subsection, unit or a component.
@@ -579,7 +530,7 @@ public class BulkDownloadFragment extends BaseFragment {
             return total == downloaded;
         }
 
-        boolean allVideosDownloading(SwitchState switchState) {
+        boolean allVideosDownloading() {
             return (total == downloaded + downloading) || (switchState != null && switchState == SwitchState.USER_TURNED_ON);
         }
 
@@ -595,47 +546,5 @@ public class BulkDownloadFragment extends BaseFragment {
             return String.format("Total: %d - Downloaded: %d - Downloading: %d - Remaining: %d - TotalSize: %d - RemainingSize: %d",
                     total, downloaded, downloading, remaining, totalVideosSize, remainingVideosSize);
         }
-
-        public CourseVideosStatus() {
-        }
-
-        protected CourseVideosStatus(Parcel in) {
-            courseComponentId = in.readString();
-            total = in.readInt();
-            downloaded = in.readInt();
-            downloading = in.readInt();
-            remaining = in.readInt();
-            totalVideosSize = in.readLong();
-            remainingVideosSize = in.readLong();
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(courseComponentId);
-            dest.writeInt(total);
-            dest.writeInt(downloaded);
-            dest.writeInt(downloading);
-            dest.writeInt(remaining);
-            dest.writeLong(totalVideosSize);
-            dest.writeLong(remainingVideosSize);
-        }
-
-        @SuppressWarnings("unused")
-        public static final Parcelable.Creator<CourseVideosStatus> CREATOR = new Parcelable.Creator<CourseVideosStatus>() {
-            @Override
-            public CourseVideosStatus createFromParcel(Parcel in) {
-                return new CourseVideosStatus(in);
-            }
-
-            @Override
-            public CourseVideosStatus[] newArray(int size) {
-                return new CourseVideosStatus[size];
-            }
-        };
     }
 }

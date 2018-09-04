@@ -74,7 +74,6 @@ public class Config {
     private static final String COURSE_DATES_ENABLED = "COURSE_DATES_ENABLED";
     private static final String WHATS_NEW_ENABLED = "WHATS_NEW_ENABLED";
     private static final String COURSE_VIDEOS_ENABLED = "COURSE_VIDEOS_ENABLED";
-
     private static final String KONNEKTEER_MAIN_TOPIC = "MAIN_TOPIC";
     private static final String KONNEKTEER_ORGANIZATION_ID = "ORGANIZATION_ID";
     private static final String KONNEKTEER_PROJECT_ID = "PROJECT_ID";
@@ -86,6 +85,7 @@ public class Config {
      *
      */
     private static final String TAB_LAYOUTS_ENABLED = "TAB_LAYOUTS_ENABLED";
+
 
     public static class ZeroRatingConfig {
         @SerializedName("ENABLED")
@@ -130,16 +130,15 @@ public class Config {
             return CourseDiscoveryType.valueOf(mCourseEnrollmentType.toUpperCase(Locale.US));
         }
 
+        public boolean isCourseDiscoveryEnabled() {
+            return getCourseDiscoveryType() != null;
+        }
+
         public boolean isExploreSubjectsEnabled() {
             // Explore Subjects is only supported for web course discovery, and requires a URL
             return isWebviewCourseDiscoveryEnabled()
                     && null != getWebViewConfig().getExploreSubjectsUrl()
                     && !getWebViewConfig().getExploreSubjectsUrl().isEmpty();
-        }
-
-
-        public boolean isCourseDiscoveryEnabled() {
-            return getCourseDiscoveryType() != null;
         }
 
         public boolean isWebviewCourseDiscoveryEnabled() {
@@ -161,10 +160,6 @@ public class Config {
         public boolean isWebCourseSearchEnabled() {
             return null != mWebViewConfig && mWebViewConfig.isWebCourseSearchEnabled();
         }
-
-        public boolean isSubjectDiscoveryEnabled() {
-            return null != mWebViewConfig && mWebViewConfig.isSubjectDiscoveryEnabled();
-        }
     }
 
     public static class WebViewConfig {
@@ -180,11 +175,12 @@ public class Config {
         @SerializedName("SEARCH_BAR_ENABLED")
         private boolean mSearchBarEnabled;
 
-        @SerializedName("SUBJECT_DISCOVERY_ENABLED")
-        private boolean subjectDiscovery;
-
         public String getCourseSearchUrl() {
             return mSearchUrl;
+        }
+
+        public String getExploreSubjectsUrl() {
+            return mExploreSubjectsUrl;
         }
 
         public String getCourseInfoUrlTemplate() {
@@ -193,14 +189,6 @@ public class Config {
 
         public boolean isWebCourseSearchEnabled() {
             return mSearchBarEnabled;
-        }
-
-        public String getExploreSubjectsUrl() {
-            return mExploreSubjectsUrl;
-        }
-
-        public boolean isSubjectDiscoveryEnabled() {
-            return subjectDiscovery;
         }
     }
 
@@ -560,6 +548,7 @@ public class Config {
     public boolean isNotificationEnabled() {
         return getBoolean(PUSH_NOTIFICATIONS, false);
     }
+
     public boolean isNewLogistrationEnabled() {
         return getBoolean(NEW_LOGISTRATION_ENABLED, false);
     }
@@ -630,6 +619,11 @@ public class Config {
         return getBoolean(COURSE_VIDEOS_ENABLED, true);
     }
 
+    /**
+     * At the time when deprecated activities {@link org.edx.mobile.view.MyCoursesListActivity},
+     * {@link org.edx.mobile.view.CourseDashboardActivity} and {@link org.edx.mobile.view.CourseOutlineActivity}
+     * will be removed, this function will no longer be of any use.
+     */
     public boolean isTabsLayoutEnabled() {
         return getBoolean(TAB_LAYOUTS_ENABLED, false);
     }
