@@ -56,13 +56,13 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "no-branch" ]; then
               unset ANDROID_NDK_HOME
-              fastlane deploy
-              # fastlane supply init
-              # cp -R config/google-play-store-assets/icon.png fastlane/metadata/android/en-US/images/icon.png
-              # cp -R config/google-play-store-assets/featureGraphic.png fastlane/metadata/android/en-US/images/featureGraphic.png
-              # python metadata.py
-              # fastlane metadata
-              # fastlane billing
+              ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
+              fastlane supply init
+              cp -R config/google-play-store-assets/icon.png fastlane/metadata/android/en-US/images/icon.png
+              cp -R config/google-play-store-assets/featureGraphic.png fastlane/metadata/android/en-US/images/featureGraphic.png
+              python metadata.py
+              fastlane metadata
+              fastlane billing
             fi
       - run:
           name: Error on gradle
