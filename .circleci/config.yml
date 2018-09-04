@@ -37,6 +37,7 @@ jobs:
             git clone git@github.com:proversity-org/houston-android-config.git --branch no-branch --single-branch --depth=1 ./config
             cp -R config/fastlane fastlane
             cp -R config/metadata.py metadata.py
+            cp -R config/consola_billing.py consola_billing.py
             cp -r config/gradle.properties OpenEdXMobile/gradle.properties
             cp -r config/google-services.json OpenEdXMobile/google-services.json
             echo "edx.dir = '../config'" > OpenEdXMobile/edx.properties
