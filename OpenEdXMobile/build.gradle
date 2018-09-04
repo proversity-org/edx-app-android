@@ -408,8 +408,15 @@ android {
         disable 'GradleCompatible'
     }
 
+    flavorDimensions "api", "mode"
+
     productFlavors {
+        demo {
+            minSdkVersion 21 // Disables multidex to drastically speed up build: https://developer.android.com/tools/building/multidex.html#dev-build\
+            dimension "mode"
+        }
         full {
+            dimension "mode"
             if (project.hasProperty('APPLICATION_ID')) {
                 applicationId APPLICATION_ID
             }
@@ -417,9 +424,6 @@ android {
                 versionCode VERSION_CODE.toInteger()
                 versionName VERSION_NAME
             }
-        }
-        demo {
-            minSdkVersion 21 // Disables multidex to drastically speed up build: https://developer.android.com/tools/building/multidex.html#dev-build
         }
     }
 
