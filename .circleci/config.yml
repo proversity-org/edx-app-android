@@ -48,7 +48,7 @@ jobs:
           name: Build app
           command: |
             unset ANDROID_NDK_HOME
-            ./gradlew assembleProdRelease
+            ./gradlew assembleProdRelease --stacktrace
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
       - run:
