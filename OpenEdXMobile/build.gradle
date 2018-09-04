@@ -379,11 +379,11 @@ android {
         release.setRoot('build-types/release')
 
         if (project.hasProperty('RES_DIR')) {
-            prod.res.srcDirs = [RES_DIR]
+            full.res.srcDirs = [RES_DIR]
         }
 
         if (project.hasProperty('ASSETS')) {
-            prod.assets.srcDirs = [ASSETS]
+            full.assets.srcDirs = [ASSETS]
         }
 
         String sharedTestDir = 'src/sharedTest/java'
