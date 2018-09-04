@@ -32,20 +32,12 @@ public class NotificationService extends FirebaseMessagingService {
         super.onSendError(s, e);
     }
 
-    @Override
-    public void onNewToken(String s) {
-        logger.debug("Refreshed FCM token: " + s);
-        super.onNewToken(s);
-    }
+
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         final IEdxEnvironment environment = MainApplication.getEnvironment(this);
 
-        if (!environment.getConfig().areFirebasePushNotificationsEnabled()) {
-            // Do not process Notifications when they are disabled.
-            return;
-        }
 
         if (remoteMessage.getNotification() != null) {
             logger.debug(

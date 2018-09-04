@@ -127,7 +127,7 @@ public abstract class MainApplication extends MultiDexApplication {
             analyticsRegistry.addAnalyticsProvider(injector.getInstance(SegmentAnalytics.class));
         }
 
-        // Add Firebase as an analytics provider if enabled in the config
+    /*    // Add Firebase as an analytics provider if enabled in the config
         if (config.getFirebaseConfig().isAnalyticsEnabled()) {
             analyticsRegistry.addAnalyticsProvider(injector.getInstance(FirebaseAnalytics.class));
         }
@@ -137,7 +137,7 @@ public abstract class MainApplication extends MultiDexApplication {
         } else if (!config.getFirebaseConfig().areNotificationsEnabled() &&
                 config.getFirebaseConfig().isEnabled()) {
             NotificationUtil.unsubscribeFromTopics(config);
-        }
+        }*/
 
         registerReceiver(new NetworkConnectivityReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         registerReceiver(new NetworkConnectivityReceiver(), new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));

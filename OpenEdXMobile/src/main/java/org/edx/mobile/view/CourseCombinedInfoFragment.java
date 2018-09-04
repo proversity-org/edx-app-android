@@ -93,8 +93,8 @@ public class CourseCombinedInfoFragment extends BaseFragment implements RefreshL
         // treat every link as external link in this view, so that all links will open in external browser
         client.setAllLinksAsExternal(true);
 
-        notificationSettingRow = view.findViewById(R.id.notification_setting_row);
-        notificationSwitch = (Switch) view.findViewById(R.id.notification_switch);
+      //  notificationSettingRow = view.findViewById(R.id.notification_setting_row);
+      //  notificationSwitch = (Switch) view.findViewById(R.id.notification_switch);
 
         return view;
     }
