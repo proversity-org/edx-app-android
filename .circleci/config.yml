@@ -42,14 +42,13 @@ jobs:
       - run:
           name: Download Dependencies
           command: |
-            ./gradlew androidDependencies  --stacktrace --info
-            ./gradlew dependencies --stacktrace --info
+            ./gradlew androidDependencies
+            ./gradlew dependencies
       - run:
           name: Build app
           command: |
             unset ANDROID_NDK_HOME
-            ./gradlew tasks
-            ./gradlew assembleProdRelease --stacktrace --info
+            ./gradlew assembleProdRelease
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
       - run:
@@ -57,7 +56,7 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "no-branch" ]; then
               unset ANDROID_NDK_HOME
-              ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta --stacktrace --info
+              ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta
               fastlane supply init
               cp -R config/google-play-store-assets/icon.png fastlane/metadata/android/en-US/images/icon.png
               cp -R config/google-play-store-assets/featureGraphic.png fastlane/metadata/android/en-US/images/featureGraphic.png
