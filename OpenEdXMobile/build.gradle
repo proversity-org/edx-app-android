@@ -28,6 +28,7 @@ apply plugin: 'com.github.triplet.play'
 repositories {
     jcenter()
     maven { url 'https://maven.fabric.io/public' }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 apply plugin: 'edxapp'
@@ -151,6 +152,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-ads:15.0.1"
     // Google Firebase
     implementation "com.google.firebase:firebase-core:16.0.1"
+    implementation "com.google.firebase:firebase-messaging:17.0.0"
 
     implementation 'com.facebook.android:facebook-android-sdk:3.23.1'
     implementation 'com.google.code.gson:gson:2.7'
@@ -183,10 +185,6 @@ dependencies {
      * https://dev.branch.io/getting-started/sdk-integration-guide/advanced/android/#supporting-pre-15-android
      */
     compile 'io.branch.sdk.android:library:1.14.5'
-
-    // Google Firebase
-    compile 'com.google.firebase:firebase-core:10.0.1'
-    compile 'com.google.firebase:firebase-messaging:10.0.1'
 
     // Segment Library
     implementation 'com.segment.analytics.android:analytics:4.2.6'
@@ -342,7 +340,7 @@ android {
                 resValue "bool", "com.crashlytics.RequireBuildId", "false"
             }
         }else{
-           ext.enableCrashlytics = false
+            ext.enableCrashlytics = false
         }
         def branchKey = ""
         if (fabric != null) {
@@ -468,7 +466,7 @@ android {
         }
     }
     buildToolsVersion '27.0.3'
-    compileSdkVersion 25
+    compileSdkVersion COMPILE_SDK_VERSION
 }
 
 

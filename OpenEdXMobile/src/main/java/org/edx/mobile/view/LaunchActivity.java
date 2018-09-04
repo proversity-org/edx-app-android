@@ -42,11 +42,11 @@ public class LaunchActivity extends BaseFragmentActivity {
             }
         });
         if (environment.getConfig().isColourInverted()){
-            binding.signInTv.setTextColor(getResources().getColor(R.color.white));
+            binding.signInTv.setTextColor(getResources().getColor(R.color.black));
         }
 
         if (config.isUseSubLogoEnabled()){
-            binding.edxSubLogo.setVisibility(View.VISIBLE);
+             binding.edxSubLogo.setVisibility(View.VISIBLE);
         }
         environment.getAnalyticsRegistry().trackScreenView(Analytics.Screens.LAUNCH_ACTIVITY);
     }
