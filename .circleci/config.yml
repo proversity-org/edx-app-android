@@ -42,7 +42,7 @@ jobs:
       - run:
           name: Download Dependencies
           command: |
-            ./gradlew androidDependencies
+            ./gradlew androidDependencies --stacktrace --info
             ./gradlew dependencies --stacktrace --info
       - run:
           name: Build app
