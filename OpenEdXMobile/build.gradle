@@ -29,6 +29,7 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+
 apply plugin: 'edxapp'
 edx {
     platform = ANDROID
@@ -47,12 +48,11 @@ repositories {
 
 apply plugin: 'com.github.triplet.play'
 
-play {  
-    track = 'beta'  
-    serviceAccountEmail = "$System.env.SERVICE_ACCOUNT_EMAIL"   
-    pk12File = file("$System.env.RELEASE_PK12_FILE")    
+play {
+    track = 'beta'
+    serviceAccountEmail = "$System.env.SERVICE_ACCOUNT_EMAIL"
+    pk12File = file("$System.env.RELEASE_PK12_FILE")
 }
-
 
 class AndroidHelper {
 
@@ -169,7 +169,6 @@ dependencies {
     }
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.volley:volley:1.1.0'
-    
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
@@ -259,7 +258,6 @@ def config = new TaskHelper().loadConfig(project)
 
 // https://developers.google.com/android/guides/google-services-plugin
 apply plugin: 'com.google.gms.google-services'
-
 
 android {
     signingConfigs {
@@ -412,10 +410,9 @@ android {
             if (project.hasProperty('APPLICATION_ID')) {
                 applicationId APPLICATION_ID
             }
-
-            if (project.hasProperty('VERSION_CODE')) {  
-                versionCode VERSION_CODE.toInteger()    
-                versionName VERSION_NAME    
+            if (project.hasProperty('VERSION_CODE')) {
+                versionCode VERSION_CODE.toInteger()
+                versionName VERSION_NAME
             }
         }
         dev {
