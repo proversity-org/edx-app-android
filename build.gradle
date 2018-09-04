@@ -11,7 +11,7 @@ allprojects {
 buildscript {
     project.apply from: "${rootDir}/constants.gradle"
     repositories {
-        google()
+        // google()
         jcenter()       // This is the default repo
         mavenCentral()  //  This is the Maven Central repo
     }
