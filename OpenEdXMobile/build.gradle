@@ -409,7 +409,7 @@ android {
     }
 
     productFlavors {
-        prod {
+        full {
             if (project.hasProperty('APPLICATION_ID')) {
                 applicationId APPLICATION_ID
             }
@@ -418,7 +418,7 @@ android {
                 versionName VERSION_NAME
             }
         }
-        dev {
+        demo {
             minSdkVersion 21 // Disables multidex to drastically speed up build: https://developer.android.com/tools/building/multidex.html#dev-build
         }
     }
