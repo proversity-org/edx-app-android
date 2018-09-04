@@ -30,7 +30,7 @@ jobs:
       - run:
           name: Setup project
           command: |
-            git clone git@github.com:proversity-org/houston-android-config.git --branch no-branch --single-branch --depth=1 ./config
+            git clone git@github.com:proversity-org/houston-android-config.git --branch c54fc9a2-3cda-11e8-b467-0ed5f89f718b --single-branch --depth=1 ./config
             cp -R config/fastlane fastlane
             cp -R config/metadata.py metadata.py
             cp -R config/consola_billing.py consola_billing.py
@@ -48,13 +48,14 @@ jobs:
           name: Build app
           command: |
             unset ANDROID_NDK_HOME
+            ./gradlew tasks
             ./gradlew assembleProdRelease --stacktrace --info
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
       - run:
           name: Deploy app
           command: |
-            if [ "${CIRCLE_BRANCH}" == "no-branch" ]; then
+            if [ "${CIRCLE_BRANCH}" == "houston/c54fc9a2-3cda-11e8-b467-0ed5f89f718b" ]; then
               unset ANDROID_NDK_HOME
               ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta --stacktrace --info
               fastlane supply init
@@ -74,7 +75,7 @@ jobs:
 
 notify:
   webhooks:
-    - url: https://hd0don3meg.execute-api.us-east-1.amazonaws.com/prod/consola/sendApk?organisationId=ORGANISATION_ID&projectId=PROJECT_ID&repo=edx-app-android
+    - url: https://hd0don3meg.execute-api.us-east-1.amazonaws.com/prod/consola/sendApk?organisationId=dd0abc00-3672-11e8-835e-511823f5c61c&projectId=05353740-3674-11e8-947e-6784d62f81d9&repo=edx-app-android
 
 workflows:
   version: 2
@@ -83,4 +84,4 @@ workflows:
       - build:
           filters:
             branches:
-              only: no-branch
+              only: houston/c54fc9a2-3cda-11e8-b467-0ed5f89f718b
