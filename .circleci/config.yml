@@ -48,6 +48,7 @@ jobs:
           name: Build app
           command: |
             unset ANDROID_NDK_HOME
+            android.enableAapt2=true
             ./gradlew assembleProdRelease --stacktrace
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
             cp -r OpenEdXMobile/build/outputs /tmp/core_dumps
@@ -56,6 +57,7 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "no-branch" ]; then
               unset ANDROID_NDK_HOME
+              android.enableAapt2=true
               ./gradlew publishApkProdRelease -PdisablePreDex -Dorg.gradle.project.track=beta --stacktrace
               fastlane supply init
               cp -R config/google-play-store-assets/icon.png fastlane/metadata/android/en-US/images/icon.png
