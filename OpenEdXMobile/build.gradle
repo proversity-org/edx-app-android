@@ -278,7 +278,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "org.proversity.houston.mkscfrggprlacwymsrjq"
+        applicationId "org.edx.mobile"
         // minimum version is Android 4.1
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion TARGET_SDK_VERSION
