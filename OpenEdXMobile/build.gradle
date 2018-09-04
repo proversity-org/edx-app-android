@@ -418,6 +418,9 @@ android {
                 versionName VERSION_NAME
             }
         }
+        dev {
+            minSdkVersion 21 // Disables multidex to drastically speed up build: https://developer.android.com/tools/building/multidex.html#dev-build
+        }
     }
 
     buildTypes {
