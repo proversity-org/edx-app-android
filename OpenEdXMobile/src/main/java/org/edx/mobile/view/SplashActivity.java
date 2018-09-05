@@ -8,7 +8,6 @@ import org.edx.mobile.base.MainApplication;
 import org.edx.mobile.core.IEdxEnvironment;
 import org.edx.mobile.logger.Logger;
 import org.edx.mobile.util.Config;
-import org.edx.mobile.util.NetworkUtil;
 import org.json.JSONObject;
 
 import io.branch.referral.Branch;
@@ -62,11 +61,8 @@ public class SplashActivity extends Activity {
                         // params are the deep linked params associated with the link that the user
                         // clicked -> was re-directed to this app params will be empty if no data found
                     } else {
-                        // Ignore the logging of errors occurred due to lack of network connectivity
-                        if (NetworkUtil.isConnected(getApplicationContext())) {
-                            logger.error(new Exception("Branch not configured properly, error:\n"
-                                    + error.getMessage()), true);
-                        }
+                        logger.error(new Exception("Branch not configured properly, error:\n"
+                                + error.getMessage()), true);
                     }
                 }
             }, this.getIntent().getData(), this);
