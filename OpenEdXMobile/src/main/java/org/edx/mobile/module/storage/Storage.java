@@ -176,16 +176,8 @@ public class Storage implements IStorage {
     }
 
     private int removeDownloadsFromApp(List<VideoModel> result, String username) {
-        if (result == null || result.size() <= 0) {
-            return 0;
-        }
-        // Remove all downloads from NativeDownloadManager
-        final long[] videoIds = new long[result.size()];
-        for (int i = 0; i < result.size(); i++) {
-            videoIds[i] = result.get(i).getDmId();
-        }
-        final int downloadsRemoved = dm.removeDownloads(videoIds);
         // Remove all downloads from db
+        long[] videoIds = new long[result.size()];
         VideoModel model;
         for (int i = 0; i < result.size(); i++) {
             model = result.get(i);
@@ -195,8 +187,10 @@ public class Storage implements IStorage {
                 db.deleteVideoByVideoId(model, username, null);
             }
             deleteFile(model.getFilePath());
+            videoIds[i] = model.getDmId();
         }
-        return downloadsRemoved;
+        // Remove all downloads from NativeDownloadManager
+        return videoIds.length > 0 ? dm.removeDownloads(videoIds) : 0;
     }
 
     /**

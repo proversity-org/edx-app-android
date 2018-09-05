@@ -118,7 +118,6 @@ public class CourseTabsDashboardFragment extends TabsBaseFragment {
         if (updateDownloadProgressRunnable != null) {
             handler.removeCallbacks(updateDownloadProgressRunnable);
             wasDownloadItemVisibleBeforeStopping = downloadsMenuItem.isVisible();
-            updateDownloadProgressRunnable = null;
         }
     }
 
