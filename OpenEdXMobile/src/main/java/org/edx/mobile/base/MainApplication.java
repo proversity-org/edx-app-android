@@ -81,6 +81,7 @@ public abstract class MainApplication extends MultiDexApplication {
      */
     private void init() {
         application = this;
+        RoboGuice.setUseAnnotationDatabases(false);
         injector = RoboGuice.getOrCreateBaseApplicationInjector((Application) this, RoboGuice.DEFAULT_STAGE,
                 (Module) RoboGuice.newDefaultRoboModule(this), (Module) new EdxDefaultModule(this));
 
