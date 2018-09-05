@@ -74,7 +74,6 @@ public class Config {
     private static final String COURSE_DATES_ENABLED = "COURSE_DATES_ENABLED";
     private static final String WHATS_NEW_ENABLED = "WHATS_NEW_ENABLED";
     private static final String COURSE_VIDEOS_ENABLED = "COURSE_VIDEOS_ENABLED";
-
     private static final String KONNEKTEER_MAIN_TOPIC = "MAIN_TOPIC";
     private static final String KONNEKTEER_ORGANIZATION_ID = "ORGANIZATION_ID";
     private static final String KONNEKTEER_PROJECT_ID = "PROJECT_ID";
@@ -137,7 +136,6 @@ public class Config {
                     && !getWebViewConfig().getExploreSubjectsUrl().isEmpty();
         }
 
-
         public boolean isCourseDiscoveryEnabled() {
             return getCourseDiscoveryType() != null;
         }
@@ -187,16 +185,16 @@ public class Config {
             return mSearchUrl;
         }
 
+        public String getExploreSubjectsUrl() {
+            return mExploreSubjectsUrl;
+        }
+
         public String getCourseInfoUrlTemplate() {
             return mCourseInfoUrlTemplate;
         }
 
         public boolean isWebCourseSearchEnabled() {
             return mSearchBarEnabled;
-        }
-
-        public String getExploreSubjectsUrl() {
-            return mExploreSubjectsUrl;
         }
 
         public boolean isSubjectDiscoveryEnabled() {
@@ -557,9 +555,11 @@ public class Config {
         return getString(KONNEKTEER_API_KEY);
     }
 
+
     public boolean isNotificationEnabled() {
         return getBoolean(PUSH_NOTIFICATIONS, false);
     }
+
     public boolean isNewLogistrationEnabled() {
         return getBoolean(NEW_LOGISTRATION_ENABLED, false);
     }
