@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.webkit.CookieManager;
+import android.os.Build;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -29,8 +29,6 @@ public class IDownloadManagerImpl implements IDownloadManager {
     @Inject
     public IDownloadManagerImpl(Context context) {
         this.context = context;
-        dm = (DownloadManager) context.getSystemService(
-            Context.DOWNLOAD_SERVICE);
     }
 
     @Override
@@ -43,30 +41,34 @@ public class IDownloadManagerImpl implements IDownloadManager {
             Query query = new Query();
             query.setFilterById(dmid);
 
-            Cursor c = dm.query(query);
-            if (c.moveToFirst()) {
-                long downloaded = c
-                        .getLong(c
+            Cursor cursor = dm.query(query);
+            if (cursor.moveToFirst()) {
+                long downloaded = cursor.getLong(cursor
                                 .getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
-                long size = c.getLong(c
+                long size = cursor.getLong(cursor
                         .getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
-                String filepath = c.getString(c
-                        .getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME));
-                int status = c.getInt(c
-                        .getColumnIndex(DownloadManager.COLUMN_STATUS));
+                String filepath = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                    if (filepath != null) {
+                        filepath = Uri.parse(filepath).getPath();
+                    }
+                } else {
+                    filepath = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME));
+                }
+                int status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
 
-                c.close();
-                
+                cursor.close();
+
                 NativeDownloadModel ndm = new NativeDownloadModel();
                 ndm.dmid = dmid;
                 ndm.downloaded = downloaded;
                 ndm.size = size;
                 ndm.filepath = filepath;
                 ndm.status = status;
-                
+
                 return ndm;
             }
-            c.close();
+            cursor.close();
         } catch(Exception e) {
             logger.error(e);
         }
@@ -96,8 +98,6 @@ public class IDownloadManagerImpl implements IDownloadManager {
 
         Uri target = Uri.fromFile(new File(destFolder, Sha1Util.SHA1(url)));
         Request request = new Request(Uri.parse(url));
-        String cookies = CookieManager.getInstance().getCookie(url);
-        request.addRequestHeader("cookie", cookies);
         request.setDestinationUri(target);
         request.setTitle(title);
 
@@ -158,7 +158,7 @@ public class IDownloadManagerImpl implements IDownloadManager {
         }catch (Exception ex){
             logger.debug(ex.getMessage());
         }
-        
+
         return 0;
     }
 
