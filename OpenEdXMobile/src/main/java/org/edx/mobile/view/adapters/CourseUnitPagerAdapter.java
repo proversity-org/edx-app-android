@@ -18,6 +18,7 @@ import org.edx.mobile.view.CourseUnitFragment;
 import org.edx.mobile.view.CourseUnitMobileNotSupportedFragment;
 import org.edx.mobile.view.CourseUnitOnlyOnYoutubeFragment;
 import org.edx.mobile.view.CourseUnitVideoFragment;
+import org.edx.mobile.view.CourseUnitYoutubeVideoFragment;
 import org.edx.mobile.view.CourseUnitWebViewFragment;
 
 import java.util.List;
@@ -63,7 +64,11 @@ public class CourseUnitPagerAdapter extends FragmentStatePagerAdapter {
         if (isCourseUnitVideo(unit)) {
             unitFragment = CourseUnitVideoFragment.newInstance((VideoBlockModel) unit, (pos < unitList.size()), (pos > 0));
         } else if (unit instanceof VideoBlockModel && ((VideoBlockModel) unit).getData().encodedVideos.getYoutubeVideoInfo() != null) {
-            unitFragment = CourseUnitOnlyOnYoutubeFragment.newInstance(unit);
+            if (config.getYoutubeConfig().isYoutubeEnabled()) {
+                unitFragment = CourseUnitYoutubeVideoFragment.newInstance((VideoBlockModel) unit, (pos < unitList.size()), (pos > 0));
+            } else {
+                unitFragment = CourseUnitOnlyOnYoutubeFragment.newInstance(unit);
+            }
         } else if (config.isDiscussionsEnabled() && unit instanceof DiscussionBlockModel) {
             unitFragment = CourseUnitDiscussionFragment.newInstance(unit, courseData);
         } else if (!unit.isMultiDevice()) {
