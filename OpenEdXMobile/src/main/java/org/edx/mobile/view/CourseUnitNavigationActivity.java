@@ -77,7 +77,7 @@ public class CourseUnitNavigationActivity extends CourseBaseActivity implements 
 
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
-            private Boolean  firstTime = true;
+            private Boolean firstTime = true;
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (firstTime) {
