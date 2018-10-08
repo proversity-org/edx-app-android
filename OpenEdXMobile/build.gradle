@@ -156,7 +156,7 @@ dependencies {
     implementation "com.google.firebase:firebase-core:16.0.1"
     implementation "com.google.firebase:firebase-messaging:17.1.0"
 
-    implementation 'com.facebook.android:facebook-android-sdk:3.23.1'
+    implementation 'com.facebook.android:facebook-login:4.36.0'
     implementation 'com.google.code.gson:gson:2.7'
     implementation 'de.greenrobot:eventbus:2.4.1'
     implementation 'com.squareup.phrase:phrase:1.1.0'
@@ -221,9 +221,9 @@ dependencies {
         exclude group: 'org.hamcrest'
     }
     testImplementation 'commons-lang:commons-lang:2.6'
-    testImplementation "org.robolectric:robolectric:3.0"
-    testImplementation "org.robolectric:shadows-support-v4:3.0"
-    testImplementation "org.robolectric:shadows-multidex:3.0"
+    testImplementation "org.robolectric:robolectric:3.8"
+    testImplementation "org.robolectric:shadows-supportv4:3.8"
+    testImplementation "org.robolectric:shadows-multidex:3.8"
     testImplementation 'org.assertj:assertj-core:2.5.0'
     testImplementation ('com.squareup.assertj:assertj-android:1.1.1') {
         exclude group: 'com.android.support'
@@ -360,15 +360,29 @@ android {
             }
         }
 
+        def facebookAppId = ""
+        def fbLoginProtocolScheme = ""
+        def facebook = config.get('FACEBOOK')
+        if (facebook?.get('ENABLED')) {
+            facebookAppId = facebook.get('FACEBOOK_APP_ID')
+            if (null == facebookAppId) {
+                throw new GradleException("You must set FACEBOOK_APP_ID if FACEBOOK is enabled")
+            }
+            fbLoginProtocolScheme = "fb"+facebookAppId
+        }
+
         manifestPlaceholders = [supportsRtl:"false",
                                 firebaseEnabled: firebaseEnabled?: false,
-                                branchKey: branchKey]
+                                branchKey: branchKey,
+                                facebookAppId: facebookAppId,
+                                fbLoginProtocolScheme: fbLoginProtocolScheme]
 
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath false
             }
         }
+        testOptions.unitTests.includeAndroidResources = true
     }
     sourceSets {
         main {
