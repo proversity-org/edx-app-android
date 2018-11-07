@@ -57,25 +57,25 @@ public class CourseUnitWebViewFragment extends CourseUnitFragment {
         super.onActivityCreated(savedInstanceState);
 
         authWebView.initWebView(getActivity(), true, false);
-        authWebView.getWebViewClient().setActionListener(new URLInterceptorWebViewClient.IActionListener() {
-            @Override
-            public void onClickCourseInfo(String pathId) {
-
-            }
-
-            @Override
-            public void onClickEnroll(String courseId, boolean emailOptIn) {
-
-            }
-
-            @Override
-            public void downloadResource(String strUrl) {
-                IDownloadManagerImpl manager =
-                    new IDownloadManagerImpl(getContext());
-                manager.addDownload(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DOWNLOADS), strUrl, true, "SGA-Download");
-            }
-        });
+//        authWebView.getWebViewClient().setActionListener(new URLInterceptorWebViewClient.IActionListener() {
+//            @Override
+//            public void onClickCourseInfo(String pathId) {
+//
+//            }
+//
+//            @Override
+//            public void onClickEnroll(String courseId, boolean emailOptIn) {
+//
+//            }
+//
+//            @Override
+//            public void downloadResource(String strUrl) {
+//                IDownloadManagerImpl manager =
+//                    new IDownloadManagerImpl(getContext());
+//                manager.addDownload(Environment.getExternalStoragePublicDirectory(
+//                    Environment.DIRECTORY_DOWNLOADS), strUrl, true, "SGA-Download");
+//            }
+//        });
         authWebView.getWebViewClient().setPageStatusListener(new URLInterceptorWebViewClient.IPageStatusListener() {
             @Override
             public void onPageStarted() {
