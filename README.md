@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/edx/edx-app-android.svg?branch=master)](https://travis-ci.org/edx/edx-app-android)
+
+# edX Android
+
 This is the source code for the edX mobile Android app. It is changing rapidly
 and its structure should not be relied upon. See http://code.edx.org for other
 parts of the edX code base.
@@ -139,7 +143,3 @@ The fixes for the common issues can be seen in the [Issues section](https://gith
 **Q:** I see an error that mentions "Error:Execution failed for task ':OpenEdXMobile:processDevDebugGoogleServices'. File google-services.json is missing.". How do I fix this?
 
 **A:** This file is required for our Firebase analytics implementation to work. If you are not planning to use Firebase just add an empty file named `google-services.json` at the root of the project's folder i.e. under `OpenEdXMobile` folder.
-
-Get google-services.json
-==========================
-https://developers.google.com/identity/sign-in/android/start
