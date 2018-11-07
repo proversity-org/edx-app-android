@@ -123,6 +123,11 @@ public class DefaultActionListener implements URLInterceptorWebViewClient.Action
         }
     }
 
+    @Override
+    public void downloadResource(String strUrl) {
+
+    }
+
     public void onClickEnroll(@NonNull final String courseId, final boolean emailOptIn) {
         if (isTaskInProgress) {
             // avoid duplicate actions
