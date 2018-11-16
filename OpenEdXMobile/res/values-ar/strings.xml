@@ -593,4 +593,20 @@
   <string name="launch_text">دورات مجانية من أفضل الجامعات في العالم في جيبك.</string>
   <string name="launch_search_courses">البحث في الدورات</string>
 
+  <!--no translation-->
+  <string name="browse_by_subject">Browse by Subject</string>
+  <string name="view_all_subjects">View All Subjects</string>
+  <string name="search_subjects">Search Subject</string>
+  <string name="by_signing_in">By signing in to this app, you agree to the {license} and {tos_and_honor_code} and acknowledge the {privacy_policy}</string>
+  <string name="privacy_policy">Privacy Policy</string>
+  <string name="tos_and_honor_code">{platform_name} Terms of Service and Honor Code</string>
+  <string name="terms_of_service_title">Terms of Service</string>
+  <string name="bulk_download_switch">Bulk videos download switch.</string>
+  <string name="download_remaining">{remaining_videos_count} Remaining, {remaining_videos_size} total</string>
+  <string name="switch_off_no_downloading">Toggling the switch on, will download all videos of this course.</string>
+  <string name="switch_on_all_downloading">Toggling the switch off, will cancel downloading of all videos and will delete all downloaded videos of this course.</string>
+  <string name="switch_on_all_downloaded">Toggling the switch off, will delete all downloaded videos of this course.</string>
+  <string name="default_notification_channel_title">General Notification</string>
+
+
 </resources>
