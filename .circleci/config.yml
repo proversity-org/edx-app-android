@@ -31,6 +31,7 @@ jobs:
           name: Build app
           command: |
             unset ANDROID_NDK_HOME
+            ./gradlew clean
             ./gradlew assembleProdRelease
             # ./gradlew testProdReleaseUnitTestCoverage
             cp -r OpenEdXMobile/build/reports /tmp/core_dumps
