@@ -549,7 +549,7 @@ public class Config {
     /// Please keep this alphabetized
 
     public String getApiHostURL() {
-        return getString(API_HOST_URL);
+        return "https://careersleadertraining.careersandenterprise.co.uk";
     }
 
     // User facing name of the platform like "edX"
