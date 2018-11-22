@@ -52,6 +52,7 @@ public class SamlWebViewActivity extends BaseFragmentActivity {
         WebView myWebView = activitySamlWebViewBinding.samlWebView;
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        setTitle(config.getSamlConfig().getSamlName());
         myWebView.setWebViewClient(new MyWebViewClient());
         String url = config.getApiHostURL() + SAML_PROVIDER_LOGIN_URL.replace("{idpSlug}", idpSlug);
         myWebView.loadUrl(url);
@@ -83,7 +84,6 @@ public class SamlWebViewActivity extends BaseFragmentActivity {
         public void onPageFinished(WebView view, String url) {
 
             String cookies = CookieManager.getInstance().getCookie(url);
-            SamlWebViewActivity.this.setTitle(view.getTitle());
             if (url.contains(config.getApiHostURL()) && cookies!= null) {
                 loginPrefs.storeUserCookies(cookies);
                 ProfileTask profileTask = new ProfileTask(getApplicationContext(), view);

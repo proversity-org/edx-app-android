@@ -349,6 +349,16 @@ android {
             fbLoginProtocolScheme = "fb"+facebookAppId
         }
 
+        def saml = config.get('SAML')
+        if (saml?.get('ENABLED')) {
+            def samlName = saml.get('NAME')
+            resValue "string", "saml_name", samlName
+            def samlIdpSlug = saml.get('SAML_IDP_SLUG')
+            if (null == samlIdpSlug) {
+                throw new GradleException("You must set SAML_IDP_SLUG if the login with SAML is enabled")
+            }
+        }
+
         manifestPlaceholders = [supportsRtl:"false",
                                 firebaseEnabled: firebaseEnabled?: false,
                                 branchKey: branchKey,
