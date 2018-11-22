@@ -123,10 +123,6 @@ public class LoginActivity
             activityLoginBinding.versionEnvTv.setText(text);
         }
 
-        if (!config.getSamlConfig().isEnabled()) {
-            activityLoginBinding.samlLogin.samlButton.setVisibility(View.GONE);
-        }
-
         return new LoginPresenter.LoginViewInterface() {
             @Override
             public void disableToolbarNavigation() {
@@ -139,15 +135,22 @@ public class LoginActivity
             }
 
             @Override
-            public void setSocialLoginButtons(boolean googleEnabled, boolean facebookEnabled) {
-                if (!facebookEnabled && !googleEnabled) {
+            public void setSocialLoginButtons(boolean googleEnabled, boolean facebookEnabled, boolean samlEnabled) {
+                if (!facebookEnabled && !googleEnabled && !samlEnabled) {
                     activityLoginBinding.panelLoginSocial.setVisibility(View.GONE);
-                } else if (!facebookEnabled) {
-                    activityLoginBinding.socialAuth.facebookButton.getRoot().setVisibility(View.GONE);
-                } else if (!googleEnabled) {
-                    activityLoginBinding.socialAuth.googleButton.getRoot().setVisibility(View.GONE);
+                } else {
+                    if (!facebookEnabled) {
+                        activityLoginBinding.socialAuth.facebookButton.getRoot().setVisibility(View.GONE);
+                    }
+                    if (!googleEnabled) {
+                        activityLoginBinding.socialAuth.googleButton.getRoot().setVisibility(View.GONE);
+                    }
+                    if (!samlEnabled) {
+                        activityLoginBinding.samlLogin.samlButton.setVisibility(View.GONE);
+                    }
                 }
             }
+
         };
     }
 
@@ -337,6 +340,7 @@ public class LoginActivity
         activityLoginBinding.socialAuth.facebookButton.getRoot().setClickable(enable);
         activityLoginBinding.socialAuth.googleButton.getRoot().setClickable(enable);
         activityLoginBinding.samlLogin.samlButton.setClickable(enable);
+
 
         activityLoginBinding.emailEt.setEnabled(enable);
         activityLoginBinding.passwordEt.setEnabled(enable);
