@@ -464,9 +464,13 @@ public class Config {
         @SerializedName("SAML_IDP_SLUG")
         private String mSamlIdpSlug;
 
-        public SAMLConfig(boolean mEnabled, String mSamlIdpSlug) {
+        @SerializedName("NAME")
+        private String mName;
+
+        public SAMLConfig(boolean mEnabled, String mSamlIdpSlug, String mName) {
             this.mEnabled = mEnabled;
             this.mSamlIdpSlug = mSamlIdpSlug;
+            this.mName = mName;
         }
 
         public SAMLConfig() {
@@ -478,6 +482,10 @@ public class Config {
 
         public String getSamlIdpSlug() {
             return mSamlIdpSlug;
+        }
+
+        public String getSamlName() {
+            return mName;
         }
     }
 
