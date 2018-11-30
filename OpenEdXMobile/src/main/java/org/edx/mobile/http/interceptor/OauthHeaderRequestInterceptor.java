@@ -35,8 +35,15 @@ public final class OauthHeaderRequestInterceptor implements Interceptor {
             builder.addHeader("Authorization", token);
         } else if (cookies != null) {
             builder.addHeader("Cookie", cookies);
+            builder.addHeader("X-CSRFToken",getCsrfToken(cookies));
         }
         return chain.proceed(builder.build());
+    }
+
+    private String getCsrfToken(String cookies){
+        cookies = cookies.substring(cookies.indexOf("csrftoken=") + 10);
+        return cookies.substring(0, cookies.indexOf(";"));
+
     }
 
 }
