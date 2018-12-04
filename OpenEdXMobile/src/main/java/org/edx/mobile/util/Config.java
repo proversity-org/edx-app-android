@@ -77,6 +77,7 @@ public class Config {
     private static final String COURSE_DATES_ENABLED = "COURSE_DATES_ENABLED";
     private static final String WHATS_NEW_ENABLED = "WHATS_NEW_ENABLED";
     private static final String COURSE_VIDEOS_ENABLED = "COURSE_VIDEOS_ENABLED";
+    private static final String DOWNLOAD_TO_SD_CARD_ENABLED = "DOWNLOAD_TO_SD_CARD_ENABLED";
     private static final String ANNOUNCEMENTS_ENABLED = "ANNOUNCEMENTS_ENABLED";
     private static final String JUMP_TO_LAST_ACCESSED_MODULE_ENABLED = "JUMP_TO_LAST_ACCESSED_MODULE_ENABLED";
     private static final String JUMP_TO_FIND_COURSES_ENABLED = "JUMP_TO_FIND_COURSES_ENABLED";
@@ -676,6 +677,10 @@ public class Config {
 
     public boolean isCourseVideosEnabled() {
         return getBoolean(COURSE_VIDEOS_ENABLED, true);
+    }
+
+    public boolean isDownloadToSDCardEnabled() {
+        return getBoolean(DOWNLOAD_TO_SD_CARD_ENABLED, true);
     }
 
     @NonNull

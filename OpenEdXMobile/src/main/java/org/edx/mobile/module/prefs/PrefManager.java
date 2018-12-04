@@ -321,6 +321,7 @@ public class PrefManager {
          * flag which marks whether the cache has been restored
          */
         public static final String VIDEOS_CACHE_RESTORED = "VideosCacheRestored";
+        public static final String DOWNLOAD_TO_SDCARD = "download_to_sdcard";
 
         // Preference to save user app rating
         public static final String APP_RATING = "APP_RATING";
