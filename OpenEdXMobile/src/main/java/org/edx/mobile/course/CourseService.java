@@ -12,7 +12,6 @@ import org.edx.mobile.http.provider.RetrofitProvider;
 import org.edx.mobile.model.Page;
 import org.edx.mobile.model.api.EnrolledCoursesResponse;
 import org.edx.mobile.model.api.SyncLastAccessedSubsectionResponse;
-import org.edx.mobile.model.api.VideoResponseModel;
 import org.edx.mobile.model.course.CourseStructureV1Model;
 import org.edx.mobile.view.common.TaskProgressCallback;
 import org.json.JSONObject;
@@ -85,7 +84,7 @@ public interface CourseService {
     /**
      * @return Enrolled courses of given user.
      */
-    @GET("/api/mobile/v0.5/users/{username}/course_enrollments")
+    @GET("/api/mobile/v1/users/{username}/course_enrollments")
     Call<List<EnrolledCoursesResponse>> getEnrolledCourses(@Path("username") final String username,
                                                            @Query("org") final String org);
 
@@ -93,16 +92,10 @@ public interface CourseService {
      * @return Enrolled courses of given user, only from the cache.
      */
     @Headers("Cache-Control: only-if-cached, max-stale")
-    @GET("/api/mobile/v0.5/users/{username}/course_enrollments")
+    @GET("/api/mobile/v1/users/{username}/course_enrollments")
     Call<List<EnrolledCoursesResponse>> getEnrolledCoursesFromCache(
             @Path("username") final String username,
             @Query("org") final String org);
-
-    /**
-     * @return List of videos in a particular course.
-     */
-    @GET("/api/mobile/v0.5/video_outlines/courses/{course_id}")
-    Call<List<VideoResponseModel>> getVideosByCourseId(@Path("course_id") final String courseId);
 
     @PATCH("/api/mobile/v0.5/users/{username}/course_status_info/{course_id}")
     Call<SyncLastAccessedSubsectionResponse> syncLastAccessedSubsection(
