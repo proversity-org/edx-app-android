@@ -22,24 +22,30 @@ public class LoginPresenterTest extends PresenterTest<LoginPresenter, LoginPrese
     public void testOnViewCreation_withGoogleLoginDisabled_googleButtonNotVisible() {
         when(config.getGoogleConfig()).thenReturn(new Config.GoogleConfig(false));
         when(config.getFacebookConfig()).thenReturn(new Config.FacebookConfig(false, "dummy app id"));
+        when(config.getSamlConfig()).thenReturn(new Config.SAMLConfig(false, "dummy slug", "dummy name"));
+        when(config.getOAuthConfig()).thenReturn(new Config.OAuthConfig(false, "dummy backend", "dummy name"));
         startPresenter(new LoginPresenter(config, zeroRatedNetworkInfo));
-        verify(view).setSocialLoginButtons(false, false);
+        verify(view).setSocialLoginButtons(false, false, false, false);
     }
 
     @Test
     public void testOnViewCreation_withFacebookLoginDisabled_facebookButtonNotVisible() {
         when(config.getGoogleConfig()).thenReturn(new Config.GoogleConfig(false));
         when(config.getFacebookConfig()).thenReturn(new Config.FacebookConfig(true, "dummy app id"));
+        when(config.getSamlConfig()).thenReturn(new Config.SAMLConfig(false, "dummy slug", "dummy name"));
+        when(config.getOAuthConfig()).thenReturn(new Config.OAuthConfig(false, "dummy backend", "dummy name"));
         startPresenter(new LoginPresenter(config, zeroRatedNetworkInfo));
-        verify(view).setSocialLoginButtons(false, true);
+        verify(view).setSocialLoginButtons(false, true, false, false);
     }
 
     @Test
     public void testOnViewCreation_withGoogleFacebookEnabled_socialLoginButtonsVisible() {
         when(config.getGoogleConfig()).thenReturn(new Config.GoogleConfig(true));
         when(config.getFacebookConfig()).thenReturn(new Config.FacebookConfig(false, "dummy app id"));
+        when(config.getSamlConfig()).thenReturn(new Config.SAMLConfig(false, "dummy slug", "dummy name"));
+        when(config.getOAuthConfig()).thenReturn(new Config.OAuthConfig(false, "dummy backend", "dummy name"));
         startPresenter(new LoginPresenter(config, zeroRatedNetworkInfo));
-        verify(view).setSocialLoginButtons(true, false);
+        verify(view).setSocialLoginButtons(true, false, false, false);
     }
 
     @Test
@@ -48,6 +54,6 @@ public class LoginPresenterTest extends PresenterTest<LoginPresenter, LoginPrese
         when(config.getGoogleConfig()).thenReturn(new Config.GoogleConfig(true));
         when(config.getFacebookConfig()).thenReturn(new Config.FacebookConfig(true, "dummy app id"));
         startPresenter(new LoginPresenter(config, zeroRatedNetworkInfo));
-        verify(view).setSocialLoginButtons(false, false);
+        verify(view).setSocialLoginButtons(false, false, false, false);
     }
 }
