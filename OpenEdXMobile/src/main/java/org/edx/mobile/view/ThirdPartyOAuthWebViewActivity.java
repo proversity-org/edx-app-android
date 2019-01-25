@@ -17,8 +17,8 @@ import com.google.inject.Inject;
 import org.edx.mobile.R;
 import org.edx.mobile.authentication.LoginAPI;
 import org.edx.mobile.base.BaseFragmentActivity;
-import org.edx.mobile.databinding.ActivityThirdPartyAuthViewBinding;
 
+import org.edx.mobile.databinding.ActivityThirdPartyOauthViewBinding;
 import org.edx.mobile.http.HttpStatus;
 import org.edx.mobile.http.HttpStatusException;
 import org.edx.mobile.model.api.ProfileModel;
@@ -29,7 +29,7 @@ import org.edx.mobile.util.Config;
 import org.edx.mobile.util.IntentFactory;
 
 
-public class ThirdPartyAuthWebViewActivity extends BaseFragmentActivity {
+public class ThirdPartyOAuthWebViewActivity extends BaseFragmentActivity {
 
     @Inject
     private Config config;
@@ -40,7 +40,7 @@ public class ThirdPartyAuthWebViewActivity extends BaseFragmentActivity {
     @Inject
     protected AnalyticsRegistry analyticsRegistry;
 
-    private ActivityThirdPartyAuthViewBinding activityThirdPartyAuthViewBinding;
+    private ActivityThirdPartyOauthViewBinding activityThirdPartyOAuthViewBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +48,10 @@ public class ThirdPartyAuthWebViewActivity extends BaseFragmentActivity {
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
         String url = config.getApiHostURL() + intent.getStringExtra("url");
-        activityThirdPartyAuthViewBinding = DataBindingUtil.setContentView(this, R.layout.activity_third_party_auth_view);
+        activityThirdPartyOAuthViewBinding = DataBindingUtil.setContentView(this, R.layout.activity_third_party_oauth_view);
         setToolbarAsActionBar();
 
-        WebView myWebView = activityThirdPartyAuthViewBinding.thirdPartyAuthWebView;
+        WebView myWebView = activityThirdPartyOAuthViewBinding.thirdPartyOauthWebView;
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         setTitle(title);
@@ -62,7 +62,7 @@ public class ThirdPartyAuthWebViewActivity extends BaseFragmentActivity {
 
     @NonNull
     public static Intent newIntent() {
-        return IntentFactory.newIntentForComponent(ThirdPartyAuthWebViewActivity.class);
+        return IntentFactory.newIntentForComponent(ThirdPartyOAuthWebViewActivity.class);
     }
 
     private class MyWebViewClient extends WebViewClient {
@@ -74,10 +74,10 @@ public class ThirdPartyAuthWebViewActivity extends BaseFragmentActivity {
 
             if (isPlatform) {
                 view.setVisibility(View.GONE);
-                activityThirdPartyAuthViewBinding.webViewProgress.loadingIndicator.setVisibility(View.VISIBLE);
+                activityThirdPartyOAuthViewBinding.webViewProgress.loadingIndicator.setVisibility(View.VISIBLE);
             } else {
                 view.setVisibility(View.VISIBLE);
-                activityThirdPartyAuthViewBinding.webViewProgress.loadingIndicator.setVisibility(View.GONE);
+                activityThirdPartyOAuthViewBinding.webViewProgress.loadingIndicator.setVisibility(View.GONE);
             }
             return false;
         }
@@ -117,7 +117,7 @@ public class ThirdPartyAuthWebViewActivity extends BaseFragmentActivity {
                     ((HttpStatusException) ex).getStatusCode() == HttpStatus.UNAUTHORIZED) {
                 loginPrefs.clear();
                 view.setVisibility(View.VISIBLE);
-                activityThirdPartyAuthViewBinding.webViewProgress.loadingIndicator.setVisibility(View.GONE);
+                activityThirdPartyOAuthViewBinding.webViewProgress.loadingIndicator.setVisibility(View.GONE);
             }
         }
 

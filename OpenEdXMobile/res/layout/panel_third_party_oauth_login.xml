@@ -3,7 +3,7 @@
 
 
     <LinearLayout
-        android:id="@+id/third_party_auth_panel"
+        android:id="@+id/third_party_oauth_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
