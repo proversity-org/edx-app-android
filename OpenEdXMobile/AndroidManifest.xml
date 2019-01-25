@@ -345,7 +345,7 @@
             android:resource="@color/edx_brand_primary_accent" />
 
         <activity
-            android:name="org.edx.mobile.view.SamlWebViewActivity"
+            android:name="org.edx.mobile.view.ThirdPartyAuthWebViewActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"

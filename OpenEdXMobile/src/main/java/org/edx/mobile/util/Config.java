@@ -60,6 +60,7 @@ public class Config {
     private static final String PUSH_NOTIFICATIONS_FLAG = "PUSH_NOTIFICATIONS";
     private static final String WHITE_LIST_OF_DOMAINS = "WHITE_LIST_OF_DOMAINS";
     private static final String SAML = "SAML";
+    private static final String SSO_OAUTH = "SSO_OAUTH";
 
     // Features
     private static final String USER_PROFILES_ENABLED = "USER_PROFILES_ENABLED";
@@ -489,6 +490,38 @@ public class Config {
         }
     }
 
+    public static class OAuthConfig {
+        @SerializedName("ENABLED")
+        private boolean mEnabled;
+
+        @SerializedName("BACKEND_NAME")
+        private String mBackendName;
+
+        @SerializedName("NAME")
+        private String mName;
+
+        public OAuthConfig(boolean mEnabled, String mBackendName, String mName) {
+            this.mEnabled = mEnabled;
+            this.mBackendName = mBackendName;
+            this.mName = mName;
+        }
+
+        public OAuthConfig() {
+        }
+
+        public boolean isEnabled() {
+            return mEnabled && !TextUtils.isEmpty(mBackendName);
+        }
+
+        public String getmBackendName() {
+            return mBackendName;
+        }
+
+        public String getOAuthName() {
+            return mName;
+        }
+    }
+
     @Inject
     public Config(Context context) {
         try {
@@ -733,6 +766,11 @@ public class Config {
     @NonNull
     public SAMLConfig getSamlConfig() {
         return getObjectOrNewInstance(SAML, SAMLConfig.class);
+    }
+
+    @NonNull
+    public OAuthConfig getOAuthConfig() {
+        return getObjectOrNewInstance(SSO_OAUTH, OAuthConfig.class);
     }
 
     @NonNull

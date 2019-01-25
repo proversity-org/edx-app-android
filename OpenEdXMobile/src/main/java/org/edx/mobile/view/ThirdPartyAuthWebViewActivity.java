@@ -17,8 +17,7 @@ import com.google.inject.Inject;
 import org.edx.mobile.R;
 import org.edx.mobile.authentication.LoginAPI;
 import org.edx.mobile.base.BaseFragmentActivity;
-import org.edx.mobile.databinding.ActivitySamlWebViewBinding;
-import static org.edx.mobile.http.constants.ApiConstants.SAML_PROVIDER_LOGIN_URL;
+import org.edx.mobile.databinding.ActivityThirdPartyAuthViewBinding;
 
 import org.edx.mobile.http.HttpStatus;
 import org.edx.mobile.http.HttpStatusException;
@@ -30,7 +29,7 @@ import org.edx.mobile.util.Config;
 import org.edx.mobile.util.IntentFactory;
 
 
-public class SamlWebViewActivity extends BaseFragmentActivity {
+public class ThirdPartyAuthWebViewActivity extends BaseFragmentActivity {
 
     @Inject
     private Config config;
@@ -41,26 +40,29 @@ public class SamlWebViewActivity extends BaseFragmentActivity {
     @Inject
     protected AnalyticsRegistry analyticsRegistry;
 
-    private ActivitySamlWebViewBinding activitySamlWebViewBinding;
+    private ActivityThirdPartyAuthViewBinding activityThirdPartyAuthViewBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activitySamlWebViewBinding = DataBindingUtil.setContentView(this, R.layout.activity_saml_web_view);
+        Intent intent = getIntent();
+        String title = intent.getStringExtra("title");
+        String url = config.getApiHostURL() + intent.getStringExtra("url");
+        activityThirdPartyAuthViewBinding = DataBindingUtil.setContentView(this, R.layout.activity_third_party_auth_view);
         setToolbarAsActionBar();
-        String idpSlug = config.getSamlConfig().getSamlIdpSlug();
-        WebView myWebView = activitySamlWebViewBinding.samlWebView;
+
+        WebView myWebView = activityThirdPartyAuthViewBinding.thirdPartyAuthWebView;
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        setTitle(config.getSamlConfig().getSamlName());
+        setTitle(title);
         myWebView.setWebViewClient(new MyWebViewClient());
-        String url = config.getApiHostURL() + SAML_PROVIDER_LOGIN_URL.replace("{idpSlug}", idpSlug);
+
         myWebView.loadUrl(url);
     }
 
     @NonNull
     public static Intent newIntent() {
-        return IntentFactory.newIntentForComponent(SamlWebViewActivity.class);
+        return IntentFactory.newIntentForComponent(ThirdPartyAuthWebViewActivity.class);
     }
 
     private class MyWebViewClient extends WebViewClient {
@@ -72,10 +74,10 @@ public class SamlWebViewActivity extends BaseFragmentActivity {
 
             if (isPlatform) {
                 view.setVisibility(View.GONE);
-                activitySamlWebViewBinding.webViewProgress.loadingIndicator.setVisibility(View.VISIBLE);
+                activityThirdPartyAuthViewBinding.webViewProgress.loadingIndicator.setVisibility(View.VISIBLE);
             } else {
                 view.setVisibility(View.VISIBLE);
-                activitySamlWebViewBinding.webViewProgress.loadingIndicator.setVisibility(View.GONE);
+                activityThirdPartyAuthViewBinding.webViewProgress.loadingIndicator.setVisibility(View.GONE);
             }
             return false;
         }
@@ -115,7 +117,7 @@ public class SamlWebViewActivity extends BaseFragmentActivity {
                     ((HttpStatusException) ex).getStatusCode() == HttpStatus.UNAUTHORIZED) {
                 loginPrefs.clear();
                 view.setVisibility(View.VISIBLE);
-                activitySamlWebViewBinding.webViewProgress.loadingIndicator.setVisibility(View.GONE);
+                activityThirdPartyAuthViewBinding.webViewProgress.loadingIndicator.setVisibility(View.GONE);
             }
         }
 

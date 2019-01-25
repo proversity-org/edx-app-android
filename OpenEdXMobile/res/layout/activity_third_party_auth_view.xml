@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/saml_root"
+        android:id="@+id/third_party_auth_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
@@ -16,7 +16,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <WebView
-                android:id="@+id/saml_web_view"
+                android:id="@+id/third_party_auth_web_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"

@@ -38,6 +38,9 @@ import org.edx.mobile.util.images.ErrorUtils;
 import org.edx.mobile.view.dialog.ResetPasswordDialogFragment;
 import org.edx.mobile.view.login.LoginPresenter;
 
+import static org.edx.mobile.http.constants.ApiConstants.OAUTH_PROVIDER_LOGIN_URL;
+import static org.edx.mobile.http.constants.ApiConstants.SAML_PROVIDER_LOGIN_URL;
+
 public class LoginActivity
         extends PresenterActivity<LoginPresenter, LoginPresenter.LoginViewInterface>
         implements SocialLoginDelegate.MobileLoginCallback {
@@ -75,11 +78,27 @@ public class LoginActivity
         activityLoginBinding.socialAuth.googleButton.getRoot().setOnClickListener(
                 socialLoginDelegate.createSocialButtonClickHandler(
                         SocialFactory.SOCIAL_SOURCE_TYPE.TYPE_GOOGLE));
-        activityLoginBinding.samlLogin.samlButton.setOnClickListener(new OnClickListener() {
+        activityLoginBinding.thirdPartyAuthLogin.samlButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 //redirect to SAML webview activity
-                startActivity(SamlWebViewActivity.newIntent());
+
+                Config.SAMLConfig config = environment.getConfig().getSamlConfig();
+                Intent intent = ThirdPartyAuthWebViewActivity.newIntent();
+                intent.putExtra("title", config.getSamlName());
+                intent.putExtra("url", SAML_PROVIDER_LOGIN_URL.replace("{idpSlug}", config.getSamlIdpSlug()));
+                startActivity(intent);
+            }
+        });
+
+        activityLoginBinding.thirdPartyAuthLogin.oauthButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Config.OAuthConfig config = environment.getConfig().getOAuthConfig();
+                Intent intent = ThirdPartyAuthWebViewActivity.newIntent();
+                intent.putExtra("title", config.getOAuthName());
+                intent.putExtra("url", OAUTH_PROVIDER_LOGIN_URL.replace("{backendName}", config.getmBackendName()));
+                startActivity(intent);
             }
         });
 
@@ -135,8 +154,8 @@ public class LoginActivity
             }
 
             @Override
-            public void setSocialLoginButtons(boolean googleEnabled, boolean facebookEnabled, boolean samlEnabled) {
-                if (!facebookEnabled && !googleEnabled && !samlEnabled) {
+            public void setSocialLoginButtons(boolean googleEnabled, boolean facebookEnabled, boolean samlEnabled, boolean oAuthEnabled) {
+                if (!facebookEnabled && !googleEnabled && !samlEnabled && !oAuthEnabled) {
                     activityLoginBinding.panelLoginSocial.setVisibility(View.GONE);
                 } else {
                     if (!facebookEnabled) {
@@ -146,7 +165,10 @@ public class LoginActivity
                         activityLoginBinding.socialAuth.googleButton.getRoot().setVisibility(View.GONE);
                     }
                     if (!samlEnabled) {
-                        activityLoginBinding.samlLogin.samlButton.setVisibility(View.GONE);
+                        activityLoginBinding.thirdPartyAuthLogin.samlButton.setVisibility(View.GONE);
+                    }
+                    if (!oAuthEnabled) {
+                        activityLoginBinding.thirdPartyAuthLogin.oauthButton.setVisibility(View.GONE);
                     }
                 }
             }
@@ -339,8 +361,11 @@ public class LoginActivity
 
         activityLoginBinding.socialAuth.facebookButton.getRoot().setClickable(enable);
         activityLoginBinding.socialAuth.googleButton.getRoot().setClickable(enable);
-        activityLoginBinding.samlLogin.samlButton.setClickable(enable);
+        activityLoginBinding.thirdPartyAuthLogin.samlButton.setClickable(enable);
+        activityLoginBinding.thirdPartyAuthLogin.oauthButton.setClickable(enable);
 
+        activityLoginBinding.thirdPartyAuthLogin.samlButton.setText(environment.getConfig().getSamlConfig().getSamlName());
+        activityLoginBinding.thirdPartyAuthLogin.oauthButton.setText(environment.getConfig().getOAuthConfig().getOAuthName());
 
         activityLoginBinding.emailEt.setEnabled(enable);
         activityLoginBinding.passwordEt.setEnabled(enable);
